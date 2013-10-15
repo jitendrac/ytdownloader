@@ -28,9 +28,7 @@ package dentex.youtube.downloader;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Application;
 import android.app.NotificationManager;
@@ -80,7 +78,6 @@ public class YTD extends Application {
 	public static final String JSON_DATA_SIZE = "size";
 	
 	public static final String ffmpegBinName = "ffmpeg";
-	public static Map<Long, Integer> ffmpegPercentMap = new HashMap<Long, Integer>();
 	
 	public static SharedPreferences settings;
 	public static SharedPreferences videoinfo;
@@ -169,7 +166,7 @@ public class YTD extends Application {
 		PopUps.showPopUp(context.getString(R.string.no_downloads_sys_app), context.getString(R.string.ytd_useless), "alert", context);
 	}
 	
-    public static void NotificationHelper() {
+    public static void NotificationHelper(Context ctx) {
     	pt1 = ctx.getString(R.string.notification_downloading_pt1);
     	pt2 = ctx.getString(R.string.notification_downloading_pt2);
     	noDownloads = ctx.getString(R.string.notification_no_downloads);

@@ -1,4 +1,3 @@
-package dentex.youtube.downloader;
 /*
  * code adapted from: 
  * https://github.com/survivingwithandroid/Surviving-with-android/tree/master/SimpleList
@@ -18,6 +17,8 @@ package dentex.youtube.downloader;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package dentex.youtube.downloader;
 
 public class DashboardListItem {
 	

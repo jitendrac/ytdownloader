@@ -1,5 +1,3 @@
-package dentex.youtube.downloader;
-
 /** 
 	Copyright (c) 2012-2013 Samuele Rini
  	
@@ -41,6 +39,8 @@ package dentex.youtube.downloader;
  	* See the License for the specific language governing permissions and
  	* limitations under the License.
  **/
+
+package dentex.youtube.downloader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -168,16 +168,6 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		
 		holder.size.setText(dli.getSize());
 		holder.path.setText(dli.getPath());
-		
-		/*if (dli.getSpeed() != 0) {
-			holder.speed.setText(String.valueOf(dli.getSpeed()) + " KB/s");
-		} else {
-			if (dli.getStatus().equals(context.getString(R.string.json_status_in_progress)) && 
-					dli.getType().equals(YTD.JSON_DATA_TYPE_V)) {
-				dli.setProgress(-1);
-			}
-			holder.speed.setText("");
-		}*/
 		
 		if (dli.getSpeed() == 0) {
 			holder.speed.setText("");

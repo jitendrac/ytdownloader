@@ -883,7 +883,7 @@ public class ShareActivity extends Activity {
 				
 				if (!autoModeEnabled) YTD.sequence.add(ID);
 				
-				YTD.NotificationHelper();
+				YTD.NotificationHelper(sShare);
 			}
 			
 			@Override
@@ -901,8 +901,14 @@ public class ShareActivity extends Activity {
 						new String[] { path.getPath() + File.separator + nameOfVideo }, 
 						new String[] {"video/*"});
 				
-				long downloadTotalSize = Maps.mTotalSizeMap.get(ID);
-				String size = String.valueOf(Utils.MakeSizeHumanReadable(downloadTotalSize, false));
+				String size;
+				try {
+					long downloadTotalSize = Maps.mTotalSizeMap.get(ID);
+					size = String.valueOf(Utils.MakeSizeHumanReadable(downloadTotalSize, false));
+				} catch (NullPointerException e) {
+					Utils.logger("w", "NPE getting finished download size for ID: " + ID, DEBUG_TAG);
+					size = "-";
+				}
 				
 				Json.addEntryToJsonFile(
 						sShare, 
@@ -1071,7 +1077,7 @@ public class ShareActivity extends Activity {
                 	try {
 						CQS[index] = URLDecoder.decode(CQS[index], "UTF-8");
 					} catch (UnsupportedEncodingException e) {
-						Log.e(DEBUG_TAG, e.getMessage());
+						Log.e(DEBUG_TAG, "UnsupportedEncodingException @ urlBlockMatchAndDecode: " + e.getMessage());
 					}
                 	
                 	asyncDownload.doProgress((int) ((index / (float) count) * 100));
