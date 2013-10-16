@@ -158,6 +158,7 @@
 	<string name="menu_restore_result_ok">Dati Dashboard ripristinati.</string>
 	<string name="menu_restore_result_failed">Errore durante il ripristino.</string>
 	<string name="unsupported_operation">Operazione non supportata.</string>
+	<string name="ffmpeg_already_running">FFmpeg è già in esecuzione.</string>
 	<string name="invalid_data">Dati non validi.</string>
 	<string name="open_chooser_title">Apri con:</string>
 	
@@ -170,10 +171,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Apri</item>
         <item>Codifica in mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Apri</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg non installallato o abilitato:</string>
@@ -192,15 +189,6 @@
 	<string name="dashboard_long_click_entry_0">Copia</string>
 	<string name="dashboard_long_click_entry_1">Sposta</string>
 	<string name="dashboard_long_click_entry_2">Cancella</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Copia</item>
-	    <item>Sposta</item>
-        <item>Rinomina</item>
-        <item>Scarica di nuovo il video</item>
-        <item>Rimuovi dalla Dashboard</item>
-        <item>Rimuovi e cancella il file</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copia</item>
@@ -270,10 +258,10 @@
     <string name="enable_q_suffix_summary">Aggiungi la qualità del video alla fine del nome del file</string>
     <string name="enable_rename_title">Abilita rinomina file</string>
     <string name="enable_rename_summary">Rinomina il file video prima di scaricarlo (solo per il download locale)</string>
-    <string name="show_size_title">Mostra dimensioni file</string>
-    <string name="show_size_summary">Recupera le dimensioni del file nel messaggio di conferma per il download (più lento)</string>
-    <string name="show_size_list_title">Mostra le dimensioni di tutti i video.</string>
-    <string name="show_size_list_summary">Recupera le dimensioni dei file per ogni elemento nella lista dei video disponibili (ancora più lento)</string>
+<!--     <string name="show_size_title">Show file size</string> -->
+<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
+<!--     <string name="show_size_list_title">Show all video sizes</string> -->
+<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
     <string name="show_thumb_title">Mostra un\'immagine di anteprima</string>
     <string name="show_thumb_summary">Scarica un\'immagine di anteprima, insieme alla lista dei video</string>
     <string name="show_resolutions_title">Mostra le risoluzioni dei video</string>
@@ -284,10 +272,20 @@
     <string name="enable_advanced_features_title">Abilità funzionalità avanzate</string>
     <string name="enable_advanced_features_summary">Scarica il \"plugin\" FFmpeg</string>
     <string name="mp3_bitrate_title">Bitrate di codifica MP3:</string>
-    <string name="audio_extraction_type_title">Tipo di estrazione</string>
-    <string name="remove_video_title">Rimozione del video</string>
-    <string name="remove_video_summary">Abilita la cancellazione del file video dopo aver estratto l\'audio con successo (attenzione: nessuna conferma)</string>
     
+    <string name="ffmpeg_auto_title">Estrai l\'audio automaticamente</string>
+    <string name="ffmpeg_auto_summary">Estrai o converti l\'audio in mp3 automaticamente dopo ogni download</string>
+    <string name="ffmpeg_auto_cb_title">Abilita estrazione automatica</string>
+    <string name="ffmpeg_auto_cb_summary">Scegli i parametri qui sotto</string>
+    
+    <string name="audio_extraction_type_title">Tipo di estrazione</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Solo estrazione audio</item>
+        <item>Estrazione e codifica audio in mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Rimozione del video</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Notifiche</string>
     

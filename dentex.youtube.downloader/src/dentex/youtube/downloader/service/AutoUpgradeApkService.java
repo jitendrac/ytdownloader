@@ -334,7 +334,7 @@ public class AutoUpgradeApkService extends Service {
 		public void deleteBadDownload(final Context context, final Intent intent) {
 			long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -2);
 			downloadManager.remove(id);
-			Toast.makeText(context, "YTD: " + getString(R.string.failed_download), Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "YTD: " + getString(R.string.failed_download), Toast.LENGTH_SHORT).show();
 		}
 
 	};

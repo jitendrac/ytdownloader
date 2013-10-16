@@ -62,6 +62,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -89,13 +90,16 @@ import com.matsuhiro.android.download.Maps;
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
+import dentex.youtube.downloader.queue.AutoFFmpegTask;
+import dentex.youtube.downloader.queue.QueueThread;
+import dentex.youtube.downloader.queue.QueueThreadListener;
 import dentex.youtube.downloader.utils.FetchUrl;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.RhinoRunner;
 import dentex.youtube.downloader.utils.Utils;
 
-public class ShareActivity extends Activity {
+public class ShareActivity extends Activity implements QueueThreadListener{
 	
 	private ProgressBar progressBar1;
 	private ProgressBar progressBarD;
@@ -155,13 +159,23 @@ public class ShareActivity extends Activity {
 	private boolean autoModeEnabled = false;
 	private boolean restartModeEnabled = false;
 	private String extraId;
-	//public String[] lv_arr;
+
+	private QueueThread queueThread;
+	private Handler handler;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
         sShare = getBaseContext();
+        
+        // Create and launch the download thread
+        queueThread = new QueueThread(this);
+        queueThread.start();
+        
+        // Create the Handler. It will implicitly bind to the Looper
+        // that is internally created for this thread (since it is the UI thread)
+        handler = new Handler();
         
     	// Theme init
     	Utils.themeInit(this);
@@ -307,6 +321,14 @@ public class ShareActivity extends Activity {
     protected void onStop() {
         super.onStop();
     	Utils.logger("v", "_onStop", DEBUG_TAG);
+    }
+	
+    @Override
+	protected void onDestroy() {
+		super.onDestroy();
+				
+		// request the thread to stop
+		queueThread.requestStop();
     }*/
     
     @Override
@@ -933,6 +955,36 @@ public class ShareActivity extends Activity {
 				//YTD.videoinfo.edit().remove(String.valueOf(ID) + "_position").commit();
 				
 				Maps.removeFromAllMaps(ID);
+				
+				// TODO Auto FFmpeg task
+				boolean autoFfmpeg = YTD.settings.getBoolean("ffmpeg_auto_cb", false);
+				if (autoFfmpeg) {
+					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
+					
+					String[] bitrateData = null;
+					String brType = null;
+					String brValue = null;
+					
+					String audioFileName;
+					
+					String extrType = YTD.settings.getString("audio_extraction_type", "conv");
+					if (extrType.equals("conv")) {
+						bitrateData = retrieveBitrateValuesFromPref();
+						audioFileName = basename + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
+						brType = bitrateData[0];
+						brValue = bitrateData[1];
+					} else {
+						audioFileName = basename + aExt;
+						
+					}
+					
+					File audioFile = new File(path.getPath(), audioFileName);
+					
+					if (!audioFile.exists()) { 
+						queueThread.enqueueTask(new AutoFFmpegTask(sShare, new File(path.getPath(), vFilename), 
+							audioFile, brType, brValue));
+					}
+				}
 			}
 			
 			@Override
@@ -943,7 +995,7 @@ public class ShareActivity extends Activity {
 				Utils.logger("w", "__errorDownload on ID: " + ID, DEBUG_TAG);
 				
 				Toast.makeText(sShare,  nameOfVideo + ": " + getString(R.string.download_failed), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				
 				String status = YTD.JSON_DATA_STATUS_PAUSED;
 				String size = "-";
@@ -1039,6 +1091,10 @@ public class ShareActivity extends Activity {
     }
 
     private String urlBlockMatchAndDecode(String content) {
+    	
+    	// log entire YouTube request
+    	//File req = new File(YTD.dir_Downloads, System.currentTimeMillis() + "_req.txt");
+    	//Utils.appendStringToFile(req, content);
 		
 		if (asyncDownload.isCancelled()) {
 			Utils.logger("d", "asyncDownload cancelled @ urlBlockMatchAndDecode begin", DEBUG_TAG);
@@ -1691,5 +1747,49 @@ public class ShareActivity extends Activity {
 		} else {
 			Utils.logger("d", "different or null YTD signature. Update check cancelled.", DEBUG_TAG);
 		}
+	}
+
+	@Override
+	public void handleQueueThreadUpdate() {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				int total = queueThread.getTotalQueued();
+				int completed = queueThread.getTotalCompleted();
+
+				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
+				
+				if (completed == total) {
+					// jobs completed
+				}
+			}
+		});
+	}
+
+	private String[] retrieveBitrateValuesFromPref() {
+		String[] bitrateValues = sShare.getResources()
+				   .getStringArray(R.array.mp3_bitrate_entry_values);
+		   
+		String[] bitrateEntries = sShare.getResources()
+				   .getStringArray(R.array.mp3_bitrate_entries);
+		
+		String bitrateValue = YTD.settings.getString("auto-mp3_bitrates", "192k");
+		String bitrateType = null;
+		if (bitrateValue.contains("k")) {
+			bitrateType = "CBR";
+		} else {
+			bitrateType = "VBR";
+		}
+		
+		String bitrateEntry = null;
+		for (int i = 0; i < bitrateEntries.length; i++) {
+			if (bitrateValue.equals(bitrateValues[i]))
+			 bitrateEntry = bitrateEntries[i];
+		}
+		
+		Utils.logger("v", "selected bitrate value: " + bitrateValue + 
+				"\nselected bitrate entry: " + bitrateEntry , DEBUG_TAG);
+		
+		return new String[] { bitrateType, bitrateValue };
 	}
 }

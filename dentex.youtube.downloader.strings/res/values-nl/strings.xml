@@ -158,6 +158,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="menu_restore_result_ok">Dashboard data hersteld.</string>
 	<string name="menu_restore_result_failed">Fout tijdens herstellen.</string>
 	<string name="unsupported_operation">Niet ondersteunde operatie.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Onjuiste gegevens.</string>
 	<string name="open_chooser_title">Open met:</string>
 	
@@ -170,10 +171,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Openen</item>
         <item>Coderen naar mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg niet geïnstalleerd of ingeschakeld:</string>
@@ -192,15 +189,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="dashboard_long_click_entry_0">Kopieer</string>
 	<string name="dashboard_long_click_entry_1">Verplaats</string>
 	<string name="dashboard_long_click_entry_2">Verwijder</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Kopiëren</item>
-	    <item>Verplaats</item>
-        <item>Hernoem</item>
-        <item>Her download de video</item>
-        <item>Verwijder van dashboard</item>
-        <item>Verwijder en delete bestand</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiëren</item>
@@ -270,10 +258,10 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="enable_q_suffix_summary">De video kwaliteit aan het eind van het bestand toevoegen</string>
     <string name="enable_rename_title">Activeer bestand hernoemen</string>
     <string name="enable_rename_summary">Hernoem het video bestand voor het downloaden (alleen voor lokale download)</string>
-    <string name="show_size_title">Bestandsgrootte laten zien</string>
-    <string name="show_size_summary">Haal de grootte van het videobestand op bij het bevestigingsbericht (langzamer)</string>
-    <string name="show_size_list_title">Toon de grootte van alle video formaten</string>
-    <string name="show_size_list_summary">Haal de bestandsgrootte op van alle video\'s in de lijst (veel slomer)</string>
+<!--     <string name="show_size_title">Show file size</string> -->
+<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
+<!--     <string name="show_size_list_title">Show all video sizes</string> -->
+<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
     <string name="show_thumb_title">Toon voorbeeld afbeelding</string>
     <string name="show_thumb_summary">Download een voorbeeld afbeelding met de videolijst</string>
     <string name="show_resolutions_title">Toon video resoluties</string>
@@ -284,10 +272,20 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="enable_advanced_features_title">Geavanceerde functies inschakelen</string>
     <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Mp3 codering bitrate:</string>
-    <string name="audio_extraction_type_title">Extractie type</string>
-    <string name="remove_video_title">Video verwijdering</string>
-    <string name="remove_video_summary">Inschakelen van video bestand verwijderen na succesvol audio extracten (waarschuwing: geen confirmatie)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">Extractie type</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Video verwijdering</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Meldingen</string>
     

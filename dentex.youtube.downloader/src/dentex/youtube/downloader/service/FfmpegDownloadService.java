@@ -114,7 +114,7 @@ public class FfmpegDownloadService extends Service {
         	dm.enqueue(request);
         } catch (IllegalArgumentException e) {
 	    	Log.e(DEBUG_TAG, "downloadFfmpeg: " + e.getMessage());
-	    	Toast.makeText(this,  this.getString(R.string.no_downloads_sys_app), Toast.LENGTH_LONG).show();
+	    	Toast.makeText(this,  this.getString(R.string.no_downloads_sys_app), Toast.LENGTH_SHORT).show();
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> downloadFfmpeg", e.getMessage(), e);
 	    } catch (SecurityException se) {
 	    	request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, YTD.ffmpegBinName);
@@ -124,7 +124,7 @@ public class FfmpegDownloadService extends Service {
 	    } catch (NullPointerException ne) {
 	    	Log.e(DEBUG_TAG, "callDownloadApk: " + ne.getMessage());
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> callDownloadApk: ", ne.getMessage(), ne);
-	    	Toast.makeText(this, getString(R.string.error), Toast.LENGTH_LONG).show();
+	    	Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
 	    }
         
 		ffmpegBinObserver = new Observer.YtdFileObserver(DIR);
@@ -171,7 +171,7 @@ public class FfmpegDownloadService extends Service {
 					case DownloadManager.STATUS_FAILED:
 						Log.e(DEBUG_TAG, YTD.ffmpegBinName + ", _ID " + id + " FAILED (status " + status + ")");
 						Log.e(DEBUG_TAG, " Reason: " + reason);
-						Toast.makeText(nContext,  YTD.ffmpegBinName + ": " + getString(R.string.download_failed), Toast.LENGTH_LONG).show();
+						Toast.makeText(nContext,  YTD.ffmpegBinName + ": " + getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
 						
 						SettingsActivity.SettingsFragment.touchAdvPref(true, false);
 						deleteBadDownload(id);
@@ -189,7 +189,7 @@ public class FfmpegDownloadService extends Service {
 	
 	private void deleteBadDownload (long id) {
 		dm.remove(id);
-		Toast.makeText(this, getString(R.string.download_failed), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
 		
 	}
 	

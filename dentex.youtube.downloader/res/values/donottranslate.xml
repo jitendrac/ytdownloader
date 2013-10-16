@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.1 - Xxx XX 2013
+        \n-----------------------------------
+        \n[ ] option to auto enqueue FFmpeg 
+        \n    tasks on downloads completion
+        \n[x] bug fixes
+        \n
         \n v3.0.2 - Oct 11 2013
         \n-----------------------------------
         \n[x] small fix
@@ -570,11 +576,19 @@
         <item>190k (VBR)</item>
         <item>225k (VBR)</item>
         <item>245k (VBR)</item>
-        
     </string-array>
+    
+    <string name="mp3_bitrate_default">192k</string>
+    
+    <string-array name="audio_extraction_type_entry_values">
+        <item>extr</item>
+        <item>conv</item>
+    </string-array>
+    
+    <string name="audio_extraction_type_default">conv</string>
 	
     <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s/download</string>
-    <string name="ffmpeg_download_dialog_msg_link_bitbucket">https://bitbucket.org/dentex/ffmpeg_compiled_for_android/src/46f57632886403af8ae2715943bb8572902e16ec/ffmpeg_arm%1$s?at=master</string>
+    <string name="ffmpeg_download_dialog_msg_link_bitbucket">http://bitbucket.org/dentex/ffmpeg_compiled_for_android/src/46f57632886403af8ae2715943bb8572902e16ec/ffmpeg_arm%1$s?at=master</string>
     <string name="ffmpeg_size_arm7">6.0 MB</string>
     <string name="ffmpeg_size_arm5">6.4 MB</string>
     

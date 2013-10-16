@@ -117,9 +117,6 @@ public class SettingsActivity extends Activity {
         	case R.id.menu_about:
         		startActivity(new Intent(this, AboutActivity.class));
         		return true;
-        	/*case R.id.menu_dashboard:
-        		startActivity(new Intent(this, DashboardActivity.class));
-        		return true;*/
         	case R.id.menu_tutorials:
         		startActivity(new Intent(this, TutorialsActivity.class));
         		return true;
@@ -175,7 +172,7 @@ public class SettingsActivity extends Activity {
             	chooserSummary = YTD.settings.getString("CHOOSER_FOLDER", "");
             }
             initSwapPreference();
-            //initSizePreference();
+            initMp3BitratePreference();
             
             for(int i=0;i<getPreferenceScreen().getPreferenceCount();i++){
                 initSummary(getPreferenceScreen().getPreference(i));
@@ -220,7 +217,7 @@ public class SettingsActivity extends Activity {
 		                        	// clear the videoinfo shared pref
 		                        	YTD.videoinfo.edit().clear().apply();
 	                        	} else {
-	                        		Toast.makeText(getActivity(), getString(R.string.clear_dashboard_failed), Toast.LENGTH_LONG).show();
+	                        		Toast.makeText(getActivity(), getString(R.string.clear_dashboard_failed), Toast.LENGTH_SHORT).show();
 	                        		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
 	                        	}
 	                        }
@@ -242,7 +239,7 @@ public class SettingsActivity extends Activity {
     	        				"\n- " + getString(R.string.notification_downloading_pt1) + " (" + 
     	        				getString(R.string.json_status_paused) + "/" + getString(R.string.json_status_in_progress) + " )" + 
     	        				"\n- " + getString(R.string.empty_dashboard), 
-    	        				Toast.LENGTH_LONG).show();
+    	        				Toast.LENGTH_SHORT).show();
     	        	}
             		
                     return true;
@@ -445,7 +442,7 @@ public class SettingsActivity extends Activity {
     				} else {
     					SettingsActivity.SettingsFragment.touchAdvPref(true, false);
     					srcFile.delete();
-    					Toast.makeText(sSettings, getString(R.string.download_failed), Toast.LENGTH_LONG).show();
+    					Toast.makeText(sSettings, getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
     				}
     				
     				aNotificationManager.cancel(3);
@@ -473,7 +470,7 @@ public class SettingsActivity extends Activity {
     			@Override
     			public void errorDownload(TestTask task, Throwable error) {
     				Log.e(DEBUG_TAG, YTD.ffmpegBinName + " download FAILED");
-    				Toast.makeText(sSettings,  YTD.ffmpegBinName + ": " + getString(R.string.download_failed), Toast.LENGTH_LONG).show();
+    				Toast.makeText(sSettings,  YTD.ffmpegBinName + ": " + getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
     				
     				dstFile.delete();
     				File temp = new File(dstFile.getAbsolutePath() + TestTask.TEMP_SUFFIX);
@@ -501,14 +498,14 @@ public class SettingsActivity extends Activity {
     	
     	public static void copyFfmpegToAppDataDir(Context context, File src, File dst) {
     		try {
-    			Toast.makeText(context, "YTD: " + context.getString(R.string.ffmpeg_install), Toast.LENGTH_LONG).show();
+    			Toast.makeText(context, "YTD: " + context.getString(R.string.ffmpeg_install), Toast.LENGTH_SHORT).show();
     			Utils.logger("i", "trying to copy FFmpeg binary to private App dir", DEBUG_TAG);
     			Utils.copyFile(src, dst);
     			
-    			Toast.makeText(context, "YTD: " + context.getString(R.string.ffmpeg_ready), Toast.LENGTH_LONG).show();
+    			Toast.makeText(context, "YTD: " + context.getString(R.string.ffmpeg_ready), Toast.LENGTH_SHORT).show();
     			touchAdvPref(true, true);
     		} catch (IOException e) {
-    			Toast.makeText(context, "YTD: " + context.getString(R.string.ffmpeg_install_failed), Toast.LENGTH_LONG).show();
+    			Toast.makeText(context, "YTD: " + context.getString(R.string.ffmpeg_install_failed), Toast.LENGTH_SHORT).show();
     			Log.e(DEBUG_TAG, "ffmpeg copy to app_bin failed. " + e.getMessage());
     			touchAdvPref(true, false);
     		}
@@ -573,16 +570,15 @@ public class SettingsActivity extends Activity {
             }
 		}
 		
-		/*private void initSizePreference() {
-			CheckBoxPreference s = (CheckBoxPreference) findPreference("show_size");
-			CheckBoxPreference l = (CheckBoxPreference) findPreference("show_size_list");
-            if (l.isChecked()) {
-            	s.setEnabled(false);
-            	s.setChecked(true);
+		private void initMp3BitratePreference() {
+			String type = YTD.settings.getString("audio_extraction_type", "conv");
+			Preference p = (Preference) findPreference("auto-mp3_bitrates");
+			if (type.equals("conv")) {
+				p.setEnabled(true);
             } else {
-            	s.setEnabled(true);
-            }
-		}*/
+            	p.setEnabled(false);
+			}
+		}
         
 		/*@Override
 	    public void onStart() {
@@ -601,7 +597,7 @@ public class SettingsActivity extends Activity {
         @Override
         public void onPause() {
         	super.onPause();
-        	// Unregister the listener whenever a key changes            
+        	// Unregister the listener for key changes            
         	getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         	Utils.logger("v", "_onPause", DEBUG_TAG);
         }
@@ -615,16 +611,21 @@ public class SettingsActivity extends Activity {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         	updatePrefSummary(findPreference(key));
         	initSwapPreference();
-        	//initSizePreference();
+        	initMp3BitratePreference();
         }
 
 		private void initSummary(Preference p){
         	if (p instanceof PreferenceCategory){
         		PreferenceCategory pCat = (PreferenceCategory) p;
-        		for(int i=0;i<pCat.getPreferenceCount();i++){
+        		for(int i=0; i < pCat.getPreferenceCount(); i++){
         			initSummary(pCat.getPreference(i));
         	    }
-        	}else{
+        	} else if (p instanceof PreferenceScreen){
+        		PreferenceScreen pScr = (PreferenceScreen) p;
+        		for(int i=0; i < pScr.getPreferenceCount(); i++){
+        			initSummary(pScr.getPreference(i));
+        		}
+        	} else {
         		updatePrefSummary(p);
         	}
         }

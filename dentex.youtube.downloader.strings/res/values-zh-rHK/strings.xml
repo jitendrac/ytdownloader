@@ -156,6 +156,7 @@
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
 	<string name="menu_restore_result_failed">Error during restore.</string>
 	<string name="unsupported_operation">Unsupported operation.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Invalid data.</string>
 	<string name="open_chooser_title">Open with:</string>
 	
@@ -168,10 +169,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Open</item>
         <item>Encode to mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
@@ -190,15 +187,6 @@
 	<string name="dashboard_long_click_entry_0">Copy</string>
 	<string name="dashboard_long_click_entry_1">Move</string>
 	<string name="dashboard_long_click_entry_2">Delete</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Copy</item>
-	    <item>Move</item>
-        <item>Rename</item>
-        <item>Re-download the video</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copy</item>
@@ -268,10 +256,10 @@
     <string name="enable_q_suffix_summary">在檔案名稱後面增加影片畫質</string>
     <string name="enable_rename_title">允許修改檔案名稱</string>
     <string name="enable_rename_summary">在下載之前更改影片檔案名稱（只限手機下載）</string>
-    <string name="show_size_title">顯示檔案大小</string>
-    <string name="show_size_summary">在下載確認訊息顯示影片檔案大小（較慢）</string>
-    <string name="show_size_list_title">顯示所有影片大小</string>
-    <string name="show_size_list_summary">取得目錄裏所有影片選項的檔案大小（更慢）</string>
+<!--     <string name="show_size_title">Show file size</string> -->
+<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
+<!--     <string name="show_size_list_title">Show all video sizes</string> -->
+<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
     <string name="show_thumb_title">顯示預覽相片</string>
     <string name="show_thumb_summary">同時下載預覽相片和影片目錄</string>
     <string name="show_resolutions_title">Show video resolutions</string>
@@ -282,10 +270,20 @@
     <string name="enable_advanced_features_title">Enable Advanced Features</string>
     <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Mp3 encoding bitrate:</string>
-    <string name="audio_extraction_type_title">提取類型</string>
-    <string name="remove_video_title">移除影片</string>
-    <string name="remove_video_summary">允許在音效提取成功後刪除影片檔案（警告：沒有確認）</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">提取類型</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">移除影片</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">通知</string>
     

@@ -173,10 +173,6 @@ public class DashboardActivity extends Activity {
 	
 	public static Activity sDashboard;
 	
-	//long BeforeTime = System.currentTimeMillis();
-	//long TotalRxBeforeTest = TrafficStats.getUidRxBytes(YTD.uid);
-	//long TotalTxBeforeTest = TrafficStats.getUidTxBytes(YTD.uid);
-	
 	private Timer autoUpdate;
 	public static boolean isLandscape;
 
@@ -184,7 +180,6 @@ public class DashboardActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("DashboardActivity_onCreate");
-		//Utils.logger("v", "TotalRxBeforeTest: " + TotalRxBeforeTest, DEBUG_TAG);
 		
 		// Theme init
     	Utils.themeInit(this);
@@ -328,7 +323,7 @@ public class DashboardActivity extends Activity {
 								    			               public void onClick(DialogInterface dialog, int id) {
 								    			            	   
 								    			            	   final Spinner sp = (Spinner) view1.findViewById(R.id.mp3_spinner);
-								    			            	   String[] bitrateData = retrieveBitrateValueFromSpinner(sp);
+								    			            	   String[] bitrateData = retrieveBitrateValuesFromSpinner(sp);
 								    			            	   
 								    			            	   CheckBox cb1 = (CheckBox) view1.findViewById(R.id.rem_video_1);
 								    			            	   removeVideo = cb1.isChecked();
@@ -390,7 +385,7 @@ public class DashboardActivity extends Activity {
 							    			               public void onClick(DialogInterface dialog, int id) {
 							    			            	   
 							    			            	   final Spinner sp = (Spinner) view2.findViewById(R.id.mp3_spinner_a);
-							    			            	   String[] bitrateData = retrieveBitrateValueFromSpinner(sp);
+							    			            	   String[] bitrateData = retrieveBitrateValuesFromSpinner(sp);
 							    			            	   
 							    			            	   CheckBox cb2 = (CheckBox) view2.findViewById(R.id.rem_original_audio);
 							    			            	   removeAudio = cb2.isChecked();
@@ -550,7 +545,7 @@ public class DashboardActivity extends Activity {
 	
 	private void notifyFfmpegIsAlreadyRunning() {
 		Utils.logger("d", "notifyFfmpegIsAlreadyRunning()", DEBUG_TAG);
-		Toast.makeText(sDashboard, "FFmpeg is already running", Toast.LENGTH_LONG).show();
+		Toast.makeText(sDashboard, getString(R.string.ffmpeg_already_running), Toast.LENGTH_SHORT).show();
 	}
 	
 	private void notifyOpsNotSupported() {
@@ -563,7 +558,7 @@ public class DashboardActivity extends Activity {
 				"\n- " + getString(R.string.notification_downloading_pt1) + " (" + 
 				getString(R.string.json_status_paused) + "/" + getString(R.string.json_status_in_progress) + " )" + 
 				"\n- " + getString(R.string.empty_dashboard), 
-				Toast.LENGTH_LONG).show();
+				Toast.LENGTH_SHORT).show();
 		Utils.logger("d", "toastOpsNotExecuted()", DEBUG_TAG);
 	}
 	
@@ -827,6 +822,8 @@ public class DashboardActivity extends Activity {
 						//YTD.videoinfo.edit().remove(ID + "_position").apply();
 						
 						Maps.removeFromAllMaps(ID);
+						
+						//TODO Auto FFmpeg task
 					}
 					
 					@Override
@@ -840,7 +837,7 @@ public class DashboardActivity extends Activity {
 							Toast.makeText(sDashboard,  nameOfVideo
 									+ ": " + getString(R.string.downloading) 
 									+ "\n"+ getString(R.string.wait), 
-									Toast.LENGTH_LONG).show();
+									Toast.LENGTH_SHORT).show();
 							
 							Json.addEntryToJsonFile(
 									sDashboard, 
@@ -859,7 +856,7 @@ public class DashboardActivity extends Activity {
 							reDownload(currentItem, "AUTO");
 						} else {
 							Toast.makeText(sDashboard,  nameOfVideo + ": " + getString(R.string.download_failed), 
-									Toast.LENGTH_LONG).show();
+									Toast.LENGTH_SHORT).show();
 							
 							Json.addEntryToJsonFile(
 									sDashboard, 
@@ -1268,14 +1265,14 @@ public class DashboardActivity extends Activity {
 		Utils.logger("w", fileToDel.getPath() + " NOT deleted.", DEBUG_TAG);
 		Toast.makeText(DashboardActivity.this, 
 				getString(R.string.delete_video_failed, currentItem.getFilename()), 
-				Toast.LENGTH_LONG).show();
+				Toast.LENGTH_SHORT).show();
 	}
 
 	public void notifyDeletionOk(final DashboardListItem currentItem, File fileToDel) {
 		Utils.logger("d", fileToDel.getPath() + " successfully deleted.", DEBUG_TAG);
 		Toast.makeText(DashboardActivity.this, 
 				getString(R.string.delete_video_ok, currentItem.getFilename()), 
-				Toast.LENGTH_LONG).show();
+				Toast.LENGTH_SHORT).show();
 	}
 
 	public void spawnSearchBar() {
@@ -1435,7 +1432,7 @@ public class DashboardActivity extends Activity {
 							Log.e(DEBUG_TAG, "IOException @ MENU_BACKUP: " + e.getMessage());
 							Toast.makeText(sDashboard, 
 									getString(R.string.menu_backup_result_failed), 
-									Toast.LENGTH_LONG).show();
+									Toast.LENGTH_SHORT).show();
 						}
 			        	
 			        	Looper.loop();
@@ -1536,15 +1533,15 @@ public class DashboardActivity extends Activity {
 			if (res.equals("e1")) {
 				Toast.makeText(DashboardActivity.this, 
 						getString(R.string.menu_import_double), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 			} else if (res.equals("e2")) {
 				Toast.makeText(DashboardActivity.this, 
 						getString(R.string.unsupported_operation), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(DashboardActivity.this, 
 						res + " " + getString(R.string.json_status_imported), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -1626,17 +1623,17 @@ public class DashboardActivity extends Activity {
 				//JSONException e1
 				Toast.makeText(sDashboard, 
 						sDashboard.getString(R.string.menu_restore_result_failed), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 			} else if (res.equals("e2")) {
 				//IOException e2
 				Toast.makeText(sDashboard, 
 						sDashboard.getString(R.string.menu_restore_result_failed), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 			} else if (res.equals("e3")) {
 				//file ext not .json
 				Toast.makeText(sDashboard, 
 						sDashboard.getString(R.string.invalid_data), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(sDashboard, 
 						getString(R.string.menu_restore_result_ok) + " (" + res + ")", 
@@ -1694,7 +1691,7 @@ public class DashboardActivity extends Activity {
 			case 0:
 				Toast.makeText(DashboardActivity.this, 
 						currentItem.getFilename() + ": " + getString(R.string.move_ok), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				Utils.logger("i", currentItem.getFilename() + " --> END move: OK", DEBUG_TAG);
 				
 				Utils.scanMedia(DashboardActivity.this, 
@@ -1719,7 +1716,7 @@ public class DashboardActivity extends Activity {
 			case 1:
 				Toast.makeText(DashboardActivity.this, 
 						currentItem.getFilename() + ": " + getString(R.string.move_error), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				Log.e(DEBUG_TAG, currentItem.getFilename() + " --> END move: FAILED");
 			}
 			
@@ -1761,7 +1758,7 @@ public class DashboardActivity extends Activity {
 			case 0:
 				Toast.makeText(DashboardActivity.this, 
 						currentItem.getFilename() + ": " + getString(R.string.copy_ok), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				Utils.logger("i", currentItem.getFilename() + " --> END copy: OK", DEBUG_TAG);
 				
 				Utils.scanMedia(DashboardActivity.this, 
@@ -1786,7 +1783,7 @@ public class DashboardActivity extends Activity {
 			case 1:
 				Toast.makeText(DashboardActivity.this, 
 						currentItem.getFilename() + ": " + getString(R.string.copy_error), 
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				Log.e(DEBUG_TAG, currentItem.getFilename() + " --> END copy: FAILED");
 			}
 			
@@ -1867,7 +1864,7 @@ public class DashboardActivity extends Activity {
 			Log.e(DEBUG_TAG, "JSONException @ parseJson: " + e.getMessage());
 			Toast.makeText(sDashboard, 
 					sDashboard.getString(R.string.invalid_data), 
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 			YTD.JSON_FILE.delete();
 		}
 		
@@ -2132,7 +2129,7 @@ public class DashboardActivity extends Activity {
 							type = YTD.JSON_DATA_TYPE_A_M;
 						}
 						Toast.makeText(DashboardActivity.this, "YTD: " + text,
-								Toast.LENGTH_LONG).show();
+								Toast.LENGTH_SHORT).show();
 
 
 						aBuilder.setContentTitle(audioFileName);
@@ -2191,7 +2188,7 @@ public class DashboardActivity extends Activity {
 				Utils.logger("d", vfilename + " " + text, DEBUG_TAG);
 				
 				audioFile = addSuffixToAudioFile(basename, audioFile);
-				Toast.makeText(DashboardActivity.this,  audioFile.getName() + ": " + text, Toast.LENGTH_LONG).show();
+				Toast.makeText(DashboardActivity.this,  audioFile.getName() + ": " + text, Toast.LENGTH_SHORT).show();
 				aBuilder.setContentTitle(audioFile.getName());
 				aBuilder.setContentText(text);
 				aBuilder.setOngoing(false);
@@ -2375,7 +2372,7 @@ public class DashboardActivity extends Activity {
 			text = getString(R.string.audio_conv_error);
 		}
 		Log.e(DEBUG_TAG, vfilename + " " + text);
-		Toast.makeText(DashboardActivity.this,  "YTD: " + text, Toast.LENGTH_LONG).show();
+		Toast.makeText(DashboardActivity.this,  "YTD: " + text, Toast.LENGTH_SHORT).show();
 		aBuilder.setContentText(text);
 	}
 	
@@ -2410,7 +2407,7 @@ public class DashboardActivity extends Activity {
 		int tot = (int) (hToSec + mToSec + s);
 		if (f > 50) tot = tot + 1;
 		
-		Utils.logger("d", "h=" + h + " m=" + m + " s=" + s + "." + f + " -> tot=" + tot,	DEBUG_TAG);
+		Utils.logger("v", "h=" + h + " m=" + m + " s=" + s + "." + f + " -> tot=" + tot,	DEBUG_TAG);
 		return tot;
 	}
 
@@ -2454,7 +2451,7 @@ public class DashboardActivity extends Activity {
 	    }
 	}
 
-	private String[] retrieveBitrateValueFromSpinner(final Spinner sp) {
+	private String[] retrieveBitrateValuesFromSpinner(final Spinner sp) {
 		String bitrateEntry = String.valueOf(sp.getSelectedItem());
 		   
 		String[] bitrateValues = sDashboard.getResources()
@@ -2475,7 +2472,7 @@ public class DashboardActivity extends Activity {
 			if (bitrateEntry.equals(bitrateEntries[i]))
 			 bitrateValue = bitrateValues[i];
 		}
-		Utils.logger("d", "selected bitrate value: " + bitrateValue + 
+		Utils.logger("v", "selected bitrate value: " + bitrateValue + 
 						"\nselected bitrate entry: " + bitrateEntry , DEBUG_TAG);
 		
 		return new String[] { bitrateType, bitrateValue };

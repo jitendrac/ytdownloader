@@ -157,6 +157,7 @@
 	<string name="menu_restore_result_ok">Podatki upravljalne plošče obnovljeni.</string>
 	<string name="menu_restore_result_failed">Napaka med obnavljanjem.</string>
 	<string name="unsupported_operation">Nepodprta operacija</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Neveljavni podatki</string>
 	<string name="open_chooser_title">Odpri z:</string>
 	
@@ -169,10 +170,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Odpri</item>
         <item>Kodiraj v mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Odpri</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg ni nameščen ali omogočen</string>
@@ -191,15 +188,6 @@
 	<string name="dashboard_long_click_entry_0">Kopiraj</string>
 	<string name="dashboard_long_click_entry_1">Premakni</string>
 	<string name="dashboard_long_click_entry_2">Izbriši</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Kopiraj</item>
-	    <item>Premakni</item>
-        <item>Preimenuj</item>
-        <item>Še enkrat prenesi ta video</item>
-        <item>Odstrani z upravljalne plošče</item>
-        <item>Odstrani in izbriši datoteko</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiraj</item>
@@ -269,10 +257,10 @@
     <string name="enable_q_suffix_summary">Dodaj kvaliteto videa na konec imena datoteke</string>
     <string name="enable_rename_title">Omogoči preimenovanje datotek</string>
     <string name="enable_rename_summary">Preimenuj video pred prenašanjem (samo za lokalne prenose)</string>
-    <string name="show_size_title">Prikaži velikost datoteke</string>
-    <string name="show_size_summary">Pridobi velikost videa na potrditvenem okencu prenosa (počasnejše)</string>
-    <string name="show_size_list_title">Prikaži vse velikosti videov</string>
-    <string name="show_size_list_summary">Pridobi velikosti datotek za vsak dostopen video (veliko počasneje)</string>
+<!--     <string name="show_size_title">Show file size</string> -->
+<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
+<!--     <string name="show_size_list_title">Show all video sizes</string> -->
+<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
     <string name="show_thumb_title">Prikaži predogledno sliko</string>
     <string name="show_thumb_summary">Prenesi predogledno sliko skupaj s seznamom videov</string>
     <string name="show_resolutions_title">Prikaži ločljivosti videov</string>
@@ -283,10 +271,20 @@
     <string name="enable_advanced_features_title">Omogočite Napredne nastavitve</string>
     <string name="enable_advanced_features_summary">Prenesi FFmpeg \"vtičnik\"</string>
     <string name="mp3_bitrate_title">Hitrost kodirane Mp3 datoteke</string>
-    <string name="audio_extraction_type_title">Tip izluščevanja</string>
-    <string name="remove_video_title">Odstranitev videa</string>
-    <string name="remove_video_summary">Omogoči izbris video datoteke po uspešnem izluščenju audia (opozorilo: ni potrdila!)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">Tip izluščevanja</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Odstranitev videa</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Obvestila</string>
     

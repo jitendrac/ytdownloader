@@ -158,6 +158,7 @@
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
 	<string name="menu_restore_result_failed">Error during restore.</string>
 	<string name="unsupported_operation">Unsupported operation.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Invalid data.</string>
 	<string name="open_chooser_title">Open with:</string>
 	
@@ -170,10 +171,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>فتح</item>
         <item>ترميز إلى mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg غير مثبته أو معطل:</string>
@@ -192,15 +189,6 @@
 	<string name="dashboard_long_click_entry_0">نسخ</string>
 	<string name="dashboard_long_click_entry_1">نقل</string>
 	<string name="dashboard_long_click_entry_2">حذف</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>نسخ</item>
-	    <item>نقل</item>
-        <item>إعادة تسمية</item>
-        <item>إعادة تنزيل هذا الفيديو</item>
-        <item>إزالة من لوحة القياس</item>
-        <item>إزالة وحذف ملف</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>نسخ</item>
@@ -271,10 +259,10 @@
     <string name="enable_rename_title">تفعيل تغيير اسم الملف</string>
     <string name="enable_rename_summary">إعادة تسمية ملف الفيديو قبل تنزيله (للتحميل المحلي فقط)
 </string>
-    <string name="show_size_title">عرض حجم المف</string>
-    <string name="show_size_summary">جلب حجم الفيديو على رسالة تأكيد التنزيل (ابطأ)</string>
-    <string name="show_size_list_title">عرض جميع احجام الفيدو</string>
-    <string name="show_size_list_summary">جلب احجام ملفات العناصر في القائمة لملفات الفيديو (أبطأ)</string>
+<!--     <string name="show_size_title">Show file size</string> -->
+<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
+<!--     <string name="show_size_list_title">Show all video sizes</string> -->
+<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
     <string name="show_thumb_title">عرض صورة العرض</string>
     <string name="show_thumb_summary">تنزيل صورة عرض مصاحبة لقائمة الفيديو</string>
     <string name="show_resolutions_title">عرض جودة الفيديو</string>
@@ -285,10 +273,20 @@
     <string name="enable_advanced_features_title">تمكين الميزات المتقدمة</string>
     <string name="enable_advanced_features_summary">تنزيل FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">معدل البت في الترميز للـ mp3:</string>
-    <string name="audio_extraction_type_title">نوع الاستخراج</string>
-    <string name="remove_video_title">إزالة الفيديو</string>
-    <string name="remove_video_summary">تمكين حذف الفيديو بعد استخراج الصوت بنجاح (تحذير: بدون تأكيد)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">نوع الاستخراج</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">إزالة الفيديو</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">إشعارات</string>
     
