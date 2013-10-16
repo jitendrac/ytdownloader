@@ -112,7 +112,7 @@ import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
-public class DashboardActivity extends Activity{
+public class DashboardActivity extends Activity {
 	
 	private final static String DEBUG_TAG = "DashboardActivity";
 	public static boolean isDashboardRunning;
@@ -242,19 +242,19 @@ public class DashboardActivity extends Activity{
 	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
 	        		builder.setTitle(currentItem.getFilename());
 	        		
-	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) && !isFfmpegRunning || 
+	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) || 
 	        				currentItem.getStatus().equals(getString(R.string.json_status_imported))) {
-	        		
+	        			
+	        			final boolean audioIsSupported = !currentItem.getAudioExt().equals("unsupported");
+	        			final File in = new File (currentItem.getPath(), currentItem.getFilename());
+	        			
 		        		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V)) {
 		        			
 		        			// handle click on a **VIDEO** file entry
 			        		builder.setItems(R.array.dashboard_click_entries, new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int which) {
 			
-				    				final File in = new File (currentItem.getPath(), currentItem.getFilename());
-				    				boolean audioIsSupported = !currentItem.getAudioExt().equals("unsupported");
-				    				
-			    					switch (which) {
+				    				switch (which) {
 			    					case 0: // open
 			    						BugSenseHandler.leaveBreadcrumb("video_open");
 			    						Intent openIntent = new Intent(Intent.ACTION_VIEW);
@@ -262,92 +262,100 @@ public class DashboardActivity extends Activity{
 			    						startActivity(Intent.createChooser(openIntent, getString(R.string.open_chooser_title)));
 			    						break;
 					    			case 1: // extract audio only
-					    				BugSenseHandler.leaveBreadcrumb("video_ffmpeg_extract");
-					    				if (audioIsSupported) {
-						    				if (ffmpegEnabled) {
-							    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxThemeContextWrapper);
-							    			    LayoutInflater inflater0 = getLayoutInflater();
-							    			    final View view0 = inflater0.inflate(R.layout.dialog_audio_extr_only, null);
-							    			    
-							    			    String type = null;
-							    			    if (currentItem.getAudioExt().equals(".aac")) type = aac;
-							    			    if (currentItem.getAudioExt().equals(".ogg")) type = ogg;
-							    			    if (currentItem.getAudioExt().equals(".mp3")) type = mp3;
-							    			    //if (currentItem.getAudioExt().equals(".auto")) type = aac_mp3;
-							    			    
-							    			    TextView info = (TextView) view0.findViewById(R.id.audio_extr_info);
-							    			    info.setText(getString(R.string.audio_extr_info) + "\n\n" + type);
-				
-							    			    builder0.setView(view0)
-							    			           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-							    			               @Override
-							    			               public void onClick(DialogInterface dialog, int id) {
-							    			            	   
-							    			            	   CheckBox cb0 = (CheckBox) view0.findViewById(R.id.rem_video_0);
-							    			            	   removeVideo = cb0.isChecked();
-				
-							    			            	   Utils.logger("v", "Launching FFmpeg on: " + in +
-							    			            			   "\n-> mode: extraction only" +
-							    			            			   "\n-> remove video: " + removeVideo, DEBUG_TAG);
-							    			            	   
-							    			            	   ffmpegJob(in, null, null);
-							    			               }
-							    			           })
-							    			           .setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
-							    			               public void onClick(DialogInterface dialog, int id) {
-							    			                   // cancel
-							    			               }
-							    			           });      
-							    			    
-							    			    secureShowDialog(builder0);
+					    				if (!isFfmpegRunning) {
+						    				BugSenseHandler.leaveBreadcrumb("video_ffmpeg_extract");
+						    				if (audioIsSupported) {
+							    				if (ffmpegEnabled) {
+								    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxThemeContextWrapper);
+								    			    LayoutInflater inflater0 = getLayoutInflater();
+								    			    final View view0 = inflater0.inflate(R.layout.dialog_audio_extr_only, null);
+								    			    
+								    			    String type = null;
+								    			    if (currentItem.getAudioExt().equals(".aac")) type = aac;
+								    			    if (currentItem.getAudioExt().equals(".ogg")) type = ogg;
+								    			    if (currentItem.getAudioExt().equals(".mp3")) type = mp3;
+								    			    //if (currentItem.getAudioExt().equals(".auto")) type = aac_mp3;
+								    			    
+								    			    TextView info = (TextView) view0.findViewById(R.id.audio_extr_info);
+								    			    info.setText(getString(R.string.audio_extr_info) + "\n\n" + type);
+					
+								    			    builder0.setView(view0)
+								    			           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+								    			               @Override
+								    			               public void onClick(DialogInterface dialog, int id) {
+								    			            	   
+								    			            	   CheckBox cb0 = (CheckBox) view0.findViewById(R.id.rem_video_0);
+								    			            	   removeVideo = cb0.isChecked();
+					
+								    			            	   Utils.logger("v", "Launching FFmpeg on: " + in +
+								    			            			   "\n-> mode: extraction only" +
+								    			            			   "\n-> remove video: " + removeVideo, DEBUG_TAG);
+								    			            	   
+								    			            	   ffmpegJob(in, null, null);
+								    			               }
+								    			           })
+								    			           .setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+								    			               public void onClick(DialogInterface dialog, int id) {
+								    			                   // cancel
+								    			               }
+								    			           });      
+								    			    
+								    			    secureShowDialog(builder0);
+							    				} else {
+							    					notifyFfmpegNotInstalled();
+							    				}
 						    				} else {
-						    					notifyFfmpegNotInstalled();
+						    					notifyOpsNotSupported();
 						    				}
-					    				} else {
-					    					notifyOpsNotSupported();
-					    				}
+			    						} else {
+			    							notifyFfmpegIsAlreadyRunning();
+			    						}
 					    			    
 			    						break;
 					    			case 2: // extract audio and convert to mp3
-					    				BugSenseHandler.leaveBreadcrumb("video_ffmpeg_mp3");
-					    				if (audioIsSupported) {
-						    				if (ffmpegEnabled) {
-							    				AlertDialog.Builder builder1 = new AlertDialog.Builder(boxThemeContextWrapper);
-							    			    LayoutInflater inflater1 = getLayoutInflater();
-							    			    
-							    			    final View view1 = inflater1.inflate(R.layout.dialog_audio_extr_mp3_conv, null);
-				
-							    			    builder1.setView(view1)
-							    			           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-							    			               @Override
-							    			               public void onClick(DialogInterface dialog, int id) {
-							    			            	   
-							    			            	   final Spinner sp = (Spinner) view1.findViewById(R.id.mp3_spinner);
-							    			            	   String[] bitrateData = retrieveBitrateValueFromSpinner(sp);
-							    			            	   
-							    			            	   CheckBox cb1 = (CheckBox) view1.findViewById(R.id.rem_video_1);
-							    			            	   removeVideo = cb1.isChecked();
-							    			            	   
-							    			            	   Utils.logger("v", "Launching FFmpeg on: " + in +
-							    			            			   "\n-> mode: conversion to mp3 from video file" +
-							    			            			   "\n-> remove video: " + removeVideo, DEBUG_TAG);
-							    			            	   
-							    			            	   ffmpegJob(in, bitrateData[0], bitrateData[1]);
-							    			               }
-							    			           })
-							    			           .setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
-							    			               public void onClick(DialogInterface dialog, int id) {
-							    			                   //
-							    			               }
-							    			           });      
-							    			    
-							    			    secureShowDialog(builder1);
+					    				if (!isFfmpegRunning) {
+						    				BugSenseHandler.leaveBreadcrumb("video_ffmpeg_mp3");
+						    				if (audioIsSupported) {
+							    				if (ffmpegEnabled) {
+								    				AlertDialog.Builder builder1 = new AlertDialog.Builder(boxThemeContextWrapper);
+								    			    LayoutInflater inflater1 = getLayoutInflater();
+								    			    
+								    			    final View view1 = inflater1.inflate(R.layout.dialog_audio_extr_mp3_conv, null);
+					
+								    			    builder1.setView(view1)
+								    			           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+								    			               @Override
+								    			               public void onClick(DialogInterface dialog, int id) {
+								    			            	   
+								    			            	   final Spinner sp = (Spinner) view1.findViewById(R.id.mp3_spinner);
+								    			            	   String[] bitrateData = retrieveBitrateValueFromSpinner(sp);
+								    			            	   
+								    			            	   CheckBox cb1 = (CheckBox) view1.findViewById(R.id.rem_video_1);
+								    			            	   removeVideo = cb1.isChecked();
+								    			            	   
+								    			            	   Utils.logger("v", "Launching FFmpeg on: " + in +
+								    			            			   "\n-> mode: conversion to mp3 from video file" +
+								    			            			   "\n-> remove video: " + removeVideo, DEBUG_TAG);
+								    			            	   
+								    			            	   ffmpegJob(in, bitrateData[0], bitrateData[1]);
+								    			               }
+								    			           })
+								    			           .setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+								    			               public void onClick(DialogInterface dialog, int id) {
+								    			                   //
+								    			               }
+								    			           });      
+								    			    
+								    			    secureShowDialog(builder1);
+							    				} else {
+							    					notifyFfmpegNotInstalled();
+							    				}
 						    				} else {
-						    					notifyFfmpegNotInstalled();
+						    					notifyOpsNotSupported();
 						    				}
 					    				} else {
-					    					notifyOpsNotSupported();
-					    				}
+			    							notifyFfmpegIsAlreadyRunning();
+			    						}	
 			    					}
 								}
 			        		});
@@ -360,51 +368,54 @@ public class DashboardActivity extends Activity{
 							// handle click on a **AUDIO** file entry
 							builder.setItems(R.array.dashboard_click_entries_audio, new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int which) {
-			
-				    				final File in = new File (currentItem.getPath(), currentItem.getFilename());
-				    				if (ffmpegEnabled) {
-				    					switch (which) {
-				    					case 0: // open
-				    						BugSenseHandler.leaveBreadcrumb("audio_open");
-				    						Intent openIntent = new Intent(Intent.ACTION_VIEW);
-				    						openIntent.setDataAndType(Uri.fromFile(in), "audio/*");
-				    						startActivity(Intent.createChooser(openIntent, getString(R.string.open_chooser_title)));
-				    						break;
-						    			case 1: // convert to mp3
-						    				BugSenseHandler.leaveBreadcrumb("audio_ffmpeg_mp3");
-						    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxThemeContextWrapper);
-						    			    LayoutInflater inflater0 = getLayoutInflater();
-						    			    final View view2 = inflater0.inflate(R.layout.dialog_audio_mp3_conv, null);
-			
-						    			    builder0.setView(view2)
-						    			           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-						    			               @Override
-						    			               public void onClick(DialogInterface dialog, int id) {
-						    			            	   
-						    			            	   final Spinner sp = (Spinner) view2.findViewById(R.id.mp3_spinner_a);
-						    			            	   String[] bitrateData = retrieveBitrateValueFromSpinner(sp);
-						    			            	   
-						    			            	   CheckBox cb2 = (CheckBox) view2.findViewById(R.id.rem_original_audio);
-						    			            	   removeAudio = cb2.isChecked();
-			
-						    			            	   Utils.logger("v", "Launching FFmpeg on: " + in +
-						    			            			   "\n-> mode: conversion to mp3 from audio file" +
-						    			            			   "\n-> remove audio: " + removeAudio, DEBUG_TAG);
-						    			            	   
-						    			            	   ffmpegJob(in, bitrateData[0], bitrateData[1]);
-						    			               }
-						    			           })
-						    			           .setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
-						    			               public void onClick(DialogInterface dialog, int id) {
-						    			                   //
-						    			               }
-						    			           });      
-						    			    
-						    			    secureShowDialog(builder0);
-				    					}
-			    					} else {
-			    						notifyFfmpegNotInstalled();
-				    				}
+									
+			    					switch (which) {
+			    					case 0: // open
+			    						BugSenseHandler.leaveBreadcrumb("audio_open");
+			    						Intent openIntent = new Intent(Intent.ACTION_VIEW);
+			    						openIntent.setDataAndType(Uri.fromFile(in), "audio/*");
+			    						startActivity(Intent.createChooser(openIntent, getString(R.string.open_chooser_title)));
+			    						break;
+					    			case 1: // convert to mp3
+					    				if (!isFfmpegRunning) {
+					    					if (ffmpegEnabled) {
+							    				BugSenseHandler.leaveBreadcrumb("audio_ffmpeg_mp3");
+							    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxThemeContextWrapper);
+							    			    LayoutInflater inflater0 = getLayoutInflater();
+							    			    final View view2 = inflater0.inflate(R.layout.dialog_audio_mp3_conv, null);
+				
+							    			    builder0.setView(view2)
+							    			           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							    			               @Override
+							    			               public void onClick(DialogInterface dialog, int id) {
+							    			            	   
+							    			            	   final Spinner sp = (Spinner) view2.findViewById(R.id.mp3_spinner_a);
+							    			            	   String[] bitrateData = retrieveBitrateValueFromSpinner(sp);
+							    			            	   
+							    			            	   CheckBox cb2 = (CheckBox) view2.findViewById(R.id.rem_original_audio);
+							    			            	   removeAudio = cb2.isChecked();
+				
+							    			            	   Utils.logger("v", "Launching FFmpeg on: " + in +
+							    			            			   "\n-> mode: conversion to mp3 from audio file" +
+							    			            			   "\n-> remove audio: " + removeAudio, DEBUG_TAG);
+							    			            	   
+							    			            	   ffmpegJob(in, bitrateData[0], bitrateData[1]);
+							    			               }
+							    			           })
+							    			           .setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+							    			               public void onClick(DialogInterface dialog, int id) {
+							    			                   //
+							    			               }
+							    			           });      
+							    			    
+							    			    secureShowDialog(builder0);
+					    					} else {
+						    					notifyFfmpegNotInstalled();
+						    				}
+					    				} else {
+			    							notifyFfmpegIsAlreadyRunning();
+			    						}
+			    					}
 								}
 			        		});
 			        		
@@ -537,6 +548,11 @@ public class DashboardActivity extends Activity{
     	});
 	}
 	
+	private void notifyFfmpegIsAlreadyRunning() {
+		Utils.logger("d", "notifyFfmpegIsAlreadyRunning()", DEBUG_TAG);
+		Toast.makeText(sDashboard, "FFmpeg is already running", Toast.LENGTH_LONG).show();
+	}
+	
 	private void notifyOpsNotSupported() {
 		PopUps.showPopUp(getString(R.string.information), getString(R.string.unsupported_operation), "alert", sDashboard);
 		Utils.logger("d", "notifyOpsNotSupported()", DEBUG_TAG);
@@ -556,6 +572,8 @@ public class DashboardActivity extends Activity{
     	if (intent != null) {
     		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
     		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
+    		intent.putExtra("path", currentItem.getPath());
+    		intent.putExtra("name", currentItem.getFilename());
     		startActivityForResult(intent, 1);
     	}
 	}
@@ -565,6 +583,8 @@ public class DashboardActivity extends Activity{
     	if (intent != null) {
     		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
     		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
+    		intent.putExtra("path", currentItem.getPath());
+    		intent.putExtra("name", currentItem.getFilename());
     		startActivityForResult(intent, 2);
     	}
 	}
@@ -762,7 +782,7 @@ public class DashboardActivity extends Activity{
 						
 						YTD.sequence.add(ID);
 						
-						YTD.NotificationHelper();
+						YTD.NotificationHelper(sDashboard);
 					}
 					
 					@Override
@@ -1185,7 +1205,7 @@ public class DashboardActivity extends Activity{
 			isResultOk = removeCompleted(fileToDel);
 		}
 		
-		if (removeFromJsonAlso && isResultOk) {
+		if (removeFromJsonAlso/* && isResultOk*/) {
 			// remove entry from JSON and reload Dashboard
 			Json.removeEntryFromJsonFile(DashboardActivity.this, currentItem.getId());
 		}
@@ -1325,6 +1345,10 @@ public class DashboardActivity extends Activity{
 			BugSenseHandler.leaveBreadcrumb("DashboardActivity_filechooser_RESULT_OK");
             @SuppressWarnings("unchecked")
 			List<LocalFile> files = (List<LocalFile>) data.getSerializableExtra(FileChooserActivity._Results);
+            
+            String path = data.getStringExtra("path");
+            String name = data.getStringExtra("name");
+            File in = new File(path, name);
             	
         	final File chooserSelection = files.get(0);
         	//Utils.logger("d", "file-chooser selection: " + chooserFolder.getPath(), DEBUG_TAG);
@@ -1333,8 +1357,7 @@ public class DashboardActivity extends Activity{
 	        switch (requestCode) {
 	        
 	        case 1: // ------------- > COPY
-	        	File in1 = new File(currentItem.getPath(), currentItem.getFilename());
-				File out1 = new File(chooserSelection, currentItem.getFilename());
+	        	File out1 = new File(chooserSelection, name);
 				
 	        	if (chooserSelection.getPath().equals(currentItem.getPath())) {
 	        		out1 = new File(chooserSelection, "copy_" + currentItem.getFilename());
@@ -1344,7 +1367,7 @@ public class DashboardActivity extends Activity{
 		        	switch (Utils.pathCheck(chooserSelection)) {
 		    		case 0:
 		    			// Path on standard sdcard
-		    			new AsyncCopy().execute(in1, out1);
+		    			new AsyncCopy().execute(in, out1);
 		        		break;
 		    		case 1:
 		    			// Path not writable
@@ -1364,15 +1387,14 @@ public class DashboardActivity extends Activity{
     			break;
     			
 	        case 2: // ------------- > MOVE
-	        	File in2 = new File(currentItem.getPath(), currentItem.getFilename());
-				File out2 = new File(chooserSelection, currentItem.getFilename());
+				File out2 = new File(chooserSelection, name);
 				
 	        	if (!chooserSelection.getPath().equals(currentItem.getPath())) {
 	        		if (!out2.exists()) {
 			        	switch (Utils.pathCheck(chooserSelection)) {
 			    		case 0:
 			    			// Path on standard sdcard
-			    			new AsyncMove().execute(in2, out2);		
+			    			new AsyncMove().execute(in, out2);		
 			        		break;
 			    		case 1:
 			    			// Path not writable
@@ -1410,7 +1432,7 @@ public class DashboardActivity extends Activity{
 									getString(R.string.menu_backup_result_ok), 
 									Toast.LENGTH_SHORT).show();
 						} catch (IOException e) {
-							Log.e(DEBUG_TAG, e.getMessage());
+							Log.e(DEBUG_TAG, "IOException @ MENU_BACKUP: " + e.getMessage());
 							Toast.makeText(sDashboard, 
 									getString(R.string.menu_backup_result_failed), 
 									Toast.LENGTH_LONG).show();
@@ -1580,12 +1602,15 @@ public class DashboardActivity extends Activity{
 						writeThumbToDiskForSelectedFile(new File(pathEntries.get(i), filenameEntries.get(i)), linkEntries.get(i));
 					}
 					return String.valueOf(entries);
-				} catch (JSONException e1) {
-					Log.e(DEBUG_TAG, e1.getMessage());
+				} catch (JSONException e) {
+					Log.e(DEBUG_TAG, "JSONException @ AsyncRestore: " + e.getMessage());
 					return "e1";
-				} catch (IOException e2) {
-					Log.e(DEBUG_TAG, e2.getMessage());
+				} catch (IOException e) {
+					Log.e(DEBUG_TAG, "IOException @ AsyncRestore: " + e.getMessage());
 					return "e2";
+				} catch (RuntimeException e) {
+					Log.e(DEBUG_TAG, "RuntimeException @ AsyncRestore: " + e.getMessage());
+					return "e4";
 				}
 			} else {
 				return "e3";
@@ -1839,7 +1864,7 @@ public class DashboardActivity extends Activity{
 				sizeEntries.add(jO.getString(YTD.JSON_DATA_SIZE));
 			}
 		} catch (JSONException e) {
-			Log.e(DEBUG_TAG, e.getMessage());
+			Log.e(DEBUG_TAG, "JSONException @ parseJson: " + e.getMessage());
 			Toast.makeText(sDashboard, 
 					sDashboard.getString(R.string.invalid_data), 
 					Toast.LENGTH_LONG).show();
@@ -1890,6 +1915,7 @@ public class DashboardActivity extends Activity{
 	
 	private static void updateProgressBars() {
 		for (int i = 0; i < idEntries.size(); i++ ) {
+			
 			try {
 				if (statusEntries.get(i).equals(YTD.JSON_DATA_STATUS_IN_PROGRESS)) {
 					
@@ -1909,7 +1935,7 @@ public class DashboardActivity extends Activity{
 						} else {
 							countdown--;
 							Utils.logger("w", "updateProgressBars: waiting for DM Maps on id " + idstr + " # " + countdown, DEBUG_TAG);
-							progress = 0;
+							progress = -1;
 							bytes_downloaded = 0;
 							bytes_total = 0;
 							speed = 0;
@@ -2108,22 +2134,14 @@ public class DashboardActivity extends Activity{
 						Toast.makeText(DashboardActivity.this, "YTD: " + text,
 								Toast.LENGTH_LONG).show();
 
-						/*
-						 * Utils.addEntryToJsonFile( DashboardActivity.this,
-						 * currentItem.getId(), type, YTD.JSON_DATA_STATUS_IN_PROGRESS,
-						 * currentItem.getPath(), audioFile.getName(),
-						 * currentItem.getBasename(), "", "-", true);
-						 * 
-						 * refreshlist(DashboardActivity.this);
-						 */
 
 						aBuilder.setContentTitle(audioFileName);
 						aBuilder.setContentText(text);
+						aBuilder.setOngoing(true);
 						aNotificationManager.notify(2, aBuilder.build());
 						Utils.logger("i", vfilename + " " + text, DEBUG_TAG);
 					} catch (IOException ioe) {
-						Log.e(DEBUG_TAG,
-								"Error loading ffmpeg. " + ioe.getMessage());
+						Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
 					}
 
 					ShellDummy shell = new ShellDummy();
@@ -2132,8 +2150,7 @@ public class DashboardActivity extends Activity{
 						ffmpeg.extractAudio(fileToConvert, audioFile,
 								bitrateType, bitrateValue, shell);
 					} catch (IOException e) {
-						Log.e(DEBUG_TAG,
-								"IOException running ffmpeg" + e.getMessage());
+						Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
 					} catch (InterruptedException e) {
 						Log.e(DEBUG_TAG, "InterruptedException running ffmpeg"
 								+ e.getMessage());
@@ -2143,6 +2160,7 @@ public class DashboardActivity extends Activity{
 			}).start();
 		} else {
 			PopUps.showPopUp(getString(R.string.long_press_warning_title), getString(R.string.audio_extr_warning_msg), "info", DashboardActivity.this);
+			isFfmpegRunning = false;
 		}
 	}
 	
@@ -2175,7 +2193,8 @@ public class DashboardActivity extends Activity{
 				audioFile = addSuffixToAudioFile(basename, audioFile);
 				Toast.makeText(DashboardActivity.this,  audioFile.getName() + ": " + text, Toast.LENGTH_LONG).show();
 				aBuilder.setContentTitle(audioFile.getName());
-				aBuilder.setContentText(text);			
+				aBuilder.setContentText(text);
+				aBuilder.setOngoing(false);
 				audioIntent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
 				PendingIntent contentIntent = PendingIntent.getActivity(DashboardActivity.this, 0, audioIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         		aBuilder.setContentIntent(contentIntent);
@@ -2391,7 +2410,7 @@ public class DashboardActivity extends Activity{
 		int tot = (int) (hToSec + mToSec + s);
 		if (f > 50) tot = tot + 1;
 		
-		Utils.logger("i", "h=" + h + " m=" + m + " s=" + s + "." + f + " -> tot=" + tot,	DEBUG_TAG);
+		Utils.logger("d", "h=" + h + " m=" + m + " s=" + s + "." + f + " -> tot=" + tot,	DEBUG_TAG);
 		return tot;
 	}
 

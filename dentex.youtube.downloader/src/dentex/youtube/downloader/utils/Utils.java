@@ -452,7 +452,7 @@ public class Utils {
     	MediaScannerConnection.scanFile(context, filePath, mime, new OnScanCompletedListener() {
     		@Override
     		public void onScanCompleted(String path, Uri uri) {
-    			Log.v(DEBUG_TAG, "file " + path + " was scanned seccessfully: " + uri);
+    			Log.v(DEBUG_TAG, "file " + path + " was scanned successfully: " + uri);
     			//YTD.videoinfo.edit().putString(path, uri.toString()).apply();
     		}
     	});
@@ -517,17 +517,22 @@ public class Utils {
         	return null;
         }
         
-		Cursor cursor = contentResolver.query(videosUri, projection, dataType + " LIKE ?", new String[] { filePath }, null);
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(projection[0]);
+        Cursor cursor = null;
         String videoUri = null;
-		try {
+        
+        try {
+			cursor = contentResolver.query(videosUri, projection, dataType + " LIKE ?", new String[] { filePath }, null);
+	        cursor.moveToFirst();
+	
+	        int columnIndex = cursor.getColumnIndex(projection[0]);
+		
         	videoId = cursor.getLong(columnIndex);
         	videoUri = videosUri + "/" + videoId; 
         	logger("d", " -> videoUri: " + videoUri, DEBUG_TAG);
         } catch (IndexOutOfBoundsException e) {
         	logger("w", " -> videoUri not available", DEBUG_TAG);
+        } catch (NullPointerException e) {
+        	logger("w", " -> videoUri not available (NPE)", DEBUG_TAG);	
         } finally {
         	cursor.close();
         }

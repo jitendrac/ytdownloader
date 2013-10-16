@@ -308,6 +308,9 @@ public class FileChooserActivity extends Activity {
             setTheme(theme);
         }*/
     	
+    	// -------------
+    	
+    	
     	// Theme init
     	settings = getSharedPreferences(PREFS_NAME, 0);
     	String theme = settings.getString("choose_theme", "D");
@@ -352,44 +355,48 @@ public class FileChooserActivity extends Activity {
         mTxtSaveas = (EditText) findViewById(R.id.afc_filechooser_activity_textview_saveas_filename);
         mBtnOk = (Button) findViewById(R.id.afc_filechooser_activity_button_ok);
 
-        // history
-        if (savedInstanceState != null && savedInstanceState.get(_History) instanceof HistoryStore<?>) {
-            try {
-				mHistory = savedInstanceState.getParcelable(_History);
-			} catch (RuntimeException re) {
-				Log.e(_ClassName, "mHistory error: " + re.getMessage());
+        try {
+			// history
+			if (savedInstanceState != null && savedInstanceState.get(_History) instanceof HistoryStore<?>) {
+			    try {
+					mHistory = savedInstanceState.getParcelable(_History);
+				} catch (RuntimeException re) {
+					Log.e(_ClassName, "mHistory error: " + re.getMessage());
+				}
+			} else {
+			    mHistory = new HistoryStore<IFile>(DisplayPrefs._DefHistoryCapacity);
 			}
-        } else {
-            mHistory = new HistoryStore<IFile>(DisplayPrefs._DefHistoryCapacity);
-        }
-        mHistory.addListener(new HistoryListener<IFile>() {
+			mHistory.addListener(new HistoryListener<IFile>() {
 
-            @Override
-            public void onChanged(History<IFile> history) {
-                int idx = history.indexOf(getLocation());
-                mViewGoBack.setEnabled(idx > 0);
-                mViewGoForward.setEnabled(idx >= 0 && idx < history.size() - 1);
-            }
-        });
+			    @Override
+			    public void onChanged(History<IFile> history) {
+			        int idx = history.indexOf(getLocation());
+			        mViewGoBack.setEnabled(idx > 0);
+			        mViewGoForward.setEnabled(idx >= 0 && idx < history.size() - 1);
+			    }
+			});
 
-        // full history
-        if (savedInstanceState != null && savedInstanceState.get(_FullHistory) instanceof HistoryStore<?>)
-            mFullHistory = savedInstanceState.getParcelable(_FullHistory);
-        else
-            mFullHistory = new HistoryStore<IFile>(DisplayPrefs._DefHistoryCapacity) {
+			// full history
+			if (savedInstanceState != null && savedInstanceState.get(_FullHistory) instanceof HistoryStore<?>)
+			    mFullHistory = savedInstanceState.getParcelable(_FullHistory);
+			else
+			    mFullHistory = new HistoryStore<IFile>(DisplayPrefs._DefHistoryCapacity) {
 
-                @Override
-                public void push(IFile newItem) {
-                    int i = indexOf(newItem);
-                    if (i >= 0) {
-                        if (i == size() - 1)
-                            return;
-                        else
-                            remove(newItem);
-                    }
-                    super.push(newItem);
-                }// push()
-            };
+			        @Override
+			        public void push(IFile newItem) {
+			            int i = indexOf(newItem);
+			            if (i >= 0) {
+			                if (i == size() - 1)
+			                    return;
+			                else
+			                    remove(newItem);
+			            }
+			            super.push(newItem);
+			        }// push()
+			    };
+		} catch (Exception e) {
+			Log.e(_ClassName, "Exception @ filechooser's onCreate(): " + e.getMessage());
+		}
 
         // make sure RESULT_CANCELED is default
         setResult(RESULT_CANCELED);
@@ -1472,6 +1479,10 @@ public class FileChooserActivity extends Activity {
         // return flags for further use (in case the caller needs)
         intent.putExtra(_FilterMode, mFileProvider.getFilterMode());
         intent.putExtra(_SaveDialog, mIsSaveDialog);
+        String path = getIntent().getStringExtra("path");
+		intent.putExtra("path", path);
+        String name = getIntent().getStringExtra("name");
+		intent.putExtra("name", name);
 
         setResult(RESULT_OK, intent);
 

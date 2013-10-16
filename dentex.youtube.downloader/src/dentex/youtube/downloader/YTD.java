@@ -166,7 +166,7 @@ public class YTD extends Application {
 		PopUps.showPopUp(context.getString(R.string.no_downloads_sys_app), context.getString(R.string.ytd_useless), "alert", context);
 	}
 	
-    public static void NotificationHelper() {
+    public static void NotificationHelper(Context ctx) {
     	pt1 = ctx.getString(R.string.notification_downloading_pt1);
     	pt2 = ctx.getString(R.string.notification_downloading_pt2);
     	noDownloads = ctx.getString(R.string.notification_no_downloads);

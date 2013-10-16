@@ -119,7 +119,7 @@ public class TranslatorsListActivity extends ListActivity {
         	//Log.i(DEBUG_TAG, ianaDecodedLanguages);
         	
 		} catch (IOException e) {
-			Log.e(DEBUG_TAG, e.getMessage());
+			Log.e(DEBUG_TAG, "Error: " + e.getMessage());
 		}
 		if (chooseDecoded) {
 			return decodedLanguagesArray;
@@ -171,7 +171,7 @@ public class TranslatorsListActivity extends ListActivity {
 			}
 			json = sb.toString();
 		} catch (IOException e) {
-			Log.e(DEBUG_TAG, e.getMessage());
+			Log.e(DEBUG_TAG, "Error: " + e.getMessage());
 		}        
 		
 		JSONArray jArray = null;
@@ -193,7 +193,7 @@ public class TranslatorsListActivity extends ListActivity {
 				profileLinks.add(jo.getString("profile_link"));
 	        }
 		} catch (JSONException e) {
-			Log.e(DEBUG_TAG, e.getMessage());
+			Log.e(DEBUG_TAG, "Error: " + e.getMessage());
 		}
 		
 		Iterator<String> userIter = usernames.iterator();
