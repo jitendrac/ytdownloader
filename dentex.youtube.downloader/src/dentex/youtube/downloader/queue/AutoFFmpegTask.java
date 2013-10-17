@@ -4,8 +4,11 @@ import java.io.File;
 
 import android.content.Context;
 import android.util.Log;
+import dentex.youtube.downloader.DashboardActivity;
+import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
+import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.Utils;
 
 public class AutoFFmpegTask implements Runnable {
@@ -16,13 +19,17 @@ public class AutoFFmpegTask implements Runnable {
 	private File aAudioFile;
 	private String aBitrateType;
 	private String aBitrateValue;
+	private String aYtId;
+	private int aPos;
 	
-	public AutoFFmpegTask(Context context, File fileToConvert, File audioFile, String bitrateType, String bitrateValue) {
+	public AutoFFmpegTask(Context context, File fileToConvert, File audioFile, String bitrateType, String bitrateValue, String YtId, int pos) {
 		aContext = context;
 		aFileToConvert = fileToConvert;
 		aAudioFile = audioFile;
 		aBitrateType = bitrateType;
 		aBitrateValue = bitrateValue;
+		aYtId = YtId;
+		aPos = pos;
 	}
 	
 	@Override
@@ -41,18 +48,62 @@ public class AutoFFmpegTask implements Runnable {
 
 		@Override
 		public void shellOut(String shellLine) {
-			// unused
+			Utils.logger("d", shellLine, DEBUG_TAG);
 		}
 
 		@Override
 		public void processComplete(int exitValue) {
-			Log.i(DEBUG_TAG, "AutoFFmpegTask for '" + aAudioFile.getName() + "': processComplete");
+			Utils.logger("v", "AutoFFmpegTask for '" + aAudioFile.getName() + "':"
+					+ "\nprocessComplete with exit value: " + exitValue, DEBUG_TAG);
 			
-			Utils.scanMedia(aContext, 
-					new String[] {aAudioFile.getPath()}, 
-					new String[] {"audio/*"});
+			String newId = String.valueOf(System.currentTimeMillis());
+			//boolean removeVideo;
 			
-			// TODO add entry to Dashboard (if it's running);
+			String type;
+			if (aBitrateValue == null) {
+				type = YTD.JSON_DATA_TYPE_A_E;
+			} else {
+				type = YTD.JSON_DATA_TYPE_A_M;
+			}
+			
+			if (exitValue == 0) {
+				Utils.scanMedia(aContext, 
+						new String[] {aAudioFile.getPath()}, 
+						new String[] {"audio/*"});
+				
+				//TODO removeVideo check
+
+				Json.addEntryToJsonFile(
+						aContext, 
+						newId, 
+						type, 
+						aYtId, 
+						aPos,
+						YTD.JSON_DATA_STATUS_COMPLETED,
+						aAudioFile.getParent(), 
+						aAudioFile.getName(), 
+						Utils.getFileNameWithoutExt(aAudioFile.getName()), 
+						"", 
+						Utils.MakeSizeHumanReadable((int) aAudioFile.length(), false), 
+						false);
+			} else {
+				Json.addEntryToJsonFile(
+						aContext, 
+						newId, 
+						type, 
+						aYtId, 
+						aPos,
+						YTD.JSON_DATA_STATUS_FAILED,
+						aAudioFile.getParent(), 
+						aAudioFile.getName(), 
+						Utils.getFileNameWithoutExt(aAudioFile.getName()), 
+						"", 
+						"-", 
+						false);
+			}
+			
+			if (DashboardActivity.isDashboardRunning)
+				DashboardActivity.refreshlist(DashboardActivity.sDashboard);
 		}
 
 		@Override

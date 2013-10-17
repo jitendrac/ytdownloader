@@ -620,7 +620,7 @@ public class SettingsActivity extends Activity {
         		for(int i=0; i < pCat.getPreferenceCount(); i++){
         			initSummary(pCat.getPreference(i));
         	    }
-        	} else if (p instanceof PreferenceScreen){
+        	} else if (p instanceof PreferenceScreen && !p.getKey().equals("open_chooser")){
         		PreferenceScreen pScr = (PreferenceScreen) p;
         		for(int i=0; i < pScr.getPreferenceCount(); i++){
         			initSummary(pScr.getPreference(i));

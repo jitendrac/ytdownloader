@@ -154,7 +154,6 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 	private String jslink;
 	private String decryptionRule;
 	private String decryptionFunction;
-	protected String ytid;
 	private DownloadTaskListener dtl;
 	private boolean autoModeEnabled = false;
 	private boolean restartModeEnabled = false;
@@ -511,13 +510,14 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 
         	progressBar1.setVisibility(View.GONE);
         	
+        	isAsyncDownloadRunning = false;
+        	
         	if (YTD.settings.getBoolean("show_thumb", false) && 
         			!((result == null || result.equals("e")) ||
         			  (result != null && result.equals("login_required")) ||
         			  (result != null && result.equals("rtmpe")) ) ) {
         		imgView.setImageBitmap(img);
         	}
-        	isAsyncDownloadRunning = false;
         	
             if (result == null || result.equals("e") && !autoModeEnabled) {
             	BugSenseHandler.leaveBreadcrumb("invalid_url");
@@ -726,7 +726,6 @@ public class ShareActivity extends Activity implements QueueThreadListener{
         }
 
 		private void noVideosMsgs(String type, String cause) {
-			BugSenseHandler.leaveBreadcrumb("noVideosMsgs");
 			PopUps.showPopUp(getString(R.string.no_video_available), cause, type, ShareActivity.this);
 			tv.setVisibility(View.GONE);
 			noVideoInfo.setVisibility(View.VISIBLE);
@@ -957,8 +956,7 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 				Maps.removeFromAllMaps(ID);
 				
 				// TODO Auto FFmpeg task
-				boolean autoFfmpeg = YTD.settings.getBoolean("ffmpeg_auto_cb", false);
-				if (autoFfmpeg) {
+				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false)) {
 					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 					
 					String[] bitrateData = null;
@@ -969,7 +967,7 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 					
 					String extrType = YTD.settings.getString("audio_extraction_type", "conv");
 					if (extrType.equals("conv")) {
-						bitrateData = retrieveBitrateValuesFromPref();
+						bitrateData = Utils.retrieveBitrateValuesFromPref(sShare);
 						audioFileName = basename + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
 						brType = bitrateData[0];
 						brValue = bitrateData[1];
@@ -982,7 +980,7 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 					
 					if (!audioFile.exists()) { 
 						queueThread.enqueueTask(new AutoFFmpegTask(sShare, new File(path.getPath(), vFilename), 
-							audioFile, brType, brValue));
+							audioFile, brType, brValue, videoId, pos));
 					}
 				}
 			}
@@ -1106,10 +1104,6 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 		if (rtmpeMatcher.find()) {
 			return "rtmpe";
 		}
-		
-        findVideoFilenameBase(content);
-        
-        findJs(content);
         
         Pattern loginPattern = Pattern.compile("restrictions:age");
         Matcher loginMatcher = loginPattern.matcher(content);
@@ -1151,7 +1145,11 @@ public class ShareActivity extends Activity implements QueueThreadListener{
                 listEntriesBuilder();
             } else {
             	Utils.logger("d", "asyncDownload cancelled @ 'findCodecAndQualityAndLinks' match", DEBUG_TAG);
-            } 
+            }
+            
+            findVideoFilenameBase(content);
+            findJs(content);
+            
             return "ok";
         } else {
             return "e";
@@ -1764,32 +1762,5 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 				}
 			}
 		});
-	}
-
-	private String[] retrieveBitrateValuesFromPref() {
-		String[] bitrateValues = sShare.getResources()
-				   .getStringArray(R.array.mp3_bitrate_entry_values);
-		   
-		String[] bitrateEntries = sShare.getResources()
-				   .getStringArray(R.array.mp3_bitrate_entries);
-		
-		String bitrateValue = YTD.settings.getString("auto-mp3_bitrates", "192k");
-		String bitrateType = null;
-		if (bitrateValue.contains("k")) {
-			bitrateType = "CBR";
-		} else {
-			bitrateType = "VBR";
-		}
-		
-		String bitrateEntry = null;
-		for (int i = 0; i < bitrateEntries.length; i++) {
-			if (bitrateValue.equals(bitrateValues[i]))
-			 bitrateEntry = bitrateEntries[i];
-		}
-		
-		Utils.logger("v", "selected bitrate value: " + bitrateValue + 
-				"\nselected bitrate entry: " + bitrateEntry , DEBUG_TAG);
-		
-		return new String[] { bitrateType, bitrateValue };
 	}
 }

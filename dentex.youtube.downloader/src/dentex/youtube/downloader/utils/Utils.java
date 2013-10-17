@@ -211,6 +211,33 @@ public class Utils {
 		}
     }
     
+	public static String[] retrieveBitrateValuesFromPref(Context ctx) {
+		String[] bitrateValues = ctx.getResources()
+				   .getStringArray(R.array.mp3_bitrate_entry_values);
+		   
+		String[] bitrateEntries = ctx.getResources()
+				   .getStringArray(R.array.mp3_bitrate_entries);
+		
+		String bitrateValue = YTD.settings.getString("auto-mp3_bitrates", "192k");
+		String bitrateType = null;
+		if (bitrateValue.contains("k")) {
+			bitrateType = "CBR";
+		} else {
+			bitrateType = "VBR";
+		}
+		
+		String bitrateEntry = null;
+		for (int i = 0; i < bitrateEntries.length; i++) {
+			if (bitrateValue.equals(bitrateValues[i]))
+			 bitrateEntry = bitrateEntries[i];
+		}
+		
+		Utils.logger("v", /*"selected bitrate value: " + bitrateValue + */
+				"\nselected bitrate entry: " + bitrateEntry , DEBUG_TAG);
+		
+		return new String[] { bitrateType, bitrateValue };
+	}
+    
     // --------------------------------------------------------------------------
     
     /*

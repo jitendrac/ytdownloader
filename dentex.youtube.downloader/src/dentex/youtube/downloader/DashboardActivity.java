@@ -70,6 +70,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.provider.MediaStore.Video.Thumbnails;
@@ -108,11 +109,14 @@ import com.matsuhiro.android.download.Maps;
 
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
+import dentex.youtube.downloader.queue.AutoFFmpegTask;
+import dentex.youtube.downloader.queue.QueueThread;
+import dentex.youtube.downloader.queue.QueueThreadListener;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
-public class DashboardActivity extends Activity {
+public class DashboardActivity extends Activity implements QueueThreadListener {
 	
 	private final static String DEBUG_TAG = "DashboardActivity";
 	public static boolean isDashboardRunning;
@@ -175,11 +179,22 @@ public class DashboardActivity extends Activity {
 	
 	private Timer autoUpdate;
 	public static boolean isLandscape;
+	
+	private QueueThread queueThread;
+	private Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("DashboardActivity_onCreate");
+		
+        // Create and launch the download thread
+        queueThread = new QueueThread(this);
+        queueThread.start();
+        
+        // Create the Handler. It will implicitly bind to the Looper
+        // that is internally created for this thread (since it is the UI thread)
+        handler = new Handler();
 		
 		// Theme init
     	Utils.themeInit(this);
@@ -824,6 +839,33 @@ public class DashboardActivity extends Activity {
 						Maps.removeFromAllMaps(ID);
 						
 						//TODO Auto FFmpeg task
+						if (YTD.settings.getBoolean("ffmpeg_auto_cb", false)) {
+							Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
+							
+							String[] bitrateData = null;
+							String brType = null;
+							String brValue = null;
+							
+							String audioFileName;
+							
+							String extrType = YTD.settings.getString("audio_extraction_type", "conv");
+							if (extrType.equals("conv")) {
+								bitrateData = Utils.retrieveBitrateValuesFromPref(sDashboard);
+								audioFileName = currentItem.getBasename() + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
+								brType = bitrateData[0];
+								brValue = bitrateData[1];
+							} else {
+								audioFileName = currentItem.getBasename() + currentItem.getAudioExt();
+								
+							}
+							
+							File audioFile = new File(currentItem.getPath(), audioFileName);
+							
+							if (!audioFile.exists()) { 
+								queueThread.enqueueTask(new AutoFFmpegTask(sDashboard, new File(currentItem.getPath(), currentItem.getFilename()), 
+									audioFile, brType, brValue, currentItem.getYtId(), currentItem.getPos()));
+							}
+						}
 					}
 					
 					@Override
@@ -2232,10 +2274,6 @@ public class DashboardActivity extends Activity {
 						"", 
 						Utils.MakeSizeHumanReadable((int) audioFile.length(), false), 
 						true);
-				
-				refreshlist(DashboardActivity.this);
-				
-				Utils.setNotificationDefaults(aBuilder);
 			} else {
 				setNotificationForAudioJobError();
 				
@@ -2252,9 +2290,11 @@ public class DashboardActivity extends Activity {
 						"", 
 						"-", 
 						true);
-				
-				refreshlist(DashboardActivity.this);
 			}
+			
+			refreshlist(DashboardActivity.this);
+			
+			Utils.setNotificationDefaults(aBuilder);
 			
 			aBuilder.setProgress(0, 0, false);
 			aNotificationManager.cancel(2);
@@ -2476,5 +2516,22 @@ public class DashboardActivity extends Activity {
 						"\nselected bitrate entry: " + bitrateEntry , DEBUG_TAG);
 		
 		return new String[] { bitrateType, bitrateValue };
+	}
+
+	@Override
+	public void handleQueueThreadUpdate() {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				int total = queueThread.getTotalQueued();
+				int completed = queueThread.getTotalCompleted();
+
+				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
+				
+				if (completed == total) {
+					// jobs completed
+				}
+			}
+		});
 	}
 }
