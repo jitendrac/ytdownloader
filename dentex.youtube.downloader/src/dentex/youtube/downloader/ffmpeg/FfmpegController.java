@@ -103,7 +103,7 @@ public class FfmpegController {
         return exitVal;
 	}
 	
-	public void extractAudio (File videoIn, File audioOut, String bitrateType, String bitrateValue, 
+	public void extractAudio(File videoIn, File audioOut, String bitrateType, String bitrateValue, 
 			ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
 		
 		List<String> cmd = new ArrayList<String>();
@@ -130,6 +130,28 @@ public class FfmpegController {
 		cmd.add(audioOut.getAbsolutePath());
 
 		execFFMPEG(cmd, sc);
+	}
+	
+	public void extractFlvThumb(File videoIn, File pngOut, 
+			ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
+		
+		List<String> cmd = new ArrayList<String>();
+
+		cmd.add(mFfmpegBinPath);
+		cmd.add("-y");
+		cmd.add("-i");
+		cmd.add(videoIn.getAbsolutePath());
+		cmd.add("-vframes");
+		cmd.add("1");
+		cmd.add("-an");
+		cmd.add("-ss");
+		cmd.add("00:00:02");
+		cmd.add("-s");
+		cmd.add("320x180");
+		cmd.add(pngOut.getAbsolutePath());
+
+		execFFMPEG(cmd, sc);
+		
 	}
 	
 	class StreamGobbler extends Thread {

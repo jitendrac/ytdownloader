@@ -11,9 +11,9 @@ import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.Utils;
 
-public class AutoFFmpegTask implements Runnable {
+public class FFmpegExtractAudioTask implements Runnable {
 
-	private static final String DEBUG_TAG = "TestTask";
+	private static final String DEBUG_TAG = "FFmpegExtractAudioTask";
 	private Context aContext;
 	private File aFileToConvert;
 	private File aAudioFile;
@@ -22,7 +22,10 @@ public class AutoFFmpegTask implements Runnable {
 	private String aYtId;
 	private int aPos;
 	
-	public AutoFFmpegTask(Context context, File fileToConvert, File audioFile, String bitrateType, String bitrateValue, String YtId, int pos) {
+	public FFmpegExtractAudioTask(Context context, 
+			File fileToConvert, File audioFile, 
+			String bitrateType, String bitrateValue, 
+			String YtId, int pos) {
 		aContext = context;
 		aFileToConvert = fileToConvert;
 		aAudioFile = audioFile;
@@ -40,7 +43,7 @@ public class AutoFFmpegTask implements Runnable {
 			ShellDummy shell = new ShellDummy();
 			ffmpeg.extractAudio(aFileToConvert, aAudioFile, aBitrateType, aBitrateValue, shell);
 		} catch (Throwable t) {
-			Log.e(DEBUG_TAG, "Error in TestTask", t);
+			Log.e(DEBUG_TAG, "Error in FFmpegExtractAudioTask", t);
 		}
 	}
 	
@@ -48,13 +51,12 @@ public class AutoFFmpegTask implements Runnable {
 
 		@Override
 		public void shellOut(String shellLine) {
-			Utils.logger("d", shellLine, DEBUG_TAG);
+			//Utils.logger("d", shellLine, DEBUG_TAG);
 		}
 
 		@Override
 		public void processComplete(int exitValue) {
-			Utils.logger("v", "AutoFFmpegTask for '" + aAudioFile.getName() + "':"
-					+ "\nprocessComplete with exit value: " + exitValue, DEBUG_TAG);
+			Utils.logger("v", aAudioFile.getName() + "':\nprocessComplete with exit value: " + exitValue, DEBUG_TAG);
 			
 			String newId = String.valueOf(System.currentTimeMillis());
 			//boolean removeVideo;
@@ -103,13 +105,13 @@ public class AutoFFmpegTask implements Runnable {
 			}
 			
 			if (DashboardActivity.isDashboardRunning)
-				DashboardActivity.refreshlist(DashboardActivity.sDashboard);
+				DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
 		}
 
 		@Override
 		public void processNotStartedCheck(boolean started) {
 			if (!started) {
-				Utils.logger("w", "Auto FFmpeg task process not started or not completed", DEBUG_TAG);
+				Utils.logger("w", "FFmpegExtractAudioTask process not started or not completed", DEBUG_TAG);
 			}
 		}
 	}

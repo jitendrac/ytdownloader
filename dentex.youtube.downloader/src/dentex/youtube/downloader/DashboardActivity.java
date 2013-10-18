@@ -70,7 +70,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.provider.MediaStore.Video.Thumbnails;
@@ -109,14 +108,13 @@ import com.matsuhiro.android.download.Maps;
 
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
-import dentex.youtube.downloader.queue.AutoFFmpegTask;
-import dentex.youtube.downloader.queue.QueueThread;
-import dentex.youtube.downloader.queue.QueueThreadListener;
+import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
+import dentex.youtube.downloader.queue.FFmpegExtractFlvThumbTask;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
-public class DashboardActivity extends Activity implements QueueThreadListener {
+public class DashboardActivity extends Activity/* implements QueueThreadListener */{
 	
 	private final static String DEBUG_TAG = "DashboardActivity";
 	public static boolean isDashboardRunning;
@@ -175,26 +173,28 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 	private boolean newClick;
 	public static long countdown;
 	
-	public static Activity sDashboard;
+	public static Activity sDashboardActivity;
+	public static Context sDashboard;
 	
 	private Timer autoUpdate;
 	public static boolean isLandscape;
 	
-	private QueueThread queueThread;
-	private Handler handler;
+	//private QueueThread queueThread;
+	//private Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("DashboardActivity_onCreate");
+		sDashboard = getBaseContext();
 		
         // Create and launch the download thread
-        queueThread = new QueueThread(this);
-        queueThread.start();
+        //queueThread = new QueueThread(this);
+        //queueThread.start();
         
         // Create the Handler. It will implicitly bind to the Looper
         // that is internally created for this thread (since it is the UI thread)
-        handler = new Handler();
+        //handler = new Handler();
 		
 		// Theme init
     	Utils.themeInit(this);
@@ -208,7 +208,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
     	int or = this.getResources().getConfiguration().orientation;
     	isLandscape = (or == 2) ? true : false;
 
-    	sDashboard = DashboardActivity.this;
+    	sDashboardActivity = DashboardActivity.this;
     	
     	if (da != null) {
     		clearAdapterAndLists();
@@ -258,9 +258,9 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 	        			final boolean audioIsSupported = !currentItem.getAudioExt().equals("unsupported");
 	        			final File in = new File (currentItem.getPath(), currentItem.getFilename());
 	        			
-		        		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V)) {
+		        		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) && !currentItem.getAudioExt().equals("x")) {
 		        			
-		        			// handle click on a **VIDEO** file entry
+		        			// handle click on a **VIDEO** file entry (non-FLV)
 			        		builder.setItems(R.array.dashboard_click_entries, new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int which) {
 			
@@ -372,10 +372,12 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 			        		
 			        		secureShowDialog(builder);
 				    		
-						} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_E) ||
-								currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_M)) {
+						} else if ((currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_E) ||
+								currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_M)) ||
+								(currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) && 
+								currentItem.getAudioExt().equals("x"))) {
 							
-							// handle click on a **AUDIO** file entry
+							// handle click on a **AUDIO** file entry or **FLV VIDEO**
 							builder.setItems(R.array.dashboard_click_entries_audio, new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int which) {
 									
@@ -431,27 +433,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 			        		
 			        		secureShowDialog(builder);
 						}
-	        		} /*else if (currentItem.getStatus().equals(getString(R.string.json_status_imported))) {
-	        			Utils.logger("v", "IMPORTED video clicked", DEBUG_TAG);
-	        			
-	        			// handle click on an  **IMPORTED VIDEO** entry
-		        		builder.setItems(R.array.dashboard_click_entries_imported, new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-		
-			    				final File in = new File (currentItem.getPath(), currentItem.getFilename());
-			    				
-		    					switch (which) {
-		    					case 0: // open
-		    						Intent openIntent = new Intent(Intent.ACTION_VIEW);
-		    						openIntent.setDataAndType(Uri.fromFile(in), "video/*");
-		    						startActivity(Intent.createChooser(openIntent, getString(R.string.open_chooser_title)));
-		    						break;
-		    					}
-							}
-		        		});
-	
-		        		secureShowDialog(builder);
-	        		}*/
+	        		}
 				}
 			}
     	});
@@ -557,6 +539,10 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
         	}
     	});
 	}
+	
+	public static Context getContext() {
+        return sDashboard;
+    }
 	
 	private void notifyFfmpegIsAlreadyRunning() {
 		Utils.logger("d", "notifyFfmpegIsAlreadyRunning()", DEBUG_TAG);
@@ -829,7 +815,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 								false);
 						
 						if (DashboardActivity.isDashboardRunning)
-							DashboardActivity.refreshlist(sDashboard);
+							DashboardActivity.refreshlist(sDashboardActivity);
 						
 						YTD.removeIdUpdateNotification(ID);
 						
@@ -862,8 +848,12 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 							File audioFile = new File(currentItem.getPath(), audioFileName);
 							
 							if (!audioFile.exists()) { 
-								queueThread.enqueueTask(new AutoFFmpegTask(sDashboard, new File(currentItem.getPath(), currentItem.getFilename()), 
-									audioFile, brType, brValue, currentItem.getYtId(), currentItem.getPos()));
+								File videoFileToConvert = new File(currentItem.getPath(), currentItem.getFilename());
+								
+								YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(sDashboard, 
+										videoFileToConvert, audioFile, 
+										brType, brValue, 
+										currentItem.getYtId(), currentItem.getPos()));
 							}
 						}
 					}
@@ -915,7 +905,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 									false);
 							
 							if (DashboardActivity.isDashboardRunning)
-								DashboardActivity.refreshlist(sDashboard);
+								refreshlist(sDashboardActivity);
 							
 							YTD.removeIdUpdateNotification(ID);
 						}
@@ -937,7 +927,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 				reDownload(currentItem, "AUTO");
 			}
 		}
-		refreshlist(sDashboard);
+		refreshlist(sDashboardActivity);
 	}
 	
 	private void reDownload(DashboardListItem currentItem, String category) {
@@ -1163,7 +1153,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
         				
         				if (inProgressIndex > 0) {
         					//Utils.logger("v", "refreshing...", DEBUG_TAG);
-        					refreshlist(sDashboard);
+        					refreshlist(sDashboardActivity);
         				}
         			}
         		});
@@ -1387,7 +1377,6 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
             
             String path = data.getStringExtra("path");
             String name = data.getStringExtra("name");
-            File in = new File(path, name);
             	
         	final File chooserSelection = files.get(0);
         	//Utils.logger("d", "file-chooser selection: " + chooserFolder.getPath(), DEBUG_TAG);
@@ -1397,6 +1386,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 	        
 	        case 1: // ------------- > COPY
 	        	File out1 = new File(chooserSelection, name);
+	        	File in1 = new File(path, name);
 				
 	        	if (chooserSelection.getPath().equals(currentItem.getPath())) {
 	        		out1 = new File(chooserSelection, "copy_" + currentItem.getFilename());
@@ -1406,7 +1396,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 		        	switch (Utils.pathCheck(chooserSelection)) {
 		    		case 0:
 		    			// Path on standard sdcard
-		    			new AsyncCopy().execute(in, out1);
+		    			new AsyncCopy().execute(in1, out1);
 		        		break;
 		    		case 1:
 		    			// Path not writable
@@ -1427,13 +1417,14 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
     			
 	        case 2: // ------------- > MOVE
 				File out2 = new File(chooserSelection, name);
+				File in2 = new File(path, name);
 				
 	        	if (!chooserSelection.getPath().equals(currentItem.getPath())) {
 	        		if (!out2.exists()) {
 			        	switch (Utils.pathCheck(chooserSelection)) {
 			    		case 0:
 			    			// Path on standard sdcard
-			    			new AsyncMove().execute(in, out2);		
+			    			new AsyncMove().execute(in2, out2);		
 			        		break;
 			    		case 1:
 			    			// Path not writable
@@ -1527,7 +1518,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 	        	String size = Utils.MakeSizeHumanReadable((int) chooserSelection.length(), false);
 	        	
 	        	String ext = Utils.getExtFromFileName(filename).toUpperCase(Locale.ENGLISH);
-	        	String aExt = "unsupported";
+	        	String aExt = "";
 	        	boolean go = false;
 	        	
 	        	if (ext.equals("WEBM")) {
@@ -1536,10 +1527,10 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 	        	} else if (ext.equals("MP4") || ext.equals("3GPP")) {
 	        		aExt = ".aac";
 	        		go = true;
-	        	} /*else if (ext.equals("FLV")) {
-	        		aExt = ".auto";
+	        	} else if (ext.equals("FLV")) {
+	        		aExt = "x";
 	        		go = true;
-	        	} */else {
+	        	} else {
 	        		go = false;
 	        	}
 	        	
@@ -1686,14 +1677,22 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 	}
 
 	private void writeThumbToDiskForSelectedFile(final File selectedFile, String pngBasename) {
-		Bitmap bmThumbnail = ThumbnailUtils.createVideoThumbnail(selectedFile.getAbsolutePath(), Thumbnails.MINI_KIND);
 		File bmFile = new File(getDir(YTD.THUMBS_FOLDER, 0), pngBasename + ".png");
-		try {
-			Utils.logger("d", "trying to write thumbnail for " + selectedFile.getName() + " -> " + pngBasename, DEBUG_TAG);
-			FileOutputStream out = new FileOutputStream(bmFile);
-			bmThumbnail.compress(Bitmap.CompressFormat.PNG, 90, out);
-		} catch (Exception e) {
-			Log.e(DEBUG_TAG, "writeThumbToDiskForImportedVideo -> " + e.getMessage());
+		
+		if (!Utils.getExtFromFileName(selectedFile.getPath()).toUpperCase(Locale.ENGLISH).equals("FLV")) {
+			try {
+				Utils.logger("d", "trying to write thumbnail for " + selectedFile.getName() + " -> " + pngBasename, DEBUG_TAG);
+				FileOutputStream out = new FileOutputStream(bmFile);
+				
+				Bitmap bmThumbnail = ThumbnailUtils.createVideoThumbnail(selectedFile.getAbsolutePath(), Thumbnails.MINI_KIND);
+				bmThumbnail.compress(Bitmap.CompressFormat.PNG, 90, out);
+			} catch (Exception e) {
+				Log.e(DEBUG_TAG, "writeThumbToDiskForImportedVideo -> " + e.getMessage());
+			}
+		} else {
+			if (!bmFile.exists()) {
+				YTD.queueThread.enqueueTask(new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile));
+			}
 		}
 	}
 
@@ -1981,7 +1980,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 							
 							DownloadTask dt = Maps.dtMap.get(idlong);
 							
-							if (countdown == 0 && dt == null) {
+							if (countdown <= 0 && dt == null) {
 								Utils.logger("w", "countdown == 0 && dt == null; setting STATUS_PAUSED on id " + idstr, DEBUG_TAG);
 								Json.addEntryToJsonFile(
 										sDashboard,
@@ -2133,7 +2132,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 		aBuilder =  new NotificationCompat.Builder(this);
 		aNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
-		aBuilder.setContentTitle(vfilename);
+		//aBuilder.setContentTitle(vfilename);
 		
 		String aExt = currentItem.getAudioExt();
 		basename = currentItem.getBasename();
@@ -2172,7 +2171,6 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 						}
 						Toast.makeText(DashboardActivity.this, "YTD: " + text,
 								Toast.LENGTH_SHORT).show();
-
 
 						aBuilder.setContentTitle(audioFileName);
 						aBuilder.setContentText(text);
@@ -2518,7 +2516,7 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 		return new String[] { bitrateType, bitrateValue };
 	}
 
-	@Override
+	/*@Override
 	public void handleQueueThreadUpdate() {
 		handler.post(new Runnable() {
 			@Override
@@ -2529,9 +2527,13 @@ public class DashboardActivity extends Activity implements QueueThreadListener {
 				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
 				
 				if (completed == total) {
-					// jobs completed
-				}
+					queueThread.pushNotificationText(sDashboard,
+							String.format("All FFmpeg tasks completed", completed, total));
+				} else {
+					queueThread.pushNotificationText(sDashboard,
+							String.format("%d of %d audio extractions completed", completed, total));
+				}	
 			}
 		});
-	}
+	}*/
 }

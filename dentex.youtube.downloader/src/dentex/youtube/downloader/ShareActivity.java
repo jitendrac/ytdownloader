@@ -62,7 +62,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -90,16 +89,14 @@ import com.matsuhiro.android.download.Maps;
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
-import dentex.youtube.downloader.queue.AutoFFmpegTask;
-import dentex.youtube.downloader.queue.QueueThread;
-import dentex.youtube.downloader.queue.QueueThreadListener;
+import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.utils.FetchUrl;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.RhinoRunner;
 import dentex.youtube.downloader.utils.Utils;
 
-public class ShareActivity extends Activity implements QueueThreadListener{
+public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 	
 	private ProgressBar progressBar1;
 	private ProgressBar progressBarD;
@@ -159,8 +156,8 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 	private boolean restartModeEnabled = false;
 	private String extraId;
 
-	private QueueThread queueThread;
-	private Handler handler;
+	//private QueueThread queueThread;
+	//private Handler handler;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -169,12 +166,12 @@ public class ShareActivity extends Activity implements QueueThreadListener{
         sShare = getBaseContext();
         
         // Create and launch the download thread
-        queueThread = new QueueThread(this);
-        queueThread.start();
+        //queueThread = new QueueThread(YTD.qtl);
+        //queueThread.start();
         
         // Create the Handler. It will implicitly bind to the Looper
         // that is internally created for this thread (since it is the UI thread)
-        handler = new Handler();
+        //handler = new Handler();
         
     	// Theme init
     	Utils.themeInit(this);
@@ -946,7 +943,7 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 						false);
 				
 				if (DashboardActivity.isDashboardRunning)
-					DashboardActivity.refreshlist(DashboardActivity.sDashboard);
+					DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
 				
 				YTD.removeIdUpdateNotification(ID);
 				
@@ -979,8 +976,12 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 					File audioFile = new File(path.getPath(), audioFileName);
 					
 					if (!audioFile.exists()) { 
-						queueThread.enqueueTask(new AutoFFmpegTask(sShare, new File(path.getPath(), vFilename), 
-							audioFile, brType, brValue, videoId, pos));
+						File videoFileToConvert = new File(path.getPath(), vFilename);
+						
+						YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(sShare, 
+								videoFileToConvert, audioFile, 
+								brType, brValue, 
+								videoId, pos));
 					}
 				}
 			}
@@ -1034,7 +1035,7 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 						false);
 				
 				if (DashboardActivity.isDashboardRunning)
-					DashboardActivity.refreshlist(DashboardActivity.sDashboard);
+					DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
 				
 				YTD.removeIdUpdateNotification(ID);
 			}
@@ -1090,8 +1091,8 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 
     private String urlBlockMatchAndDecode(String content) {
     	
-    	// log entire YouTube request
-    	//File req = new File(YTD.dir_Downloads, System.currentTimeMillis() + "_req.txt");
+    	// log entire YouTube requests
+    	//File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
     	//Utils.appendStringToFile(req, content);
 		
 		if (asyncDownload.isCancelled()) {
@@ -1110,6 +1111,9 @@ public class ShareActivity extends Activity implements QueueThreadListener{
         if (loginMatcher.find()) {
         	return "login_required";
         }
+        
+        findVideoFilenameBase(content);
+        findJs(content);
 
         Pattern streamsPattern = Pattern.compile("url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
         Matcher streamsMatcher = streamsPattern.matcher(content);
@@ -1146,9 +1150,6 @@ public class ShareActivity extends Activity implements QueueThreadListener{
             } else {
             	Utils.logger("d", "asyncDownload cancelled @ 'findCodecAndQualityAndLinks' match", DEBUG_TAG);
             }
-            
-            findVideoFilenameBase(content);
-            findJs(content);
             
             return "ok";
         } else {
@@ -1324,7 +1325,12 @@ public class ShareActivity extends Activity implements QueueThreadListener{
     	
     	if (decryptionArray == null) {
     		decryptionRule = null;
-			String jsCode = fu.doFetch(jslink);
+    		String jsCode = null;
+			if (!jslink.equals("e")) {
+				jsCode = fu.doFetch(jslink);
+			} else {
+				jsCode = fu.doFetch("https://s.ytimg.com/yts/jsbin/html5player-vflW444Sr.js");
+			}
 			String findSignatureCode = 
 					"function isInteger(n) {" +
 					"	return (typeof n==='number' && n%1==0);" +
@@ -1358,8 +1364,9 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 					"		} else if (functionCodePieces[i].indexOf('reverse') >= 0) {" +
 					"			decodeArray.push(0);" +
 					"		} else if (functionCodePieces[i].indexOf('[0]') >= 0) {" +
-					"			if (i+2<functionCodePieces.length && functionCodePieces[i+1].indexOf('.length') >= 0 &&" +
-											"functionCodePieces[i+1].indexOf('[0]') >= 0) {" +
+					"			if (i+2<functionCodePieces.length && " +
+					" 				functionCodePieces[i+1].indexOf('.length') >= 0 &&" +					
+					"				functionCodePieces[i+1].indexOf('[0]') >= 0) {" +
 					"				var inlineMatches=functionCodePieces[i+1].match(regInline);" +
 					"				var inline=(inlineMatches)?inlineMatches[1]:null;" +
 					"				inline=parseInt(inline, 10);" +
@@ -1377,8 +1384,8 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 					"	}" +
 					"	return decodeArray;" +
 					"}";
-			
-			decryptionArray = RhinoRunner.obtainDecryptionArray(jsCode, findSignatureCode);			
+	    	
+			decryptionArray = RhinoRunner.obtainDecryptionArray(jsCode, findSignatureCode);
 			decryptionFunction = "function decryptSignature(a){ a=a.split(\"\"); ";
 			
 			for (int i = 0; i < decryptionArray.length; i++) {
@@ -1422,7 +1429,7 @@ public class ShareActivity extends Activity implements QueueThreadListener{
         if (jsMatcher.find()) {
             jslink = jsMatcher.group(1).replaceAll("\\\\", "");
         } else {
-            jslink = "NOT_FOUND";
+            jslink = "e";
         }
         Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
     }
@@ -1747,7 +1754,7 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 		}
 	}
 
-	@Override
+	/*@Override
 	public void handleQueueThreadUpdate() {
 		handler.post(new Runnable() {
 			@Override
@@ -1758,9 +1765,13 @@ public class ShareActivity extends Activity implements QueueThreadListener{
 				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
 				
 				if (completed == total) {
-					// jobs completed
+					queueThread.pushNotificationText(sShare,
+							String.format("All FFmpeg tasks completed", completed, total));
+				} else {
+					queueThread.pushNotificationText(sShare,
+							String.format("%d of %d audio extractions completed", completed, total));
 				}
 			}
 		});
-	}
+	}*/
 }

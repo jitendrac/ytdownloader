@@ -590,7 +590,7 @@ public class Utils {
     	PrintWriter out = null;
     	try {
     	    out = new PrintWriter(new BufferedWriter(new FileWriter(file.getAbsolutePath(), true)));
-    	    out.println("\n" + text);
+    	    out.println("\n\n" + System.currentTimeMillis() + ":\n" + text);
     	} catch (IOException e) {
     	    Log.e(DEBUG_TAG, "appendStringToFile: " + e.getMessage());
     	} finally {

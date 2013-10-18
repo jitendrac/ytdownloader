@@ -37,6 +37,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -44,10 +45,12 @@ import android.view.WindowManager;
 
 import com.bugsense.trace.BugSenseHandler;
 
+import dentex.youtube.downloader.queue.QueueThread;
+import dentex.youtube.downloader.queue.QueueThreadListener;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
-public class YTD extends Application {
+public class YTD extends Application implements QueueThreadListener{
 	
 	static String DEBUG_TAG = "YTD";
 	public static Context ctx;
@@ -102,6 +105,9 @@ public class YTD extends Application {
 	public static final String THUMBS_FOLDER = "thumbs";
 	public static double reduceFactor;
 	
+	public static QueueThread queueThread;
+	public static Handler handler;
+	
 	@Override
 	public void onCreate() {
 		Log.d(DEBUG_TAG, "onCreate");
@@ -110,6 +116,13 @@ public class YTD extends Application {
 		videoinfo = getSharedPreferences(VIDEOINFO_NAME, 0);
 		
 		BugSenseHandler.initAndStartSession(getApplicationContext(), BugsenseApiKey);
+		
+		queueThread = new QueueThread(this);
+        queueThread.start();
+        
+        // Create the Handler. It will implicitly bind to the Looper
+        // that is internally created for this thread (since it is the UI thread)
+        handler = new Handler();
 		
 		//findProcessUid();
 		
@@ -213,5 +226,26 @@ public class YTD extends Application {
 			Log.e(DEBUG_TAG, "NPE at removeIdUpdateNotification: " + e.getMessage());
 			BugSenseHandler.sendExceptionMessage("NPE at removeIdUpdateNotification", e.getMessage(), e);
 		}
+	}
+
+    @Override
+	public void handleQueueThreadUpdate() {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				int total = queueThread.getTotalQueued();
+				int completed = queueThread.getTotalCompleted();
+
+				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
+				
+				if (completed == total) {
+					queueThread.pushNotificationText(ctx,
+							String.format("All FFmpeg tasks completed", completed, total));
+				} else {
+					queueThread.pushNotificationText(ctx,
+							String.format("%d of %d audio extractions completed", completed, total));
+				}
+			}
+		});
 	}
 }

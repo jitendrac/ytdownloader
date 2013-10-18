@@ -5,7 +5,9 @@
         \n-----------------------------------
         \n[ ] option to auto enqueue FFmpeg 
         \n    tasks on downloads completion
-        \n[x] bug fixes
+        \n[x] Dashboard import feature now 
+        \n    supports FLV video
+        \n[x] various bug fixes
         \n
         \n v3.0.2 - Oct 11 2013
         \n-----------------------------------

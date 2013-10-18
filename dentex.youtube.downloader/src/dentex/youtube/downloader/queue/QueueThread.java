@@ -1,13 +1,20 @@
 package dentex.youtube.downloader.queue;
 
+import dentex.youtube.downloader.R;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
 public final class QueueThread extends Thread {
 
 	private static final String DEBUG_TAG = QueueThread.class.getSimpleName();
+	
+	private NotificationCompat.Builder aBuilder;
+	private NotificationManager aNotificationManager;
 	
 	private Handler handler;
 	
@@ -19,6 +26,10 @@ public final class QueueThread extends Thread {
 	
 	public QueueThread(QueueThreadListener listener) {
 		this.listener = listener;
+	}
+	
+	public QueueThreadListener getListener() {
+		return this.listener;
 	}
 	
 	@Override
@@ -104,5 +115,15 @@ public final class QueueThread extends Thread {
 		if (listener != null) {
 			listener.handleQueueThreadUpdate();
 		}
+	}
+
+	public synchronized void pushNotificationText(Context ctx, String text) {
+		aBuilder =  new NotificationCompat.Builder(ctx);
+		aNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+		aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
+		aBuilder.setContentTitle("YTD audio extractions");
+		aBuilder.setContentText(text);
+		//aBuilder.setOngoing(true);
+		aNotificationManager.notify(3, aBuilder.build());
 	}
 }
