@@ -146,7 +146,6 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 	//private boolean showSizesInVideoList;
 	//private boolean showSingleSize;
 	ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(this, R.style.BoxTheme);
-	private int count;
 	private String[] decryptionArray = null;
 	private String jslink;
 	private String decryptionRule;
@@ -1115,14 +1114,26 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         findVideoFilenameBase(content);
         findJs(content);
 
-        Pattern streamsPattern = Pattern.compile("url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
+        int ue = 0;//matchUrlEncodedStreams(content);
+        int as = matchAdaptiveStreams(content);
+        
+        if ((ue + as) > 0) {
+        	return "ok";
+        } else {
+        	return "e";
+        }
+        
+    }
+
+	private int matchUrlEncodedStreams(String content) {
+		Pattern streamsPattern = Pattern.compile("url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
         Matcher streamsMatcher = streamsPattern.matcher(content);
         if (streamsMatcher.find()) {
         	Pattern blockPattern = Pattern.compile(",");
             Matcher blockMatcher = blockPattern.matcher(streamsMatcher.group(1));
             if (blockMatcher.find() && !asyncDownload.isCancelled()) {
             	String[] CQS = streamsMatcher.group(1).split(blockPattern.toString());
-            	count = (CQS.length-1);
+            	int count = (CQS.length-1);
                 Utils.logger("d", "number of entries found: " + count, DEBUG_TAG);
                 int index = 0;
                 progressBar1.setIndeterminate(false);
@@ -1141,22 +1152,62 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
                     codecMatcher(CQS[index], index);
                     qualityMatcher(CQS[index], index);
                     stereoMatcher(CQS[index], index);
-                    resolutionMatcher(CQS[index], index);
+                    itagMatcher(CQS[index], index);
                     linkComposer(CQS[index], index);
                     
                     index++;
                 }
                 listEntriesBuilder();
             } else {
-            	Utils.logger("d", "asyncDownload cancelled @ 'findCodecAndQualityAndLinks' match", DEBUG_TAG);
+            	Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
             }
             
-            return "ok";
+            return 1;
         } else {
-            return "e";
+            return 0;
         }
-    }
+	}
     
+	private int matchAdaptiveStreams(String content) {
+		Pattern streamsPattern = Pattern.compile("adaptive_fmts\\\": \\\"(.*?)\\\"");
+        Matcher streamsMatcher = streamsPattern.matcher(content);
+        if (streamsMatcher.find()) {
+        	Pattern blockPattern = Pattern.compile(",");
+            Matcher blockMatcher = blockPattern.matcher(streamsMatcher.group(1));
+            if (blockMatcher.find() && !asyncDownload.isCancelled()) {
+            	String[] CQS = streamsMatcher.group(1).split(blockPattern.toString());
+            	int count = (CQS.length-1);
+                Utils.logger("d", "number of entries found: " + count, DEBUG_TAG);
+                int index = 0;
+                progressBar1.setIndeterminate(false);
+                decryptionArray = null;
+                while ((index+1) < CQS.length) {
+                	try {
+						CQS[index] = URLDecoder.decode(CQS[index], "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						Log.e(DEBUG_TAG, "UnsupportedEncodingException @ urlBlockMatchAndDecode: " + e.getMessage());
+					}
+                	
+                	asyncDownload.doProgress((int) ((index / (float) count) * 100));
+                	
+                	Utils.logger("v", "block " + index + ": " + CQS[index], DEBUG_TAG);
+                	
+                	itagMatcher(CQS[index], index);
+                    linkComposer(CQS[index], index);
+                    
+                    index++;
+                }
+                listEntriesBuilderForAdaptiveStreams();
+            } else {
+            	Utils.logger("d", "asyncDownload cancelled @ 'matchAdaptiveStreams' match", DEBUG_TAG);
+            }
+            
+            return 1;
+        } else {
+            return 0;
+        }
+	}
+	
     private class AsyncSizesFiller extends AsyncTask<String, String, Void> {
 
     	protected void onPreExecute() {
@@ -1188,7 +1239,8 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 			sizes.add(index, " - " + newValue);
     		
     		listEntries.clear();
-    		listEntriesBuilder();
+    		//listEntriesBuilder();
+    		listEntriesBuilderForAdaptiveStreams();
 
 			aA.notifyDataSetChanged();
     	}
@@ -1219,21 +1271,11 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         Iterator<String> stereoIter = stereo.iterator();
         Iterator<String> sizesIter = sizes.iterator();
         Iterator<String> itagsIter = itags.iterator();
-        
-        //boolean showSize = YTD.settings.getBoolean("show_size_list", false);
+
         boolean showRes = YTD.settings.getBoolean("show_resolutions", false);
     	
         while (codecsIter.hasNext()) {
-        	/*String size;
-			if (showSize) {
-        		size = sizesIter.next();
-        	} else {
-        		size = "";
-        	}*/
-        	
-        	try {
-	        	String size = sizesIter.next();
-	        	
+        	try {	        	
 	        	String res;
 				if (showRes) {
 	        		res = itagsIter.next();
@@ -1241,7 +1283,19 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 	        		res = qualitiesIter.next();
 	        	}
 				listEntries.add(codecsIter.next().toUpperCase(Locale.ENGLISH).replace("WEBM", "WebM") + 
-						" - " + res + stereoIter.next() + size);
+						" - " + res + stereoIter.next() + sizesIter.next());
+        	} catch (NoSuchElementException e) {
+        		listEntries.add("//");
+        	}
+        }
+    }
+    
+    private void listEntriesBuilderForAdaptiveStreams() {
+    	Iterator<String> sizesIter = sizes.iterator();
+        Iterator<String> itagsIter = itags.iterator();
+        while (itagsIter.hasNext()) {        	
+        	try {
+				listEntries.add(itagsIter.next() + sizesIter.next());
         	} catch (NoSuchElementException e) {
         		listEntries.add("//");
         	}
@@ -1560,7 +1614,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         //Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
     }
     
-    private void resolutionMatcher(String current, int i) {
+    private void itagMatcher(String current, int i) {
     	String res = "-";
     	
     	Pattern itagPattern = Pattern.compile("itag=([0-9]{1,3})\\\\u0026");
@@ -1646,13 +1700,81 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 				case 102:
 					res = "720p";
 					break;
+				// ************************
+				// *** adaptive streams ***
+				// ************************
+				case 133:
+					res = "VO - MP4 - 240p";
+					break;
+				case 134:
+					res = "VO - MP4 - 360p";
+					break;
+				case 135:
+					res = "VO - MP4 - 480p";
+					break;
+				case 136:
+					res = "VO - MP4 - 720p";
+					break;
+				case 137:
+					res = "VO - MP4 - 1080p";
+					break;
+				case 139:
+					res = "AO - MP4 - low q.";
+					break;
+				case 140:
+					res = "AO - MP4 - med q.";
+					break;
+				case 141:
+					res = "AO - MP4 - hi q.";
+					break;
+				case 160:
+					res = "VO - MP4 - 144p";
+					break;
+				case 171:
+					res = "AO - WebM - med q.";
+					break;
+				case 172:
+					res = "AO - WebM - hi q.";
+					break;
+				case 242:
+					res = "VO - WebM - 240p";
+					break;
+				case 243:
+					res = "VO - WebM - 360p";
+					break;
+				case 244:
+					res = "VO - WebM - 480p";
+					break;
+				case 245:
+					res = "VO - WebM - 480p";
+					break;
+				case 246:
+					res = "VO - WebM - 480p";
+					break;
+				case 247:
+					res = "VO - WebM - 72p";
+					break;
+				case 248:
+					res = "VO - WebM - 1080p";
+					break;
 				}
+				
 			} catch (NumberFormatException e) {
 				Log.e(DEBUG_TAG, "resolutionMatcher --> " + e.getMessage());
 			}
 		}
 		return res;
 	}
+	
+	/*
+	 *  242    WEB    320 x 240   VOX
+ 		243    WEB    480 x 360   VOX
+ 		244    WEB    640 x 480   VOX
+ 		245    WEB    640 x 480   VOX
+ 		246    WEB    640 x 480   VOX
+ 		247    WEB   1280 x 720   VOX
+ 		248    WEB   1920 x 1080  VOX
+	 */
 	
     /*private String generateThumbUrl() {
 		// link example "http://i2.ytimg.com/vi/8wr-uQX1Grw/mqdefault.jpg"
