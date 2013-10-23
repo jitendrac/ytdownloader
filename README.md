@@ -14,6 +14,13 @@ For Android 4+
 
 MD5 checksum: `fdf3896c6a0cebe3524392f958c505e3` dentex.youtube.downloader_v3.0.2.apk
 
+DISCLAIMER
+================================================================
+    You, the user, accept the full responsibility for the usage of 
+    this application, excluding the developer from any liability about 
+    any consequence that may derive. Thus, this application has to be 
+    considered as a mere technical service provider.
+
 NOTICE
 ================================================================
     Complying with the GPL below is mandatory.
