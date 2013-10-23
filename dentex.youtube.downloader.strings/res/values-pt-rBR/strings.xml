@@ -254,19 +254,11 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	
     <!-- -->
     <string name="settings_cat_files">Arquivos de vídeo</string>
-    <string name="enable_q_suffix_title">Acrescentar qualidade do vídeo no título do arquivo</string>
-    <string name="enable_q_suffix_summary">Adicionar a qualidade do vídeo no fim do nome do arquivo</string>
     <string name="enable_rename_title">Renomear o vídeo</string>
     <string name="enable_rename_summary">Permite alterar o nome do vídeo antes do download (apenas para downloads locais).</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Exibir imagem de visualização</string>
+	<string name="show_thumb_title">Exibir imagem de visualização</string>
     <string name="show_thumb_summary">Baixar a imagem de visualização junto com a lista de vídeos.</string>
-    <string name="show_resolutions_title">Mostrar resoluções do vídeo</string>
-    <string name="show_resolutions_summary">Substituir a indicação de qualidade com a resolução do vídeo</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Avançado</string>
     <string name="enable_advanced_features_title">Habilitar Funções Avançadas</string>
@@ -285,6 +277,9 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     </string-array>
     
     <string name="remove_video_title">Remover o vídeo</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notificações</string>

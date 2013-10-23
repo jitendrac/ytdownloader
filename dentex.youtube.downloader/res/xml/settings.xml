@@ -31,12 +31,6 @@
     
     <PreferenceCategory
         android:title="@string/settings_cat_files">
-            
-    	<CheckBoxPreference
-        	android:key="enable_q_suffix"
-        	android:title="@string/enable_q_suffix_title"
-        	android:summary="@string/enable_q_suffix_summary"
-        	android:defaultValue="true"/>
     	
     	<CheckBoxPreference
         	android:key="enable_rename"
@@ -49,26 +43,6 @@
             android:title="@string/show_thumb_title"
             android:summary="@string/show_thumb_summary" 
             android:defaultValue="false"/>
-	            
-<!--         <CheckBoxPreference -->
-<!--             android:key="show_size" -->
-<!--             android:dependency="show_size_list" -->
-<!--             android:title="@string/show_size_title" -->
-<!--             android:summary="@string/show_size_summary"  -->
-<!--             android:defaultValue="false"/> -->
-        
-<!--         <CheckBoxPreference -->
-<!--             android:key="show_size_list" -->
-<!--             android:disableDependentsState="true" -->
-<!--             android:title="@string/show_size_list_title" -->
-<!--             android:summary="@string/show_size_list_summary"  -->
-<!--             android:defaultValue="false"/> -->
-        
-        <CheckBoxPreference
-            android:key="show_resolutions"
-            android:title="@string/show_resolutions_title"
-            android:summary="@string/show_resolutions_summary" 
-            android:defaultValue="true"/>
 
     </PreferenceCategory>
     
@@ -118,6 +92,12 @@
     	    	android:defaultValue="false"/>
     	    
     	</PreferenceScreen>
+    	
+   		<CheckBoxPreference
+   	        android:key="enable_adaptive"
+   	        android:title="@string/enable_adaptive_title"
+   	    	android:summary="@string/enable_adaptive_summary"
+   	    	android:defaultValue="false"/>
             
 	</PreferenceCategory>
 

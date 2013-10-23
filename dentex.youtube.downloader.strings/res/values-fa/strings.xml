@@ -244,19 +244,11 @@
 	
     <!-- -->
     <string name="settings_cat_files">فایل های ویدئو</string>
-    <string name="enable_q_suffix_title">پسوند کیفیت را اضافه کن</string>
-    <string name="enable_q_suffix_summary">کیفیت ویدئو را به انتهای نام فایل اضافه کن.</string>
     <string name="enable_rename_title">فعال کردن تغییر نام دادن فایل</string>
     <string name="enable_rename_summary">قبل از اینکه فایل ویدئویی را دانلود کنی آن را تغییر نام بده(فقط برای دانلود محلی)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">نمایش تصویر پیش نمایش</string>
+	<string name="show_thumb_title">نمایش تصویر پیش نمایش</string>
     <string name="show_thumb_summary">دانلود یک تصویر پیش نمایش به همراه لیست ویدئو</string>
-    <string name="show_resolutions_title">Show video resolutions</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">پیشرفته</string>
     <string name="enable_advanced_features_title">Enable Advanced Features</string>
@@ -275,6 +267,9 @@
     </string-array>
     
     <string name="remove_video_title">حذف کردن ویدئو</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">اعلان ها</string>

@@ -254,20 +254,12 @@
 	
     <!-- -->
     <string name="settings_cat_files">ملفات الفيديو</string>
-    <string name="enable_q_suffix_title">إلحاق لاحقة الجودة</string>
-    <string name="enable_q_suffix_summary">اضافة جودة الفيديو في نهاية اسم الملف</string>
     <string name="enable_rename_title">تفعيل تغيير اسم الملف</string>
     <string name="enable_rename_summary">إعادة تسمية ملف الفيديو قبل تنزيله (للتحميل المحلي فقط)
 </string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">عرض صورة العرض</string>
+	<string name="show_thumb_title">عرض صورة العرض</string>
     <string name="show_thumb_summary">تنزيل صورة عرض مصاحبة لقائمة الفيديو</string>
-    <string name="show_resolutions_title">عرض جودة الفيديو</string>
-    <string name="show_resolutions_summary">استبدال قيمة الجودة بنسبة جودة الفيديو</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">متقدم</string>
     <string name="enable_advanced_features_title">تمكين الميزات المتقدمة</string>
@@ -286,6 +278,9 @@
     </string-array>
     
     <string name="remove_video_title">إزالة الفيديو</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">إشعارات</string>

@@ -254,19 +254,11 @@
 	
     <!-- -->
     <string name="settings_cat_files">Αρχεία βίντεο</string>
-    <string name="enable_q_suffix_title">Επισύναψη κατάληξης ποιότητας</string>
-    <string name="enable_q_suffix_summary">Προσθήκη της ποιότητας βίντεο στο τέλος του ονόματος αρχείου</string>
     <string name="enable_rename_title">Ενεργοποίηση μετονομασίας αρχείου</string>
     <string name="enable_rename_summary">Μετονομασία του αρχείου βίντεο πριν τη λήψη του (μόνο για τοπική λήψη)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Εμφάνιση εικόνας προεπισκόπησης </string>
+	<string name="show_thumb_title">Εμφάνιση εικόνας προεπισκόπησης </string>
     <string name="show_thumb_summary">Λήψη εικόνας προεπισκόπησης μαζί με τη λίστα βίντεο</string>
-    <string name="show_resolutions_title">Εμφάνιση αναλύσεων βίντεο</string>
-    <string name="show_resolutions_summary">Αντικατάσταση της ένδειξης ποιότητας με την αναλύση του βίντεο</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Για προχωρημένους</string>
     <string name="enable_advanced_features_title">Ενεργοποίηση Προχωρημένων Χαρακτηριστικών</string>
@@ -285,6 +277,9 @@
     </string-array>
     
     <string name="remove_video_title">Αφαίρεση βίντεο</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Ειδοποιήσεις</string>

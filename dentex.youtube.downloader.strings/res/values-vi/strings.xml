@@ -253,19 +253,11 @@
 	
     <!-- -->
     <string name="settings_cat_files">Videos</string>
-    <string name="enable_q_suffix_title">Thêm hậu tố</string>
-    <string name="enable_q_suffix_summary">Add the video quality at the end of the file name</string>
     <string name="enable_rename_title">Cho phép đổi tên</string>
     <string name="enable_rename_summary">Đổi tên video trước khi tải</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Hiện ảnh xem trước</string>
+	<string name="show_thumb_title">Hiện ảnh xem trước</string>
     <string name="show_thumb_summary">Hiện ảnh xem trước cùng với danh sách video</string>
-    <string name="show_resolutions_title">Hiển thị độ phân giải video</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Nâng cao</string>
     <string name="enable_advanced_features_title">Bật tính năng nâng cao</string>
@@ -284,6 +276,9 @@
     </string-array>
     
     <string name="remove_video_title">Gỡ bỏ video</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Thông báo</string>

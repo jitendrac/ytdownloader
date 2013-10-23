@@ -254,19 +254,11 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	
     <!-- -->
     <string name="settings_cat_files">Archivos de video</string>
-    <string name="enable_q_suffix_title">Añadir sufijo de calidad</string>
-    <string name="enable_q_suffix_summary">Añadir la calidad del video al final del nombre del archivo</string>
     <string name="enable_rename_title">Habilitar cambios de nombre de archivos</string>
     <string name="enable_rename_summary">Renombrar el archivo de video antes de descargarlo (para las descargas locales solamente)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Mostrar vista preliminar</string>
+	<string name="show_thumb_title">Mostrar vista preliminar</string>
     <string name="show_thumb_summary">Descargar una imágen de visualización junto con la lista de videos</string>
-    <string name="show_resolutions_title">Mostrar las resoluciones de vídeo</string>
-    <string name="show_resolutions_summary">Cambie la indicación de calidad por la resolución del vídeo</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Avanzado</string>
     <string name="enable_advanced_features_title">Habilitar Funciones Avanzados</string>
@@ -285,6 +277,9 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     </string-array>
     
     <string name="remove_video_title">Eliminación de video</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notificaciones</string>

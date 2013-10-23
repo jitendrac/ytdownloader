@@ -253,19 +253,11 @@
 	
     <!-- -->
     <string name="settings_cat_files">Video datoteke</string>
-    <string name="enable_q_suffix_title">Dodaj končnico kvalitete</string>
-    <string name="enable_q_suffix_summary">Dodaj kvaliteto videa na konec imena datoteke</string>
     <string name="enable_rename_title">Omogoči preimenovanje datotek</string>
     <string name="enable_rename_summary">Preimenuj video pred prenašanjem (samo za lokalne prenose)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Prikaži predogledno sliko</string>
+	<string name="show_thumb_title">Prikaži predogledno sliko</string>
     <string name="show_thumb_summary">Prenesi predogledno sliko skupaj s seznamom videov</string>
-    <string name="show_resolutions_title">Prikaži ločljivosti videov</string>
-    <string name="show_resolutions_summary">Zamenjaj pokazatelja kvalitete z resolucijo videa</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Napredno</string>
     <string name="enable_advanced_features_title">Omogočite Napredne nastavitve</string>
@@ -284,6 +276,9 @@
     </string-array>
     
     <string name="remove_video_title">Odstranitev videa</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Obvestila</string>

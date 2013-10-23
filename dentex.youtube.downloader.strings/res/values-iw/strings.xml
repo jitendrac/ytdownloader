@@ -254,19 +254,11 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	
     <!-- -->
     <string name="settings_cat_files">קבצי וידאו</string>
-    <string name="enable_q_suffix_title">צרף סיומת איכות</string>
-    <string name="enable_q_suffix_summary">הוסף את איכות וידאו בסופו של שם הקובץ</string>
     <string name="enable_rename_title">אפשר שינוי שם קובץ</string>
     <string name="enable_rename_summary">שנה את שם קובץ וידאו לפני הורדתו (להורדה המקומית בלבד)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">הצג תצוגה מקדימה של תמונה</string>
+	<string name="show_thumb_title">הצג תצוגה מקדימה של תמונה</string>
     <string name="show_thumb_summary">הורד תמונת תצוגה מקדימה יחד עם רשימת הווידאו</string>
-    <string name="show_resolutions_title">Show video resolutions</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">מתקדם</string>
     <string name="enable_advanced_features_title">Enable Advanced Features</string>
@@ -285,6 +277,9 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     </string-array>
     
     <string name="remove_video_title">הסרת וידאו</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">התראות</string>

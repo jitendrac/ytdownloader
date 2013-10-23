@@ -40,7 +40,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -101,19 +100,18 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 	private ProgressBar progressBar1;
 	private ProgressBar progressBarD;
 	private ProgressBar progressBarL;
-	//private ProgressBar filesizeProgressBar;
 	private static final String DEBUG_TAG = "ShareActivity";
     private TextView tv;
     private TextView noVideoInfo;
     private ListView lv;
     private ArrayAdapter<String> aA;
-    List<String> links = new ArrayList<String>();
-    List<String> codecs = new ArrayList<String>();
-    List<String> qualities = new ArrayList<String>();
-    List<String> stereo = new ArrayList<String>();
-    List<String> sizes = new ArrayList<String>();
-    List<String> itags = new ArrayList<String>();
-    List<String> listEntries = new ArrayList<String>();
+    private List<String> links = new ArrayList<String>();
+    private List<String> codecs = new ArrayList<String>();
+    private List<String> qualities = new ArrayList<String>();
+    private List<String> sizes = new ArrayList<String>();
+    private List<String> itags = new ArrayList<String>();
+    private List<String> listEntries = new ArrayList<String>();
+    private int index = 0;
     private String titleRaw;
     private String basename;
     private int pos;
@@ -130,25 +128,19 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
     private boolean fileRenameEnabled;
     private File chooserFolder;
 	private AsyncDownload asyncDownload;
-	//private AsyncSizeQuery asyncSizeQuery;
 	private AsyncSizesFiller asyncSizesFiller;
 	private boolean isAsyncDownloadRunning = false;
 	private boolean isAsyncSizesFillerRunning = false;
-	//private String videoFileSize;
 	private AlertDialog helpDialog;
-	//private AlertDialog waitBox;
-	//private AlertDialog.Builder  waitBuilder;
 	private AlertDialog.Builder  helpBuilder;
 	private Bitmap img;
 	private ImageView imgView;
 	private String videoId;
 	public static Context sShare;
-	//private boolean showSizesInVideoList;
-	//private boolean showSingleSize;
-	ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(this, R.style.BoxTheme);
+	private ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(this, R.style.BoxTheme);
 	private String[] decryptionArray = null;
 	private String jslink;
-	private String decryptionRule;
+	private String decryptionRule = null;
 	private String decryptionFunction;
 	private DownloadTaskListener dtl;
 	private boolean autoModeEnabled = false;
@@ -316,14 +308,6 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
     protected void onStop() {
         super.onStop();
     	Utils.logger("v", "_onStop", DEBUG_TAG);
-    }
-	
-    @Override
-	protected void onDestroy() {
-		super.onDestroy();
-				
-		// request the thread to stop
-		queueThread.requestStop();
     }*/
     
     @Override
@@ -517,13 +501,8 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         	
             if (result == null || result.equals("e") && !autoModeEnabled) {
             	BugSenseHandler.leaveBreadcrumb("invalid_url");
-            	//tv.setText(getString(R.string.invalid_url_short));
-                //PopUps.showPopUp(getString(R.string.error), getString(R.string.invalid_url), "alert", ShareActivity.this);
-                //titleRaw = getString(R.string.invalid_response);
             	noVideosMsgs("alert", getString(R.string.invalid_url));
             }
-
-            //lv_arr = listEntries.toArray(new String[0]);
             
             if (result != null && result.equals("login_required") && !autoModeEnabled) {
             	BugSenseHandler.leaveBreadcrumb("login_required");
@@ -551,13 +530,9 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
             } else {
             	lv.setAdapter(aA);
             	
-            	//if (YTD.settings.getBoolean("show_size_list", false)) {
-            		asyncSizesFiller = new AsyncSizesFiller();
-            		asyncSizesFiller.execute(links.toArray(new String[0]));
-                //}
+            	asyncSizesFiller = new AsyncSizesFiller();
+            	asyncSizesFiller.execute(links.toArray(new String[0]));
             }
-            
-            Utils.logger("d", "LISTview done with " + aA.getCount() + " items.", DEBUG_TAG);
 
             tv.setText(titleRaw);
             
@@ -575,28 +550,15 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
                 	helpBuilder = new AlertDialog.Builder(boxThemeContextWrapper);
                     helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
                     helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
-                    
-                    /*if (showSizesInVideoList) {
-                    	showSingleSize = true;
-                    } else {
-                    	showSingleSize = YTD.settings.getBoolean("show_size", false);
-                    }*/
+
 					boolean showSize = false;
 					try {
                         if (sizes.get(pos).equals("")) {
-                        	/*if (showSingleSize) {
-                        		showSize = true;
-                        		asyncSizeQuery = new AsyncSizeQuery();
-                        		asyncSizeQuery.execute(links.get(position));
-                        	} else {*/
-                        		helpBuilder.setMessage(titleRaw + 
-	                        			getString(R.string.codec) + " " + codecs.get(pos) + 
-	                					getString(R.string.quality) + " " + qualities.get(pos) + stereo.get(pos));
-                        	//}
+                        	helpBuilder.setMessage(titleRaw + "\n" +
+	                        		getString(R.string.quality) + " " + itags.get(pos));
                         } else {
-                        	helpBuilder.setMessage(titleRaw + 
-        							getString(R.string.codec) + " " + codecs.get(pos) + 
-        							getString(R.string.quality) + " " + qualities.get(pos) + stereo.get(pos) +
+                        	helpBuilder.setMessage(titleRaw +  "\n" +
+        							getString(R.string.quality) + " " + itags.get(pos) +
         							getString(R.string.size) + " " + sizes.get(pos).replace(" - ", ""));
                         }
                         
@@ -661,7 +623,6 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
                         }
                     });
                     
-                    //if (!showSingleSize || (showSizesInVideoList && showSingleSize)) {
                     if (!showSize) {
                     	helpDialog = helpBuilder.create();
                     	
@@ -698,7 +659,6 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
             		} else {
             			builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries2, new DialogInterface.OnClickListener() {
 					    	public void onClick(DialogInterface dialog, int which) {
-					    		//vFilename = composeVideoFilename();
 					    		switch (which) {
 					    			case 0: // copy
 					    				copy(position);
@@ -743,23 +703,17 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 			cb.setPrimaryClip(cmd);
 		}
         
-		private boolean useQualitySuffix() {
-        	boolean enabled = YTD.settings.getBoolean("enable_q_suffix", true);
-        	return enabled;
-        }
-        
 		private String composeVideoFilename() {
-			String composedName;
-        	if (useQualitySuffix()) {
-        		boolean showRes = YTD.settings.getBoolean("show_resolutions", false);
-        		if (showRes) {
-        			composedName = basename + "_" + itags.get(pos).replace("/", "-") + stereo.get(pos) + "." + codecs.get(pos);
-        		} else {
-        			composedName = basename + "_" + qualities.get(pos) + stereo.get(pos) + "." + codecs.get(pos);
-        		}
-        	} else {
-    	    	composedName = basename + stereo.get(pos) + "." + codecs.get(pos);
-        	}
+        	String suffix = itags.get(pos)
+        			.replace("MP4 - ", "")
+        			.replace("WebM - ", "")
+        			.replace("FLV - ", "")
+        			.replace("3GP - ", "")
+        			.replace("/", "-")
+        			.replace(" - ", "_");
+        	
+        	String composedName = basename + "_" + suffix + "." + codecs.get(pos);
+        	
     	    Utils.logger("d", "videoFilename: " + composedName, DEBUG_TAG);
     	    return composedName;
         }
@@ -1083,7 +1037,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 	    if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("small")) aExt = ".mp3";
 	    if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("medium")) aExt = ".aac";
 	    if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("large")) aExt = ".aac";
-	    if (codecs.get(pos).equals("3gpp")) aExt = ".aac";
+	    if (codecs.get(pos).equals("3gp")) aExt = ".aac";
 
     	return aExt;
     }
@@ -1114,15 +1068,21 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         findVideoFilenameBase(content);
         findJs(content);
 
-        int ue = 0;//matchUrlEncodedStreams(content);
-        int as = matchAdaptiveStreams(content);
+        int ue = matchUrlEncodedStreams(content);
+        int as;
+        
+        boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
+        if (asEnabled) {
+        	as = matchAdaptiveStreams(content);
+        } else {
+        	as = 0;
+        }
         
         if ((ue + as) > 0) {
         	return "ok";
         } else {
         	return "e";
         }
-        
     }
 
 	private int matchUrlEncodedStreams(String content) {
@@ -1132,32 +1092,29 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         	Pattern blockPattern = Pattern.compile(",");
             Matcher blockMatcher = blockPattern.matcher(streamsMatcher.group(1));
             if (blockMatcher.find() && !asyncDownload.isCancelled()) {
-            	String[] CQS = streamsMatcher.group(1).split(blockPattern.toString());
-            	int count = (CQS.length-1);
-                Utils.logger("d", "number of entries found: " + count, DEBUG_TAG);
-                int index = 0;
+            	String[] ueBlocks = streamsMatcher.group(1).split(blockPattern.toString());
+            	int count = ueBlocks.length-1;
+                Utils.logger("d", "*** url encoded streams ***", DEBUG_TAG);
                 progressBar1.setIndeterminate(false);
                 decryptionArray = null;
-                while ((index+1) < CQS.length) {
+                while ((index+1) < ueBlocks.length) {
                 	try {
-						CQS[index] = URLDecoder.decode(CQS[index], "UTF-8");
+						ueBlocks[index] = URLDecoder.decode(ueBlocks[index], "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						Log.e(DEBUG_TAG, "UnsupportedEncodingException @ urlBlockMatchAndDecode: " + e.getMessage());
 					}
                 	
                 	asyncDownload.doProgress((int) ((index / (float) count) * 100));
                 	
-                	Utils.logger("v", "block " + index + ": " + CQS[index], DEBUG_TAG);
+                	Utils.logger("v", "block " + index + ": " + ueBlocks[index], DEBUG_TAG);
                 	
-                    codecMatcher(CQS[index], index);
-                    qualityMatcher(CQS[index], index);
-                    stereoMatcher(CQS[index], index);
-                    itagMatcher(CQS[index], index);
-                    linkComposer(CQS[index], index);
+                    codecMatcher(ueBlocks[index], index);
+                    qualityMatcher(ueBlocks[index], index);
+                    itagMatcher(ueBlocks[index], index);
+                    linkComposer(ueBlocks[index], index);
                     
                     index++;
                 }
-                listEntriesBuilder();
             } else {
             	Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
             }
@@ -1175,29 +1132,27 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         	Pattern blockPattern = Pattern.compile(",");
             Matcher blockMatcher = blockPattern.matcher(streamsMatcher.group(1));
             if (blockMatcher.find() && !asyncDownload.isCancelled()) {
-            	String[] CQS = streamsMatcher.group(1).split(blockPattern.toString());
-            	int count = (CQS.length-1);
-                Utils.logger("d", "number of entries found: " + count, DEBUG_TAG);
-                int index = 0;
-                progressBar1.setIndeterminate(false);
-                decryptionArray = null;
-                while ((index+1) < CQS.length) {
+            	String[] aBlocks = streamsMatcher.group(1).split(blockPattern.toString());
+            	int count = aBlocks.length-1;
+                Utils.logger("d", "*** adaptive streams ***", DEBUG_TAG);
+                while ((index+1) < aBlocks.length) {
                 	try {
-						CQS[index] = URLDecoder.decode(CQS[index], "UTF-8");
+						aBlocks[index] = URLDecoder.decode(aBlocks[index], "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						Log.e(DEBUG_TAG, "UnsupportedEncodingException @ urlBlockMatchAndDecode: " + e.getMessage());
 					}
                 	
                 	asyncDownload.doProgress((int) ((index / (float) count) * 100));
                 	
-                	Utils.logger("v", "block " + index + ": " + CQS[index], DEBUG_TAG);
+                	Utils.logger("v", "block " + index + ": " + aBlocks[index], DEBUG_TAG);
                 	
-                	itagMatcher(CQS[index], index);
-                    linkComposer(CQS[index], index);
+                	codecMatcher(aBlocks[index], index);
+                    qualityMatcher(aBlocks[index], index);
+                	itagMatcher(aBlocks[index], index);
+                    linkComposer(aBlocks[index], index);
                     
                     index++;
                 }
-                listEntriesBuilderForAdaptiveStreams();
             } else {
             	Utils.logger("d", "asyncDownload cancelled @ 'matchAdaptiveStreams' match", DEBUG_TAG);
             }
@@ -1212,6 +1167,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 
     	protected void onPreExecute() {
     		isAsyncSizesFillerRunning = true;
+    		Utils.logger("d", "*** sizes ***", DEBUG_TAG);
     	}
 
 		@Override
@@ -1239,8 +1195,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 			sizes.add(index, " - " + newValue);
     		
     		listEntries.clear();
-    		//listEntriesBuilder();
-    		listEntriesBuilderForAdaptiveStreams();
+    		listEntriesBuilder();
 
 			aA.notifyDataSetChanged();
     	}
@@ -1264,33 +1219,8 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         }
         Utils.logger("d", "findVideoFilenameBase: " + basename, DEBUG_TAG);
     }
-
-    private void listEntriesBuilder() {
-    	Iterator<String> codecsIter = codecs.iterator();
-        Iterator<String> qualitiesIter = qualities.iterator();
-        Iterator<String> stereoIter = stereo.iterator();
-        Iterator<String> sizesIter = sizes.iterator();
-        Iterator<String> itagsIter = itags.iterator();
-
-        boolean showRes = YTD.settings.getBoolean("show_resolutions", false);
-    	
-        while (codecsIter.hasNext()) {
-        	try {	        	
-	        	String res;
-				if (showRes) {
-	        		res = itagsIter.next();
-	        	} else {
-	        		res = qualitiesIter.next();
-	        	}
-				listEntries.add(codecsIter.next().toUpperCase(Locale.ENGLISH).replace("WEBM", "WebM") + 
-						" - " + res + stereoIter.next() + sizesIter.next());
-        	} catch (NoSuchElementException e) {
-        		listEntries.add("//");
-        	}
-        }
-    }
     
-    private void listEntriesBuilderForAdaptiveStreams() {
+    private void listEntriesBuilder() {
     	Iterator<String> sizesIter = sizes.iterator();
         Iterator<String> itagsIter = itags.iterator();
         while (itagsIter.hasNext()) {        	
@@ -1314,7 +1244,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
     		if (urlMatcher2.find()) {
         		url = urlMatcher2.group(1);
         	} else {
-        		Log.e(DEBUG_TAG, "url: " + url);
+        		Log.e(DEBUG_TAG, "index: " + i + "url: " + url);
         	}
     	}
 
@@ -1323,39 +1253,39 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
     	Matcher sigMatcher = sigPattern.matcher(block);
 		if (sigMatcher.find()) {
     		sig = "signature=" + sigMatcher.group(1);
-    		Utils.logger("d", "non-ecrypted signature found on step 1", DEBUG_TAG);
+    		Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 1", DEBUG_TAG);
     	} else {
     		Pattern sigPattern2 = Pattern.compile("sig=(.+?)$");
     		Matcher sigMatcher2 = sigPattern2.matcher(block);
     		if (sigMatcher2.find()) {
     			sig = "signature=" + sigMatcher2.group(1);
-    			Utils.logger("d", "non-ecrypted signature found on step 2", DEBUG_TAG);
+    			Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 2", DEBUG_TAG);
         	} else {
         		Pattern sigPattern3 = Pattern.compile("sig=([[0-9][A-Z]]{39,40}\\.[[0-9][A-Z]]{39,40})");
         		Matcher sigMatcher3 = sigPattern3.matcher(block);
         		if (sigMatcher3.find()) {
         			sig = "signature=" + sigMatcher3.group(1);
-        			Utils.logger("d", "non-ecrypted signature found on step 3", DEBUG_TAG);
+        			Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 3", DEBUG_TAG);
         		} else {
         			Pattern sigPattern4 = Pattern.compile("^s=(.+?)\\\\u0026");
         			Matcher sigMatcher4 = sigPattern4.matcher(block);
         			if (sigMatcher4.find()) {
-        				Utils.logger("d", "encrypted signature found on step 1; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
+        				Utils.logger("d", "index: " + i + ", encrypted signature found on step 1; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
         				sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
         			} else {
         				Pattern sigPattern5 = Pattern.compile("\\\\u0026s=(.+?)\\\\u0026");
         	    		Matcher sigMatcher5 = sigPattern5.matcher(block);
         	    		if (sigMatcher5.find()) {
-        	    			Utils.logger("d", "encrypted signature found on step 2; length is " + sigMatcher5.group(1).length(), DEBUG_TAG);
+        	    			Utils.logger("d", "index: " + i + ", encrypted signature found on step 2; length is " + sigMatcher5.group(1).length(), DEBUG_TAG);
         	    			sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
         	    		} else {
         	    			Pattern sigPattern6 = Pattern.compile("\\\\u0026s=(.+?)$");
                 			Matcher sigMatcher6 = sigPattern6.matcher(block);
                 			if (sigMatcher6.find()) {
-                				Utils.logger("d", "encrypted signature found on step 3; length is " + sigMatcher6.group(1).length(), DEBUG_TAG);
+                				Utils.logger("d", "index: " + i + ", encrypted signature found on step 3; length is " + sigMatcher6.group(1).length(), DEBUG_TAG);
                 				sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
 		        			} else {
-		        				Log.e(DEBUG_TAG, "sig: " + sig);
+		        				Utils.logger("w", "index: " + i + ", sig: " + sig, DEBUG_TAG);
 		        			}
         	    		}
         			}
@@ -1488,88 +1418,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
     }
 
-	/*private class AsyncSizeQuery extends AsyncTask<String, Void, String> {
-    	
-    	protected void onPreExecute() {
-    		waitBuilder = new AlertDialog.Builder(boxThemeContextWrapper);
-    		LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-    	    View barView = adbInflater.inflate(R.layout.wait_for_filesize, null);
-    	    filesizeProgressBar = (ProgressBar) barView.findViewById(R.id.filesizeProgressBar);
-    	    filesizeProgressBar.setVisibility(View.VISIBLE);
-    	    waitBuilder.setView(barView);
-    	    waitBuilder.setIcon(android.R.drawable.ic_dialog_info);
-    	    waitBuilder.setTitle(R.string.wait);
-    	    waitBuilder.setMessage(titleRaw + 
-    	    		getString(R.string.codec) + " " + codecs.get(pos) + 
-					getString(R.string.quality) + " " + qualities.get(pos) + stereo.get(pos));*/
-    	    
-    	    /*
-    	     * next two listener from StackOverflow:
-    	     * http://stackoverflow.com/questions/7801971/android-how-to-override-onbackpressed-in-alertdialog
-    	     * 
-    	     * Q & A1:  http://stackoverflow.com/users/964589/pooks
-    	     * A2: http://stackoverflow.com/users/2104941/lettings-mall (modified)
-    	     */
-    	    
-    	    // this handles the BACK button only
-    	    /*waitBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
-    	        @Override
-    	        public boolean onKey (DialogInterface dialog, int keyCode, KeyEvent event) {
-    	            if (keyCode == KeyEvent.KEYCODE_BACK && 
-    	                event.getAction() == KeyEvent.ACTION_UP && 
-    	                !event.isCanceled()) {
-    	                dialog.cancel();
-    	                Utils.logger("v", "canceling asyncSizeQuery", DEBUG_TAG);
-    	                asyncSizeQuery.cancel(true);
-    	                return true;
-    	            }
-    	            return false;
-    	        }
-    	    });*/
-    	    
-    	    // this handles both the BACK button and the click OUTSIDE the dialog
-    	    /*waitBuilder.setOnCancelListener(new OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    dialog.cancel();
-                    Utils.logger("v", "canceling asyncSizeQuery", DEBUG_TAG);
-	                asyncSizeQuery.cancel(true);
-                }
-            });
-    	    
-    	    waitBox = waitBuilder.create();
-    	    if (! ((Activity) ShareActivity.this).isFinishing()) {
-	        	waitBox.show();
-    		}
-    	}
-
-		protected String doInBackground(String... urls) {
-            // params comes from the execute() call: params[0] is the url.
-            return getVideoFileSize(urls[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-        	
-        	filesizeProgressBar.setVisibility(View.GONE);
-        	if (! ((Activity) ShareActivity.this).isFinishing()) {
-        		waitBox.dismiss();
-        	}
-        	
-        	videoFileSize = result;
-        	Utils.logger("d", "size " + pos + ": " + result, DEBUG_TAG);
-        	helpBuilder.setMessage(titleRaw + 
-        			getString(R.string.codec) + " " + codecs.get(pos) + 
-					getString(R.string.quality) + " " + qualities.get(pos) + stereo.get(pos) +
-					getString(R.string.size) + " " + videoFileSize);
-        	helpDialog = helpBuilder.create();
-            if (! ((Activity) ShareActivity.this).isFinishing()) {
-	        	helpDialog.show();
-    		}
-        }
-	}*/
-    
-    private String getVideoFileSize(String link) {
+	private String getVideoFileSize(String link) {
 		try {
 			final URL url = new URL(link);
 			URLConnection ucon = url.openConnection();
@@ -1582,14 +1431,14 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 	}
 
     private void codecMatcher(String current, int i) {
-        Pattern codecPattern = Pattern.compile("(webm|mp4|flv|3gpp)");
+        Pattern codecPattern = Pattern.compile("(webm|mp4|flv|3gp)");
         Matcher codecMatcher = codecPattern.matcher(current);
         if (codecMatcher.find()) {
             codecs.add(codecMatcher.group());
         } else {
-            codecs.add("NoMatch");
+            codecs.add("video");
         }
-        //Utils.logger("d", "index: " + i + ", Codec: " + codecs.get(i), DEBUG_TAG);
+        Utils.logger("d", "index: " + i + ", Codec: " + codecs.get(i), DEBUG_TAG);
     }
 
     private void qualityMatcher(String current, int i) {
@@ -1598,12 +1447,12 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
         if (qualityMatcher.find()) {
             qualities.add(qualityMatcher.group().replace("highres", "Original"));
         } else {
-            qualities.add("NoMatch");
+            qualities.add("-");
         }
-        //Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
+        Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
     }
     
-    private void stereoMatcher(String current, int i) {
+    /*private void stereoMatcher(String current, int i) {
         Pattern qualityPattern = Pattern.compile("stereo3d=1");
         Matcher qualityMatcher = qualityPattern.matcher(current);
         if (qualityMatcher.find()) {
@@ -1612,7 +1461,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
             stereo.add("");
         }
         //Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
-    }
+    }*/
     
     private void itagMatcher(String current, int i) {
     	String res = "-";
@@ -1637,68 +1486,71 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 		if (itag != null) {
 			try {
 				switch (Integer.parseInt(itag)) {
+				// ***************************
+				// *** url encoded streams ***
+				// ***************************
 				case 5:
-					res = "240p";
+					res = "FLV - 240p";
 					break;
 				case 6:
-					res = "270p";
+					res = "FLV - 270p";
 					break;
 				case 17:
-					res = "144p";
+					res = "3GP - 144p";
 					break;
 				case 18:
-					res = "270p/360p";
+					res = "MP4 - 270p/360p";
 					break;
 				case 22:
-					res = "720p";
+					res = "MP4 - 720p";
 					break;
 				case 34:
-					res = "360p";
+					res = "FLV - 360p";
 					break;
 				case 35:
-					res = "480p";
+					res = "FLV - 480p";
 					break;
 				case 36:
-					res = "240p";
+					res = "3GP - 240p";
 					break;
 				case 37:
-					res = "1080p";
+					res = "MP4 - 1080p";
 					break;
 				case 38:
-					res = "Original";
+					res = "MP4 - Original";
 					break;
 				case 43:
-					res = "360p";
+					res = "WebM - 360p";
 					break;
 				case 44:
-					res = "480p";
+					res = "WebM - 480p";
 					break;
 				case 45:
-					res = "720p";
+					res = "WebM - 720p";
 					break;
 				case 46:
-					res = "1080p";
+					res = "WebM - 1080p";
 					break;
 				case 82:
-					res = "360p";
+					res = "MP4 - 360p - 3D";
 					break;
 				case 83:
-					res = "240p";
+					res = "MP4 - 240p - 3D";
 					break;
 				case 84:
-					res = "720p";
+					res = "MP4 - 720p - 3D";
 					break;
 				case 85:
-					res = "520p";
+					res = "MP4 - 520p - 3D";
 					break;
 				case 100:
-					res = "360p";
+					res = "WebM - 360p - 3D";
 					break;
 				case 101:
-					res = "360p";
+					res = "WebM - 360p - 3D";
 					break;
 				case 102:
-					res = "720p";
+					res = "WebM - 720p - 3D";
 					break;
 				// ************************
 				// *** adaptive streams ***
@@ -1719,22 +1571,22 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 					res = "VO - MP4 - 1080p";
 					break;
 				case 139:
-					res = "AO - MP4 - low q.";
+					res = "AO - MP4 - Low-Q";
 					break;
 				case 140:
-					res = "AO - MP4 - med q.";
+					res = "AO - MP4 - Med-Q";
 					break;
 				case 141:
-					res = "AO - MP4 - hi q.";
+					res = "AO - MP4 - Hi-Q";
 					break;
 				case 160:
 					res = "VO - MP4 - 144p";
 					break;
 				case 171:
-					res = "AO - WebM - med q.";
+					res = "AO - WebM - Med-Q";
 					break;
 				case 172:
-					res = "AO - WebM - hi q.";
+					res = "AO - WebM - Hi-Q";
 					break;
 				case 242:
 					res = "VO - WebM - 240p";
@@ -1752,7 +1604,7 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 					res = "VO - WebM - 480p";
 					break;
 				case 247:
-					res = "VO - WebM - 72p";
+					res = "VO - WebM - 720p";
 					break;
 				case 248:
 					res = "VO - WebM - 1080p";
@@ -1765,25 +1617,6 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 		}
 		return res;
 	}
-	
-	/*
-	 *  242    WEB    320 x 240   VOX
- 		243    WEB    480 x 360   VOX
- 		244    WEB    640 x 480   VOX
- 		245    WEB    640 x 480   VOX
- 		246    WEB    640 x 480   VOX
- 		247    WEB   1280 x 720   VOX
- 		248    WEB   1920 x 1080  VOX
-	 */
-	
-    /*private String generateThumbUrl() {
-		// link example "http://i2.ytimg.com/vi/8wr-uQX1Grw/mqdefault.jpg"
-    	Random random = new Random();
-    	int num = random.nextInt(4 - 1) + 1;
-    	String url = "http://i" + num + ".ytimg.com/vi/" + videoId + "/mqdefault.jpg";
-    	Utils.logger("d", "thumbnail url: " + url, DEBUG_TAG);
-    	return url;
-	}*/
     
     private String[] generateThumbUrls() {
     	

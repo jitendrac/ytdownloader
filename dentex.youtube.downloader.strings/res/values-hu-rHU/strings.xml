@@ -254,19 +254,11 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	
     <!-- -->
     <string name="settings_cat_files">Videófájlok</string>
-    <string name="enable_q_suffix_title">Minőség utótag mellékelése</string>
-    <string name="enable_q_suffix_summary">Videóminőség hozzáadása a fájlnévhez</string>
     <string name="enable_rename_title">Fájl átnevezés engedélyezése</string>
     <string name="enable_rename_summary">Videófájl átnevezése letöltés előtt (csak helyi letöltés esetén)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Előzetes kép mutatása</string>
+	<string name="show_thumb_title">Előzetes kép mutatása</string>
     <string name="show_thumb_summary">Előzetes kép letöltése a videólistával</string>
-    <string name="show_resolutions_title">Mutassa a video felbontását</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Speciális beállítások</string>
     <string name="enable_advanced_features_title">Kiterjesztett funkciók engedélyezése</string>
@@ -285,6 +277,9 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     </string-array>
     
     <string name="remove_video_title">Videó eltávolítás</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Értesítések</string>

@@ -254,19 +254,11 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	
     <!-- -->
     <string name="settings_cat_files">Video bestanden</string>
-    <string name="enable_q_suffix_title">Kwaliteit achtervoegsel toevoegen</string>
-    <string name="enable_q_suffix_summary">De video kwaliteit aan het eind van het bestand toevoegen</string>
     <string name="enable_rename_title">Activeer bestand hernoemen</string>
     <string name="enable_rename_summary">Hernoem het video bestand voor het downloaden (alleen voor lokale download)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Toon voorbeeld afbeelding</string>
+	<string name="show_thumb_title">Toon voorbeeld afbeelding</string>
     <string name="show_thumb_summary">Download een voorbeeld afbeelding met de videolijst</string>
-    <string name="show_resolutions_title">Toon video resoluties</string>
-    <string name="show_resolutions_summary">Vervang de kwaliteit indicatie met de video resolutie</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Geavanceerd</string>
     <string name="enable_advanced_features_title">Geavanceerde functies inschakelen</string>
@@ -285,6 +277,9 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     </string-array>
     
     <string name="remove_video_title">Video verwijdering</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Meldingen</string>

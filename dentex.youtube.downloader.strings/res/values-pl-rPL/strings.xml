@@ -255,19 +255,11 @@ Aplikacja może zostać wybrana poprzez przycisk udostępnij w aplikacji YouTube
 	
     <!-- -->
     <string name="settings_cat_files">Pliki wideo</string>
-    <string name="enable_q_suffix_title">Dołącz sufiks jakości</string>
-    <string name="enable_q_suffix_summary">Dodaj informację na temat jakości filmu na końcu nazwy pliku</string>
     <string name="enable_rename_title">Włącz opcję zmiany nazw plików</string>
     <string name="enable_rename_summary">Zmień nazwę pliku filmu przed pobraniem go(tylko dla lokalnych pobrań)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Pokaż podgląd</string>
+	<string name="show_thumb_title">Pokaż podgląd</string>
     <string name="show_thumb_summary">Pobierz obrazek podglądu razem z listą filmów</string>
-    <string name="show_resolutions_title">Pokaż rozdzielczość wideo</string>
-    <string name="show_resolutions_summary">Zamień wskaźnik jakości na rozdzielczość wideo</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Zaawansowane</string>
     <string name="enable_advanced_features_title">Włącz Zaawansowane Ustawienia</string>
@@ -286,6 +278,9 @@ Aplikacja może zostać wybrana poprzez przycisk udostępnij w aplikacji YouTube
     </string-array>
     
     <string name="remove_video_title">Usuwanie filmu</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Powiadomienia</string>

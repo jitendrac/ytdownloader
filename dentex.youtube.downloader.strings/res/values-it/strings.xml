@@ -254,19 +254,11 @@
 	
     <!-- -->
     <string name="settings_cat_files">File video</string>
-    <string name="enable_q_suffix_title">Apponi suffisso qualità</string>
-    <string name="enable_q_suffix_summary">Aggiungi la qualità del video alla fine del nome del file</string>
     <string name="enable_rename_title">Abilita rinomina file</string>
     <string name="enable_rename_summary">Rinomina il file video prima di scaricarlo (solo per il download locale)</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">Mostra un\'immagine di anteprima</string>
+	<string name="show_thumb_title">Mostra un\'immagine di anteprima</string>
     <string name="show_thumb_summary">Scarica un\'immagine di anteprima, insieme alla lista dei video</string>
-    <string name="show_resolutions_title">Mostra le risoluzioni dei video</string>
-    <string name="show_resolutions_summary">Sostituisci l\'indicazione della qualità con la risoluzione video</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Avanzate</string>
     <string name="enable_advanced_features_title">Abilità funzionalità avanzate</string>
@@ -285,6 +277,9 @@
     </string-array>
     
     <string name="remove_video_title">Rimozione del video</string>
+    
+    <string name="enable_adaptive_title">Ottieni flussi secondari (sperimentale)</string>
+    <string name="enable_adaptive_summary">Aggiungi flussi solo-video e/o solo-audio addizionali (se disponibili) alla lista video</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notifiche</string>

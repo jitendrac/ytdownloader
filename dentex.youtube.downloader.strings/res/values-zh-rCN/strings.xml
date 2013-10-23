@@ -252,19 +252,11 @@
 	
     <!-- -->
     <string name="settings_cat_files">影片档案</string>
-    <string name="enable_q_suffix_title">附上影片画质词尾</string>
-    <string name="enable_q_suffix_summary">在档案名称后面增加影片画质</string>
     <string name="enable_rename_title">允许修改档案名称</string>
     <string name="enable_rename_summary">在下载之前更改影片档案名称（只限手机下载）</string>
-<!--     <string name="show_size_title">Show file size</string> -->
-<!--     <string name="show_size_summary">Fetch the video file size on download confirmation message (slower)</string> -->
-<!--     <string name="show_size_list_title">Show all video sizes</string> -->
-<!--     <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string> -->
-    <string name="show_thumb_title">显示预览相片</string>
+	<string name="show_thumb_title">显示预览相片</string>
     <string name="show_thumb_summary">同时下载预览相片和影片目录</string>
-    <string name="show_resolutions_title">Show video resolutions</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">高级</string>
     <string name="enable_advanced_features_title">Enable Advanced Features</string>
@@ -283,6 +275,9 @@
     </string-array>
     
     <string name="remove_video_title">移除影片</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">通知</string>
