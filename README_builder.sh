@@ -26,6 +26,13 @@ echo -e "\n\`$name\`" >> $dest
 echo -e "\nMD5 checksum: \`"$md5 >> $dest
 
 echo "
+DISCLAIMER
+================================================================
+    You, the user, accept the full responsibility for the usage of 
+    this application, excluding the developer from any liability about 
+    any consequence that may derive. Thus, this application has to be 
+    considered as a mere technical service provider.
+    
 NOTICE
 ================================================================
     Complying with the GPL below is mandatory.
