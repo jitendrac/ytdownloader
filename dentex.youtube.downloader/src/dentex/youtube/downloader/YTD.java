@@ -236,11 +236,12 @@ public class YTD extends Application implements QueueThreadListener{
 				int total = queueThread.getTotalQueued();
 				int completed = queueThread.getTotalCompleted();
 
-				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
+				Utils.logger("i", String.format("Auto audio extractions completed: "
+						+ "%d of %d", completed, total), DEBUG_TAG);
 				
 				if (completed == total) {
 					queueThread.pushNotificationText(ctx,
-							String.format("All FFmpeg tasks completed", completed, total));
+							String.format("All audio extractions completed", completed, total));
 				} else {
 					queueThread.pushNotificationText(ctx,
 							String.format("%d of %d audio extractions completed", completed, total));

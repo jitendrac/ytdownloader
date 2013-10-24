@@ -171,8 +171,10 @@ public class SettingsActivity extends Activity {
             } else {
             	chooserSummary = YTD.settings.getString("CHOOSER_FOLDER", "");
             }
+            
             initSwapPreference();
             initMp3BitratePreference();
+            initFFmpegAutoCb();
             
             for(int i=0;i<getPreferenceScreen().getPreferenceCount();i++){
                 initSummary(getPreferenceScreen().getPreference(i));
@@ -301,9 +303,9 @@ public class SettingsActivity extends Activity {
 			advanced.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
-					boolean audioExtrEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
+					boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
 					boolean ffmpegInstalled = new File(dstDir, "ffmpeg").exists();
-					if (!audioExtrEnabled) {
+					if (!advancedFeatures) {
 						cpuVers = armCpuVersion();
 						boolean isCpuSupported = (cpuVers > 0) ? true : false;
 						Utils.logger("d", "isCpuSupported: " + isCpuSupported, DEBUG_TAG);
@@ -579,6 +581,16 @@ public class SettingsActivity extends Activity {
             	p.setEnabled(false);
 			}
 		}
+		
+		private void initFFmpegAutoCb() {
+			boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
+			CheckBoxPreference cb = (CheckBoxPreference) findPreference("ffmpeg_auto_cb");
+			if (advancedFeatures) {
+				cb.setEnabled(true);
+			} else {
+				cb.setEnabled(false);
+			}
+		}
         
 		/*@Override
 	    public void onStart() {
@@ -612,6 +624,7 @@ public class SettingsActivity extends Activity {
         	updatePrefSummary(findPreference(key));
         	initSwapPreference();
         	initMp3BitratePreference();
+        	initFFmpegAutoCb();
         }
 
 		private void initSummary(Preference p){

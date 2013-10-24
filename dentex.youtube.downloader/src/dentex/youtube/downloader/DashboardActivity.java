@@ -114,7 +114,7 @@ import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
-public class DashboardActivity extends Activity/* implements QueueThreadListener */{
+public class DashboardActivity extends Activity {
 	
 	private final static String DEBUG_TAG = "DashboardActivity";
 	public static boolean isDashboardRunning;
@@ -178,23 +178,12 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 	
 	private Timer autoUpdate;
 	public static boolean isLandscape;
-	
-	//private QueueThread queueThread;
-	//private Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("DashboardActivity_onCreate");
 		sDashboard = getBaseContext();
-		
-        // Create and launch the download thread
-        //queueThread = new QueueThread(this);
-        //queueThread.start();
-        
-        // Create the Handler. It will implicitly bind to the Looper
-        // that is internally created for this thread (since it is the UI thread)
-        //handler = new Handler();
 		
 		// Theme init
     	Utils.themeInit(this);
@@ -622,7 +611,7 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 	    			// remove references for the old file
 	    			String mediaUriString = Utils.getContentUriFromFilePath(in.getAbsolutePath(), getContentResolver());
 	    			//Utils.logger("d", "mediaString: " + mediaUriString, DEBUG_TAG);
-	    			removeFromMediaStore(in, mediaUriString);
+	    			Utils.removeFromMediaStore(sDashboard, in, mediaUriString);
 	    			
 	    			// scan the new file
 	    			Utils.scanMedia(DashboardActivity.this, 
@@ -825,7 +814,8 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 						Maps.removeFromAllMaps(ID);
 						
 						//TODO Auto FFmpeg task
-						if (YTD.settings.getBoolean("ffmpeg_auto_cb", false)) {
+						if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && 
+								!currentItem.getFilename().contains("_VO_")) { //TODO test for VO videos
 							Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 							
 							String[] bitrateData = null;
@@ -850,10 +840,13 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 							if (!audioFile.exists()) { 
 								File videoFileToConvert = new File(currentItem.getPath(), currentItem.getFilename());
 								
-								YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(sDashboard, 
+								YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
+										sDashboard, 
 										videoFileToConvert, audioFile, 
 										brType, brValue, 
-										currentItem.getYtId(), currentItem.getPos()));
+										currentItem.getId(), 
+										currentItem.getYtId(), 
+										currentItem.getPos()), 0);
 							}
 						}
 					}
@@ -1269,27 +1262,13 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 			String mediaUriString;
 			try {
 				mediaUriString = Utils.getContentUriFromFilePath(fileToDel.getAbsolutePath(), getContentResolver());
-				removeFromMediaStore(fileToDel, mediaUriString);
+				Utils.removeFromMediaStore(sDashboard, fileToDel, mediaUriString);
 			} catch (NullPointerException e) {
 				Utils.logger("w", fileToDel.getName() + " UriString NOT found", DEBUG_TAG);
 			}
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	private void removeFromMediaStore(File fileToDel, String mediaUriString) {
-		if (mediaUriString != null) {
-			Uri mediaUri = Uri.parse(mediaUriString);
-			// remove media file reference from MediaStore library via ContentResolver
-			if (getContentResolver().delete(mediaUri, null, null) > 0) {
-				Utils.logger("d", mediaUri.toString() + " Removed", DEBUG_TAG);
-			} else {
-				Utils.logger("w", mediaUri.toString() + " NOT removed", DEBUG_TAG);
-			}
-		} else {
-			Utils.logger("w", "mediaUriString for " + fileToDel.getName() + " null", DEBUG_TAG);
 		}
 	}
 
@@ -1524,7 +1503,7 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 	        	if (ext.equals("WEBM")) {
 	        		aExt = ".ogg";
 	        		go = true;
-	        	} else if (ext.equals("MP4") || ext.equals("3GPP")) {
+	        	} else if (ext.equals("MP4") || ext.equals("3GP")) {
 	        		aExt = ".aac";
 	        		go = true;
 	        	} else if (ext.equals("FLV")) {
@@ -1691,7 +1670,7 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 			}
 		} else {
 			if (!bmFile.exists()) {
-				YTD.queueThread.enqueueTask(new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile));
+				YTD.queueThread.enqueueTask(new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile), 1);
 			}
 		}
 	}
@@ -2515,25 +2494,4 @@ public class DashboardActivity extends Activity/* implements QueueThreadListener
 		
 		return new String[] { bitrateType, bitrateValue };
 	}
-
-	/*@Override
-	public void handleQueueThreadUpdate() {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				int total = queueThread.getTotalQueued();
-				int completed = queueThread.getTotalCompleted();
-
-				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
-				
-				if (completed == total) {
-					queueThread.pushNotificationText(sDashboard,
-							String.format("All FFmpeg tasks completed", completed, total));
-				} else {
-					queueThread.pushNotificationText(sDashboard,
-							String.format("%d of %d audio extractions completed", completed, total));
-				}	
-			}
-		});
-	}*/
 }

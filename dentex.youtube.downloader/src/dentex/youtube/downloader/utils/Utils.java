@@ -237,6 +237,20 @@ public class Utils {
 		
 		return new String[] { bitrateType, bitrateValue };
 	}
+	
+	public static void removeFromMediaStore(Context ctx, File fileToDel, String mediaUriString) {
+		if (mediaUriString != null) {
+			Uri mediaUri = Uri.parse(mediaUriString);
+			// remove media file reference from MediaStore library via ContentResolver
+			if (ctx.getContentResolver().delete(mediaUri, null, null) > 0) {
+				Utils.logger("d", mediaUri.toString() + " Removed", DEBUG_TAG);
+			} else {
+				Utils.logger("w", mediaUri.toString() + " NOT removed", DEBUG_TAG);
+			}
+		} else {
+			Utils.logger("w", "mediaUriString for " + fileToDel.getName() + " null", DEBUG_TAG);
+		}
+	}
     
     // --------------------------------------------------------------------------
     
@@ -531,7 +545,7 @@ public class Utils {
         Uri videosUri = null;
         String[] projection = null;
         String dataType = null;
-        if (ext.equals("mp4") || ext.equals("3gpp") || ext.equals("webm")) {
+        if (ext.equals("mp4") || ext.equals("3gp") || ext.equals("webm")) {
         	videosUri = MediaStore.Video.Media.getContentUri("external");
         	projection = vprojection;
         	dataType = MediaStore.Video.VideoColumns.DATA;

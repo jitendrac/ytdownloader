@@ -3,10 +3,13 @@
     <string name="changelog">
         \n v3.1 - Xxx XX 2013
         \n-----------------------------------
-        \n[ ] option to auto enqueue FFmpeg 
+        \n[ ] option to auto-enqueue FFmpeg 
         \n    tasks on downloads completion
         \n[x] Dashboard import feature now 
         \n    supports FLV video
+        \n[x] support for video-only and
+        \n    audio-only "secondary" streams
+        \n    from YouTube (experimental)
         \n[x] various bug fixes
         \n
         \n v3.0.2 - Oct 11 2013

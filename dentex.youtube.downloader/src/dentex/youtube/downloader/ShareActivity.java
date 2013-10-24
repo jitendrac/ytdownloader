@@ -95,7 +95,7 @@ import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.RhinoRunner;
 import dentex.youtube.downloader.utils.Utils;
 
-public class ShareActivity extends Activity /*implements QueueThreadListener*/{
+public class ShareActivity extends Activity {
 	
 	private ProgressBar progressBar1;
 	private ProgressBar progressBarD;
@@ -146,23 +146,13 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 	private boolean autoModeEnabled = false;
 	private boolean restartModeEnabled = false;
 	private String extraId;
-
-	//private QueueThread queueThread;
-	//private Handler handler;
+	private boolean oneAutoFFmpegTaskSent = false;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
         sShare = getBaseContext();
-        
-        // Create and launch the download thread
-        //queueThread = new QueueThread(YTD.qtl);
-        //queueThread.start();
-        
-        // Create the Handler. It will implicitly bind to the Looper
-        // that is internally created for this thread (since it is the UI thread)
-        //handler = new Handler();
         
     	// Theme init
     	Utils.themeInit(this);
@@ -906,8 +896,10 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 				Maps.removeFromAllMaps(ID);
 				
 				// TODO Auto FFmpeg task
-				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false)) {
+				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !oneAutoFFmpegTaskSent) {
 					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
+					
+					oneAutoFFmpegTaskSent = true;
 					
 					String[] bitrateData = null;
 					String brType = null;
@@ -931,11 +923,17 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 					if (!audioFile.exists()) { 
 						File videoFileToConvert = new File(path.getPath(), vFilename);
 						
-						YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(sShare, 
+						YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
+								sShare, 
 								videoFileToConvert, audioFile, 
 								brType, brValue, 
-								videoId, pos));
+								String.valueOf(ID), 
+								videoId, 
+								pos), 0);
 					}
+				} else {
+					Utils.logger("v", "Auto FFmpeg task for ID " + ID
+							+ " not enabled OR already sent for this video", DEBUG_TAG);
 				}
 			}
 			
@@ -1708,25 +1706,4 @@ public class ShareActivity extends Activity /*implements QueueThreadListener*/{
 			Utils.logger("d", "different or null YTD signature. Update check cancelled.", DEBUG_TAG);
 		}
 	}
-
-	/*@Override
-	public void handleQueueThreadUpdate() {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				int total = queueThread.getTotalQueued();
-				int completed = queueThread.getTotalCompleted();
-
-				Log.i(DEBUG_TAG, String.format("Auto FFmpeg tasks completed: %d of %d", completed, total));
-				
-				if (completed == total) {
-					queueThread.pushNotificationText(sShare,
-							String.format("All FFmpeg tasks completed", completed, total));
-				} else {
-					queueThread.pushNotificationText(sShare,
-							String.format("%d of %d audio extractions completed", completed, total));
-				}
-			}
-		});
-	}*/
 }

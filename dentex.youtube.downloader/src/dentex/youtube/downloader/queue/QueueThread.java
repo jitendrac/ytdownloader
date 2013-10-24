@@ -22,6 +22,8 @@ public final class QueueThread extends Thread {
 	
 	private int totalCompleted;
 	
+	//private int type;
+	
 	private QueueThreadListener listener;
 	
 	public QueueThread(QueueThreadListener listener) {
@@ -76,7 +78,7 @@ public final class QueueThread extends Thread {
 		});
 	}
 	
-	public synchronized void enqueueTask(final Runnable task) {
+	public synchronized void enqueueTask(final Runnable task, final int i) {
 		// Wrap TestTask into another Runnable to track the statistics
 		handler.post(new Runnable() {
 			@Override
@@ -86,17 +88,20 @@ public final class QueueThread extends Thread {
 				} finally {					
 					// register task completion
 					synchronized (QueueThread.this) {
-						totalCompleted++;
+						// i is set to 0 when the task is an Audio Extraction
+						if (i == 0) totalCompleted++;
 					}
 					// tell the listener something has happened
-					signalUpdate();
+					if (i == 0) signalUpdate();
 				}				
 			}
 		});
 		
-		totalQueued++;
-		// tell the listeners the queue is now longer
-		signalUpdate();
+		if (i == 0) {
+			totalQueued++;
+			// tell the listeners the queue is now longer
+			signalUpdate();
+		}
 	}
 	
 	public synchronized int getTotalQueued() {
@@ -106,6 +111,10 @@ public final class QueueThread extends Thread {
 	public synchronized int getTotalCompleted() {
 		return totalCompleted;
 	}
+	
+	/*public synchronized int getType() {
+		return type;
+	}*/
 	
 	// Please note! This method will normally be called from the queue thread.
 	// Thus, it is up for the listener to deal with that (in case it is a UI component,
