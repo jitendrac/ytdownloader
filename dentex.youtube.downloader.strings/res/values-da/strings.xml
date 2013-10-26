@@ -62,8 +62,6 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     <string name="notification_no_downloads">Ingen igangværende downloads</string>
     <string name="long_click_title">Håndter valgte link:</string>
     <string name="ffmpeg_ready">FFmpeg klar.</string>
-    <string name="confirm_audio_checkbox1">Ekstrakt lyd efter download</string>
-    <string name="confirm_audio_checkbox2">\n(som defineret i indstillinger)</string>
     <string name="login_required">Login to YouTube may be required.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">Ingen video tilgængelig.</string>
@@ -114,7 +112,7 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     <string name="upgrade_network_error">Ikke muligt at hente opdateret data.\nPrøv senere.</string>
     <string name="upgrade_bad_md5_dialog_msg">Den downloadede pakke er korrupt.\nDen vil blive slettet nu.\nTryk OK for at downloade den igen.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD-video</string>
     <string name="copy_error">Fejl under kopiering.</string>
@@ -128,6 +126,8 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     <string name="audio_conv_completed">Lydkodning til mp3 gennemført.</string>
     <string name="audio_extr_error">Fejl under lydekstration.</string>
     <string name="audio_conv_error">Fejl under lydkodning til mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

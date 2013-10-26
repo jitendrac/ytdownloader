@@ -467,7 +467,7 @@
         	 - http://openideals.com/guardian
         	 - https://github.com/guardianproject/android-ffmpeg-java
         \n
-		\nObserver.java: reference - https://gist.github.com/shirou/659180
+		\nObserver.java -  reference: https://gist.github.com/shirou/659180
         \n
 		\nSectionedAdapter.java: GPL-3.0
 			 - Copyright &#169; 2008-2010 CommonsWare, LLC
@@ -488,7 +488,11 @@
         \n
 		\nJavascript function \"decryptSignature\" from the Greasemonkey script 
 			http://userscripts.org/scripts/show/25105 (MIT License) - by Gantt
-	    \n\n
+		\n
+		\nQueueThread.java -  reference: http://mindtherobot.com/blog/159/android-guts-intro-to-loopers-and-handlers/
+		\nby Ivan Memruk
+		\n
+	    \n
 	    For more details, look for comments in YTD\'s Java code.
 	    \n
 	    \n

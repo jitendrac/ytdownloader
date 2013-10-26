@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">No downloads in progress</string>
     <string name="long_click_title">Handle selected link:</string>
     <string name="ffmpeg_ready">FFmpeg ready.</string>
-    <string name="confirm_audio_checkbox1">Extract audio after download</string>
-    <string name="confirm_audio_checkbox2">\n(as defined in settings)</string>
     <string name="login_required">Login to YouTube may be required.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">No video available.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">Unable to retrieve update data.\nRetry later.</string>
     <string name="upgrade_bad_md5_dialog_msg">Downloaded package corrupted.\nWill be deleted now.\nPress OK to download it again.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Error during copy.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">Audio encoding to mp3 completed.</string>
     <string name="audio_extr_error">Error during audio extraction.</string>
     <string name="audio_conv_error">Error during audio encoding to mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

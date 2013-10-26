@@ -61,8 +61,6 @@
     <string name="notification_no_downloads">진행중인 다운로드 없음</string>
     <string name="long_click_title">선택한 링크 처리:</string>
     <string name="ffmpeg_ready">FFmpeg 이 준비됨</string>
-    <string name="confirm_audio_checkbox1">다운로드 후 오디오 추출</string>
-    <string name="confirm_audio_checkbox2">\n(세부 사항은 추출 설정을 따릅니다)</string>
     <string name="login_required">유튜브에 로그인해야 합니다.</string>
     <string name="encrypted_streams">암호화된 비디오 스트림</string>
     <string name="no_video_available">비디오가 없습니다.</string>
@@ -113,7 +111,7 @@
     <string name="upgrade_network_error">업데이트 정보를 받아올 수 없습니다.\n나중에 다시 시도하세요.</string>
     <string name="upgrade_bad_md5_dialog_msg">다운로드한 앱이 손상되었습니다.\n다운받은 앱이 삭제됩니다.\n확인을 누르면 다시 다운로드를 시도합니다.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">유튜브 다운로더 비디오</string>
     <string name="copy_error">복사 중 에러가 발생하였습니다.</string>
@@ -127,6 +125,8 @@
     <string name="audio_conv_completed">mp3 변환이 완료되었습니다.</string>
     <string name="audio_extr_error">오디오 추출 실패.</string>
     <string name="audio_conv_error">mp3 인코딩 실패.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -277,8 +277,8 @@
     
     <string name="remove_video_title">비디오 제거</string>
     
-    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">보조스트림 다운받기 (실험적인 기능)</string>
+    <string name="enable_adaptive_summary">비디오 목록에 추가적인 비디오/오디오 스트림이 있다면 함께 다운받습니다</string>
         
     <!-- -->
     <string name="settings_cat_notifications">알림</string>

@@ -8,6 +8,11 @@ import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+/*
+ * code adapted from:
+ * http://mindtherobot.com/blog/159/android-guts-intro-to-loopers-and-handlers/
+ * by Ivan Memruk: http://mindtherobot.com/blog/about/
+ */
 
 public final class QueueThread extends Thread {
 
@@ -78,7 +83,7 @@ public final class QueueThread extends Thread {
 		});
 	}
 	
-	public synchronized void enqueueTask(final Runnable task, final int i) {
+	public synchronized void enqueueTask(final Runnable task, final int type) {
 		// Wrap TestTask into another Runnable to track the statistics
 		handler.post(new Runnable() {
 			@Override
@@ -88,16 +93,16 @@ public final class QueueThread extends Thread {
 				} finally {					
 					// register task completion
 					synchronized (QueueThread.this) {
-						// i is set to 0 when the task is an Audio Extraction
-						if (i == 0) totalCompleted++;
+						// type is 0 when the task is an Audio Extraction
+						if (type == 0) totalCompleted++;
 					}
 					// tell the listener something has happened
-					if (i == 0) signalUpdate();
+					if (type == 0) signalUpdate();
 				}				
 			}
 		});
 		
-		if (i == 0) {
+		if (type == 0) {
 			totalQueued++;
 			// tell the listeners the queue is now longer
 			signalUpdate();
@@ -126,13 +131,15 @@ public final class QueueThread extends Thread {
 		}
 	}
 
-	public synchronized void pushNotificationText(Context ctx, String text) {
+	public synchronized void pushNotificationText(Context ctx, String text, boolean isOngoing) {
 		aBuilder =  new NotificationCompat.Builder(ctx);
 		aNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-		aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
-		aBuilder.setContentTitle("YTD audio extractions");
-		aBuilder.setContentText(text);
-		//aBuilder.setOngoing(true);
+		
+		aBuilder.setSmallIcon(R.drawable.ic_stat_ytd)
+			.setContentTitle(ctx.getString(R.string.app_name))
+			.setContentText(text)
+			.setOngoing(isOngoing);
+		
 		aNotificationManager.notify(3, aBuilder.build());
 	}
 }

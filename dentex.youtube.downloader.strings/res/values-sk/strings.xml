@@ -62,8 +62,6 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="notification_no_downloads">Žiadne prebiehajúce sťahovanie</string>
     <string name="long_click_title"> Spracovať vybraný odkaz:</string>
     <string name="ffmpeg_ready">FFmpeg pripravený.</string>
-    <string name="confirm_audio_checkbox1">Extrahovať audio po stiahnutí</string>
-    <string name="confirm_audio_checkbox2">\n(ako je definované v nastaveniach)</string>
     <string name="login_required">Je potrebné prihlásenie do YouTube.</string>
     <string name="encrypted_streams">Šifrovaný video stream</string>
     <string name="no_video_available">Žiadne video nie je k dispozícii.</string>
@@ -114,7 +112,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="upgrade_network_error">Nemožno načítať dáta aktualizácie.\nSkúste neskôr.</string>
     <string name="upgrade_bad_md5_dialog_msg">Stiahnutý balíček je poškodený.\nBude vymazaný.\nKliknite na OK a stiahne sa znova.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Chyba počas kopírovania.</string>
@@ -128,6 +126,8 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="audio_conv_completed">Konvertovanie audia do mp3 dokončené.</string>
     <string name="audio_extr_error">Chyba pri extrahovaní audia.</string>
     <string name="audio_conv_error">Chyba pri konvertovaní audia do mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

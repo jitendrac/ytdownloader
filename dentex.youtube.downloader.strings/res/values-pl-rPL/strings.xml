@@ -62,8 +62,6 @@ Wybierz profil w ConnectBot i kiedy będziesz na zdalnej maszynie, przejdź do w
     <string name="notification_no_downloads">Nic nie jest pobierane.</string>
     <string name="long_click_title">Co zrobić z zaznaczonym linkiem:</string>
     <string name="ffmpeg_ready">FFmpeg gotowy.</string>
-    <string name="confirm_audio_checkbox1">Wyodrębnij dźwięk po pobraniu</string>
-    <string name="confirm_audio_checkbox2">\n(zdefiniowane tak samo jak w ustawieniach)</string>
     <string name="login_required">Zalogowanie się do konta na YouTube może być wymagane.</string>
     <string name="encrypted_streams">Szyfrowany strumień wideo</string>
     <string name="no_video_available">Video niedostępne</string>
@@ -115,7 +113,7 @@ Pobrać je teraz?</string>
     <string name="upgrade_network_error">Nie można pobrać danych aktualizacji.\nSpróbuj później.</string>
     <string name="upgrade_bad_md5_dialog_msg">Pobrana paczka jest uszkodzona.\nZostanie teraz usunięta.\nWciśnij OK, aby pobrać ponownie.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">Filmy YTD</string>
     <string name="copy_error">Błąd w trakcie kopiowania.</string>
@@ -129,6 +127,8 @@ Pobrać je teraz?</string>
     <string name="audio_conv_completed">Kodowanie dźwięku do mp3 zakończone.</string>
     <string name="audio_extr_error">Wystąpił błąd podczas kodowania dźwięku.</string>
     <string name="audio_conv_error">Wystąpił błąd podczas kodowania dźwięku do mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

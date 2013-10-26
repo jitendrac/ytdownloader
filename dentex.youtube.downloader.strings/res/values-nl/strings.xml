@@ -62,8 +62,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="notification_no_downloads">Geen downloads in behandeling</string>
     <string name="long_click_title">Hanteer geselecteerde link:</string>
     <string name="ffmpeg_ready">FFmpeg klaar.</string>
-    <string name="confirm_audio_checkbox1">Audio uittrekken na download</string>
-    <string name="confirm_audio_checkbox2">\n(als ingesteld in instellingen)</string>
     <string name="login_required">Inloggen bij YouTube kan nodig zijn</string>
     <string name="encrypted_streams">Geencrypteerde video stream</string>
     <string name="no_video_available">Geen video beschikbaar</string>
@@ -114,7 +112,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="upgrade_network_error">Niet in staat om de update data terug te vinden.\nProbeer het later nogmaals.</string>
     <string name="upgrade_bad_md5_dialog_msg">Gedownloade pakket is ongeldig.\nWordt nu verwijderd.\nKlik OK om opnieuw te downloaden.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Fout tijdens kopieren</string>
@@ -128,6 +126,8 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="audio_conv_completed">Audio coderen naar mp3 compleet</string>
     <string name="audio_extr_error">Fout tijdens audio extractie.</string>
     <string name="audio_conv_error">Fout tijdens audio codering naar mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

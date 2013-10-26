@@ -188,7 +188,7 @@ public class YTD extends Application implements QueueThreadListener{
     	
     	mBuilder.setSmallIcon(R.drawable.ic_stat_ytd)
     			.setOngoing(true)
-    	        .setContentTitle(ctx.getString(R.string.title_activity_share))
+    	        .setContentTitle(ctx.getString(R.string.app_name))
     	        .setContentText(pt1 + " " + sequence.size() + " " + pt2);
     	
     	mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -240,11 +240,9 @@ public class YTD extends Application implements QueueThreadListener{
 						+ "%d of %d", completed, total), DEBUG_TAG);
 				
 				if (completed == total) {
-					queueThread.pushNotificationText(ctx,
-							String.format("All audio extractions completed", completed, total));
+					queueThread.pushNotificationText(ctx, ctx.getString(R.string.auto_audio_extr_completed), false);
 				} else {
-					queueThread.pushNotificationText(ctx,
-							String.format("%d of %d audio extractions completed", completed, total));
+					queueThread.pushNotificationText(ctx, ctx.getString(R.string.auto_audio_extr_progress, completed, total), true);
 				}
 			}
 		});

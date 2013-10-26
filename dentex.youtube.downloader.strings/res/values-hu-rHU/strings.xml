@@ -62,8 +62,6 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="notification_no_downloads">Nincsenek folyamatban letöltések</string>
     <string name="long_click_title">Kiválasztott link kezelése:</string>
     <string name="ffmpeg_ready">FFmpeg kész.</string>
-    <string name="confirm_audio_checkbox1">Hang kicsomagolása letöltése után</string>
-    <string name="confirm_audio_checkbox2">\n(ahogy a beállításokban meg lett adva)</string>
     <string name="login_required">YouTube bejelentkezés kötelező</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">Nincs elérhető video</string>
@@ -114,7 +112,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="upgrade_network_error">Frissítési adatok nem elérhetőek.\nPróbáld később.</string>
     <string name="upgrade_bad_md5_dialog_msg">Érvénytelen letöltés.\nA fájl most letörlődik.\nMenj az OK-ra, hogy újból letöltsd.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD videó</string>
     <string name="copy_error">Hiba a másolás közben</string>
@@ -128,6 +126,8 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="audio_conv_completed">MP3 konvertálása sikeres.</string>
     <string name="audio_extr_error">Hiba hangkicsomagolás közben.</string>
     <string name="audio_conv_error">Hiba mp3-ra konvertálás közben.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

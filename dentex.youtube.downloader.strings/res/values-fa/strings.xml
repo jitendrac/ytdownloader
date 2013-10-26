@@ -56,8 +56,6 @@
     <string name="notification_no_downloads">دانلودی در حال پیشرفت نیست</string>
     <string name="long_click_title">رفتار با پیوند انتخاب شده:</string>
     <string name="ffmpeg_ready">FFmpeg آماده است.</string>
-    <string name="confirm_audio_checkbox1">بعد از دانلود صدا را استخراج کن</string>
-    <string name="confirm_audio_checkbox2">\n(همانطور که در تنظیمات تعریف شده است)</string>
     <string name="login_required">Login to YouTube may be required.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">No video available.</string>
@@ -107,7 +105,7 @@
     <string name="upgrade_network_error">قادر به بازیابی داده های به روزرسانی نیستیم.\n بعدا دوباره امتحان کنید.</string>
     <string name="upgrade_bad_md5_dialog_msg">بسته دانلود شده خراب است.\nالان حذف خواهد شد.\n دکمه بسیار خوب را فشار دهید تا دوباره دانلود شود.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">ویدئو YTD</string>
     <string name="copy_error">Error during copy.</string>
@@ -121,6 +119,8 @@
     <string name="audio_conv_completed">رمزکردن صدا به mp3 کامل شد.</string>
     <string name="audio_extr_error">خطا در هنگام استخراج صدا</string>
     <string name="audio_conv_error">خطا در هنگام رمزکردن صدا به mp3</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

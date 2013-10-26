@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">Отсутствуют активные загрузки</string>
     <string name="long_click_title">Обработать выбранную ссылку:</string>
     <string name="ffmpeg_ready">FFmpeg готов.</string>
-    <string name="confirm_audio_checkbox1">Извлекать аудио после загрузки</string>
-    <string name="confirm_audio_checkbox2">\n(как определено в настройках)</string>
     <string name="login_required">Может потребоваться войти в аккаунт YouTube.</string>
     <string name="encrypted_streams">Закодированный поток видео</string>
     <string name="no_video_available">Нет доступных видео.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">Невозможно получить данные об обновлении.\nПопытайтесь позже.</string>
     <string name="upgrade_bad_md5_dialog_msg">Загруженный пакет повреждён.\nСейчас он будет удалён.\nНажмите OK для повторной загрузки.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">Видео YTD</string>
     <string name="copy_error">Ошибка при копировании.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">Кодирование в mp3 завершено.</string>
     <string name="audio_extr_error">Ошибка при извлечении аудио.</string>
     <string name="audio_conv_error">Ошибка при кодировании в mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -278,8 +278,8 @@
     
     <string name="remove_video_title">Удаление видео</string>
     
-    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">Дополнительные потоки (эксп.)</string>
+    <string name="enable_adaptive_summary">Добавление дополнительных только видео и/или только аудио потоков (если доступно) к списку видео</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Уведомления</string>

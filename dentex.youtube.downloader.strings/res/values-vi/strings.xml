@@ -61,8 +61,6 @@
     <string name="notification_no_downloads">Không có tiến trình nào</string>
     <string name="long_click_title">Lựa chọn:</string>
     <string name="ffmpeg_ready">FFmpeg ready.</string>
-    <string name="confirm_audio_checkbox1">Extract audio after download</string>
-    <string name="confirm_audio_checkbox2">\n(as defined in settings)</string>
     <string name="login_required">Có thể yêu cầu đăng nhập vào tài khoản Youtube</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">Không có video nào</string>
@@ -113,7 +111,7 @@
     <string name="upgrade_network_error">Không thể cập nhật.\n Thử lại sau</string>
     <string name="upgrade_bad_md5_dialog_msg">Lỗi tải file.\nFile hỏng đã được xoá.\nChọn OK để tải lại</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Lỗi trong quá trình sao chép</string>
@@ -127,6 +125,8 @@
     <string name="audio_conv_completed">Mã hóa âm thanh thành mp3 hoàn thành</string>
     <string name="audio_extr_error">Error during audio extraction.</string>
     <string name="audio_conv_error">Error during audio encoding to mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

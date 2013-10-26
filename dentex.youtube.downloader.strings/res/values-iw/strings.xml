@@ -61,8 +61,6 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="notification_no_downloads">אין הורדות פועלות</string>
     <string name="long_click_title">טפל בקישור הנבחר:</string>
     <string name="ffmpeg_ready">FFmpeg מוכן.</string>
-    <string name="confirm_audio_checkbox1">חלץ אודיו לאחר הורדה</string>
-    <string name="confirm_audio_checkbox2">\n(כמוגדר בהגדרות)</string>
     <string name="login_required">Login to YouTube may be required.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">No video available.</string>
@@ -113,7 +111,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="upgrade_network_error">לא ניתן לאחזר את נתוני עדכון. \n נסה מאוחר יותר.</string>
     <string name="upgrade_bad_md5_dialog_msg">החבילה שהורדת פגומה. \nימחק עכשיו\n לחץ אישור להוריד שוב.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">וידאו מתחילת השנה</string>
     <string name="copy_error">Error during copy.</string>
@@ -127,6 +125,8 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="audio_conv_completed">קידוד ל-MP3 הושלם.</string>
     <string name="audio_extr_error">שגיאה במהלך חילוץ אודיו.</string>
     <string name="audio_conv_error">שגיאה במהלך קידוד אודיו ל-MP3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

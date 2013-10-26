@@ -146,7 +146,7 @@ public class ShareActivity extends Activity {
 	private boolean autoModeEnabled = false;
 	private boolean restartModeEnabled = false;
 	private String extraId;
-	private boolean oneAutoFFmpegTaskSent = false;
+	private boolean autoFFmpegTaskAlreadySent = false;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -896,10 +896,10 @@ public class ShareActivity extends Activity {
 				Maps.removeFromAllMaps(ID);
 				
 				// TODO Auto FFmpeg task
-				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !oneAutoFFmpegTaskSent) {
+				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !autoFFmpegTaskAlreadySent) {
 					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 					
-					oneAutoFFmpegTaskSent = true;
+					autoFFmpegTaskAlreadySent = true;
 					
 					String[] bitrateData = null;
 					String brType = null;
@@ -1070,7 +1070,7 @@ public class ShareActivity extends Activity {
         int as;
         
         boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
-        if (asEnabled) {
+        if (asEnabled || autoModeEnabled) {
         	as = matchAdaptiveStreams(content);
         } else {
         	as = 0;

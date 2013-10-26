@@ -29,7 +29,7 @@
     <string name="invalid_url">غير قادر على جلب صفحة الويب. قد يكون العنوان غير صالح.</string>
     <string name="invalid_url_short">غير قادر على جلب صفحة الويب.</string>
     <string name="invalid_response">رد ملقم HTTP غير صالح</string>
-    <string name="rtmpe_streams">Invalid HTTP server response.</string>
+    <string name="rtmpe_streams">رد خادم HTTP غير صالح</string>
     <string name="bad_link">تأكد من رابط المزود.</string>
     <string name="bad_link_dialog_msg">رابط يوتيوب غير صالح.</string>
     <string name="no_net">لايوجد إتصال.</string>
@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">لايوجد عمليات تنزيل جارية</string>
     <string name="long_click_title">التحكم في الرابط الذي تم اختياره:</string>
     <string name="ffmpeg_ready">FFmpeg جاهز</string>
-    <string name="confirm_audio_checkbox1">استخراج الصوت بعد التنزيل</string>
-    <string name="confirm_audio_checkbox2">\n(كما هو معرّف في الاعدادات)</string>
     <string name="login_required">قد يتطلب تسجيل الدخول إلى يوتيوب.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">لايتوفر أي  فيديو.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">غير قادر على جلب بيانات التحديث \n عاود المحاولة مرة اخرى لاحقاً</string>
     <string name="upgrade_bad_md5_dialog_msg">الحزمة التي تم تحميلها تالفة. \n سوف تُحذف الآن. \n اضغط موافق لتحميلها مرة آخرى.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">ملفات فيديو YTD</string>
     <string name="copy_error">خطأ خلال النسخ.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">اكتمل تحويل الصوت إلى MP3</string>
     <string name="audio_extr_error">خطأ خلال استخراج الصوت.</string>
     <string name="audio_conv_error">خطأ خلال تحويل الصوت</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

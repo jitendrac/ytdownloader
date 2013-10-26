@@ -60,8 +60,6 @@
     <string name="notification_no_downloads">沒有正在進行中的下載</string>
     <string name="long_click_title">處理選擇的連結：</string>
     <string name="ffmpeg_ready">已準備 FFmpeg。</string>
-    <string name="confirm_audio_checkbox1">下載後提取音效</string>
-    <string name="confirm_audio_checkbox2">\n（和設定中的設置一樣）</string>
     <string name="login_required">您可能需要登入至 YouTube。</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">影片不可用。</string>
@@ -112,7 +110,7 @@
     <string name="upgrade_network_error">無法取得更新資料。\n稍後重試。</string>
     <string name="upgrade_bad_md5_dialog_msg">下載包裝已損毀。\n它現在將被刪除。\n按 OK 重新下載。</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD 影片</string>
     <string name="copy_error">複製時錯誤。</string>
@@ -126,6 +124,8 @@
     <string name="audio_conv_completed">音效編碼至 mp3 完成。</string>
     <string name="audio_extr_error">音效提取時錯誤。</string>
     <string name="audio_conv_error">音效編碼至 mp3 時錯誤。</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

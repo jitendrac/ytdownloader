@@ -62,8 +62,6 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     <string name="notification_no_downloads">No hay descargas en proceso</string>
     <string name="long_click_title">¿Qué desea hacer con el enlace?</string>
     <string name="ffmpeg_ready">FFmpeg listo.</string>
-    <string name="confirm_audio_checkbox1">Extraer el audio después de descargar</string>
-    <string name="confirm_audio_checkbox2">\n(definido en preferencias)</string>
     <string name="login_required">Autenticación a YouTube puede ser requerido.</string>
     <string name="encrypted_streams">"Stream" de vídeo encriptado</string>
     <string name="no_video_available">Vídeo no disponible.</string>
@@ -114,7 +112,7 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     <string name="upgrade_network_error">No se pudo recibir datos de actualización.\nVuelva a intentar después.</string>
     <string name="upgrade_bad_md5_dialog_msg">Paquete descargada esta corrompida.\n\nSerá eliminada ahora.\nSeleccione OK para decargarlo de nuevo.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">Video de YTD</string>
     <string name="copy_error">Error al copiar.</string>
@@ -128,6 +126,8 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     <string name="audio_conv_completed">Codificación de audio a mp3 terminado.</string>
     <string name="audio_extr_error">Error en extracción de audio.</string>
     <string name="audio_conv_error">Error en la codificación de audio a mp3. </string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

@@ -62,8 +62,6 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
     <string name="notification_no_downloads">Ei latauksia käynnissä</string>
     <string name="long_click_title">Käsittele valittu linkki:</string>
     <string name="ffmpeg_ready">FFmpeg valmis.</string>
-    <string name="confirm_audio_checkbox1">Irroita audio lataamisen jälkeen</string>
-    <string name="confirm_audio_checkbox2">\n(kuten määritelty asetuksissa)</string>
     <string name="login_required">Kirjautuminen YouTubeen voidaan vaatia.</string>
     <string name="encrypted_streams">Enkryptattu videovirta</string>
     <string name="no_video_available">Videota ei ole saatavilla.</string>
@@ -114,7 +112,7 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
     <string name="upgrade_network_error">Päivitysdatan nouto ei onnistu.\nYritä uudelleen myöhemmin.</string>
     <string name="upgrade_bad_md5_dialog_msg">Ladattu paketti on vioittunut.\nPoistetaan nyt.\nPaina OK ladataksesi se uudelleen.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Virhe kopioinnin aikana.</string>
@@ -128,6 +126,8 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
     <string name="audio_conv_completed">Audion enkoodaus mp3:ksi valmistui.</string>
     <string name="audio_extr_error">Virhe audion irroituksen aikana.</string>
     <string name="audio_conv_error">Virhe audion enkoodauksen mp3:ksi aikana.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     

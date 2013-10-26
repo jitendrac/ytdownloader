@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">Devam etmekte olan bir indirme mevcut değil</string>
     <string name="long_click_title">Seçilen bağlantı kolu:</string>
     <string name="ffmpeg_ready">FFmpeg hazır.</string>
-    <string name="confirm_audio_checkbox1">İndirmeden sonra sesi çıkart</string>
-    <string name="confirm_audio_checkbox2">\n(ayarlarda belirlendiği gibi)</string>
     <string name="login_required">YouTube\'a giriş yapmanız gerekebilir.</string>
     <string name="encrypted_streams">Şifreli video akışı</string>
     <string name="no_video_available">Video yok.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">Güncelleme verisi alınamadı.\nDaha sonra tekrar deneyiniz.</string>
     <string name="upgrade_bad_md5_dialog_msg">İndirilen paket bozuk.\nŞimdi silinecek.\nYeniden indirmek için OK tıklayın.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Kopyalama hatası.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">Mp3 kodlaması tamamlandı.</string>
     <string name="audio_extr_error">Ses ayıklaması sırasında hata meydana geldi.</string>
     <string name="audio_conv_error">Ses dosyasının mp3\'e dönüştürülmesi sırasında hata meydana geldi.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -278,8 +278,8 @@
     
     <string name="remove_video_title">Video removal</string>
     
-    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">İkincil akışları alın (deneysel)</string>
+    <string name="enable_adaptive_summary">Video listesine ilave olarak video ve/veya ses akışları ekle</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Bildirimler</string>

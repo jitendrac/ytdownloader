@@ -62,8 +62,6 @@ Verzeichnis, füge den Befehl ein (verwende den Menü-Knopf) und drücke ENTER.<
     <string name="notification_no_downloads">Keine aktiven Downloads</string>
     <string name="long_click_title">Bearbeite ausgewählten Link:</string>
     <string name="ffmpeg_ready">FFmpeg bereit.</string>
-    <string name="confirm_audio_checkbox1">Extrahiere Tonspur nach dem Download</string>
-    <string name="confirm_audio_checkbox2">\n(wie in den Einstellungen definiert)</string>
     <string name="login_required">Das Einloggen bei YouTube könnte erforderlich sein.</string>
     <string name="encrypted_streams">Verschlüsselter Videostream</string>
     <string name="no_video_available">Video nicht verfügbar!</string>
@@ -114,7 +112,7 @@ Verzeichnis, füge den Befehl ein (verwende den Menü-Knopf) und drücke ENTER.<
     <string name="upgrade_network_error">Update nicht möglich. \nSpäter erneut versuchen.</string>
     <string name="upgrade_bad_md5_dialog_msg">Heruntergeladenes Paket fehlerhaft.\nWird nun gelöscht.\nOK drücken, um es erneut herunterzuladen.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD-Video</string>
     <string name="copy_error">Fehler beim Kopieren!</string>
@@ -128,6 +126,8 @@ Verzeichnis, füge den Befehl ein (verwende den Menü-Knopf) und drücke ENTER.<
     <string name="audio_conv_completed">MP3 Audiokodierung fertig.</string>
     <string name="audio_extr_error">Fehler während der Tonspur Extraktion.</string>
     <string name="audio_conv_error">Fehler während der Tonspur Extraktion.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -278,8 +278,8 @@ Verzeichnis, füge den Befehl ein (verwende den Menü-Knopf) und drücke ENTER.<
     
     <string name="remove_video_title">Video entfernen</string>
     
-    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">Zweiten Stream erhalten (experimentell)</string>
+    <string name="enable_adaptive_summary">Weiteren Video-/Audio-Stream (falls verfügbar) der Videoliste hinzufügen</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Benachrichtigungen</string>

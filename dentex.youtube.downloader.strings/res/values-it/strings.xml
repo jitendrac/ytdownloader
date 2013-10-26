@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">Nessun download in corso</string>
     <string name="long_click_title">Gestisci il link selezionato:</string>
     <string name="ffmpeg_ready">FFmpeg pronto.</string>
-    <string name="confirm_audio_checkbox1">Estrai l\'audio dopo il download</string>
-    <string name="confirm_audio_checkbox2">\n(come definito nelle opzioni)</string>
     <string name="login_required">Potrebbe essere richiesto il login a YouTube.</string>
     <string name="encrypted_streams">Flusso video criptato</string>
     <string name="no_video_available">Nessun video disponibile.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">Impossibile ottenere dati sull\'aggiornamento.\nRiprova più tardi.</string>
     <string name="upgrade_bad_md5_dialog_msg">Il pacchetto scaricato è corrotto.\nVerrà cancellato adesso.\nPremi OK per scaricare di nuovo.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Errore durante la copia.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">Codifica dell\'audio in mp3 completata.</string>
     <string name="audio_extr_error">Errore durante l\'estrazione audio</string>
     <string name="audio_conv_error">Errore durante la codifica audio in mp3</string>
+    <string name="auto_audio_extr_progress">%1$s di %2$s estrazioni audio completate</string>
+    <string name="auto_audio_extr_completed">Tutte le estrazioni audio completate</string>
     
     <!-- ### DonateActivity ### -->
     

@@ -62,8 +62,6 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     <string name="notification_no_downloads">Aucun téléchargements en cours</string>
     <string name="long_click_title">Gérer le lien sélectionné:</string>
     <string name="ffmpeg_ready">FFmpeg prêt.</string>
-    <string name="confirm_audio_checkbox1">Extraire l\'audio après le téléchargement</string>
-    <string name="confirm_audio_checkbox2">\n(comme défini dans les options)</string>
     <string name="login_required">L\'identification à YouTube peut être requis.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">Pas de vidéo disponible.</string>
@@ -114,7 +112,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     <string name="upgrade_network_error">Impossible de récupérer les informations de mise à jour.\nRéessayez plus tard.</string>
     <string name="upgrade_bad_md5_dialog_msg">Le package téléchargé est corrompu.\nIl va être supprimé.\nAppuyez sur OK pour le télécharger de nouveau.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">Vidéo YTD</string>
     <string name="copy_error">Erreur pendant la copie.</string>
@@ -128,6 +126,8 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     <string name="audio_conv_completed">Encodage audio en MP3 terminé.</string>
     <string name="audio_extr_error">Erreur durant l\'extraction audio.</string>
     <string name="audio_conv_error">Erreur durant l\'encodage de l\'\audio en MP3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
