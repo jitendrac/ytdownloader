@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.1 - Xxx XX 2013
+        \n v3.1 - Oct 26 2013
         \n-----------------------------------
-        \n[ ] option to auto-enqueue FFmpeg 
+        \n[x] option to auto-enqueue FFmpeg 
         \n    tasks on downloads completion
         \n[x] Dashboard import feature now 
-        \n    supports FLV video
+        \n    supports FLV video format
         \n[x] support for video-only and
         \n    audio-only "secondary" streams
         \n    from YouTube (experimental)

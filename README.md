@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="64"`
+`versionCode="65"`
 
-`versionName="3.0.2"`
+`versionName="3.1"`
 
-MD5 checksum: `fdf3896c6a0cebe3524392f958c505e3` dentex.youtube.downloader_v3.0.2.apk
+MD5 checksum: `2d7bcb53fb199a43de4c10d9b581752c` dentex.youtube.downloader_v3.1.apk
 
 DISCLAIMER
 ================================================================
@@ -20,7 +20,7 @@ DISCLAIMER
     this application, excluding the developer from any liability about 
     any consequence that may derive. Thus, this application has to be 
     considered as a mere technical service provider.
-
+    
 NOTICE
 ================================================================
     Complying with the GPL below is mandatory.
@@ -98,7 +98,7 @@ OTHER LICENSES
     FfmpegController.java: GPL-3.0 - Copyright (C) 2009, Nathan Freitas, Orbot / The Guardian Project
     http://openideals.com/guardian - https://github.com/guardianproject/android-ffmpeg-java 
      
-    Observer.java: reference - https://gist.github.com/shirou/659180 
+    Observer.java: reference: https://gist.github.com/shirou/659180 
      
     SectionedAdapter.java: GPL-3.0
     Copyright (C) 2008-2010 CommonsWare, LLC - portions Copyright (C) 2008 Jeffrey Sharkey 
@@ -119,6 +119,10 @@ OTHER LICENSES
     Javascript function `decryptSignature` from the Greasemonkey script 
     http://userscripts.org/scripts/show/25105 (MIT License) - by Gantt 
     
+    QueueThread.java:
+	reference: http://mindtherobot.com/blog/159/android-guts-intro-to-loopers-and-handlers/ 
+    by Ivan Memruk 
+     
      For more details, look for comments in YTD`s Java code. 
      
      	Translations 
@@ -139,6 +143,17 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.1 - Oct 26 2013 
+    ----------------------------------- 
+    [x] option to auto-enqueue FFmpeg 
+     tasks on downloads completion 
+    [x] Dashboard import feature now 
+     supports FLV video format 
+    [x] support for video-only and 
+     audio-only "secondary" streams 
+     from YouTube (experimental) 
+    [x] various bug fixes 
+     
      v3.0.2 - Oct 11 2013 
     ----------------------------------- 
     [x] small fix 
@@ -421,17 +436,13 @@ CHANGELOG
 
 TO-DO LIST
 ================================================================
-
 	[ ] implement other FFmpeg functions
 	[ ] compile FFmpeg to support x86 Android ABI
-	[ ] option for automatic audio extraction after download
+	[ ] support subtitles download
 	[ ] default format/filter selection for video download
 	[ ] use icon/logo to identify codecs available (expand the custom ShareActivity adapter)
 	[ ] make the App tablet friendly
-	[ ] handle SourceForge servers down; fallback on GitHub for apk download:
-	    page: https://github.com/dentex/ytdownloader
-	    file: https://github.com/dentex/ytdownloader/blob/master/dentex.youtube.downloader_v.*.apk?raw=true
-	[ ] use custom DM for other download tasks (apk update, ffmpeg binary [wip])
+	[ ] use custom DM for other download tasks (apk update, ffmpeg binary [wip - on hold])
 	[ ] option to include downloaded videos into dashboard backup (or make menu entry "archive")
 
 KNOWN ISSUES
@@ -440,4 +451,4 @@ KNOWN ISSUES
 		- for a long time (around 20 or 30 minutes)
 		AND 
 		- without having the Dashboard Activity to the front
-		may be forced to PAUSE. In this case a manual resume is needed
+		may be forced to PAUSE. In this case a manual resume is needed.

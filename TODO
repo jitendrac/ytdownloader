@@ -1,4 +1,3 @@
-	[v] FFmpeg tasks queue (automatic after downloads & manual from Dashboard)
 	[ ] implement other FFmpeg functions
 	[ ] compile FFmpeg to support x86 Android ABI
 	[ ] support subtitles download
