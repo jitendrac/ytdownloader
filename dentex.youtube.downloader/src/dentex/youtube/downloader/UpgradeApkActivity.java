@@ -279,7 +279,7 @@ public class UpgradeApkActivity extends Activity {
 	        cl.setText(matchedChangeLog);
 	        
 	        if (matchedVersion.contentEquals("n.a.")) {
-	        	Toast.makeText(UpgradeApkActivity.this, "Invalid HTTP server response", Toast.LENGTH_LONG).show();
+	        	Toast.makeText(UpgradeApkActivity.this, "Invalid HTTP server response", Toast.LENGTH_SHORT).show();
 	        }
 	        
 	        if (compRes.contentEquals(">")) {
@@ -370,7 +370,7 @@ public class UpgradeApkActivity extends Activity {
 	    } catch (NullPointerException ne) {
 	    	Log.e(DEBUG_TAG, "callDownloadApk: " + ne.getMessage());
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> callDownloadApk: ", ne.getMessage(), ne);
-	    	Toast.makeText(this, getString(R.string.error), Toast.LENGTH_LONG).show();
+	    	Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
 	    }
 	}
 
@@ -457,6 +457,6 @@ public class UpgradeApkActivity extends Activity {
 	
 	private void deleteBadDownload (long id) {
 		downloadManager.remove(id);
-		Toast.makeText(this, getString(R.string.download_failed), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
 	}
 }

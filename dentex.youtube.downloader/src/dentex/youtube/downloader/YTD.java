@@ -37,6 +37,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -44,10 +45,12 @@ import android.view.WindowManager;
 
 import com.bugsense.trace.BugSenseHandler;
 
+import dentex.youtube.downloader.queue.QueueThread;
+import dentex.youtube.downloader.queue.QueueThreadListener;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
-public class YTD extends Application {
+public class YTD extends Application implements QueueThreadListener{
 	
 	static String DEBUG_TAG = "YTD";
 	public static Context ctx;
@@ -102,6 +105,9 @@ public class YTD extends Application {
 	public static final String THUMBS_FOLDER = "thumbs";
 	public static double reduceFactor;
 	
+	public static QueueThread queueThread;
+	public static Handler handler;
+	
 	@Override
 	public void onCreate() {
 		Log.d(DEBUG_TAG, "onCreate");
@@ -110,6 +116,13 @@ public class YTD extends Application {
 		videoinfo = getSharedPreferences(VIDEOINFO_NAME, 0);
 		
 		BugSenseHandler.initAndStartSession(getApplicationContext(), BugsenseApiKey);
+		
+		queueThread = new QueueThread(this);
+        queueThread.start();
+        
+        // Create the Handler. It will implicitly bind to the Looper
+        // that is internally created for this thread (since it is the UI thread)
+        handler = new Handler();
 		
 		//findProcessUid();
 		
@@ -175,7 +188,7 @@ public class YTD extends Application {
     	
     	mBuilder.setSmallIcon(R.drawable.ic_stat_ytd)
     			.setOngoing(true)
-    	        .setContentTitle(ctx.getString(R.string.title_activity_share))
+    	        .setContentTitle(ctx.getString(R.string.app_name))
     	        .setContentText(pt1 + " " + sequence.size() + " " + pt2);
     	
     	mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -213,5 +226,25 @@ public class YTD extends Application {
 			Log.e(DEBUG_TAG, "NPE at removeIdUpdateNotification: " + e.getMessage());
 			BugSenseHandler.sendExceptionMessage("NPE at removeIdUpdateNotification", e.getMessage(), e);
 		}
+	}
+
+    @Override
+	public void handleQueueThreadUpdate() {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				int total = queueThread.getTotalQueued();
+				int completed = queueThread.getTotalCompleted();
+
+				Utils.logger("i", String.format("Auto audio extractions completed: "
+						+ "%d of %d", completed, total), DEBUG_TAG);
+				
+				if (completed == total) {
+					queueThread.pushNotificationText(ctx, ctx.getString(R.string.auto_audio_extr_completed), false);
+				} else {
+					queueThread.pushNotificationText(ctx, ctx.getString(R.string.auto_audio_extr_progress, completed, total), true);
+				}
+			}
+		});
 	}
 }

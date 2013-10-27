@@ -7,7 +7,7 @@
     <string name="title_activity_donate">Adományok</string>
     <string name="title_activity_tutorials">Oktatások</string>
     <string name="title_activity_translators_show">Fordítók</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_dashboard">Irányítópult</string>
 
     <!-- ### ShareActivity ### -->
 
@@ -23,11 +23,11 @@
     <string name="dialogs_negative">Mégse</string>
     <string name="wait">Kérlek várj&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" rendszer app nem található.</string>
-    <string name="ytd_useless">YTD cannot download files on this device.</string>
+    <string name="ytd_useless">YTD nem töltött le fájlokat erre az eszközre</string>
     <string name="invalid_url">Weboldal nem elérhető. Hibás URL?</string>
     <string name="invalid_url_short">Weboldal nem elérhető.</string>
     <string name="invalid_response">Érvénytelen HTTP szerver válasz.</string>
-    <string name="rtmpe_streams">Invalid HTTP server response.</string>
+    <string name="rtmpe_streams">Érvénytelen HTTP szerver válasz.</string>
     <string name="bad_link">Kattints a linkre.</string>
     <string name="bad_link_dialog_msg">Nem érvényes YouTube link.</string>
     <string name="no_net">Nincs elérhető kapcsolat.</string>
@@ -62,12 +62,10 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="notification_no_downloads">Nincsenek folyamatban letöltések</string>
     <string name="long_click_title">Kiválasztott link kezelése:</string>
     <string name="ffmpeg_ready">FFmpeg kész.</string>
-    <string name="confirm_audio_checkbox1">Hang kicsomagolása letöltése után</string>
-    <string name="confirm_audio_checkbox2">\n(ahogy a beállításokban meg lett adva)</string>
-    <string name="login_required">Login to YouTube may be required.</string>
+    <string name="login_required">YouTube bejelentkezés kötelező</string>
     <string name="encrypted_streams">Encrypted video stream</string>
-    <string name="no_video_available">No video available.</string>
-    <string name="retry_button_text">Retry</string>
+    <string name="no_video_available">Nincs elérhető video</string>
+    <string name="retry_button_text">Újra</string>
     
     <string-array name="long_click_entries">
         <item>Másolás a vágólapra</item>
@@ -114,12 +112,12 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="upgrade_network_error">Frissítési adatok nem elérhetőek.\nPróbáld később.</string>
     <string name="upgrade_bad_md5_dialog_msg">Érvénytelen letöltés.\nA fájl most letörlődik.\nMenj az OK-ra, hogy újból letöltsd.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD videó</string>
-    <string name="copy_error">Error during copy.</string>
+    <string name="copy_error">Hiba a másolás közben</string>
     <string name="copy_progress">Fájl másolás folyamatban&#8230;</string>
-    <string name="copy_ok">File copy completed.</string>
+    <string name="copy_ok">File másolása sikeres</string>
     <string name="download_remove_failed">Hiba: az ideiglenesen letörölt fájl nem lett letörölve.</string>
     <string name="download_failed">Sikertelen letöltés!</string>
     <string name="audio_extr_progress">Hang kicsomagolása folyamatban&#8230;</string>
@@ -128,6 +126,8 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="audio_conv_completed">MP3 konvertálása sikeres.</string>
     <string name="audio_extr_error">Hiba hangkicsomagolás közben.</string>
     <string name="audio_conv_error">Hiba mp3-ra konvertálás közben.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -139,103 +139,91 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="ffmpeg_install_failed">FFmpeg telepítése sikertelen</string>
 	
 	<!-- ### DashboardActivity ### -->
-	<string name="json_status_completed">Completed</string>
-	<string name="json_status_failed">Failed</string>
-	<string name="json_status_in_progress">In Progress</string>
-	<string name="json_status_paused">Paused</string>
+	<string name="json_status_completed">Kész</string>
+	<string name="json_status_failed">Sikertelen</string>
+	<string name="json_status_in_progress">Folyamatban</string>
+	<string name="json_status_paused">Szüneteltetve</string>
 	<string name="json_status_imported">Imported</string>
-	<string name="menu_search">search&#8230;</string>
-	<string name="menu_backup">Backup</string>
-	<string name="menu_restore">Restore</string>
-	<string name="menu_import">Import a video</string>
-	<string name="menu_import_double">Video already added.</string>
-	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
-	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
-	<string name="menu_restore_info_msg">Present data will be overwritten.</string>
-	<string name="menu_import_info">Import a video and manage it from the Dashboard</string>
-	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
-	<string name="menu_backup_result_failed">Error during backup.</string>
+	<string name="menu_search">keresés&#8230;</string>
+	<string name="menu_backup">Biztonsági mentés</string>
+	<string name="menu_restore">Visszaállítás</string>
+	<string name="menu_import">Video importálása</string>
+	<string name="menu_import_double">Video már hozzá van adva.</string>
+	<string name="menu_backup_info">Válassz ki egy mappát</string>
+	<string name="menu_restore_info">Irányítópult visszaállítása fájlból</string>
+	<string name="menu_restore_info_msg">Jelenlegi adatok felül lesznek írva</string>
+	<string name="menu_import_info">Video importálása</string>
+	<string name="menu_backup_result_ok">Irányítópult visszaállítása sikeres</string>
+	<string name="menu_backup_result_failed">Hiba a visszaállítás közben</string>
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
 	<string name="menu_restore_result_failed">Error during restore.</string>
-	<string name="unsupported_operation">Unsupported operation.</string>
-	<string name="invalid_data">Invalid data.</string>
-	<string name="open_chooser_title">Open with:</string>
+	<string name="unsupported_operation">Nem támogatott művelet</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
+	<string name="invalid_data">Valótlan adat.</string>
+	<string name="open_chooser_title">Megnyitás ezzel:</string>
 	
 	<string-array name="dashboard_click_entries">
-	    <item>Open</item>
+	    <item>Megnyitás</item>
 	    <item>Extract audio only</item>
         <item>Extract and encode audio to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
-	    <item>Open</item>
+	    <item>Megnyitás</item>
         <item>Encode to mp3</item>
     </string-array>
     
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
-    </string-array>
-    
-	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
-	<string name="ffmpeg_not_enabled_msg">Open settings?</string>
-	<string name="remove_video">Delete video after audio extraction (no confirmation!)</string>
-	<string name="remove_original_audio">Delete audio after conversion (no confirmation!)</string>
-	<string name="edit_id3_tags">Edit ID3 tags</string>
+	<string name="ffmpeg_not_enabled_title">FFmpeg nincs telepítve vagy nincs engedélyezve.</string>
+	<string name="ffmpeg_not_enabled_msg">Beállítások megnyitása?</string>
+	<string name="remove_video">Videó törlésének engedélyezése sikeres hang kicsomagoláskor (figyelem: nincs megerősítés)</string>
+	<string name="remove_original_audio">Videó törlésének engedélyezése sikeres hang kicsomagoláskor (figyelem: nincs megerősítés)</string>
+	<string name="edit_id3_tags">ID3 tag-ek szerkesztése</string>
 	<string name="id3_album">Album</string>
-	<string name="id3_artist">Artist</string>
-	<string name="id3_title">Title</string>
-	<string name="id3_year">Year</string>
-	<string name="id3_genre">Genre</string>
+	<string name="id3_artist">Előadó</string>
+	<string name="id3_title">Cím</string>
+	<string name="id3_year">Év</string>
+	<string name="id3_genre">Stílus</string>
 	
 	<string name="audio_extr_info">Contained audio stream:</string>
 	
-	<string name="dashboard_long_click_entry_0">Copy</string>
-	<string name="dashboard_long_click_entry_1">Move</string>
-	<string name="dashboard_long_click_entry_2">Delete</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Copy</item>
-	    <item>Move</item>
-        <item>Rename</item>
-        <item>Re-download the video</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-    </string-array> -->
+	<string name="dashboard_long_click_entry_0">Másolás</string>
+	<string name="dashboard_long_click_entry_1">Áthelyezés</string>
+	<string name="dashboard_long_click_entry_2">Törlés</string>
 
 	<string-array name="dashboard_long_click_entries">
-	    <item>Copy</item>
-	    <item>Move</item>
-        <item>Rename</item>
-        <item>Re-download the video</item>
-        <item>Remove from Dashboard</item>
+	    <item>Másolás</item>
+	    <item>Áthelyezés</item>
+        <item>Átnevezés</item>
+        <item>Video újra letöltése</item>
+        <item>Törlés az irányítópultból</item>
         <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>Szünet/Folytatás</item>
     </string-array>
     
-	<string name="move_error">Error during move.</string>
-    <string name="move_progress">File move in progress&#8230;</string>
-    <string name="move_ok">File move completed.</string>
-    <string name="long_press_warning_title">Operation not executed:</string>
-    <string name="long_press_warning_msg">Source and destination folders overlap.</string>
-    <string name="long_press_warning_msg2">A copy already exists in this folder.</string>
+	<string name="move_error">Hiba az áthelyezés közben</string>
+    <string name="move_progress">File áthelyezése folyamatban&#8230;</string>
+    <string name="move_ok">File áthelyezése sikeres.</string>
+    <string name="long_press_warning_title">A művelet nem futott le</string>
+    <string name="long_press_warning_msg">A célkönyvtár nem elérhető, és/vagy nem írható.</string>
+    <string name="long_press_warning_msg2">A fájl már létezik ebben a könyvtárban</string>
     <string name="audio_extr_warning_msg">Same audio file already extracted.</string>
 
-	<string name="delete_video_confirm">Confirm you want to delete this video?</string>
-	<string name="remove_video_confirm">Confirm you want to remove this video?</string>
-	<string name="delete_video_ok">%1$s successfully deleted.</string>
-	<string name="delete_video_failed">Error: %1$s not deleted.</string>
+	<string name="delete_video_confirm">Biztos hogy törölni szeretné a videót?</string>
+	<string name="remove_video_confirm">Biztos hogy törölni szeretné a videót?</string>
+	<string name="delete_video_ok">%1$s ssikeresen törölve.</string>
+	<string name="delete_video_failed">Hiba: %1$s nem lett törölve.</string>
 	
-	<string name="empty_dashboard">No downloaded video.</string>
+	<string name="empty_dashboard">Nincs letöltött video.</string>
 
     <!-- ### preferences ### -->
 
     <!-- -->
-    <string name="dashboard_summary">Open YTD\'s Dashboard</string>
+    <string name="dashboard_summary">YTD\'s irányítópult megnyitása</string>
 
     <!-- -->
     <string name="settings_cat_ui">Felhasználói felület</string>
     <string name="lang_title">Nyelv</string>
-    <string name="lang_dialog_title">Choose UI language:</string>
+    <string name="lang_dialog_title">Kérem válasszon nyelvet:</string>
     <string name="choose_theme_title">Téma választása</string>
     <string-array name="choose_theme_entries">
         <item>Sötét</item>
@@ -266,28 +254,33 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	
     <!-- -->
     <string name="settings_cat_files">Videófájlok</string>
-    <string name="enable_q_suffix_title">Minőség utótag mellékelése</string>
-    <string name="enable_q_suffix_summary">Videóminőség hozzáadása a fájlnévhez</string>
     <string name="enable_rename_title">Fájl átnevezés engedélyezése</string>
     <string name="enable_rename_summary">Videófájl átnevezése letöltés előtt (csak helyi letöltés esetén)</string>
-    <string name="show_size_title">Fájlméret mutatása</string>
-    <string name="show_size_summary">Videófájl méretének mutatása a letöltés megerősítésekor (lassabb)</string>
-    <string name="show_size_list_title">Minden videóméret mutatása</string>
-    <string name="show_size_list_summary">Minden fájl méretének mutatása az elérhető videók listáján (nagyon lassú)</string>
-    <string name="show_thumb_title">Előzetes kép mutatása</string>
+	<string name="show_thumb_title">Előzetes kép mutatása</string>
     <string name="show_thumb_summary">Előzetes kép letöltése a videólistával</string>
-    <string name="show_resolutions_title">Show video resolutions</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Speciális beállítások</string>
-    <string name="enable_advanced_features_title">Enable Advanced Features</string>
-    <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
+    <string name="enable_advanced_features_title">Kiterjesztett funkciók engedélyezése</string>
+    <string name="enable_advanced_features_summary">FFmpeg \"plugin"\ letöltése</string>
     <string name="mp3_bitrate_title">Mp3 encoding bitrate:</string>
-    <string name="audio_extraction_type_title">Kicsomagolás típúsa</string>
-    <string name="remove_video_title">Videó eltávolítás</string>
-    <string name="remove_video_summary">Videó törlésének engedélyezése sikeres hang kicsomagoláskor (figyelem: nincs megerősítés)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">Kicsomagolás típúsa</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Videó eltávolítás</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Értesítések</string>
     
@@ -346,13 +339,13 @@ SSH-n való küldéshez (csak akkor működik, ha a céleszköz ugyanazon a hál
 	<string name="ssh_to_longpress_menu_summary">\"Send via SSH\" művelet áthelyezése a hosszan nyomva előjövő menübe.</string>
 	
     <!-- -->
-	<string name="settings_cat_system">System</string>
+	<string name="settings_cat_system">Rendszer</string>
 	<string name="enable_logging_title">Naplózás engedélyezése</string>
 	<string name="enable_logging_summary">YTD üzeneteinek felvétele a rendszernaplóba. Kötelező logcat küldéséhez a fejlesztőnek.</string>
-	<string name="clear_dashboard_title">Empty the Dashboard</string>
+	<string name="clear_dashboard_title">Irányítópult ürítése.</string>
 	<string name="clear_dashboard_summary">Clear all dashboard\'s references (may fix some crashes)</string>
 	<string name="clear_dashboard_msg">Are you sure?\nThis will clear all the list in the Dashboard.</string>
-	<string name="clear_dashboard_ok">Dashboard cleared.</string>
-	<string name="clear_dashboard_failed">Dashboard emptying failed.</string>
+	<string name="clear_dashboard_ok">Irányítópult adatai törölve</string>
+	<string name="clear_dashboard_failed">Irányítópult ürítése sikertelen.</string>
 	
 </resources>

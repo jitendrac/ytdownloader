@@ -61,8 +61,6 @@
     <string name="notification_no_downloads">Không có tiến trình nào</string>
     <string name="long_click_title">Lựa chọn:</string>
     <string name="ffmpeg_ready">FFmpeg ready.</string>
-    <string name="confirm_audio_checkbox1">Extract audio after download</string>
-    <string name="confirm_audio_checkbox2">\n(as defined in settings)</string>
     <string name="login_required">Có thể yêu cầu đăng nhập vào tài khoản Youtube</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">Không có video nào</string>
@@ -113,7 +111,7 @@
     <string name="upgrade_network_error">Không thể cập nhật.\n Thử lại sau</string>
     <string name="upgrade_bad_md5_dialog_msg">Lỗi tải file.\nFile hỏng đã được xoá.\nChọn OK để tải lại</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Lỗi trong quá trình sao chép</string>
@@ -127,6 +125,8 @@
     <string name="audio_conv_completed">Mã hóa âm thanh thành mp3 hoàn thành</string>
     <string name="audio_extr_error">Error during audio extraction.</string>
     <string name="audio_conv_error">Error during audio encoding to mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -157,6 +157,7 @@
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
 	<string name="menu_restore_result_failed">Lỗi khi khôi phục</string>
 	<string name="unsupported_operation">Hoạt động không hỗ trợ</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Dữ liệu không hợp lệ</string>
 	<string name="open_chooser_title">Mở với:</string>
 	
@@ -169,10 +170,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Mở</item>
         <item>Mã hóa âm thanh thành mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Mở</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg chưa được cài hoặc cho phép:</string>
@@ -191,15 +188,6 @@
 	<string name="dashboard_long_click_entry_0">Sao chép</string>
 	<string name="dashboard_long_click_entry_1">Di chuyển</string>
 	<string name="dashboard_long_click_entry_2">Xoá</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Sao chép</item>
-	    <item>Di chuyển</item>
-        <item>Đổi tên</item>
-        <item>Re-download the video</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Sao chép</item>
@@ -265,28 +253,33 @@
 	
     <!-- -->
     <string name="settings_cat_files">Videos</string>
-    <string name="enable_q_suffix_title">Thêm hậu tố</string>
-    <string name="enable_q_suffix_summary">Add the video quality at the end of the file name</string>
     <string name="enable_rename_title">Cho phép đổi tên</string>
     <string name="enable_rename_summary">Đổi tên video trước khi tải</string>
-    <string name="show_size_title">Hiển thị dung lượng</string>
-    <string name="show_size_summary">Hiển thị dung lượng trong hộp thoại xác nhận(chậm)</string>
-    <string name="show_size_list_title">Hiện tất cả các kích thước video</string>
-    <string name="show_size_list_summary">Fetch the file sizes for every item in the list of available video (much slower)</string>
-    <string name="show_thumb_title">Hiện ảnh xem trước</string>
+	<string name="show_thumb_title">Hiện ảnh xem trước</string>
     <string name="show_thumb_summary">Hiện ảnh xem trước cùng với danh sách video</string>
-    <string name="show_resolutions_title">Hiển thị độ phân giải video</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Nâng cao</string>
     <string name="enable_advanced_features_title">Bật tính năng nâng cao</string>
     <string name="enable_advanced_features_summary">Tải về giải mã FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Mp3 encoding bitrate:</string>
-    <string name="audio_extraction_type_title">Loại xuất</string>
-    <string name="remove_video_title">Gỡ bỏ video</string>
-    <string name="remove_video_summary">Enable video file deletion after successful audio extraction (warning: no confirmation)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">Loại xuất</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Gỡ bỏ video</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Thông báo</string>
     

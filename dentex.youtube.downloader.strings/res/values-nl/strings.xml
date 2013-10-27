@@ -62,8 +62,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="notification_no_downloads">Geen downloads in behandeling</string>
     <string name="long_click_title">Hanteer geselecteerde link:</string>
     <string name="ffmpeg_ready">FFmpeg klaar.</string>
-    <string name="confirm_audio_checkbox1">Audio uittrekken na download</string>
-    <string name="confirm_audio_checkbox2">\n(als ingesteld in instellingen)</string>
     <string name="login_required">Inloggen bij YouTube kan nodig zijn</string>
     <string name="encrypted_streams">Geencrypteerde video stream</string>
     <string name="no_video_available">Geen video beschikbaar</string>
@@ -114,7 +112,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="upgrade_network_error">Niet in staat om de update data terug te vinden.\nProbeer het later nogmaals.</string>
     <string name="upgrade_bad_md5_dialog_msg">Gedownloade pakket is ongeldig.\nWordt nu verwijderd.\nKlik OK om opnieuw te downloaden.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Fout tijdens kopieren</string>
@@ -128,6 +126,8 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="audio_conv_completed">Audio coderen naar mp3 compleet</string>
     <string name="audio_extr_error">Fout tijdens audio extractie.</string>
     <string name="audio_conv_error">Fout tijdens audio codering naar mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,6 +158,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="menu_restore_result_ok">Dashboard data hersteld.</string>
 	<string name="menu_restore_result_failed">Fout tijdens herstellen.</string>
 	<string name="unsupported_operation">Niet ondersteunde operatie.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Onjuiste gegevens.</string>
 	<string name="open_chooser_title">Open met:</string>
 	
@@ -170,10 +171,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Openen</item>
         <item>Coderen naar mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg niet geïnstalleerd of ingeschakeld:</string>
@@ -192,15 +189,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="dashboard_long_click_entry_0">Kopieer</string>
 	<string name="dashboard_long_click_entry_1">Verplaats</string>
 	<string name="dashboard_long_click_entry_2">Verwijder</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Kopiëren</item>
-	    <item>Verplaats</item>
-        <item>Hernoem</item>
-        <item>Her download de video</item>
-        <item>Verwijder van dashboard</item>
-        <item>Verwijder en delete bestand</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiëren</item>
@@ -266,28 +254,33 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	
     <!-- -->
     <string name="settings_cat_files">Video bestanden</string>
-    <string name="enable_q_suffix_title">Kwaliteit achtervoegsel toevoegen</string>
-    <string name="enable_q_suffix_summary">De video kwaliteit aan het eind van het bestand toevoegen</string>
     <string name="enable_rename_title">Activeer bestand hernoemen</string>
     <string name="enable_rename_summary">Hernoem het video bestand voor het downloaden (alleen voor lokale download)</string>
-    <string name="show_size_title">Bestandsgrootte laten zien</string>
-    <string name="show_size_summary">Haal de grootte van het videobestand op bij het bevestigingsbericht (langzamer)</string>
-    <string name="show_size_list_title">Toon de grootte van alle video formaten</string>
-    <string name="show_size_list_summary">Haal de bestandsgrootte op van alle video\'s in de lijst (veel slomer)</string>
-    <string name="show_thumb_title">Toon voorbeeld afbeelding</string>
+	<string name="show_thumb_title">Toon voorbeeld afbeelding</string>
     <string name="show_thumb_summary">Download een voorbeeld afbeelding met de videolijst</string>
-    <string name="show_resolutions_title">Toon video resoluties</string>
-    <string name="show_resolutions_summary">Vervang de kwaliteit indicatie met de video resolutie</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Geavanceerd</string>
     <string name="enable_advanced_features_title">Geavanceerde functies inschakelen</string>
     <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Mp3 codering bitrate:</string>
-    <string name="audio_extraction_type_title">Extractie type</string>
-    <string name="remove_video_title">Video verwijdering</string>
-    <string name="remove_video_summary">Inschakelen van video bestand verwijderen na succesvol audio extracten (waarschuwing: geen confirmatie)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">Extractie type</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Video verwijdering</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Meldingen</string>
     

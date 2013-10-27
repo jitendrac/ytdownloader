@@ -13,9 +13,9 @@
 
     <string name="tutorial_title">Γενικός οδηγός εφαρμογής</string>
 	<string name="tutorial_msg_new">Τώρα θα δείτε μια λίστα με όλους τους διαθέσιμους κωδικοποιητές και τις ποιότητες του επιλεγμένου βίντεο. Μπορείτε να:
-\n\n*) Επιλέξετε ένα αντικείμενο για τοπική λήψη του βίντεο (στη συσκευή) ή να το στείλετε μέσω SSH σε έναν απομακρυσμένο υπολογιστή.
+\n\n1) Επιλέξετε ένα αντικείμενο για τοπική λήψη του βίντεο (στη συσκευή) ή να το στείλετε μέσω SSH σε έναν απομακρυσμένο υπολογιστή.
 \nΑπαιτήσεις συσκευής προορισμού: Bash και Wget. Επιπλέον πληροφορίες SSH στη συνέχεια.
-\n\n*)Πιέστε παρατεταμένα ένα αντικείμενο και επιλέξτε μεταξύ αντιγραφής στο πρόχειρο ή κοινής χρήσης του συνδέσμου ως κείμενο (π.χ. αποστολή σε άλλη εφαρμογή).
+\n\n2)Πιέστε παρατεταμένα ένα αντικείμενο και επιλέξτε μεταξύ αντιγραφής στο πρόχειρο ή κοινής χρήσης του συνδέσμου ως κείμενο (π.χ. αποστολή σε άλλη εφαρμογή).
 \nΣημειώστε ότι ένας τέτοιος σύνδεσμος (διαφορετικός από αυτόν που στέλνετε μέσω SSH) μπορεί να χρησιμοποιηθεί μόνο στην ίδια συσκευή στην οποία δημιουργήθηκε Ή στο ίδιο δίκτυο LAN, αν την μοιράζεστε με άλλη συσκευή.\n</string>
     <string name="loading">Φόρτωση&#8230;</string>
     <string name="error">Σφάλμα!</string>
@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">Καμία λήψη σε εξέλιξη</string>
     <string name="long_click_title">Χειρισμός επιλεγμένου συνδέσμου:</string>
     <string name="ffmpeg_ready">FFmpeg έτοιμος.</string>
-    <string name="confirm_audio_checkbox1">Εξαγωγή ήχου μετά τη λήψη</string>
-    <string name="confirm_audio_checkbox2">\n(όπως καθορίστηκε στις ρυθμίσεις)</string>
     <string name="login_required">Μπορεί να χρειάζεται σύνδεση στο YouTube.</string>
     <string name="encrypted_streams">Κρυπτογραφημένη ροή βίντεο</string>
     <string name="no_video_available">Κανένα βίντεο διαθέσιμο.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">Αδυναμία ανάκτησης δεδομένων αναβάθμισης.\nΔοκιμάστε αργότερα.</string>
     <string name="upgrade_bad_md5_dialog_msg">Το ληφθέν πακέτο είναι φθαρμένο.\nΘα διαγραφεί τώρα.\nΠατήστε ΟΚ για να το κατεβάσετε ξανά.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">Βίντεο YTD</string>
     <string name="copy_error">Σφάλμα κατά την αντιγραφή.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">Η κωδικοποίηση σε mp3 ολοκληρώθηκε.</string>
     <string name="audio_extr_error">Σφάλμα κατά την εξαγωγή ήχου.</string>
     <string name="audio_conv_error">Σφάλμα κατά την κωδικοποίηση ήχου σε mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,6 +158,7 @@
 	<string name="menu_restore_result_ok">Τα δεδομένα του Πίνακα Ελέγχου ανακτήθηκαν.</string>
 	<string name="menu_restore_result_failed">Σφάλμα κατά την ανάκτηση.</string>
 	<string name="unsupported_operation">Μη υποστηριζόμενη λειτουργία.</string>
+	<string name="ffmpeg_already_running">Ο FFmpeg ήδη τρέχει.</string>
 	<string name="invalid_data">Μη έγκυρα δεδομένα.</string>
 	<string name="open_chooser_title">Άνοιγμα με:</string>
 	
@@ -170,10 +171,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Άνοιγμα</item>
         <item>Κωδικοποίηση σε mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Άνοιγμα</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">Το FFmpeg δεν είναι εγκατεστημένο ή ενεργοποιημένο:</string>
@@ -192,15 +189,6 @@
 	<string name="dashboard_long_click_entry_0">Αντιγραφή</string>
 	<string name="dashboard_long_click_entry_1">Μετακίνηση</string>
 	<string name="dashboard_long_click_entry_2">Διαγραφή</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Αντιγραφή</item>
-	    <item>Μετακίνηση</item>
-        <item>Μετονομασία</item>
-        <item>Εκ νέου λήψη του βίντεο</item>
-        <item>Απομάκρυνση από τον Πίνακα Ελέγχου</item>
-        <item>Απομάκρυνση και διαγραφή αρχείου</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Αντιγραφή</item>
@@ -266,28 +254,33 @@
 	
     <!-- -->
     <string name="settings_cat_files">Αρχεία βίντεο</string>
-    <string name="enable_q_suffix_title">Επισύναψη κατάληξης ποιότητας</string>
-    <string name="enable_q_suffix_summary">Προσθήκη της ποιότητας βίντεο στο τέλος του ονόματος αρχείου</string>
     <string name="enable_rename_title">Ενεργοποίηση μετονομασίας αρχείου</string>
     <string name="enable_rename_summary">Μετονομασία του αρχείου βίντεο πριν τη λήψη του (μόνο για τοπική λήψη)</string>
-    <string name="show_size_title">Εμφάνιση μεγέθους αρχείου</string>
-    <string name="show_size_summary">Εμφάνιση μεγέθους αρχείου στο μήνυμα επιβεβαίωσης λήψης (αργό)</string>
-    <string name="show_size_list_title">Εμφάνιση των μεγεθών όλων των βίντεο</string>
-    <string name="show_size_list_summary">Εμφάνιση του μεγέθους αρχείου για κάθε αντικείμενο στη λίστα των διαθέσιμων βίντεο (πιο αργό)</string>
-    <string name="show_thumb_title">Εμφάνιση εικόνας προεπισκόπησης </string>
+	<string name="show_thumb_title">Εμφάνιση εικόνας προεπισκόπησης </string>
     <string name="show_thumb_summary">Λήψη εικόνας προεπισκόπησης μαζί με τη λίστα βίντεο</string>
-    <string name="show_resolutions_title">Εμφάνιση αναλύσεων βίντεο</string>
-    <string name="show_resolutions_summary">Αντικατάσταση της ένδειξης ποιότητας με την αναλύση του βίντεο</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Για προχωρημένους</string>
     <string name="enable_advanced_features_title">Ενεργοποίηση Προχωρημένων Χαρακτηριστικών</string>
     <string name="enable_advanced_features_summary">Λήψη \"πρόσθετου\" FFmpeg</string>
     <string name="mp3_bitrate_title">Bitrate κωδικοποίησης mp3:</string>
-    <string name="audio_extraction_type_title">Τύπος εξαγωγής</string>
-    <string name="remove_video_title">Αφαίρεση βίντεο</string>
-    <string name="remove_video_summary">Ενεργοποίηση διαγραφής του αρχείου βίντεο μετά από επιτυχημένη εξαγωγή ήχου (προσοχή: χωρίς επιβεβαίωση!)</string>
     
+    <string name="ffmpeg_auto_title">Αυτόματη εξαγωγή ήχου</string>
+    <string name="ffmpeg_auto_summary">Εξαγωγή ή μετατροπή ήχου σε mp3 αυτόματα, μετά από κάθε λήψη</string>
+    <string name="ffmpeg_auto_cb_title">Ενεργοποίηση αυτόματης εξαγωγής</string>
+    <string name="ffmpeg_auto_cb_summary">Επιλέξτε τις παρακάτω παραμέτρους</string>
+    
+    <string name="audio_extraction_type_title">Τύπος εξαγωγής</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Μόνο εξαγωγή ήχου</item>
+        <item>Εξαγωγή και κωδικοποίηση ήχου σε mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Αφαίρεση βίντεο</string>
+    
+    <string name="enable_adaptive_title">Λήψη δευτερευόντων ροών (πειραματικό)</string>
+    <string name="enable_adaptive_summary">Προσθήκη επιλέον μόνο-βίντεο και/ή μόνο-ήχου ροών (αν διατίθενται) στη λίστα βίντεο</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Ειδοποιήσεις</string>
     

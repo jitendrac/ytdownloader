@@ -60,8 +60,6 @@
     <string name="notification_no_downloads">没有正在进行中的下载</string>
     <string name="long_click_title">处理选择的连结：</string>
     <string name="ffmpeg_ready">已准备 FFmpeg。</string>
-    <string name="confirm_audio_checkbox1">下载后提取音效</string>
-    <string name="confirm_audio_checkbox2">\n（和设定中的设置一样）</string>
     <string name="login_required">Login to YouTube may be required.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">No video available.</string>
@@ -112,7 +110,7 @@
     <string name="upgrade_network_error">无法取得更新资料。 \n稍后重试。</string>
     <string name="upgrade_bad_md5_dialog_msg">下载包装已损毁。 \n它现在将被删除。 \n按 OK 重新下载。</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD 影片</string>
     <string name="copy_error">Error during copy.</string>
@@ -126,6 +124,8 @@
     <string name="audio_conv_completed">音效编码至 mp3 完成。</string>
     <string name="audio_extr_error">音效提取时错误。</string>
     <string name="audio_conv_error">音效编码至 mp3 时错误。</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -156,6 +156,7 @@
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
 	<string name="menu_restore_result_failed">Error during restore.</string>
 	<string name="unsupported_operation">Unsupported operation.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Invalid data.</string>
 	<string name="open_chooser_title">Open with:</string>
 	
@@ -168,10 +169,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Open</item>
         <item>Encode to mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
@@ -190,15 +187,6 @@
 	<string name="dashboard_long_click_entry_0">Copy</string>
 	<string name="dashboard_long_click_entry_1">Move</string>
 	<string name="dashboard_long_click_entry_2">Delete</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Copy</item>
-	    <item>Move</item>
-        <item>Rename</item>
-        <item>Re-download the video</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copy</item>
@@ -264,28 +252,33 @@
 	
     <!-- -->
     <string name="settings_cat_files">影片档案</string>
-    <string name="enable_q_suffix_title">附上影片画质词尾</string>
-    <string name="enable_q_suffix_summary">在档案名称后面增加影片画质</string>
     <string name="enable_rename_title">允许修改档案名称</string>
     <string name="enable_rename_summary">在下载之前更改影片档案名称（只限手机下载）</string>
-    <string name="show_size_title">显示档案大小</string>
-    <string name="show_size_summary">在下载确认讯息显示影片档案大小（较慢）</string>
-    <string name="show_size_list_title">显示所有影片大小</string>
-    <string name="show_size_list_summary">取得目录里所有影片选项的档案大小（更慢）</string>
-    <string name="show_thumb_title">显示预览相片</string>
+	<string name="show_thumb_title">显示预览相片</string>
     <string name="show_thumb_summary">同时下载预览相片和影片目录</string>
-    <string name="show_resolutions_title">Show video resolutions</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">高级</string>
     <string name="enable_advanced_features_title">Enable Advanced Features</string>
     <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Mp3 encoding bitrate:</string>
-    <string name="audio_extraction_type_title">提取类型</string>
-    <string name="remove_video_title">移除影片</string>
-    <string name="remove_video_summary">允许在音效提取成功后删除影片档案（警告：没有确认）</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">提取类型</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">移除影片</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">通知</string>
     

@@ -61,8 +61,6 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="notification_no_downloads">אין הורדות פועלות</string>
     <string name="long_click_title">טפל בקישור הנבחר:</string>
     <string name="ffmpeg_ready">FFmpeg מוכן.</string>
-    <string name="confirm_audio_checkbox1">חלץ אודיו לאחר הורדה</string>
-    <string name="confirm_audio_checkbox2">\n(כמוגדר בהגדרות)</string>
     <string name="login_required">Login to YouTube may be required.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">No video available.</string>
@@ -113,7 +111,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="upgrade_network_error">לא ניתן לאחזר את נתוני עדכון. \n נסה מאוחר יותר.</string>
     <string name="upgrade_bad_md5_dialog_msg">החבילה שהורדת פגומה. \nימחק עכשיו\n לחץ אישור להוריד שוב.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">וידאו מתחילת השנה</string>
     <string name="copy_error">Error during copy.</string>
@@ -127,6 +125,8 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="audio_conv_completed">קידוד ל-MP3 הושלם.</string>
     <string name="audio_extr_error">שגיאה במהלך חילוץ אודיו.</string>
     <string name="audio_conv_error">שגיאה במהלך קידוד אודיו ל-MP3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -157,6 +157,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
 	<string name="menu_restore_result_failed">Error during restore.</string>
 	<string name="unsupported_operation">Unsupported operation.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Invalid data.</string>
 	<string name="open_chooser_title">Open with:</string>
 	
@@ -169,10 +170,6 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Open</item>
         <item>Encode to mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
@@ -191,15 +188,6 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	<string name="dashboard_long_click_entry_0">Copy</string>
 	<string name="dashboard_long_click_entry_1">Move</string>
 	<string name="dashboard_long_click_entry_2">Delete</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Copy</item>
-	    <item>Move</item>
-        <item>Rename</item>
-        <item>Re-download the video</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copy</item>
@@ -266,28 +254,33 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	
     <!-- -->
     <string name="settings_cat_files">קבצי וידאו</string>
-    <string name="enable_q_suffix_title">צרף סיומת איכות</string>
-    <string name="enable_q_suffix_summary">הוסף את איכות וידאו בסופו של שם הקובץ</string>
     <string name="enable_rename_title">אפשר שינוי שם קובץ</string>
     <string name="enable_rename_summary">שנה את שם קובץ וידאו לפני הורדתו (להורדה המקומית בלבד)</string>
-    <string name="show_size_title">הצג גודל קובץ</string>
-    <string name="show_size_summary">תביא את גודל קובץ וידאו בהודעת אישור להורדה (איטי יותר)</string>
-    <string name="show_size_list_title">הצג את כל גדלי וידאו</string>
-    <string name="show_size_list_summary">תביא את גדלי הקבצים עבור כל פריט ברשימה של וידאו זמין (הרבה יותר איטי)</string>
-    <string name="show_thumb_title">הצג תצוגה מקדימה של תמונה</string>
+	<string name="show_thumb_title">הצג תצוגה מקדימה של תמונה</string>
     <string name="show_thumb_summary">הורד תמונת תצוגה מקדימה יחד עם רשימת הווידאו</string>
-    <string name="show_resolutions_title">Show video resolutions</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">מתקדם</string>
     <string name="enable_advanced_features_title">Enable Advanced Features</string>
     <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Mp3 encoding bitrate:</string>
-    <string name="audio_extraction_type_title">סוג החילוץ</string>
-    <string name="remove_video_title">הסרת וידאו</string>
-    <string name="remove_video_summary">לאפשר מחיקת קובץ וידאו לאחר חילוץ אודיו מוצלח (אזהרה: ללא אישור)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">סוג החילוץ</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">הסרת וידאו</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">התראות</string>
     

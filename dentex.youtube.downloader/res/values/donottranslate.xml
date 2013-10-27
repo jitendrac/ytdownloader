@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.1 - Xxx XX 2013
+        \n-----------------------------------
+        \n[ ] option to auto-enqueue FFmpeg 
+        \n    tasks on downloads completion
+        \n[x] Dashboard import feature now 
+        \n    supports FLV video
+        \n[x] support for video-only and
+        \n    audio-only "secondary" streams
+        \n    from YouTube (experimental)
+        \n[x] various bug fixes
+        \n
         \n v3.0.2 - Oct 11 2013
         \n-----------------------------------
         \n[x] small fix
@@ -456,7 +467,7 @@
         	 - http://openideals.com/guardian
         	 - https://github.com/guardianproject/android-ffmpeg-java
         \n
-		\nObserver.java: reference - https://gist.github.com/shirou/659180
+		\nObserver.java -  reference: https://gist.github.com/shirou/659180
         \n
 		\nSectionedAdapter.java: GPL-3.0
 			 - Copyright &#169; 2008-2010 CommonsWare, LLC
@@ -477,7 +488,11 @@
         \n
 		\nJavascript function \"decryptSignature\" from the Greasemonkey script 
 			http://userscripts.org/scripts/show/25105 (MIT License) - by Gantt
-	    \n\n
+		\n
+		\nQueueThread.java -  reference: http://mindtherobot.com/blog/159/android-guts-intro-to-loopers-and-handlers/
+		\nby Ivan Memruk
+		\n
+	    \n
 	    For more details, look for comments in YTD\'s Java code.
 	    \n
 	    \n
@@ -570,11 +585,19 @@
         <item>190k (VBR)</item>
         <item>225k (VBR)</item>
         <item>245k (VBR)</item>
-        
     </string-array>
+    
+    <string name="mp3_bitrate_default">192k</string>
+    
+    <string-array name="audio_extraction_type_entry_values">
+        <item>extr</item>
+        <item>conv</item>
+    </string-array>
+    
+    <string name="audio_extraction_type_default">conv</string>
 	
     <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s/download</string>
-    <string name="ffmpeg_download_dialog_msg_link_bitbucket">https://bitbucket.org/dentex/ffmpeg_compiled_for_android/src/46f57632886403af8ae2715943bb8572902e16ec/ffmpeg_arm%1$s?at=master</string>
+    <string name="ffmpeg_download_dialog_msg_link_bitbucket">http://bitbucket.org/dentex/ffmpeg_compiled_for_android/src/46f57632886403af8ae2715943bb8572902e16ec/ffmpeg_arm%1$s?at=master</string>
     <string name="ffmpeg_size_arm7">6.0 MB</string>
     <string name="ffmpeg_size_arm5">6.4 MB</string>
     

@@ -62,8 +62,6 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="notification_no_downloads">Nenhum download em progresso</string>
     <string name="long_click_title">Link selecionado:</string>
     <string name="ffmpeg_ready">O FFmpeg está pronto.</string>
-    <string name="confirm_audio_checkbox1">Extrair o áudio após o download</string>
-    <string name="confirm_audio_checkbox2">\n(como definido nas configurações)</string>
     <string name="login_required">Login no YouTube pode ser necessário</string>
     <string name="encrypted_streams">Stream de vídeo encriptada</string>
     <string name="no_video_available">Vídeo não disponível.</string>
@@ -114,7 +112,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="upgrade_network_error">Não é possível baixar dados da atualização.\nTente novamente mais tarde.</string>
     <string name="upgrade_bad_md5_dialog_msg">Download corrompido.\nO pacote será deletado agora.\nPressione OK para baixar novamente.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">Vídeo do YTD</string>
     <string name="copy_error">Erro durante a cópia.</string>
@@ -128,6 +126,8 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="audio_conv_completed">Codificação de áudio em .mp3 completa.</string>
     <string name="audio_extr_error">Um erro ocorreu durante a extração do áudio.</string>
     <string name="audio_conv_error">Um erro ocorreu durante a codificação do áudio em .mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,6 +158,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="menu_restore_result_ok">Dados do painel restaurados.</string>
 	<string name="menu_restore_result_failed">Erro durante a restauração.</string>
 	<string name="unsupported_operation">Operação não suportada.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Dado inválido.</string>
 	<string name="open_chooser_title">Abrir com:</string>
 	
@@ -170,10 +171,6 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Abrir</item>
         <item>Codificar para mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Abrir</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg não instalado ou ativado:</string>
@@ -192,15 +189,6 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="dashboard_long_click_entry_0">Copiar</string>
 	<string name="dashboard_long_click_entry_1">Mover</string>
 	<string name="dashboard_long_click_entry_2">Deletar</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Copiar</item>
-	    <item>Mover</item>
-        <item>Renomear</item>
-        <item>Fazer o download do vídeo novamente</item>
-        <item>Remover do painel</item>
-        <item>Remover e deletar o arquivo</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copiar</item>
@@ -266,28 +254,33 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	
     <!-- -->
     <string name="settings_cat_files">Arquivos de vídeo</string>
-    <string name="enable_q_suffix_title">Acrescentar qualidade do vídeo no título do arquivo</string>
-    <string name="enable_q_suffix_summary">Adicionar a qualidade do vídeo no fim do nome do arquivo</string>
     <string name="enable_rename_title">Renomear o vídeo</string>
     <string name="enable_rename_summary">Permite alterar o nome do vídeo antes do download (apenas para downloads locais).</string>
-    <string name="show_size_title">Exibir tamanho do arquivo</string>
-    <string name="show_size_summary">Exibe o tamanho do arquivo de vídeo na mensagem de confirmação do download (mais lento).</string>
-    <string name="show_size_list_title">Exibir todos os tamanhos de vídeo</string>
-    <string name="show_size_list_summary">Exibe os tamanhos dos arquivos de cada item na lista de vídeos disponíveis (muito mais lento).</string>
-    <string name="show_thumb_title">Exibir imagem de visualização</string>
+	<string name="show_thumb_title">Exibir imagem de visualização</string>
     <string name="show_thumb_summary">Baixar a imagem de visualização junto com a lista de vídeos.</string>
-    <string name="show_resolutions_title">Mostrar resoluções do vídeo</string>
-    <string name="show_resolutions_summary">Substituir a indicação de qualidade com a resolução do vídeo</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Avançado</string>
     <string name="enable_advanced_features_title">Habilitar Funções Avançadas</string>
     <string name="enable_advanced_features_summary">Fazer o download do FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Taxa de bits de codificação MP3:</string>
-    <string name="audio_extraction_type_title">Tipo de extração</string>
-    <string name="remove_video_title">Remover o vídeo</string>
-    <string name="remove_video_summary">Habilita a remoção do arquivo de vídeo depois que a extração do áudio completa (aviso: sem confirmação)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">Tipo de extração</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Remover o vídeo</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Notificações</string>
     

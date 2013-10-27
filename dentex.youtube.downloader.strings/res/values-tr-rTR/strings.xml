@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">Devam etmekte olan bir indirme mevcut değil</string>
     <string name="long_click_title">Seçilen bağlantı kolu:</string>
     <string name="ffmpeg_ready">FFmpeg hazır.</string>
-    <string name="confirm_audio_checkbox1">İndirmeden sonra sesi çıkart</string>
-    <string name="confirm_audio_checkbox2">\n(ayarlarda belirlendiği gibi)</string>
     <string name="login_required">YouTube\'a giriş yapmanız gerekebilir.</string>
     <string name="encrypted_streams">Şifreli video akışı</string>
     <string name="no_video_available">Video yok.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">Güncelleme verisi alınamadı.\nDaha sonra tekrar deneyiniz.</string>
     <string name="upgrade_bad_md5_dialog_msg">İndirilen paket bozuk.\nŞimdi silinecek.\nYeniden indirmek için OK tıklayın.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Kopyalama hatası.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">Mp3 kodlaması tamamlandı.</string>
     <string name="audio_extr_error">Ses ayıklaması sırasında hata meydana geldi.</string>
     <string name="audio_conv_error">Ses dosyasının mp3\'e dönüştürülmesi sırasında hata meydana geldi.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,6 +158,7 @@
 	<string name="menu_restore_result_ok">Kontrol panel bilgileri geri yüklendi.</string>
 	<string name="menu_restore_result_failed">Geri yükleme hatası.</string>
 	<string name="unsupported_operation">Desteklenmeyen işlem.</string>
+	<string name="ffmpeg_already_running">FFmpeg şu anda çalışıyor.</string>
 	<string name="invalid_data">Geçersiz bilgi.</string>
 	<string name="open_chooser_title">Şununla aç:</string>
 	
@@ -170,10 +171,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Aç</item>
         <item>Mp3\'e çevir</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Aç</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg yüklü ya da aktif değil:</string>
@@ -192,15 +189,6 @@
 	<string name="dashboard_long_click_entry_0">Kopyala</string>
 	<string name="dashboard_long_click_entry_1">Taşı</string>
 	<string name="dashboard_long_click_entry_2">Sil</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Kopyala</item>
-	    <item>Taşı</item>
-        <item>Yeniden Adlandır</item>
-        <item>Videoyu yeniden indir</item>
-        <item>Panelden Kaldır</item>
-        <item>Dosyayı sil</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopyala</item>
@@ -266,28 +254,33 @@
 	
     <!-- -->
     <string name="settings_cat_files">Video dosyaları</string>
-    <string name="enable_q_suffix_title">Kalite soneki ekleyin</string>
-    <string name="enable_q_suffix_summary">Video adında kalitesini belirt</string>
     <string name="enable_rename_title">Dosya yeniden adlandırmayı etkinleştir</string>
     <string name="enable_rename_summary">Video dosyasını indirmeden önce yeniden adlandır (sadece yerel indirmeler için)</string>
-    <string name="show_size_title">Dosya boyutunu göster</string>
-    <string name="show_size_summary">İndirme onaylama mesajında video boyutunu al (daha yavaş)</string>
-    <string name="show_size_list_title">Tüm video boyutlarını göster</string>
-    <string name="show_size_list_summary">Kullanılabilir video listesindeki dosyaların  boyutlarını al (çok yavaş)</string>
-    <string name="show_thumb_title">Önizleme resmi göster</string>
+	<string name="show_thumb_title">Önizleme resmi göster</string>
     <string name="show_thumb_summary">Video listesi ile birlikte bir önizleme resmi indir</string>
-    <string name="show_resolutions_title">Video çözünürlüğünü göster</string>
-    <string name="show_resolutions_summary">Kalite göstergesini video çözünürlüğü ile değiştir</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Advanced</string>
     <string name="enable_advanced_features_title">Gelişmiş Özellikleri Aktif et</string>
     <string name="enable_advanced_features_summary">FFmpeg \"eklenti\" indir</string>
     <string name="mp3_bitrate_title">Mp3 çeviri kalitesi:</string>
-    <string name="audio_extraction_type_title">Çıkarma türü</string>
-    <string name="remove_video_title">Video removal</string>
-    <string name="remove_video_summary">Başarılı ses ayıklama ardından video dosyasını sil (dikkat: onay istemeden video silinir)</string>
     
+    <string name="ffmpeg_auto_title">Sesi otomatik dışa aktar</string>
+    <string name="ffmpeg_auto_summary">Her indirme sonrası sesi otomatik olarak MP3 formatında dışa aktar </string>
+    <string name="ffmpeg_auto_cb_title">Otomatik dışa aktarmayı etkinleştir</string>
+    <string name="ffmpeg_auto_cb_summary">Aşağıdan parametreleri seçin</string>
+    
+    <string name="audio_extraction_type_title">Çıkarma türü</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Sadece sesi dışa aktar</item>
+        <item>Sesi dışa aktar ve Mp3\'e çevir</item>
+    </string-array>
+    
+    <string name="remove_video_title">Video removal</string>
+    
+    <string name="enable_adaptive_title">İkincil akışları alın (deneysel)</string>
+    <string name="enable_adaptive_summary">Video listesine ilave olarak video ve/veya ses akışları ekle</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Bildirimler</string>
     

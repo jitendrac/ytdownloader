@@ -31,12 +31,6 @@
     
     <PreferenceCategory
         android:title="@string/settings_cat_files">
-            
-    	<CheckBoxPreference
-        	android:key="enable_q_suffix"
-        	android:title="@string/enable_q_suffix_title"
-        	android:summary="@string/enable_q_suffix_summary"
-        	android:defaultValue="true"/>
     	
     	<CheckBoxPreference
         	android:key="enable_rename"
@@ -49,26 +43,6 @@
             android:title="@string/show_thumb_title"
             android:summary="@string/show_thumb_summary" 
             android:defaultValue="false"/>
-	            
-<!--         <CheckBoxPreference -->
-<!--             android:key="show_size" -->
-<!--             android:dependency="show_size_list" -->
-<!--             android:title="@string/show_size_title" -->
-<!--             android:summary="@string/show_size_summary"  -->
-<!--             android:defaultValue="false"/> -->
-        
-<!--         <CheckBoxPreference -->
-<!--             android:key="show_size_list" -->
-<!--             android:disableDependentsState="true" -->
-<!--             android:title="@string/show_size_list_title" -->
-<!--             android:summary="@string/show_size_list_summary"  -->
-<!--             android:defaultValue="false"/> -->
-        
-        <CheckBoxPreference
-            android:key="show_resolutions"
-            android:title="@string/show_resolutions_title"
-            android:summary="@string/show_resolutions_summary" 
-            android:defaultValue="true"/>
 
     </PreferenceCategory>
     
@@ -79,6 +53,51 @@
         	android:key="enable_advanced_features"
         	android:title="@string/enable_advanced_features_title"
         	android:summary="@string/enable_advanced_features_summary"/>
+    	
+    	<PreferenceScreen 
+    	    android:key="ffmpeg_auto"
+    	    android:dependency="enable_advanced_features"
+    	    android:title="@string/ffmpeg_auto_title"
+    	    android:summary="@string/ffmpeg_auto_summary">
+    	    
+    	    <CheckBoxPreference
+    	        android:key="ffmpeg_auto_cb"
+    	        android:title="@string/ffmpeg_auto_cb_title"
+    	        android:summary="@string/ffmpeg_auto_cb_summary"
+    	        android:defaultValue="false"/>
+    	    
+    	    <ListPreference 
+        		android:key="audio_extraction_type"
+        		android:dependency="ffmpeg_auto_cb"
+        		android:title="@string/audio_extraction_type_title"
+        	    android:dialogTitle="@string/audio_extraction_type_title"
+        	    android:entries="@array/audio_extraction_type_entries"
+        	    android:entryValues="@array/audio_extraction_type_entry_values"
+        	    android:defaultValue="@string/audio_extraction_type_default"/>
+        	    
+        	<ListPreference
+        	    android:key="auto-mp3_bitrates"
+        	    android:dependency="ffmpeg_auto_cb"
+        	    android:title="@string/mp3_bitrate_title"
+        	    android:dialogTitle="@string/mp3_bitrate_title"
+        	    android:entries="@array/mp3_bitrate_entries"
+        	    android:entryValues="@array/mp3_bitrate_entry_values"
+        	    android:defaultValue="@string/mp3_bitrate_default"/>
+    	    
+    	    <CheckBoxPreference
+    	        android:key="ffmpeg_auto_rem_video"
+    	        android:dependency="ffmpeg_auto_cb"
+    	        android:title="@string/remove_video_title"
+    	    	android:summary="@string/remove_video"
+    	    	android:defaultValue="false"/>
+    	    
+    	</PreferenceScreen>
+    	
+   		<CheckBoxPreference
+   	        android:key="enable_adaptive"
+   	        android:title="@string/enable_adaptive_title"
+   	    	android:summary="@string/enable_adaptive_summary"
+   	    	android:defaultValue="false"/>
             
 	</PreferenceCategory>
 

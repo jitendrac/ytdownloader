@@ -62,8 +62,6 @@
     <string name="notification_no_downloads">Отсутствуют активные загрузки</string>
     <string name="long_click_title">Обработать выбранную ссылку:</string>
     <string name="ffmpeg_ready">FFmpeg готов.</string>
-    <string name="confirm_audio_checkbox1">Извлекать аудио после загрузки</string>
-    <string name="confirm_audio_checkbox2">\n(как определено в настройках)</string>
     <string name="login_required">Может потребоваться войти в аккаунт YouTube.</string>
     <string name="encrypted_streams">Закодированный поток видео</string>
     <string name="no_video_available">Нет доступных видео.</string>
@@ -114,7 +112,7 @@
     <string name="upgrade_network_error">Невозможно получить данные об обновлении.\nПопытайтесь позже.</string>
     <string name="upgrade_bad_md5_dialog_msg">Загруженный пакет повреждён.\nСейчас он будет удалён.\nНажмите OK для повторной загрузки.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">Видео YTD</string>
     <string name="copy_error">Ошибка при копировании.</string>
@@ -128,6 +126,8 @@
     <string name="audio_conv_completed">Кодирование в mp3 завершено.</string>
     <string name="audio_extr_error">Ошибка при извлечении аудио.</string>
     <string name="audio_conv_error">Ошибка при кодировании в mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,6 +158,7 @@
 	<string name="menu_restore_result_ok">Данные инстр. панели восстановлены.</string>
 	<string name="menu_restore_result_failed">Ошибка восстановления.</string>
 	<string name="unsupported_operation">Неподдерж. операция</string>
+	<string name="ffmpeg_already_running">FFmpeg уже запущен.</string>
 	<string name="invalid_data">Неверные данные.</string>
 	<string name="open_chooser_title">Открыть с помощью:</string>
 	
@@ -170,10 +171,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Oткрыть</item>
         <item>Извлечь и кодировать аудио в mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Открыть</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg не установлен или не включён:</string>
@@ -192,15 +189,6 @@
 	<string name="dashboard_long_click_entry_0">Копировать</string>
 	<string name="dashboard_long_click_entry_1">Переместить</string>
 	<string name="dashboard_long_click_entry_2">Удалить</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Копировать</item>
-	    <item>Переместить</item>
-        <item>Переименовать</item>
-        <item>Повторная загрузка видео</item>
-        <item>Убрать с панели</item>
-        <item>Убрать и удалить файл</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Копировать</item>
@@ -266,28 +254,33 @@
 	
     <!-- -->
     <string name="settings_cat_files">Видео файлы</string>
-    <string name="enable_q_suffix_title">Прикрепить суффикс качества</string>
-    <string name="enable_q_suffix_summary">Добавить качество видео в конце имени файла</string>
     <string name="enable_rename_title">Разрешить переименование</string>
     <string name="enable_rename_summary">Переименовать видео перед загрузкой (только при локальной загрузке)</string>
-    <string name="show_size_title">Показать размер файла</string>
-    <string name="show_size_summary">Получить размер видео при подтверждении загрузки (медленнее)</string>
-    <string name="show_size_list_title">Показать все размеры видео</string>
-    <string name="show_size_list_summary">Получить размеры файлов для каждого элемента списка доступного видео (намного медленнее)</string>
-    <string name="show_thumb_title">Включить предпросмотр</string>
+	<string name="show_thumb_title">Включить предпросмотр</string>
     <string name="show_thumb_summary">Загружать изображение предварительного просмотра вместе со списком видео</string>
-    <string name="show_resolutions_title">Показать разрешение видео</string>
-    <string name="show_resolutions_summary">Заменить показатель качества на разрешение видео</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Дополнительно</string>
     <string name="enable_advanced_features_title">Включить дополнительные функции</string>
     <string name="enable_advanced_features_summary">Скачать \"плагин\" FFmpeg</string>
     <string name="mp3_bitrate_title">Битрейт кодирования mp3:</string>
-    <string name="audio_extraction_type_title">Тип извлечения</string>
-    <string name="remove_video_title">Удаление видео</string>
-    <string name="remove_video_summary">Включить удаление видео после успешного извлечения аудио (предупреждение: без подтверждения)</string>
     
+    <string name="ffmpeg_auto_title">Автоизвлечение аудио</string>
+    <string name="ffmpeg_auto_summary">Извлекать или конвертировать аудио в mp3 после каждой загрузки</string>
+    <string name="ffmpeg_auto_cb_title">Включить автоматическое извлечение</string>
+    <string name="ffmpeg_auto_cb_summary">Выберите параметры ниже</string>
+    
+    <string name="audio_extraction_type_title">Тип извлечения</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Только извлечь аудио</item>
+        <item>Извлечь и кодировать аудио в mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Удаление видео</string>
+    
+    <string name="enable_adaptive_title">Дополнительные потоки (эксп.)</string>
+    <string name="enable_adaptive_summary">Добавление дополнительных только видео и/или только аудио потоков (если доступно) к списку видео</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Уведомления</string>
     

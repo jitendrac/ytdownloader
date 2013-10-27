@@ -56,8 +56,6 @@
     <string name="notification_no_downloads">دانلودی در حال پیشرفت نیست</string>
     <string name="long_click_title">رفتار با پیوند انتخاب شده:</string>
     <string name="ffmpeg_ready">FFmpeg آماده است.</string>
-    <string name="confirm_audio_checkbox1">بعد از دانلود صدا را استخراج کن</string>
-    <string name="confirm_audio_checkbox2">\n(همانطور که در تنظیمات تعریف شده است)</string>
     <string name="login_required">Login to YouTube may be required.</string>
     <string name="encrypted_streams">Encrypted video stream</string>
     <string name="no_video_available">No video available.</string>
@@ -107,7 +105,7 @@
     <string name="upgrade_network_error">قادر به بازیابی داده های به روزرسانی نیستیم.\n بعدا دوباره امتحان کنید.</string>
     <string name="upgrade_bad_md5_dialog_msg">بسته دانلود شده خراب است.\nالان حذف خواهد شد.\n دکمه بسیار خوب را فشار دهید تا دوباره دانلود شود.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">ویدئو YTD</string>
     <string name="copy_error">Error during copy.</string>
@@ -121,6 +119,8 @@
     <string name="audio_conv_completed">رمزکردن صدا به mp3 کامل شد.</string>
     <string name="audio_extr_error">خطا در هنگام استخراج صدا</string>
     <string name="audio_conv_error">خطا در هنگام رمزکردن صدا به mp3</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -151,6 +151,7 @@
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
 	<string name="menu_restore_result_failed">Error during restore.</string>
 	<string name="unsupported_operation">Unsupported operation.</string>
+	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Invalid data.</string>
 	<string name="open_chooser_title">Open with:</string>
 	
@@ -163,10 +164,6 @@
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Open</item>
         <item>Encode to mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Open</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
@@ -185,15 +182,6 @@
 	<string name="dashboard_long_click_entry_0">Copy</string>
 	<string name="dashboard_long_click_entry_1">Move</string>
 	<string name="dashboard_long_click_entry_2">Delete</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Copy</item>
-	    <item>Move</item>
-        <item>Rename</item>
-        <item>Re-download the video</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copy</item>
@@ -256,28 +244,33 @@
 	
     <!-- -->
     <string name="settings_cat_files">فایل های ویدئو</string>
-    <string name="enable_q_suffix_title">پسوند کیفیت را اضافه کن</string>
-    <string name="enable_q_suffix_summary">کیفیت ویدئو را به انتهای نام فایل اضافه کن.</string>
     <string name="enable_rename_title">فعال کردن تغییر نام دادن فایل</string>
     <string name="enable_rename_summary">قبل از اینکه فایل ویدئویی را دانلود کنی آن را تغییر نام بده(فقط برای دانلود محلی)</string>
-    <string name="show_size_title">حجم فایل را نمایش بده</string>
-    <string name="show_size_summary">در هنگام پیام تأیید دانلود حجم فایل را واکشی کن(آهسته تر)</string>
-    <string name="show_size_list_title">نمایش حجم تمام فایلهای ویدئویی</string>
-    <string name="show_size_list_summary">برای هر آیتم در لیست ویدئوهای موجود حجم را واکشی کن(خیلی کندتر)</string>
-    <string name="show_thumb_title">نمایش تصویر پیش نمایش</string>
+	<string name="show_thumb_title">نمایش تصویر پیش نمایش</string>
     <string name="show_thumb_summary">دانلود یک تصویر پیش نمایش به همراه لیست ویدئو</string>
-    <string name="show_resolutions_title">Show video resolutions</string>
-    <string name="show_resolutions_summary">Replace the quality indication with the video resolution</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">پیشرفته</string>
     <string name="enable_advanced_features_title">Enable Advanced Features</string>
     <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Mp3 encoding bitrate:</string>
-    <string name="audio_extraction_type_title">نوع استخراج</string>
-    <string name="remove_video_title">حذف کردن ویدئو</string>
-    <string name="remove_video_summary">حذف ویدئو پس از استخراج موفقیت آمیز صدا را فعال کن(اخطار: بدون تأیید)</string>
     
+    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
+    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    
+    <string name="audio_extraction_type_title">نوع استخراج</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Extract audio only</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">حذف کردن ویدئو</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">اعلان ها</string>
     

@@ -35,7 +35,7 @@
     <string name="no_market">Aplikácia pre nákup nie je dostupná.</string>
     <string name="no_market_dialog_msg">Prosím, nainštalujte Google Play</string>
     <string name="list_click_dialog_title">Potvrďte stiahnutie pre:</string>
-    <string name="list_click_download_local">Stiahnuť tu</string>
+    <string name="list_click_download_local">Stiahnuť</string>
     <string name="list_click_download_ssh">Odoslať cez SSH</string>
     <string name="rename_dialog_title">Nový názov súboru:</string>
     <string name="rename_dialog_msg">Nevkladajte príponu súboru (ako .mp4, alebo .flv).</string>
@@ -62,8 +62,6 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="notification_no_downloads">Žiadne prebiehajúce sťahovanie</string>
     <string name="long_click_title"> Spracovať vybraný odkaz:</string>
     <string name="ffmpeg_ready">FFmpeg pripravený.</string>
-    <string name="confirm_audio_checkbox1">Extrahovať audio po stiahnutí</string>
-    <string name="confirm_audio_checkbox2">\n(ako je definované v nastaveniach)</string>
     <string name="login_required">Je potrebné prihlásenie do YouTube.</string>
     <string name="encrypted_streams">Šifrovaný video stream</string>
     <string name="no_video_available">Žiadne video nie je k dispozícii.</string>
@@ -114,7 +112,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="upgrade_network_error">Nemožno načítať dáta aktualizácie.\nSkúste neskôr.</string>
     <string name="upgrade_bad_md5_dialog_msg">Stiahnutý balíček je poškodený.\nBude vymazaný.\nKliknite na OK a stiahne sa znova.</string>
     
-    <!-- ### DownloadsService ### -->
+    <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
     <string name="copy_error">Chyba počas kopírovania.</string>
@@ -124,10 +122,12 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="download_failed">Sťahovanie zlyhalo!</string>
     <string name="audio_extr_progress">Prebieha extrahovanie audia&#8230;</string>
     <string name="audio_conv_progress">Prebieha konvertovanie audia do mp3&#8230;</string>
-    <string name="audio_extr_completed">Extrahovanie zvuku dokončené.</string>
+    <string name="audio_extr_completed">Extrahovanie audia dokončené.</string>
     <string name="audio_conv_completed">Konvertovanie audia do mp3 dokončené.</string>
     <string name="audio_extr_error">Chyba pri extrahovaní audia.</string>
     <string name="audio_conv_error">Chyba pri konvertovaní audia do mp3.</string>
+    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
+    <string name="auto_audio_extr_completed">All audio extractions completed</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,6 +158,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="menu_restore_result_ok">Dashboard údaje obnovené.</string>
 	<string name="menu_restore_result_failed">Chyba počas obnovovania.</string>
 	<string name="unsupported_operation">Nepodporovaná operácia.</string>
+	<string name="ffmpeg_already_running">FFmpeg už beží.</string>
 	<string name="invalid_data">Neplatné údaje.</string>
 	<string name="open_chooser_title">Otvoriť s:</string>
 	
@@ -170,10 +171,6 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string-array name="dashboard_click_entries_audio">
 	    <item>Otvoriť</item>
         <item>Konvertovať do mp3</item>
-    </string-array>
-    
-	<string-array name="dashboard_click_entries_imported">
-	    <item>Otvoriť</item>
     </string-array>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg nie je nainštalovaný, alebo povolený:</string>
@@ -192,15 +189,6 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="dashboard_long_click_entry_0">Kopírovať</string>
 	<string name="dashboard_long_click_entry_1">Presunúť</string>
 	<string name="dashboard_long_click_entry_2">Vymazať</string>
-	
-	<!-- <string-array name="dashboard_long_click_entries">
-	    <item>Kopírovať</item>
-	    <item>Presunúť</item>
-        <item>Premenovať</item>
-        <item>Stiahnuť znovu video</item>
-        <item>Odstrániť z Dashboard</item>
-        <item>Odstrániť a vymazať súbor</item>
-    </string-array> -->
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopírovať</item>
@@ -266,28 +254,33 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	
     <!-- -->
     <string name="settings_cat_files">Video súbory</string>
-    <string name="enable_q_suffix_title">Pridať kvalitu</string>
-    <string name="enable_q_suffix_summary">Pridať kvalitu videa na koniec názvu súboru</string>
     <string name="enable_rename_title">Povoliť zmenu názvu súboru</string>
     <string name="enable_rename_summary">Premenovať názov súboru pred stiahnutím (iba pre lokálne uloženie)</string>
-    <string name="show_size_title">Zobraziť veľkosť súboru</string>
-    <string name="show_size_summary">Načítať veľkosť súboru v správe potvrdenia (pomalé)</string>
-    <string name="show_size_list_title">Zobraziť všetky veľkosti videa</string>
-    <string name="show_size_list_summary">Načítať veľkosť súborov pre každú položku v zozname dostupných videí (veľmi pomalé)</string>
-    <string name="show_thumb_title">Zobraziť obrázok náhľadu</string>
+	<string name="show_thumb_title">Zobraziť obrázok náhľadu</string>
     <string name="show_thumb_summary">Stiahnuť obrázok náhľadu spolu so zoznamom videa</string>
-    <string name="show_resolutions_title">Zobraziť rozlíšenie videa</string>
-    <string name="show_resolutions_summary">Zameniť indikátor kvality za rozlíšenie videa</string>
-    
+
     <!-- -->
     <string name="settings_cat_advanced">Pokročilé</string>
     <string name="enable_advanced_features_title">Povoliť pokročilé funkcie</string>
     <string name="enable_advanced_features_summary">Stiahnuť FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Bitrate pre mp3:</string>
-    <string name="audio_extraction_type_title">Druh extrahovania</string>
-    <string name="remove_video_title">Odstránenie videa</string>
-    <string name="remove_video_summary">Povoliť odstánenie video súboru po úspešnom extrahovaní audia (upozornenie: bez potvrdenia)</string>
     
+    <string name="ffmpeg_auto_title">Autom. extrakcia audia</string>
+    <string name="ffmpeg_auto_summary">Automaticky extrahovať, alebo konvertovať audio do mp3 po každom stiahnutí</string>
+    <string name="ffmpeg_auto_cb_title">Povoliť automatické extrahovanie</string>
+    <string name="ffmpeg_auto_cb_summary">Zvoľte niektorý z parametrov nižšie</string>
+    
+    <string name="audio_extraction_type_title">Druh extrahovania</string>
+    <string-array name="audio_extraction_type_entries">
+	    <item>Iba extrahovať audio</item>
+        <item>Extrahovať a konvertovať audio do mp3</item>
+    </string-array>
+    
+    <string name="remove_video_title">Odstránenie videa</string>
+    
+    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
+    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+        
     <!-- -->
     <string name="settings_cat_notifications">Oznámenia</string>
     

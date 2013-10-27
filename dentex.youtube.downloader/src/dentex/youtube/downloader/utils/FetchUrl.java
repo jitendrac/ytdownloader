@@ -47,12 +47,12 @@ public class FetchUrl {
         	Utils.logger("d", "doFetch: trying url " + url, DEBUG_TAG);
             return downloadWebPage(url);
         } catch (IOException e) {
-        	Log.e(DEBUG_TAG, "doFetch: " + e.getMessage());
+        	Log.e(DEBUG_TAG, "doFetch: IOException", e);
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> doFetch", e.getMessage(), e);
             return "e";
-        } catch (RuntimeException re) {
-        	Log.e(DEBUG_TAG, "doFetch: " + re.getMessage());
-	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> doFetch", re.getMessage(), re);
+        } catch (RuntimeException e) {
+        	Log.e(DEBUG_TAG, "doFetch: RuntimeException", e);
+	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> doFetch", e.getMessage(), e);
 	    	return "e";
         }
     }

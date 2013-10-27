@@ -211,6 +211,47 @@ public class Utils {
 		}
     }
     
+	public static String[] retrieveBitrateValuesFromPref(Context ctx) {
+		String[] bitrateValues = ctx.getResources()
+				   .getStringArray(R.array.mp3_bitrate_entry_values);
+		   
+		String[] bitrateEntries = ctx.getResources()
+				   .getStringArray(R.array.mp3_bitrate_entries);
+		
+		String bitrateValue = YTD.settings.getString("auto-mp3_bitrates", "192k");
+		String bitrateType = null;
+		if (bitrateValue.contains("k")) {
+			bitrateType = "CBR";
+		} else {
+			bitrateType = "VBR";
+		}
+		
+		String bitrateEntry = null;
+		for (int i = 0; i < bitrateEntries.length; i++) {
+			if (bitrateValue.equals(bitrateValues[i]))
+			 bitrateEntry = bitrateEntries[i];
+		}
+		
+		Utils.logger("v", /*"selected bitrate value: " + bitrateValue + */
+				"\nselected bitrate entry: " + bitrateEntry , DEBUG_TAG);
+		
+		return new String[] { bitrateType, bitrateValue };
+	}
+	
+	public static void removeFromMediaStore(Context ctx, File fileToDel, String mediaUriString) {
+		if (mediaUriString != null) {
+			Uri mediaUri = Uri.parse(mediaUriString);
+			// remove media file reference from MediaStore library via ContentResolver
+			if (ctx.getContentResolver().delete(mediaUri, null, null) > 0) {
+				Utils.logger("d", mediaUri.toString() + " Removed", DEBUG_TAG);
+			} else {
+				Utils.logger("w", mediaUri.toString() + " NOT removed", DEBUG_TAG);
+			}
+		} else {
+			Utils.logger("w", "mediaUriString for " + fileToDel.getName() + " null", DEBUG_TAG);
+		}
+	}
+    
     // --------------------------------------------------------------------------
     
     /*
@@ -504,7 +545,7 @@ public class Utils {
         Uri videosUri = null;
         String[] projection = null;
         String dataType = null;
-        if (ext.equals("mp4") || ext.equals("3gpp") || ext.equals("webm")) {
+        if (ext.equals("mp4") || ext.equals("3gp") || ext.equals("webm")) {
         	videosUri = MediaStore.Video.Media.getContentUri("external");
         	projection = vprojection;
         	dataType = MediaStore.Video.VideoColumns.DATA;
@@ -563,7 +604,7 @@ public class Utils {
     	PrintWriter out = null;
     	try {
     	    out = new PrintWriter(new BufferedWriter(new FileWriter(file.getAbsolutePath(), true)));
-    	    out.println("\n" + text);
+    	    out.println("\n\n" + System.currentTimeMillis() + ":\n" + text);
     	} catch (IOException e) {
     	    Log.e(DEBUG_TAG, "appendStringToFile: " + e.getMessage());
     	} finally {
