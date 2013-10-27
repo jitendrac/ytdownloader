@@ -137,9 +137,9 @@ public class SettingsActivity extends Activity {
 		private String link;
 		private Preference clear;
 
-		public static final int YTD_SIG_HASH = -1892118308; // final string
+		//public static final int YTD_SIG_HASH = -1892118308; // final string
 		//public static final int YTD_SIG_HASH = -118685648; // dev test: desktop
-		//public static final int YTD_SIG_HASH = 1922021506; // dev test: laptop
+		public static final int YTD_SIG_HASH = 1922021506; // dev test: laptop
 		
 		private File srcDir;
 		private File srcFile;

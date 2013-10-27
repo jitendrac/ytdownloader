@@ -126,11 +126,10 @@ public class FFmpegExtractAudioTask implements Runnable {
 
 		@Override
 		protected Boolean doInBackground(File... file) {
-			if (file[0].delete()) {
+			if (file[0].exists() && file[0].delete()) {
 				// remove library reference
-				String mediaUriString;
 				try {
-					mediaUriString = Utils.getContentUriFromFilePath(file[0].getAbsolutePath(), aContext.getContentResolver());
+					String mediaUriString = Utils.getContentUriFromFile(file[0], aContext.getContentResolver());
 					Utils.removeFromMediaStore(aContext, file[0], mediaUriString);
 				} catch (NullPointerException e) {
 					Utils.logger("w", file[0].getName() + " UriString NOT found", DEBUG_TAG);

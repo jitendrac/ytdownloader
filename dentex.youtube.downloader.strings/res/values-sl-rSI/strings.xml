@@ -125,8 +125,8 @@
     <string name="audio_conv_completed">Kodiranje zvoka v mp3 končano.</string>
     <string name="audio_extr_error">Napaka med izluščevanjem audia.</string>
     <string name="audio_conv_error">Napaka med kodiranjem audia v mp3.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s od %2$s audio izluščenj končanih</string>
+    <string name="auto_audio_extr_completed">Vsa audio izluščenja končana</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -277,8 +277,8 @@
     
     <string name="remove_video_title">Odstranitev videa</string>
     
-    <string name="enable_adaptive_title">Pridobi sekundarne pretoke (eksperimentalno)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">Pridobi sekundarne pretoke</string>
+    <string name="enable_adaptive_summary">[Eksperimentalno]\nDodaj dodatne video/audio pretoke na seznam videov, če so na voljo</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Obvestila</string>

@@ -278,8 +278,8 @@
     
     <string name="remove_video_title">Удаление видео</string>
     
-    <string name="enable_adaptive_title">Дополнительные потоки (эксп.)</string>
-    <string name="enable_adaptive_summary">Добавление дополнительных только видео и/или только аудио потоков (если доступно) к списку видео</string>
+    <string name="enable_adaptive_title">Дополнительные потоки</string>
+    <string name="enable_adaptive_summary">[Эксп. функция]\nДобавить дополнительные только видео и/или только аудио потоки (если доступны) к списку видео</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Уведомления</string>

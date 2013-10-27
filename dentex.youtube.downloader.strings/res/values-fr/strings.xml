@@ -278,8 +278,8 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     
     <string name="remove_video_title">Suppression vidéo</string>
     
-    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">Get secondary streams</string>
+    <string name="enable_adaptive_summary">[Experimental]\nAdd additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notifications</string>

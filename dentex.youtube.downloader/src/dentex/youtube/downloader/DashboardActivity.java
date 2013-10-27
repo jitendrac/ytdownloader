@@ -125,7 +125,7 @@ public class DashboardActivity extends Activity {
 	private int currentTime;
 	protected File audioFile;
 	protected String basename;
-	private String aSuffix = ".audio";
+	private String aSuffix;
 	private String vfilename;
 	private boolean removeVideo;
 	private boolean removeAudio;
@@ -446,7 +446,7 @@ public class DashboardActivity extends Activity {
 
         		if (!isAnyAsyncInProgress) {
 	        		currentItem = da.getItem(position); // in order to refer to the filtered item
-	
+
 	        		int COPY = 0;
 	        		int MOVE = 1;
 	        		int RENAME = 2;
@@ -605,41 +605,47 @@ public class DashboardActivity extends Activity {
 	    		String input = userFilename.getText().toString();
 	    		File in = new File(currentItem.getPath(), currentItem.getFilename());
 	    		File renamed = new File(currentItem.getPath(), input);
-	    		if (in.renameTo(renamed)) {
-	    			// set new name to the list item
-	    			currentItem.setFilename(input);
-	    			
-	    			// update the JSON file entry
-	    			Json.addEntryToJsonFile(
-							DashboardActivity.this, 
-							currentItem.getId(), 
-							currentItem.getType(), 
-							currentItem.getYtId(), 
-							currentItem.getPos(),
-							currentItem.getStatus(), 
-							currentItem.getPath(), 
-							input, 
-							Utils.getFileNameWithoutExt(input), 
-							currentItem.getAudioExt(), 
-							currentItem.getSize(),
-							false);
-	    			
-	    			// remove references for the old file
-	    			String mediaUriString = Utils.getContentUriFromFilePath(in.getAbsolutePath(), getContentResolver());
-	    			//Utils.logger("d", "mediaString: " + mediaUriString, DEBUG_TAG);
-	    			Utils.removeFromMediaStore(sDashboard, in, mediaUriString);
-	    			
-	    			// scan the new file
-	    			Utils.scanMedia(DashboardActivity.this, 
-							new String[]{ renamed.getAbsolutePath() }, 
-							new String[]{ "video/*" });
-	    			
-	    			// refresh the dashboard
-	    			refreshlist(DashboardActivity.this);
-	    			
-	    			Utils.logger("d", "'" + in.getName() + "' renamed to '" + input + "'", DEBUG_TAG);
+	    		
+	    		if (!currentItem.getFilename().equals(input)) {
+		    		if (in.renameTo(renamed)) {
+		    			// set new name to the list item
+		    			currentItem.setFilename(input);
+		    			
+		    			// update the JSON file entry
+		    			Json.addEntryToJsonFile(
+								DashboardActivity.this, 
+								currentItem.getId(), 
+								currentItem.getType(), 
+								currentItem.getYtId(), 
+								currentItem.getPos(),
+								currentItem.getStatus(), 
+								currentItem.getPath(), 
+								input, 
+								Utils.getFileNameWithoutExt(input), 
+								currentItem.getAudioExt(), 
+								currentItem.getSize(),
+								false);
+		    			
+		    			if (in != null) {
+							// remove references for the old file
+							String mediaUriString = Utils.getContentUriFromFile(in, sDashboard.getContentResolver());
+							//Utils.logger("d", "mediaString: " + mediaUriString, DEBUG_TAG);
+							Utils.removeFromMediaStore(sDashboard, in, mediaUriString);
+						}
+						// scan the new file
+		    			Utils.scanMedia(DashboardActivity.this, 
+								new String[]{ renamed.getAbsolutePath() }, 
+								new String[]{ "video/*" });
+		    			
+		    			// refresh the dashboard
+		    			refreshlist(DashboardActivity.this);
+		    			
+		    			Utils.logger("d", "'" + in.getName() + "' renamed to '" + input + "'", DEBUG_TAG);
+		    		} else {
+		    			Log.e(DEBUG_TAG, "'" + in.getName() + "' NOT renamed");
+		    		}
 	    		} else {
-	    			Log.e(DEBUG_TAG, "'" + in.getName() + "' NOT renamed");
+	    			Utils.logger("w", "DashboardActivity#rename -> Same name used", DEBUG_TAG);
 	    		}
 	    		
 	    		// hide keyboard
@@ -969,7 +975,7 @@ public class DashboardActivity extends Activity {
         
         switch(item.getItemId()){
         	case R.id.menu_search:
-        		BugSenseHandler.leaveBreadcrumb("ShareActivity_menu_search");
+        		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_search");
     			if (!isSearchBarVisible) {
     				spawnSearchBar();
     			} else {
@@ -977,7 +983,7 @@ public class DashboardActivity extends Activity {
     			}
     			return true;
         	case R.id.menu_backup:
-        		BugSenseHandler.leaveBreadcrumb("ShareActivity_menu_backup");
+        		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_backup");
         		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
 	        		boolean backupCheckboxEnabled = YTD.settings.getBoolean("dashboard_backup_info", true);
 				    if (backupCheckboxEnabled == true) {
@@ -1020,7 +1026,7 @@ public class DashboardActivity extends Activity {
         		}
         		return true;
         	case R.id.menu_restore:
-        		BugSenseHandler.leaveBreadcrumb("ShareActivity_menu_restore");
+        		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_restore");
         		if (!smtInProgressOrPaused) {
 	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
 				    if (restoreCheckboxEnabled == true) {
@@ -1063,7 +1069,7 @@ public class DashboardActivity extends Activity {
         		}
         		return true;
         	case R.id.menu_import:
-        		BugSenseHandler.leaveBreadcrumb("ShareActivity_menu_import");
+        		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_import");
         		boolean importCheckboxEnabled1 = YTD.settings.getBoolean("dashboard_import_info", true);
 			    if (importCheckboxEnabled1 == true) {
 			    	
@@ -1274,11 +1280,11 @@ public class DashboardActivity extends Activity {
 
 	public boolean removeCompleted(File fileToDel) {
 		// remove file
-		if (fileToDel.delete()) {
+		if (fileToDel.exists() && fileToDel.delete()) {
 			// remove library reference
 			String mediaUriString;
 			try {
-				mediaUriString = Utils.getContentUriFromFilePath(fileToDel.getAbsolutePath(), getContentResolver());
+				mediaUriString = Utils.getContentUriFromFile(fileToDel, getContentResolver());
 				Utils.removeFromMediaStore(sDashboard, fileToDel, mediaUriString);
 			} catch (NullPointerException e) {
 				Utils.logger("w", fileToDel.getName() + " UriString NOT found", DEBUG_TAG);
@@ -2146,7 +2152,7 @@ public class DashboardActivity extends Activity {
 		
 		audioFile = new File(fileToConvert.getParent(), audioFileName);
 
-		if (!audioFile.exists()) {
+		if (!audioFile.exists() || audioFile.length() == 0) {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -2223,7 +2229,7 @@ public class DashboardActivity extends Activity {
 				}
 				Utils.logger("d", vfilename + " " + text, DEBUG_TAG);
 				
-				audioFile = addSuffixToAudioFile(basename, audioFile);
+				boolean addItToDb = addSuffixToAudioFileName();
 				Toast.makeText(DashboardActivity.this,  audioFile.getName() + ": " + text, Toast.LENGTH_SHORT).show();
 				aBuilder.setContentTitle(audioFile.getName());
 				aBuilder.setContentText(text);
@@ -2255,19 +2261,20 @@ public class DashboardActivity extends Activity {
 				}
 				
 				// add audio file to the JSON file entry
-				Json.addEntryToJsonFile(
-						DashboardActivity.this, 
-						currentItem.getId(), 
-						type, 
-						currentItem.getYtId(), 
-						currentItem.getPos(),
-						YTD.JSON_DATA_STATUS_COMPLETED,
-						currentItem.getPath(), 
-						audioFile.getName(), 
-						currentItem.getBasename(), 
-						"", 
-						Utils.MakeSizeHumanReadable((int) audioFile.length(), false), 
-						true);
+				if (addItToDb)
+					Json.addEntryToJsonFile(
+							DashboardActivity.this, 
+							currentItem.getId(), 
+							type, 
+							currentItem.getYtId(), 
+							currentItem.getPos(),
+							YTD.JSON_DATA_STATUS_COMPLETED,
+							currentItem.getPath(), 
+							audioFile.getName(), 
+							currentItem.getBasename(), 
+							"", 
+							Utils.MakeSizeHumanReadable((int) audioFile.length(), false), 
+							true);
 			} else {
 				setNotificationForAudioJobError();
 				
@@ -2310,22 +2317,28 @@ public class DashboardActivity extends Activity {
 		}
     }
     
-	public File addSuffixToAudioFile(String aBaseName, File extractedAudioFile) {
+	public boolean addSuffixToAudioFileName() {
 		// Rename audio file to add a more detailed suffix, 
-		// but only if it has been matched from the ffmpeg console output
+		// but only if it has been matched from the FFmpeg console output
 		if (!extrTypeIsMp3Conv &&
-				extractedAudioFile.exists() && 
-				!aSuffix.equals(".audio")) {
-			String newName = aBaseName + aSuffix;
+				audioFile.exists() && 
+				aSuffix != null) {
+			String newName = basename + aSuffix;
 			File newFile = new File(currentItem.getPath(), newName);
-			if (extractedAudioFile.renameTo(newFile)) {
-				Utils.logger("i", "'" + extractedAudioFile.getName() + "' renamed to: '" + newName + "'", DEBUG_TAG);
-				return newFile;
+			
+			if (newFile.exists()) {
+				audioFile.delete();
+				return false;
+			}
+			
+			if (audioFile.renameTo(newFile)) {
+				Utils.logger("i", "'" + audioFile.getName() + "' renamed to: '" + newName + "'", DEBUG_TAG);
+				audioFile = newFile;
 			} else {
-				Log.e(DEBUG_TAG, "Unable to rename '" + extractedAudioFile.getName() + "' to: '" + aSuffix + "'");
+				Log.e(DEBUG_TAG, "Unable to rename '" + audioFile.getName() + "' to: '" + aSuffix + "'");
 			}
 		}
-		return extractedAudioFile;
+		return true;
 	}
 
 	/* method addId3Tags adapted from Stack Overflow:

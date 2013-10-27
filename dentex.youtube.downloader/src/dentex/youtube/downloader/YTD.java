@@ -90,7 +90,6 @@ public class YTD extends Application implements QueueThreadListener{
 	
 	public static String pt1;
 	public static String pt2;
-	public static String noDownloads;
 	public static NotificationManager mNotificationManager;
 	public static NotificationCompat.Builder mBuilder;
 	public static List<Long> sequence = new ArrayList<Long>();
@@ -130,6 +129,9 @@ public class YTD extends Application implements QueueThreadListener{
 		JSON_FILE = new File(ctx.getDir(JSON_FOLDER, 0), JSON_FILENAME);
 		
 		detectFirstLaunch();
+		
+		mBuilder =  new NotificationCompat.Builder(ctx);
+		mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		super.onCreate();
 	}
@@ -182,16 +184,11 @@ public class YTD extends Application implements QueueThreadListener{
     public static void NotificationHelper(Context ctx) {
     	pt1 = ctx.getString(R.string.notification_downloading_pt1);
     	pt2 = ctx.getString(R.string.notification_downloading_pt2);
-    	noDownloads = ctx.getString(R.string.notification_no_downloads);
-    	
-    	mBuilder =  new NotificationCompat.Builder(ctx);
     	
     	mBuilder.setSmallIcon(R.drawable.ic_stat_ytd)
     			.setOngoing(true)
     	        .setContentTitle(ctx.getString(R.string.app_name))
     	        .setContentText(pt1 + " " + sequence.size() + " " + pt2);
-    	
-    	mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
     	
     	Intent notificationIntent = new Intent(ctx, DashboardActivity.class);
     	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -215,10 +212,12 @@ public class YTD extends Application implements QueueThreadListener{
 	    	Utils.setNotificationDefaults(mBuilder);
 
 			if (sequence.size() > 0) {
-				mBuilder.setContentText(pt1 + " " + sequence.size() + " " + pt2).setOngoing(true);
+				mBuilder.setContentText(pt1 + " " + sequence.size() + " " + pt2)
+						.setOngoing(true);
 				mNotificationManager.notify(1, mBuilder.build());
 			} else {
-				mBuilder.setContentText(noDownloads).setOngoing(false);
+				mBuilder.setContentText(ctx.getString(R.string.notification_no_downloads))
+						.setOngoing(false);
 				mNotificationManager.notify(1, mBuilder.build());
 				Utils.logger("d", "No downloads in progress.", DEBUG_TAG);
 			}

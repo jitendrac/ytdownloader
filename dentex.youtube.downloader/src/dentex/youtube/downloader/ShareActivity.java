@@ -56,8 +56,6 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -81,6 +79,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.matsuhiro.android.connect.NetworkUtils;
 import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.Maps;
@@ -111,7 +110,9 @@ public class ShareActivity extends Activity {
     private List<String> sizes = new ArrayList<String>();
     private List<String> itags = new ArrayList<String>();
     private List<String> listEntries = new ArrayList<String>();
-    private int index = 0;
+    //private int index = 0;
+    private int ueIndex = 0;
+    private int asIndex = 0;
     private String titleRaw;
     private String basename;
     private int pos;
@@ -147,6 +148,7 @@ public class ShareActivity extends Activity {
 	private boolean restartModeEnabled = false;
 	private String extraId;
 	private boolean autoFFmpegTaskAlreadySent = false;
+	public String mComposedName;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -318,10 +320,10 @@ public class ShareActivity extends Activity {
 
     void handleSendText(Intent intent, String action) throws IOException {
 
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        /*ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-        	
+        if (networkInfo != null && networkInfo.isConnected()) {*/
+        if (NetworkUtils.isNetworkAvailable(sShare)) {
         	String sharedText = null;
 			if (action.equals(Intent.ACTION_SEND)) {
             	sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
@@ -458,7 +460,7 @@ public class ShareActivity extends Activity {
             	Utils.logger("d", "doInBackground...", DEBUG_TAG);
             	assignBitmapToVideoListThumbnail(generateThumbUrls());
 
-            	FetchUrl fu = new FetchUrl();
+            	FetchUrl fu = new FetchUrl(sShare);
             	return urlBlockMatchAndDecode(fu.doFetch(urls[0])); 
             } catch (Exception e) {
             	Log.e(DEBUG_TAG, "downloadUrl: " + e.getMessage());
@@ -535,7 +537,8 @@ public class ShareActivity extends Activity {
                     pos = position;     
                     //pos = 45;		// to test IndexOutOfBound Exception...
                     
-                    vFilename = composeVideoFilename();
+                    final String base = composeVideoFilenameNoExt();
+                    vFilename = composeVideoFilename(base);
                     
                 	helpBuilder = new AlertDialog.Builder(boxThemeContextWrapper);
                     helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
@@ -565,15 +568,15 @@ public class ShareActivity extends Activity {
 	                            	LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 		                    	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 		                    	    userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
-		                    	    userFilename.setText(basename);
+		                    	    userFilename.setText(base);
 		                    	    adb.setView(inputFilename);
 		                    	    adb.setTitle(getString(R.string.rename_dialog_title));
 		                    	    adb.setMessage(getString(R.string.rename_dialog_msg));
 		                    	    
 		                    	    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		                    	    	public void onClick(DialogInterface dialog, int which) {
-		                    	    		basename = userFilename.getText().toString();
-		                    	    		vFilename = composeVideoFilename();
+		                    	    		mComposedName = userFilename.getText().toString();
+											vFilename = composeVideoFilename(mComposedName);
 											callDownloadManager(links.get(pos), pos, vFilename);
 		                    	    	}
 		                    	    });
@@ -631,7 +634,8 @@ public class ShareActivity extends Activity {
             		BugSenseHandler.leaveBreadcrumb("ShareActivity_onItemLongClick");
             		pos = position;
             		
-            		vFilename = composeVideoFilename();
+            		String base = composeVideoFilenameNoExt();
+            		vFilename = composeVideoFilename(base);
             		
             		AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
             		if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
@@ -693,7 +697,7 @@ public class ShareActivity extends Activity {
 			cb.setPrimaryClip(cmd);
 		}
         
-		private String composeVideoFilename() {
+		private String composeVideoFilenameNoExt() {
         	String suffix = itags.get(pos)
         			.replace("MP4 - ", "")
         			.replace("WebM - ", "")
@@ -702,9 +706,18 @@ public class ShareActivity extends Activity {
         			.replace("/", "-")
         			.replace(" - ", "_");
         	
-        	String composedName = basename + "_" + suffix + "." + codecs.get(pos);
+        	String composedName = basename + "_" + suffix;
         	
-    	    Utils.logger("d", "videoFilename: " + composedName, DEBUG_TAG);
+    	    Utils.logger("d", "videoFilename with no EXT: " + composedName, DEBUG_TAG);
+    	    mComposedName = composedName;
+    	    return composedName;
+        }
+		
+		private String composeVideoFilename(String base) {
+        	
+        	String composedName = base + "." + codecs.get(pos);
+        	
+    	    Utils.logger("d", "COMPLETE videoFilename: " + composedName, DEBUG_TAG);
     	    return composedName;
         }
 
@@ -835,7 +848,7 @@ public class ShareActivity extends Activity {
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
 						path.getAbsolutePath(), 
 						nameOfVideo, 
-						basename, 
+						mComposedName, 
 						aExt, 
 						"-", 
 						false);
@@ -880,7 +893,7 @@ public class ShareActivity extends Activity {
 						YTD.JSON_DATA_STATUS_COMPLETED, 
 						path.getPath(), 
 						nameOfVideo, 
-						basename, 
+						mComposedName, 
 						aExt, 
 						size, 
 						false);
@@ -950,7 +963,7 @@ public class ShareActivity extends Activity {
 				String status = YTD.JSON_DATA_STATUS_PAUSED;
 				String size = "-";
 				
-				if (error.getMessage() != null) {
+				if (error != null && error.getMessage() != null) {
 					Pattern httpPattern = Pattern.compile("http error code: (400|403|404|405|410|411)");
 					Matcher httpMatcher = httpPattern.matcher(error.getMessage());
 					if (httpMatcher.find()) {
@@ -980,7 +993,7 @@ public class ShareActivity extends Activity {
 						status, 
 						path.getPath(), 
 						nameOfVideo, 
-						basename, 
+						mComposedName, 
 						aExt, 
 						size, 
 						false);
@@ -1095,23 +1108,23 @@ public class ShareActivity extends Activity {
                 Utils.logger("d", "*** url encoded streams ***", DEBUG_TAG);
                 progressBar1.setIndeterminate(false);
                 decryptionArray = null;
-                while ((index+1) < ueBlocks.length) {
+                while ((ueIndex+1) < count) {
                 	try {
-						ueBlocks[index] = URLDecoder.decode(ueBlocks[index], "UTF-8");
+						ueBlocks[ueIndex] = URLDecoder.decode(ueBlocks[ueIndex], "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						Log.e(DEBUG_TAG, "UnsupportedEncodingException @ urlBlockMatchAndDecode: " + e.getMessage());
 					}
                 	
-                	asyncDownload.doProgress((int) ((index / (float) count) * 100));
+                	asyncDownload.doProgress((int) ((ueIndex / (float) count) * 100));
                 	
-                	Utils.logger("v", "block " + index + ": " + ueBlocks[index], DEBUG_TAG);
+                	Utils.logger("v", "block " + ueIndex + ": " + ueBlocks[ueIndex], DEBUG_TAG);
                 	
-                    codecMatcher(ueBlocks[index], index);
-                    qualityMatcher(ueBlocks[index], index);
-                    itagMatcher(ueBlocks[index], index);
-                    linkComposer(ueBlocks[index], index);
+                    codecMatcher(ueBlocks[ueIndex]);
+                    qualityMatcher(ueBlocks[ueIndex]);
+                    itagMatcher(ueBlocks[ueIndex]);
+                    linkComposer(ueBlocks[ueIndex]);
                     
-                    index++;
+                    ueIndex++;
                 }
             } else {
             	Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
@@ -1130,26 +1143,27 @@ public class ShareActivity extends Activity {
         	Pattern blockPattern = Pattern.compile(",");
             Matcher blockMatcher = blockPattern.matcher(streamsMatcher.group(1));
             if (blockMatcher.find() && !asyncDownload.isCancelled()) {
-            	String[] aBlocks = streamsMatcher.group(1).split(blockPattern.toString());
-            	int count = aBlocks.length-1;
+            	String[] asBlocks = streamsMatcher.group(1).split(blockPattern.toString());
+            	int count = asBlocks.length-1;
                 Utils.logger("d", "*** adaptive streams ***", DEBUG_TAG);
-                while ((index+1) < aBlocks.length) {
+                //int asIndex = 0;
+                while ((asIndex+1) < count) {
                 	try {
-						aBlocks[index] = URLDecoder.decode(aBlocks[index], "UTF-8");
+						asBlocks[asIndex] = URLDecoder.decode(asBlocks[asIndex], "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						Log.e(DEBUG_TAG, "UnsupportedEncodingException @ urlBlockMatchAndDecode: " + e.getMessage());
 					}
                 	
-                	asyncDownload.doProgress((int) ((index / (float) count) * 100));
+                	asyncDownload.doProgress((int) ((asIndex / (float) count) * 100));
                 	
-                	Utils.logger("v", "block " + index + ": " + aBlocks[index], DEBUG_TAG);
+                	Utils.logger("v", "block " + asIndex + ": " + asBlocks[asIndex], DEBUG_TAG);
                 	
-                	codecMatcher(aBlocks[index], index);
-                    qualityMatcher(aBlocks[index], index);
-                	itagMatcher(aBlocks[index], index);
-                    linkComposer(aBlocks[index], index);
+                	codecMatcher(asBlocks[asIndex]);
+                    qualityMatcher(asBlocks[asIndex]);
+                	itagMatcher(asBlocks[asIndex]);
+                    linkComposer(asBlocks[asIndex]);
                     
-                    index++;
+                    asIndex++;
                 }
             } else {
             	Utils.logger("d", "asyncDownload cancelled @ 'matchAdaptiveStreams' match", DEBUG_TAG);
@@ -1230,7 +1244,9 @@ public class ShareActivity extends Activity {
         }
     }
     
-    private void linkComposer(String block, int i) {
+    private void linkComposer(String block) {
+    	int i = ueIndex + asIndex;
+    	
     	Pattern urlPattern = Pattern.compile("url=(.+?)\\\\u0026");
     	Matcher urlMatcher = urlPattern.matcher(block);
     	String url = null;
@@ -1303,7 +1319,7 @@ public class ShareActivity extends Activity {
 	}
     
     private String decryptExpSig(String sig) {
-    	FetchUrl fu = new FetchUrl();
+    	FetchUrl fu = new FetchUrl(sShare);
     	
     	if (decryptionArray == null) {
     		decryptionRule = null;
@@ -1428,7 +1444,7 @@ public class ShareActivity extends Activity {
 		}
 	}
 
-    private void codecMatcher(String current, int i) {
+    private void codecMatcher(String current) {
         Pattern codecPattern = Pattern.compile("(webm|mp4|flv|3gp)");
         Matcher codecMatcher = codecPattern.matcher(current);
         if (codecMatcher.find()) {
@@ -1436,10 +1452,11 @@ public class ShareActivity extends Activity {
         } else {
             codecs.add("video");
         }
+        int i = ueIndex + asIndex;
         Utils.logger("d", "index: " + i + ", Codec: " + codecs.get(i), DEBUG_TAG);
     }
 
-    private void qualityMatcher(String current, int i) {
+    private void qualityMatcher(String current) {
         Pattern qualityPattern = Pattern.compile("(highres|hd1080|hd720|large|medium|small)");
         Matcher qualityMatcher = qualityPattern.matcher(current);
         if (qualityMatcher.find()) {
@@ -1447,6 +1464,7 @@ public class ShareActivity extends Activity {
         } else {
             qualities.add("-");
         }
+        int i = ueIndex + asIndex;
         Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
     }
     
@@ -1461,22 +1479,23 @@ public class ShareActivity extends Activity {
         //Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
     }*/
     
-    private void itagMatcher(String current, int i) {
+    private void itagMatcher(String current) {
     	String res = "-";
-    	
+    	int i = ueIndex + asIndex;
     	Pattern itagPattern = Pattern.compile("itag=([0-9]{1,3})\\\\u0026");
     	Matcher itagMatcher = itagPattern.matcher(current);
     	if (itagMatcher.find()) {
     		res = findItag(itagMatcher, res);
+    		Utils.logger("d", "index: " + i + ", itag: " + itagMatcher.group(1) + " (" + res + ")", DEBUG_TAG);
     	} else {
     		Pattern itagPattern2 = Pattern.compile("itag=([0-9]{1,3})$");
         	Matcher itagMatcher2 = itagPattern2.matcher(current);
 	    	if (itagMatcher2.find()) {
 	    		res = findItag(itagMatcher2, res);
+	    		Utils.logger("d", "index: " + i + ", itag: " + itagMatcher2.group(1) + " (" + res + ")", DEBUG_TAG);
 	    	}
     	}
     	itags.add(res);
-        Utils.logger("d", "index: " + i + ", itag: " + itags.get(i), DEBUG_TAG);
     }
 
 	private String findItag(Matcher itagMatcher, String res) {

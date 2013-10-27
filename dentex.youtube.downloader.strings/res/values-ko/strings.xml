@@ -277,8 +277,8 @@
     
     <string name="remove_video_title">비디오 제거</string>
     
-    <string name="enable_adaptive_title">보조스트림 다운받기 (실험적인 기능)</string>
-    <string name="enable_adaptive_summary">비디오 목록에 추가적인 비디오/오디오 스트림이 있다면 함께 다운받습니다</string>
+    <string name="enable_adaptive_title">Get secondary streams</string>
+    <string name="enable_adaptive_summary">[Experimental]\nAdd additional video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">알림</string>

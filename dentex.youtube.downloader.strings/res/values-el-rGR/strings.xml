@@ -126,8 +126,8 @@
     <string name="audio_conv_completed">Η κωδικοποίηση σε mp3 ολοκληρώθηκε.</string>
     <string name="audio_extr_error">Σφάλμα κατά την εξαγωγή ήχου.</string>
     <string name="audio_conv_error">Σφάλμα κατά την κωδικοποίηση ήχου σε mp3.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s από %2$s εξαγωγές ήχου ολοκληρώθηκαν</string>
+    <string name="auto_audio_extr_completed">Όλες οι εξαγωγές ήχων ολοκληρώθηκαν</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -278,8 +278,8 @@
     
     <string name="remove_video_title">Αφαίρεση βίντεο</string>
     
-    <string name="enable_adaptive_title">Λήψη δευτερευόντων ροών (πειραματικό)</string>
-    <string name="enable_adaptive_summary">Προσθήκη επιλέον μόνο-βίντεο και/ή μόνο-ήχου ροών (αν διατίθενται) στη λίστα βίντεο</string>
+    <string name="enable_adaptive_title">Ανάκτηση δευτερευόντων ροών</string>
+    <string name="enable_adaptive_summary">[Πειραματικό]\nΠροσθήκη επιπλέον μόνο-βίντεο και/ή μόνο-ήχου ροών (αν διατίθενται) στη λίστα βίντεο</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Ειδοποιήσεις</string>

@@ -126,8 +126,8 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="audio_conv_completed">Audio coderen naar mp3 compleet</string>
     <string name="audio_extr_error">Fout tijdens audio extractie.</string>
     <string name="audio_conv_error">Fout tijdens audio codering naar mp3.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s van %2$s audio extracties compleet</string>
+    <string name="auto_audio_extr_completed">Alle audio extracties compleet</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,7 +158,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="menu_restore_result_ok">Dashboard data hersteld.</string>
 	<string name="menu_restore_result_failed">Fout tijdens herstellen.</string>
 	<string name="unsupported_operation">Niet ondersteunde operatie.</string>
-	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
+	<string name="ffmpeg_already_running">FFmpeg is reeds gestart.</string>
 	<string name="invalid_data">Onjuiste gegevens.</string>
 	<string name="open_chooser_title">Open met:</string>
 	
@@ -266,20 +266,20 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="mp3_bitrate_title">Mp3 codering bitrate:</string>
     
     <string name="ffmpeg_auto_title">Auto-extract audio</string>
-    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
-    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
-    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    <string name="ffmpeg_auto_summary">Audio automatisch uitpakken of converteren naar mp3 na iedere download</string>
+    <string name="ffmpeg_auto_cb_title">Automatisch uitpakken inschakelen</string>
+    <string name="ffmpeg_auto_cb_summary">Kies hieronder de parameters</string>
     
     <string name="audio_extraction_type_title">Extractie type</string>
     <string-array name="audio_extraction_type_entries">
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>Enkel audio uitpakken</item>
+        <item>Audio extracten en coderen naar mp3</item>
     </string-array>
     
     <string name="remove_video_title">Video verwijdering</string>
     
-    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">Krijg secundaire streams</string>
+    <string name="enable_adaptive_summary">(Experimenteel)\nVoeg additionele enkel-video en/of enkel-audio streams toe (indien beschikbaar) aan de video lijst.</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Meldingen</string>

@@ -126,8 +126,8 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="audio_conv_completed">Codificação de áudio em .mp3 completa.</string>
     <string name="audio_extr_error">Um erro ocorreu durante a extração do áudio.</string>
     <string name="audio_conv_error">Um erro ocorreu durante a codificação do áudio em .mp3.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s de %2$s extrações de áudio completadas</string>
+    <string name="auto_audio_extr_completed">Todas as extrações de áudio completadas</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -158,7 +158,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="menu_restore_result_ok">Dados do painel restaurados.</string>
 	<string name="menu_restore_result_failed">Erro durante a restauração.</string>
 	<string name="unsupported_operation">Operação não suportada.</string>
-	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
+	<string name="ffmpeg_already_running">FFmpeg já está rodando.</string>
 	<string name="invalid_data">Dado inválido.</string>
 	<string name="open_chooser_title">Abrir com:</string>
 	
@@ -265,21 +265,21 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="enable_advanced_features_summary">Fazer o download do FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">Taxa de bits de codificação MP3:</string>
     
-    <string name="ffmpeg_auto_title">Auto-extract audio</string>
-    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
-    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
-    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    <string name="ffmpeg_auto_title">Extração automática de áudio</string>
+    <string name="ffmpeg_auto_summary">Extrair ou converter áudio para mp3 automaticamente após cada download</string>
+    <string name="ffmpeg_auto_cb_title">Habilitar extração automática</string>
+    <string name="ffmpeg_auto_cb_summary">Escolha parâmetros abaixo</string>
     
     <string name="audio_extraction_type_title">Tipo de extração</string>
     <string-array name="audio_extraction_type_entries">
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>Extrair áudio apenas</item>
+        <item>Extrair e codificar áudio para mp3</item>
     </string-array>
     
     <string name="remove_video_title">Remover o vídeo</string>
     
-    <string name="enable_adaptive_title">Get secondary streams (experimental)</string>
-    <string name="enable_adaptive_summary">Add additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">Obter streams secundárias</string>
+    <string name="enable_adaptive_summary">[Experimental]\nAdicione uma stream de vídeo adicional e/ou áudio (se disponível) para a lista de vídeo</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notificações</string>

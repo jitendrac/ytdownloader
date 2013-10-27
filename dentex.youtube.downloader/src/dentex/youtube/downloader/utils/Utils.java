@@ -532,7 +532,9 @@ public class Utils {
      * @param contentResolver The content resolver to use to perform the query.
      * @return the video ID as a long
      */
-    public static String getContentUriFromFilePath(String filePath, ContentResolver contentResolver) {
+    public static String getContentUriFromFile(File file, ContentResolver contentResolver) {
+    	
+    	String filePath = file.getAbsolutePath();
         long videoId;
         logger("d","Loading file " + filePath, DEBUG_TAG);
 
@@ -545,7 +547,12 @@ public class Utils {
         Uri videosUri = null;
         String[] projection = null;
         String dataType = null;
-        if (ext.equals("mp4") || ext.equals("3gp") || ext.equals("webm")) {
+        if (file.getName().contains("_AO_")) {
+        	videosUri = MediaStore.Audio.Media.getContentUri("external");
+        	projection = aprojection;
+        	dataType = MediaStore.Audio.AudioColumns.DATA;
+        	logger("d", " -> contentUri on Audio-Only file", DEBUG_TAG);
+        } else if (ext.equals("mp4") || ext.equals("3gp") || ext.equals("webm")) {
         	videosUri = MediaStore.Video.Media.getContentUri("external");
         	projection = vprojection;
         	dataType = MediaStore.Video.VideoColumns.DATA;
@@ -554,7 +561,7 @@ public class Utils {
         	projection = aprojection;
         	dataType = MediaStore.Audio.AudioColumns.DATA;
         } else if (ext.equals("flv")) {
-        	logger("w", " -> videoUri not available [FLV video]", DEBUG_TAG);
+        	logger("w", " -> contentUri not available [FLV video]", DEBUG_TAG);
         	return null;
         }
         
@@ -569,11 +576,11 @@ public class Utils {
 		
         	videoId = cursor.getLong(columnIndex);
         	videoUri = videosUri + "/" + videoId; 
-        	logger("d", " -> videoUri: " + videoUri, DEBUG_TAG);
+        	logger("d", " -> contentUri: " + videoUri, DEBUG_TAG);
         } catch (IndexOutOfBoundsException e) {
-        	logger("w", " -> videoUri not available", DEBUG_TAG);
+        	logger("w", " -> contentUri not available", DEBUG_TAG);
         } catch (NullPointerException e) {
-        	logger("w", " -> videoUri not available (NPE)", DEBUG_TAG);	
+        	logger("w", " -> contentUri not available (NPE)", DEBUG_TAG);	
         } finally {
         	cursor.close();
         }

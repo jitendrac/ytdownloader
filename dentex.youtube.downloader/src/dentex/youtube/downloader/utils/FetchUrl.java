@@ -34,11 +34,19 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.matsuhiro.android.connect.NetworkUtils;
 
 public class FetchUrl {
+	
+	private Context ctx;
+	
+	public FetchUrl(Context ctx) {
+		this.ctx = ctx;
+	}
 	
 	String DEBUG_TAG = "FetchUrl";
 	
@@ -60,9 +68,15 @@ public class FetchUrl {
     private String downloadWebPage(String myurl) throws IOException {
     	HttpClient httpclient = new DefaultHttpClient();
     	HttpGet httpget = new HttpGet(myurl); 
-    	ResponseHandler<String> responseHandler = new BasicResponseHandler();    
-    	String responseBody = httpclient.execute(httpget, responseHandler);
-    	httpclient.getConnectionManager().shutdown();
-    	return responseBody;
+    	ResponseHandler<String> responseHandler = new BasicResponseHandler();
+    	
+    	if (NetworkUtils.isNetworkAvailable(ctx)) {
+    		String responseBody = httpclient.execute(httpget, responseHandler);
+    		httpclient.getConnectionManager().shutdown();
+    		return responseBody;
+    	} else {
+    		Log.e(DEBUG_TAG, "doFetch: Network not Available");
+    		return "e";
+    	}
 	}
 }

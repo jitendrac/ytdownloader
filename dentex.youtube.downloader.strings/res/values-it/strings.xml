@@ -278,8 +278,8 @@
     
     <string name="remove_video_title">Rimozione del video</string>
     
-    <string name="enable_adaptive_title">Ottieni flussi secondari (sperimentale)</string>
-    <string name="enable_adaptive_summary">Aggiungi flussi solo-video e/o solo-audio addizionali (se disponibili) alla lista video</string>
+    <string name="enable_adaptive_title">Ottieni flussi secondari</string>
+    <string name="enable_adaptive_summary">[Sperimentale]\nAggiungi flussi solo-video e/o solo-audio addizionali (se disponibili) alla lista video</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notifiche</string>
