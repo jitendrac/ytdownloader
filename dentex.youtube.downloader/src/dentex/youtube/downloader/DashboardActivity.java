@@ -969,10 +969,6 @@ public class DashboardActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         
-        String previousJson = Json.readJsonDashboardFile(sDashboard);
-        boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
-				 previousJson.contains(YTD.JSON_DATA_STATUS_PAUSED)) ;
-        
         switch(item.getItemId()){
         	case R.id.menu_search:
         		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_search");
@@ -982,8 +978,16 @@ public class DashboardActivity extends Activity {
     				hideSearchBar();
     			}
     			return true;
+        	case R.id.menu_settings:
+        		Intent sIntent = new Intent(this, SettingsActivity.class);
+        		sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        		startActivity(sIntent);
+    			return true;
         	case R.id.menu_backup:
         		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_backup");
+        		String previousJson = Json.readJsonDashboardFile(sDashboard);
+                boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
+        				 previousJson.contains(YTD.JSON_DATA_STATUS_PAUSED));
         		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
 	        		boolean backupCheckboxEnabled = YTD.settings.getBoolean("dashboard_backup_info", true);
 				    if (backupCheckboxEnabled == true) {
@@ -1027,7 +1031,10 @@ public class DashboardActivity extends Activity {
         		return true;
         	case R.id.menu_restore:
         		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_restore");
-        		if (!smtInProgressOrPaused) {
+        		String previousJson2 = Json.readJsonDashboardFile(sDashboard);
+                boolean smtInProgressOrPaused2 = (previousJson2.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
+        				 previousJson2.contains(YTD.JSON_DATA_STATUS_PAUSED));
+        		if (!smtInProgressOrPaused2) {
 	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
 				    if (restoreCheckboxEnabled == true) {
 				    	

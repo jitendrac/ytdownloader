@@ -182,18 +182,23 @@ public class YTD extends Application implements QueueThreadListener{
 	}
 	
     public static void NotificationHelper(Context ctx) {
+    	mBuilder =  new NotificationCompat.Builder(ctx); // to reset its DEFAULTS
+    	
     	pt1 = ctx.getString(R.string.notification_downloading_pt1);
     	pt2 = ctx.getString(R.string.notification_downloading_pt2);
     	
-    	mBuilder.setSmallIcon(R.drawable.ic_stat_ytd)
-    			.setOngoing(true)
-    	        .setContentTitle(ctx.getString(R.string.app_name))
-    	        .setContentText(pt1 + " " + sequence.size() + " " + pt2);
-    	
     	Intent notificationIntent = new Intent(ctx, DashboardActivity.class);
-    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+    					  .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    	
     	PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
-    	mBuilder.setContentIntent(contentIntent);
+    	
+    	mBuilder.setSmallIcon(R.drawable.ic_stat_ytd)
+			.setOngoing(true)
+			.setContentTitle(ctx.getString(R.string.app_name))
+			.setContentText(pt1 + " " + sequence.size() + " " + pt2)
+			.setContentIntent(contentIntent);
+    	
     	mNotificationManager.notify(1, mBuilder.build());
 	}
     
@@ -208,7 +213,7 @@ public class YTD extends Application implements QueueThreadListener{
 			} else {
 				Utils.logger("w", "ID  not found!", DEBUG_TAG);
 			}
-			
+	    	
 	    	Utils.setNotificationDefaults(mBuilder);
 
 			if (sequence.size() > 0) {
@@ -239,6 +244,7 @@ public class YTD extends Application implements QueueThreadListener{
 						+ "%d of %d", completed, total), DEBUG_TAG);
 				
 				if (completed == total) {
+					queueThread.resetQueue();
 					queueThread.pushNotificationText(ctx, ctx.getString(R.string.auto_audio_extr_completed), false);
 				} else {
 					queueThread.pushNotificationText(ctx, ctx.getString(R.string.auto_audio_extr_progress, completed, total), true);

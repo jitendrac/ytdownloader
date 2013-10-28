@@ -72,6 +72,9 @@
         <item>ارسال از طریق پروتکل امن SSH</item>
     </string-array>
     
+    <string name="link_copied">Link copied into clipboard</string>
+    <string name="share_link_via">Share this link via:</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">توجه!</string>

@@ -78,6 +78,9 @@
         <item>Invio con SSH</item>
     </string-array>
     
+    <string name="link_copied">Link copiato nella clipboard</string>
+    <string name="share_link_via">Condividi questo link via:</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Attenzione!</string>

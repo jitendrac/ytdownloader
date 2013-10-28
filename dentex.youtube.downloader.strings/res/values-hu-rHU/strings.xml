@@ -78,6 +78,9 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
         <item>Küldés SSH-n keresztül</item>
     </string-array>
     
+    <string name="link_copied">Link copied into clipboard</string>
+    <string name="share_link_via">Share this link via:</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Figyelem!</string>

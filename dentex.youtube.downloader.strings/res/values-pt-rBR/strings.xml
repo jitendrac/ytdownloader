@@ -78,6 +78,9 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
         <item>Enviar via SSH</item>
     </string-array>
     
+    <string name="link_copied">Link copied into clipboard</string>
+    <string name="share_link_via">Share this link via:</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Atenção!</string>

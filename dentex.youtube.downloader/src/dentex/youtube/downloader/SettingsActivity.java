@@ -184,7 +184,9 @@ public class SettingsActivity extends Activity {
             dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             	
                 public boolean onPreferenceClick(Preference preference) {
-                	startActivity(new Intent(getActivity(), DashboardActivity.class));
+                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
+            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            		startActivity(dashboardIntent);
                     return true;
                 }
             });

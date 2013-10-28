@@ -26,8 +26,6 @@
 
 package dentex.youtube.downloader.menu;
 
-import com.bugsense.trace.BugSenseHandler;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -42,9 +40,11 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Window;
+
+import com.bugsense.trace.BugSenseHandler;
+
 import dentex.youtube.downloader.R;
 import dentex.youtube.downloader.docs.ApacheShowActivity;
 import dentex.youtube.downloader.docs.CcShowActivity;
@@ -94,7 +94,8 @@ public class AboutActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(android.view.MenuItem item) {
 	    if (item.getItemId() == android.R.id.home) {
-	        NavUtils.navigateUpFromSameTask(this);
+	        //NavUtils.navigateUpFromSameTask(this);
+	        finish();
 	        return true;
 	    }
 	    return super.onOptionsItemSelected(item);

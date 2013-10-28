@@ -1,5 +1,5 @@
 	[ ] implement other FFmpeg functions
-	[ ] compile FFmpeg to support x86 Android ABI
+	[ ] compile FFmpeg to support x86 Android ABI [wip]
 	[ ] support subtitles download
 	[ ] default format/filter selection for video download
 	[ ] use icon/logo to identify codecs available (expand the custom ShareActivity adapter)

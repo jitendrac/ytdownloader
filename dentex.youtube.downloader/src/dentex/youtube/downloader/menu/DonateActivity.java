@@ -26,8 +26,6 @@
 
 package dentex.youtube.downloader.menu;
 
-import com.bugsense.trace.BugSenseHandler;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -37,9 +35,11 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.Window;
+
+import com.bugsense.trace.BugSenseHandler;
+
 import dentex.youtube.downloader.R;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -81,7 +81,8 @@ public class DonateActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
+			//NavUtils.navigateUpFromSameTask(this);
+	        finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

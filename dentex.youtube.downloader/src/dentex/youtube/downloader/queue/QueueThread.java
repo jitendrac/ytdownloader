@@ -117,6 +117,11 @@ public final class QueueThread extends Thread {
 		return totalCompleted;
 	}
 	
+	public void resetQueue() {
+		totalQueued = 0;
+		totalCompleted = 0;
+	}
+	
 	/*public synchronized int getType() {
 		return type;
 	}*/
