@@ -830,7 +830,11 @@ public class ShareActivity extends Activity {
     private void callDownloadManager(final String link, final int position, final String nameOfVideo) {
     	BugSenseHandler.leaveBreadcrumb("callDownloadManager");
     	final String aExt = findAudioCodec();
-    	if (codecs.get(pos).equals("m4a") || codecs.get(pos).equals("ogg")) jsonDataType = YTD.JSON_DATA_TYPE_A_E;
+    	if (codecs.get(pos).equals("m4a") || codecs.get(pos).equals("ogg")) {
+    		jsonDataType = YTD.JSON_DATA_TYPE_A_E;
+    	} else {
+    		jsonDataType = YTD.JSON_DATA_TYPE_V;
+    	}
     	
     	dtl = new DownloadTaskListener() {
     		
@@ -1501,7 +1505,7 @@ public class ShareActivity extends Activity {
 				case 36:
 					res = "3GP - 240p";
 					break;
-				case - 37:
+				case 37:
 					res = "MP4 - 1080p";
 					break;
 				case 38:

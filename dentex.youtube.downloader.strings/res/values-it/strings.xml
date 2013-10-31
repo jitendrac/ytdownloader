@@ -151,11 +151,14 @@
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Ripristino</string>
 	<string name="menu_import">Importa un video</string>
-	<string name="menu_import_double">Video già aggiunto</string>
+	<string name="menu_import_file">Importa un file</string>
+	<string name="menu_import_double">Video già aggiunto.</string>
+	<string name="menu_import_file_double">File già aggiunto.</string>
 	<string name="menu_backup_info">Scegli la cartella in cui salvare i dati dela Dashboard</string>
 	<string name="menu_restore_info">Ripristina i dati della Dasboard da file</string>
 	<string name="menu_restore_info_msg">I dati attuali saranno sovrascritti.</string>
 	<string name="menu_import_info">Importa un video e gestiscilo dalla Dashboard</string>
+	<string name="menu_import_file_info">Importa un file e gestiscilo dalla Dashboard</string>
 	<string name="menu_backup_result_ok">Backup dei dati Dashboard OK.</string>
 	<string name="menu_backup_result_failed">Errore durante il backup.</string>
 	<string name="menu_restore_result_ok">Dati Dashboard ripristinati.</string>
@@ -188,10 +191,6 @@
 	<string name="id3_genre">Genere</string>
 	
 	<string name="audio_extr_info">Flusso audio contenuto:</string>
-	
-	<string name="dashboard_long_click_entry_0">Copia</string>
-	<string name="dashboard_long_click_entry_1">Sposta</string>
-	<string name="dashboard_long_click_entry_2">Cancella</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copia</item>
@@ -202,6 +201,8 @@
         <item>Rimuovi e cancella il file</item>
         <item>Pausa/Riprendi</item>
     </string-array>
+    
+	<string name="operation_standby">Attendi: un\'altra operazione è già in corso.</string>
     
 	<string name="move_error">Errore durante lo spostamento.</string>
     <string name="move_progress">Spostamento del file in corso&#8230;</string>

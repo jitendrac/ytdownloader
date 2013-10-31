@@ -152,11 +152,14 @@ Pobrać je teraz?</string>
 	<string name="menu_backup">Kopia zapasowa</string>
 	<string name="menu_restore">Przywróć</string>
 	<string name="menu_import">Zaimportuj wideo</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Video już dodane.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Wybierz folder dla kopii danych Tablicy aktywności</string>
 	<string name="menu_restore_info">Przywróć ustawienia Tablicy aktywności z pliku</string>
 	<string name="menu_restore_info_msg">Dotychczasowe dane zostaną nadpisane.</string>
 	<string name="menu_import_info">Zaimportuj wideo i zarządzaj nim z Tablicy aktywności</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Poprawna kopia zapasowa Tablicy aktywności.</string>
 	<string name="menu_backup_result_failed">Błąd w trakcie tworzenia kopii.</string>
 	<string name="menu_restore_result_ok">Przywrócono dane Tablicy aktywności.</string>
@@ -189,10 +192,6 @@ Pobrać je teraz?</string>
 	<string name="id3_genre">Gatunek</string>
 	
 	<string name="audio_extr_info">Zawiera ścieżkę dźwiękową:</string>
-	
-	<string name="dashboard_long_click_entry_0">Kopiuj</string>
-	<string name="dashboard_long_click_entry_1">Przenieś</string>
-	<string name="dashboard_long_click_entry_2">Usuń</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiuj</item>
@@ -203,6 +202,8 @@ Pobrać je teraz?</string>
         <item>Usuń z listy i skasuj plik</item>
         <item>Pauza/Wznów</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Błąd w trakcie przenoszenia.</string>
     <string name="move_progress">Przenoszenie pliku&#8230;</string>

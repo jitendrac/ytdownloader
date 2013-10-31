@@ -29,6 +29,7 @@ package dentex.youtube.downloader;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Application;
 import android.app.NotificationManager;
@@ -128,6 +129,8 @@ public class YTD extends Application implements QueueThreadListener{
 		ctx = getApplicationContext(); 
 		JSON_FILE = new File(ctx.getDir(JSON_FOLDER, 0), JSON_FILENAME);
 		
+		detectSysDefLang();
+		
 		detectFirstLaunch();
 		
 		mBuilder =  new NotificationCompat.Builder(ctx);
@@ -153,6 +156,16 @@ public class YTD extends Application implements QueueThreadListener{
 			reduceFactor = Double.parseDouble(settings.getString("REDUCE_FACTOR", "1"));
 			Log.d(DEBUG_TAG, "Retrieved a REDUCE_FACTOR of " + reduceFactor + " from prefs");
 		}
+	}
+	
+	private void detectSysDefLang() {
+		String storedDefLang = YTD.settings.getString("DEF_LANG", "");
+    	if (storedDefLang.isEmpty() && storedDefLang != null) {	
+    		Locale defLocale = Locale.getDefault();
+    		String defLang = defLocale.getLanguage();
+    		Log.d(DEBUG_TAG, "Storing default system lang: " + defLang);
+    		YTD.settings.edit().putString("DEF_LANG", defLang).commit();
+    	}
 	}
 
 	private double detectScreenDensity() {

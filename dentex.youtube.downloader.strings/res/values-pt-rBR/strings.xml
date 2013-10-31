@@ -78,8 +78,8 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
         <item>Enviar via SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Link copiado para a área de transferência</string>
+    <string name="share_link_via">Compartilhe este link via:</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -151,11 +151,14 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restaurar</string>
 	<string name="menu_import">Importar um vídeo</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Vídeo já adicionado.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Escolhar uma pasta para o backup dos dados do painel</string>
 	<string name="menu_restore_info">Restaure os dados do painel do arquivo</string>
 	<string name="menu_restore_info_msg">Dados atuais irão ser sobre-escritos.</string>
 	<string name="menu_import_info">Importar um vídeo e gerenciá-lo a partir do painel</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Backup dos dados do painel completo.</string>
 	<string name="menu_backup_result_failed">Erro durante o backup.</string>
 	<string name="menu_restore_result_ok">Dados do painel restaurados.</string>
@@ -188,10 +191,6 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="id3_genre">Gênero</string>
 	
 	<string name="audio_extr_info">Stream de áudio contida.</string>
-	
-	<string name="dashboard_long_click_entry_0">Copiar</string>
-	<string name="dashboard_long_click_entry_1">Mover</string>
-	<string name="dashboard_long_click_entry_2">Deletar</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copiar</item>
@@ -202,6 +201,8 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
         <item>Remover e deletar o arquivo</item>
         <item>Pausar/Resumir</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Erro enquanto movia.</string>
     <string name="move_progress">Movimento do arquivo em progresso&#8230;</string>

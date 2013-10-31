@@ -150,11 +150,14 @@
 	<string name="menu_backup">Sao lưu</string>
 	<string name="menu_restore">Khôi phục</string>
 	<string name="menu_import">Nhập vào video</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Video đã được thêm</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
 	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
 	<string name="menu_restore_info_msg">Present data will be overwritten.</string>
 	<string name="menu_import_info">Import a video and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
 	<string name="menu_backup_result_failed">Error during backup.</string>
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
@@ -187,10 +190,6 @@
 	<string name="id3_genre">Thể loại</string>
 	
 	<string name="audio_extr_info">Có chứa âm thanh</string>
-	
-	<string name="dashboard_long_click_entry_0">Sao chép</string>
-	<string name="dashboard_long_click_entry_1">Di chuyển</string>
-	<string name="dashboard_long_click_entry_2">Xoá</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Sao chép</item>
@@ -201,6 +200,8 @@
         <item>Remove and delete file</item>
         <item>Pause/Resume</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Lỗi trong quá trình di chuyển</string>
     <string name="move_progress">Tệp tin đang được di chuyển &#8230;</string>

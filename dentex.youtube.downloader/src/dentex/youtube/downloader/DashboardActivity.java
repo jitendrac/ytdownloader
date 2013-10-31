@@ -434,6 +434,8 @@ public class DashboardActivity extends Activity {
 			        		secureShowDialog(builder);
 						}
 	        		}
+				} else {
+					notifyAnotherOperationIsInProgress();
 				}
 			}
     	});
@@ -557,6 +559,11 @@ public class DashboardActivity extends Activity {
 	private void notifyAsVideoOnly() {
 		Utils.logger("d", "notifyAsVideoOnly()", DEBUG_TAG);
 		Toast.makeText(sDashboard, getString(R.string.unsupported_operation), Toast.LENGTH_SHORT).show();
+	}
+	
+	private void notifyAnotherOperationIsInProgress() {
+		Utils.logger("d", "notifyAnotherOperationIsInProgress()", DEBUG_TAG);
+		Toast.makeText(sDashboard, getString(R.string.operation_standby), Toast.LENGTH_SHORT).show();
 	}
 	
 	private void toastOpsNotExecuted() {
@@ -1539,12 +1546,16 @@ public class DashboardActivity extends Activity {
 	        	} else if (ext.equals("FLV")) {
 	        		aExt = "x";
 	        		go = true;
+	        	} else if (ext.equals("M4A") || ext.equals("OGG") || ext.equals("MP3")) {
+	        		type = YTD.JSON_DATA_TYPE_A_E;
+	        		go = true;
 	        	} else {
 	        		go = false;
 	        	}
 	        	
 	        	if (go) {
-	    			writeThumbToDiskForSelectedFile(chooserSelection, id);
+	        		if (type == YTD.JSON_DATA_TYPE_V) 
+	        			writeThumbToDiskForSelectedFile(chooserSelection, id);
 	        		
 					Json.addEntryToJsonFile(
 							sDashboard, 
@@ -1574,7 +1585,7 @@ public class DashboardActivity extends Activity {
 			
 			if (res.equals("e1")) {
 				Toast.makeText(DashboardActivity.this, 
-						getString(R.string.menu_import_double), 
+						getString(R.string.menu_import_file_double), 
 						Toast.LENGTH_SHORT).show();
 			} else if (res.equals("e2")) {
 				Toast.makeText(DashboardActivity.this, 
@@ -2038,9 +2049,7 @@ public class DashboardActivity extends Activity {
 		for (int i = 0; i < idEntries.size(); i++) {
 			String thisSize;
 			try {
-				String thisStatus = statusEntries.get(i);
-
-				if (thisStatus.equals(YTD.JSON_DATA_STATUS_IN_PROGRESS) && speedEntries.get(i) != 0) {
+				if (statusEntries.get(i).equals(YTD.JSON_DATA_STATUS_IN_PROGRESS) && speedEntries.get(i) != 0) {
 					thisSize = partSizeEntries.get(i);
 				} else {
 					thisSize = sizeEntries.get(i);
@@ -2051,7 +2060,7 @@ public class DashboardActivity extends Activity {
 						typeEntries.get(i),
 						linkEntries.get(i), 
 						posEntries.get(i), 
-						thisStatus
+						statusEntries.get(i)
 							.replace(YTD.JSON_DATA_STATUS_COMPLETED, sDashboard.getString(R.string.json_status_completed))
 							.replace(YTD.JSON_DATA_STATUS_IN_PROGRESS, sDashboard.getString(R.string.json_status_in_progress))
 							.replace(YTD.JSON_DATA_STATUS_FAILED, sDashboard.getString(R.string.json_status_failed))

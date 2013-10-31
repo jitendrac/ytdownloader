@@ -151,11 +151,14 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	<string name="menu_backup">Varmennus</string>
 	<string name="menu_restore">Palauta</string>
 	<string name="menu_import">Tuo video</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Video on jo lisätty.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Valitse kansio varmentaaksesi Dashboard\in data</string>
 	<string name="menu_restore_info">Palauta Dashboard\in data tiedostosta</string>
 	<string name="menu_restore_info_msg">Nykyinen data ylikirjoitetaan.</string>
 	<string name="menu_import_info">Tuo video ja hallitse sitä Dashboardista</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Dashboardin datan varmennus OK.</string>
 	<string name="menu_backup_result_failed">Virhe varmennuksen aikana.</string>
 	<string name="menu_restore_result_ok">Dashboardin data palautettu.</string>
@@ -188,10 +191,6 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	<string name="id3_genre">Tyyli</string>
 	
 	<string name="audio_extr_info">Sisältyvä audiovirta:</string>
-	
-	<string name="dashboard_long_click_entry_0">Kopioi</string>
-	<string name="dashboard_long_click_entry_1">Siirrä</string>
-	<string name="dashboard_long_click_entry_2">Tuhoa</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopioi</item>
@@ -202,6 +201,8 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
         <item>Poista ja tuhoa tiedosto</item>
         <item>Pysäytä/Jatka</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Virhe siirron aikana.</string>
     <string name="move_progress">Tiedoston siirto käynnissä&#8230;</string>

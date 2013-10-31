@@ -151,11 +151,14 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	<string name="menu_backup">Copia de seguridad </string>
 	<string name="menu_restore">Restaurar</string>
 	<string name="menu_import">Importar un vídeo</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Vídeo ya Agregado.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Escoga una carpeta para la copia de seguridad de los datos del panel (Dashboard)</string>
 	<string name="menu_restore_info">Restaurar los datos del panel del archivo (Dashboard)</string>
 	<string name="menu_restore_info_msg">Los datos actuales se sobrescribirán.</string>
 	<string name="menu_import_info">Importar un vídeo y administrarlo desde el panel</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Copia de seguridad de los datos del panel completada.</string>
 	<string name="menu_backup_result_failed">Error al crear la copia de seguridad.</string>
 	<string name="menu_restore_result_ok">Restaurados los datos del panel.</string>
@@ -188,10 +191,6 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	<string name="id3_genre">Género</string>
 	
 	<string name="audio_extr_info">Audio stream contenido:</string>
-	
-	<string name="dashboard_long_click_entry_0">Copiar</string>
-	<string name="dashboard_long_click_entry_1">Transferir</string>
-	<string name="dashboard_long_click_entry_2">Eliminar</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copiar</item>
@@ -202,6 +201,8 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
         <item>Quitar y eliminar archivo</item>
         <item> Pausar/Resumir</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Error al transferir.</string>
     <string name="move_progress">Transferencia de archivo en progreso&#8230;</string>

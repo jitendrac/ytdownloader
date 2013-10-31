@@ -151,11 +151,14 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="menu_backup">Biztonsági mentés</string>
 	<string name="menu_restore">Visszaállítás</string>
 	<string name="menu_import">Video importálása</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Video már hozzá van adva.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Válassz ki egy mappát</string>
 	<string name="menu_restore_info">Irányítópult visszaállítása fájlból</string>
 	<string name="menu_restore_info_msg">Jelenlegi adatok felül lesznek írva</string>
 	<string name="menu_import_info">Video importálása</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Irányítópult visszaállítása sikeres</string>
 	<string name="menu_backup_result_failed">Hiba a visszaállítás közben</string>
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
@@ -188,10 +191,6 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="id3_genre">Stílus</string>
 	
 	<string name="audio_extr_info">Contained audio stream:</string>
-	
-	<string name="dashboard_long_click_entry_0">Másolás</string>
-	<string name="dashboard_long_click_entry_1">Áthelyezés</string>
-	<string name="dashboard_long_click_entry_2">Törlés</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Másolás</item>
@@ -202,6 +201,8 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
         <item>Remove and delete file</item>
         <item>Szünet/Folytatás</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Hiba az áthelyezés közben</string>
     <string name="move_progress">File áthelyezése folyamatban&#8230;</string>

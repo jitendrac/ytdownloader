@@ -78,8 +78,8 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
         <item>Verzend via SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Link gekopieerd naar het klembord</string>
+    <string name="share_link_via">Deel deze link via:</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -151,11 +151,14 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="menu_backup">Back-up </string>
 	<string name="menu_restore">Herstellen</string>
 	<string name="menu_import">Importeer een video</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Video reeds toegevoegd.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Kies een map om Dashboard\'s date op te slaan.</string>
 	<string name="menu_restore_info">Herstel Dashboard\'s data uit bestand</string>
 	<string name="menu_restore_info_msg">Huidige data wordt overschreven</string>
 	<string name="menu_import_info">Importeer een video en bewerk hem vanuit het Dashboard</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
 	<string name="menu_backup_result_failed">Fout tijdens back-up</string>
 	<string name="menu_restore_result_ok">Dashboard data hersteld.</string>
@@ -188,10 +191,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="id3_genre">Genre</string>
 	
 	<string name="audio_extr_info">Ingesloten audio stream:</string>
-	
-	<string name="dashboard_long_click_entry_0">Kopieer</string>
-	<string name="dashboard_long_click_entry_1">Verplaats</string>
-	<string name="dashboard_long_click_entry_2">Verwijder</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiëren</item>
@@ -202,6 +201,8 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
         <item>Verwijder en delete bestand</item>
         <item>Pauze/Hervatten</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Fout bij verplaatsen</string>
     <string name="move_progress">Bestand verplaatsen bezig&#8230;</string>

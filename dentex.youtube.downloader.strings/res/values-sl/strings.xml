@@ -150,11 +150,14 @@
 	<string name="menu_backup">Varnostno kopiraj</string>
 	<string name="menu_restore">Obnovi</string>
 	<string name="menu_import">Uvozi video</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Video je že dodan.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Izberite mapo za podatke varnostne kopije upravljalne plošče.</string>
 	<string name="menu_restore_info">Obnovi podatke upravljalne plošče z datoteke</string>
 	<string name="menu_restore_info_msg">Trenutni podatki bodo prepisani</string>
 	<string name="menu_import_info">Uvozi video in ga upravljaj preko upravljalne plošče</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Varnostna kopija upravljalne plošče je OK.</string>
 	<string name="menu_backup_result_failed">Napaka med varnostnim kopiranjem.</string>
 	<string name="menu_restore_result_ok">Podatki upravljalne plošče obnovljeni.</string>
@@ -187,10 +190,6 @@
 	<string name="id3_genre">Žanr</string>
 	
 	<string name="audio_extr_info">Zajet audio stream</string>
-	
-	<string name="dashboard_long_click_entry_0">Kopiraj</string>
-	<string name="dashboard_long_click_entry_1">Premakni</string>
-	<string name="dashboard_long_click_entry_2">Izbriši</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiraj</item>
@@ -201,6 +200,8 @@
         <item>Odstrani in izbriši datoteko</item>
         <item>Pavziraj/Nadaljuj</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Napaka med premikanjem</string>
     <string name="move_progress">Premikanje datoteke v poteku&#8230;</string>

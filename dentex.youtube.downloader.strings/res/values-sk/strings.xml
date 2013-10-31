@@ -78,8 +78,8 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
         <item>Odoslať cez SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Odkaz skopírovaný do schránky</string>
+    <string name="share_link_via">Zdiaľať odkaz cez:</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -151,11 +151,14 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="menu_backup">Zálohovať</string>
 	<string name="menu_restore">Obnoviť</string>
 	<string name="menu_import">Importovať video</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Video je už pridané.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Zvoľte adresár na zálohu Dashboard údajov</string>
 	<string name="menu_restore_info">Obnoviť Dashboard údaje zo súboru</string>
 	<string name="menu_restore_info_msg">Súčasné údaje budú prepísané.</string>
 	<string name="menu_import_info">Importovať video a spravovať cez Dashboard</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Zálohovanie Dashboard údajov je OK.</string>
 	<string name="menu_backup_result_failed">Chyba počas zálohovania.</string>
 	<string name="menu_restore_result_ok">Dashboard údaje obnovené.</string>
@@ -188,10 +191,6 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="id3_genre">Žáner</string>
 	
 	<string name="audio_extr_info">Obsiahnuté audio streamy:</string>
-	
-	<string name="dashboard_long_click_entry_0">Kopírovať</string>
-	<string name="dashboard_long_click_entry_1">Presunúť</string>
-	<string name="dashboard_long_click_entry_2">Vymazať</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopírovať</item>
@@ -202,6 +201,8 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
         <item>Odstrániť a vymazať súbor</item>
         <item>Pozastaviť/Spustiť</item>
     </string-array>
+    
+	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
     
 	<string name="move_error">Chyba počas presúvania.</string>
     <string name="move_progress">Prebieha presúvanie súboru&#8230;</string>

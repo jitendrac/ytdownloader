@@ -202,7 +202,6 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		if (DashboardActivity.isLandscape) height = 320;
 		
 		int phRes = DashboardActivity.isLandscape ? R.drawable.placeholder_320x180 : R.drawable.placeholder_180x180;
-		
 		if (YTD.reduceFactor == 1.44) {
 			phRes = DashboardActivity.isLandscape ? R.drawable.placeholder_222x125 : R.drawable.placeholder_125x125;
 		} else if (YTD.reduceFactor == 2) {
@@ -210,19 +209,44 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		} else if (YTD.reduceFactor == 3) {
 			phRes = DashboardActivity.isLandscape ? R.drawable.placeholder_107x60 : R.drawable.placeholder_60x60;
 		}
+		
 		Drawable ph = context.getResources().getDrawable(phRes);
 		
-		File thumb = new File(getContext().getDir(YTD.THUMBS_FOLDER, 0), dli.getYtId() + ".png");
+		if (dli.getStatus().equals(context.getString(R.string.json_status_imported)) && 
+				dli.getType().equals(YTD.JSON_DATA_TYPE_A_E)) {
+			
+			int audioPh = DashboardActivity.isLandscape ? R.drawable.placeholder_a_320x180 : R.drawable.placeholder_a_180x180;
+			if (YTD.reduceFactor == 1.44) {
+				audioPh = DashboardActivity.isLandscape ? R.drawable.placeholder_a_222x125 : R.drawable.placeholder_a_125x125;
+			} else if (YTD.reduceFactor == 2) {
+				audioPh = DashboardActivity.isLandscape ? R.drawable.placeholder_a_160x90 : R.drawable.placeholder_a_90x90;
+			} else if (YTD.reduceFactor == 3) {
+				audioPh = DashboardActivity.isLandscape ? R.drawable.placeholder_a_107x60 : R.drawable.placeholder_a_60x60;
+			}
+			
+			//Picasso.with(getContext()).setDebugging(true);
+			Picasso.with(getContext())
+					.load(audioPh)
+					.placeholder(ph)
+					.error(ph)
+					.resize((int) (height/YTD.reduceFactor), (int) (180/YTD.reduceFactor))
+					.centerCrop()
+					.into(holder.thumb);
+			
+		} else {
+			
+			File thumb = new File(getContext().getDir(YTD.THUMBS_FOLDER, 0), dli.getYtId() + ".png");
+			
+			//Picasso.with(getContext()).setDebugging(true);
+			Picasso.with(getContext())
+					.load(thumb)
+					.placeholder(ph)
+					.error(ph)
+					.resize((int) (height/YTD.reduceFactor), (int) (180/YTD.reduceFactor))
+					.centerCrop()
+					.into(holder.thumb);
+		}
 		
-		//Picasso.with(getContext()).setDebugging(true);
-		Picasso.with(getContext())
-				.load(thumb)
-				.placeholder(ph)
-				.error(ph)
-				.resize((int) (height/YTD.reduceFactor), (int) (180/YTD.reduceFactor))
-				.centerCrop()
-				.into(holder.thumb);
-
 		return v;
 	}
 	

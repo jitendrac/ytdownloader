@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="65"`
+`versionCode="66"`
 
-`versionName="3.1"`
+`versionName="3.2"`
 
-MD5 checksum: `2d7bcb53fb199a43de4c10d9b581752c` dentex.youtube.downloader_v3.1.apk
+MD5 checksum: `5792bfd5651b457f0ca31946c7fdfd71` dentex.youtube.downloader_v3.2.apk
 
 DISCLAIMER
 ================================================================
@@ -91,7 +91,7 @@ OTHER LICENSES
     Stack Overflow (http://stackoverflow.com), a question and answer site for programmers where
     all the content is CC BY-SA 3.0 licensed (see http://creativecommons.org/licenses/by-sa/3.0) 
      
-    checkMD5(...) & calculateMD5(...): 
+    checkMD5(...) and calculateMD5(...): 
     https://github.com/CyanogenMod/android_packages_apps_CMUpdater
     Copyright (C) 2012 The CyanogenMod Project, licensed under the GNU GPLv2 license 
      
@@ -109,7 +109,7 @@ OTHER LICENSES
     http://www.grokkingandroid.com/adding-files-to-androids-media-library-using-the-mediascanner/
     by Wolfram Rittmeyer 
      
-    DashboardAdapter.java & DashboardListItem.java: 
+    DashboardAdapter.java and DashboardListItem.java: 
     code adapted from https://github.com/survivingwithandroid/Surviving-with-android/
     by Francesco Azzola (JFrankie) 
      
@@ -143,15 +143,18 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.2 - Oct 30 2013 
+    ----------------------------------- 
+    [x] better support for "secondary" YouTube streams 
+    [x] support for audio files import into Dashboard 
+    [x] other optimizations 
+     
      v3.1 - Oct 26 2013 
     ----------------------------------- 
-    [x] option to auto-enqueue FFmpeg 
-     tasks on downloads completion 
-    [x] Dashboard import feature now 
-     supports FLV video format 
-    [x] support for video-only and 
-     audio-only "secondary" streams 
-     from YouTube (experimental) 
+    [x] option to auto-enqueue FFmpeg tasks on downloads completion 
+    [x] support for FLV video import into Dashboard 
+    [x] support for video-only and audio-only "secondary" 
+        streams from YouTube (experimental) 
     [x] various bug fixes 
      
      v3.0.2 - Oct 11 2013 
@@ -165,8 +168,7 @@ CHANGELOG
      
      v3.0 - Oct 08 2013 
     ----------------------------------- 
-    [x] Dashboard for interaction 
-     with downloaded video: 
+    [x] Dashboard for interaction with downloaded video: 
      - show status/progress/speed 
      - click to: 
       ^ open video/audio file 
@@ -179,12 +181,10 @@ CHANGELOG
       ^ remove 
       ^ delete 
       ^ pause/resume 
-    [x] Custom download manager 
-     supporting: 
+    [x] Custom download manager supporting: 
      - pause/resume 
-     - YouTube link validation on 
-     resume through different 
-     networks and/or expire time 
+     - YouTube link validation on resume through 
+       different networks and/or expire time 
     [x] new translations: 
      - Slovak 
      - Slovenian 
@@ -193,8 +193,7 @@ CHANGELOG
      
      v2.7 - Aug 20 2013 
     ----------------------------------- 
-    [x] auto-patch experimental 
-     signature changes 
+    [x] auto-patch experimental signature changes 
     [x] JB 4.3 target 
      
      v2.6.2 - Aug 08 2013 
@@ -203,8 +202,7 @@ CHANGELOG
      
      v2.6.1 - Jul 26 2013 
     ----------------------------------- 
-    [x] option to show resolutions 
-     into the video list 
+    [x] option to show resolutions into the video list 
     [x] experimental signature patch 
      
      v2.6 - Jul 17 2013 
@@ -217,8 +215,7 @@ CHANGELOG
      
      v2.5.2 - Jul 14 2013 
     ----------------------------------- 
-    [x] auto-fetch gantt\'s script to 
-     parse experimental signatures 
+    [x] auto-fetch gantt\'s script to parse experimental signatures 
      
      v2.5.1 - Jul 12 2013 
     ----------------------------------- 
@@ -226,14 +223,12 @@ CHANGELOG
      
      v2.5 - Jul 11 2013 
     ----------------------------------- 
-    [x] experimantal signature patch 
-     (yes, again) 
+    [x] experimantal signature patch (yes, again) 
     [x] other small bugs fixed 
      
      v2.4 - Jul 02 2013 
     ----------------------------------- 
-    [x] new launcher and notification 
-     icons by Sam Plane 
+    [x] new launcher and notification icons by Sam Plane 
      
      v2.3.2 - Jun 28 2013 
     ----------------------------------- 
@@ -246,45 +241,39 @@ CHANGELOG
      v2.3 - Jun 25 2013 
     ----------------------------------- 
     [x] experimantal signature support 
-     (thanks Gantt@userscripts.org) 
+        (thanks Gantt@userscripts.org) 
     [x] other bug/stability fixes 
      
      v2.2 - May 12 2013 
     ----------------------------------- 
     [x] fixed a bunch of BUUUUUGS !!! 
     [x] handles direct link clicks 
-     (use of Intent.ACTION_VIEW) 
      
      v2.1 - May 11 2013 
     ----------------------------------- 
     [x] code optimizations 
-    [x] mediaScanner bug fix 
-     (thanks Wolfram!) 
+    [x] mediaScanner bug fix (thanks Wolfram!) 
     [x] new translations: 
      - Chinese (China) 
      - Chinese (Hong Kong) 
      
      v2.0.6 - May 09 2013 
     ----------------------------------- 
-    [x] dialog/toast when Downloads 
-     system app is not found 
+    [x] dialog/toast when Downloads system app is not found 
     [x] Chinese (Taiwan) translation 
      
      v2.0.5 - May 09 2013 
     ----------------------------------- 
-    [x] bug fix (FC when Downloads 
-     system app is not found)(3) 
+    [x] bug fix (FC when Downloads system app is not found)(3) 
      
      v2.0.4 - May 08 2013 
     ----------------------------------- 
-    [x] bug fix (FC when Downloads 
-     system app is not found)(2) 
+    [x] bug fix (FC when Downloads system app is not found)(2) 
     [x] Hungarian translation 
      
      v2.0.3 - May 08 2013 
     ----------------------------------- 
-    [x] bug fix (FC when Downloads 
-     system app is not found) 
+    [x] bug fix (FC when Downloads system app is not found) 
      
      v2.0.2 - May 07 2013 
     ----------------------------------- 
@@ -296,9 +285,8 @@ CHANGELOG
      
      v2.0 - May 06 2013 
     ----------------------------------- 
-    [x] audio extraction from 
-     downloaded video with optional 
-     conversion to mp3 (with FFmpeg) 
+    [x] audio extraction from downloaded video with 
+        optional conversion to mp3 (with FFmpeg) 
     [x] PayPal donation menu 
     [x] BugSense integration 
     [x] on the fly language switch 
@@ -321,8 +309,7 @@ CHANGELOG
      v1.9 - Mar 23 2013 
     ----------------------------------- 
     [x] YT web page parsing improved 
-    [x] fixed notif. error when remove 
-     downloads not yet started 
+    [x] fixed notif. error when remove downloads not yet started 
     [x] 4K and 3D video support 
     [x] re-organized menus 
     [x] on the fly theme switch 
@@ -333,8 +320,7 @@ CHANGELOG
      v1.8.2 - Mar 15 2013 
     ----------------------------------- 
     [x] dark/light theme switcher 
-    [x] option to show all the file 
-     sizes into the video list 
+    [x] option to show all the file sizes into the video list 
     [x] French translation 
      
      v1.8.1 - Mar 14 2013 
@@ -344,8 +330,7 @@ CHANGELOG
      v1.8 - Mar 12 2013 
     ----------------------------------- 
     [x] extSdCard support 
-    [x] long-press on video list item: 
-     menu to copy/share link 
+    [x] long-press on video list item: menu to copy/share link 
     [x] auto update-check once a day 
     [x] new notification icon 
     [x] landscape orientation support 
@@ -371,8 +356,7 @@ CHANGELOG
     ----------------------------------- 
     [x] better fix on bad video list 
     [x] remove stop download on click 
-    [x] open DM on notif. bar click 
-     (still not working in CM ROM) 
+    [x] open DM on notif. bar click (still not working in CM ROM) 
      
      v1.5.1 - Feb 24 2013 
     ----------------------------------- 
@@ -383,8 +367,7 @@ CHANGELOG
     ----------------------------------- 
     [x] online update check 
     [x] option to fetch filesizes 
-    [x] stop download on click 
-     (maybe not working in CM 10.1) 
+    [x] stop download on click (maybe not working in CM 10.1) 
     [x] DownloadManager quick links 
     [x] settings and DM overflow menu 
     [x] reordered preferences 
@@ -397,8 +380,7 @@ CHANGELOG
      
      v1.3.1 - Jan 19 2013 
     ----------------------------------- 
-    [x] handle again http|https links 
-     (thanks Reiner!) 
+    [x] handle again http|https links (thanks Reiner!) 
      
      v1.3 - Jan 18 2013 
     ----------------------------------- 
@@ -437,13 +419,15 @@ CHANGELOG
 TO-DO LIST
 ================================================================
 	[ ] implement other FFmpeg functions
-	[ ] compile FFmpeg to support x86 Android ABI
+	[ ] compile FFmpeg to support x86 Android ABI [wip]
 	[ ] support subtitles download
 	[ ] default format/filter selection for video download
 	[ ] use icon/logo to identify codecs available (expand the custom ShareActivity adapter)
 	[ ] make the App tablet friendly
 	[ ] use custom DM for other download tasks (apk update, ffmpeg binary [wip - on hold])
-	[ ] option to include downloaded videos into dashboard backup (or make menu entry "archive")
+	[ ] dashboard option to include downloaded videos into backups 
+        (or make menu entry "archive")
+	[ ] dashboard option to "nuke" all entries (remove and delete all)
 
 KNOWN ISSUES
 ================================================================

@@ -94,14 +94,7 @@ public class Utils {
 	}
     
     public static void langInit(Context context) {
-    	String storedDefLang = YTD.settings.getString("DEF_LANG", "");
-    	if (storedDefLang.isEmpty() && storedDefLang != null) {	
-    		Locale defLocale = Locale.getDefault();
-    		String defLang = defLocale.getLanguage();
-    		YTD.settings.edit().putString("DEF_LANG", defLang).commit();
-    	}
-    		
-		String lang  = YTD.settings.getString("lang", "default");
+    	String lang  = YTD.settings.getString("lang", "default");
         Locale locale;
 		if (!lang.equals("default")) {
 			String[] fLang = filterLang(lang);
@@ -113,6 +106,7 @@ public class Utils {
         	locale = new Locale(YTD.settings.getString("DEF_LANG", ""));
         	Locale.setDefault(locale);
         }
+		
         Configuration config = new Configuration();
         config.locale = locale;
         context.getResources().updateConfiguration(config, null);
@@ -126,7 +120,6 @@ public class Utils {
 			lang.equals("pl_PL") ||
 			lang.equals("pt_BR") || 
 			lang.equals("pt_PT") || 
-			lang.equals("sl_SI") || 
 			lang.equals("tr_TR") || 
 			lang.equals("zh_CN") ||
 			lang.equals("zh_HK") ||

@@ -78,8 +78,8 @@
         <item>Отправить через SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Ссылка скопирована в буфер</string>
+    <string name="share_link_via">Поделиться ссылкой через:</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -151,11 +151,14 @@
 	<string name="menu_backup">Резервное копирование</string>
 	<string name="menu_restore">Восстановление</string>
 	<string name="menu_import">Импортировать видео</string>
+	<string name="menu_import_file">Import a file</string>
 	<string name="menu_import_double">Видео уже добавлено.</string>
+	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Выбрать папку для резервного копирования данных инстр. панели</string>
 	<string name="menu_restore_info">Восстановить данные инстр. панели из файла</string>
 	<string name="menu_restore_info_msg">Текущие данные будут переписаны.</string>
 	<string name="menu_import_info">Импорт видео и управление им из инстр. панели</string>
+	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Копия данных инстр. панели ОК.</string>
 	<string name="menu_backup_result_failed">Ошибка рез. копирования.</string>
 	<string name="menu_restore_result_ok">Данные инстр. панели восстановлены.</string>
@@ -188,10 +191,6 @@
 	<string name="id3_genre">Жанр</string>
 	
 	<string name="audio_extr_info">Включённый поток аудио:</string>
-	
-	<string name="dashboard_long_click_entry_0">Копировать</string>
-	<string name="dashboard_long_click_entry_1">Переместить</string>
-	<string name="dashboard_long_click_entry_2">Удалить</string>
 
 	<string-array name="dashboard_long_click_entries">
 	    <item>Копировать</item>
@@ -202,6 +201,8 @@
         <item>Убрать и удалить файл</item>
         <item>Пауза/возобновить</item>
     </string-array>
+    
+	<string name="operation_standby">Ожидание: запущена другая операция.</string>
     
 	<string name="move_error">Ошибка при перемещении.</string>
     <string name="move_progress">Перемещение файла в процессе&#8230;</string>

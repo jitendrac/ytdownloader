@@ -296,7 +296,10 @@ public class SettingsActivity extends Activity {
 				
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
 					String language = YTD.settings.getString("lang", "default");
-					if (!language.equals(newValue)) Utils.reload(getActivity());
+					if (!language.equals(newValue)) {
+						Utils.logger("d", "Setting current lang to: " + newValue, DEBUG_TAG);
+						Utils.reload(getActivity());
+					}
 					return true;
 				}
 			});
