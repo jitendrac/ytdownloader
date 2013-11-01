@@ -44,6 +44,7 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -96,6 +97,44 @@ import dentex.youtube.downloader.utils.Utils;
 
 public class ShareActivity extends Activity {
 	
+	private static final String VO_WEB_M_480P = "VO - WebM - 480p";
+	private static final String VO_MP4_1080P_HBR = "VO - MP4 - 1080p (HBR)";
+	private static final String VO_WEB_M_1080P = "VO - WebM - 1080p";
+	private static final String VO_WEB_M_720P = "VO - WebM - 720p";
+	private static final String VO_WEB_M_360P = "VO - WebM - 360p";
+	private static final String VO_WEB_M_240P = "VO - WebM - 240p";
+	private static final String AO_OGG_HI_Q = "AO - OGG - Hi-Q";
+	private static final String AO_OGG_MED_Q = "AO - OGG - Med-Q";
+	private static final String VO_MP4_144P = "VO - MP4 - 144p";
+	private static final String AO_M4A_HI_Q = "AO - M4A - Hi-Q";
+	private static final String AO_M4A_MED_Q = "AO - M4A - Med-Q";
+	private static final String AO_M4A_LOW_Q = "AO - M4A - Low-Q";
+	private static final String VO_MP4_ORIGINAL = "VO - MP4 - Original";
+	private static final String VO_MP4_1080P = "VO - MP4 - 1080p";
+	private static final String VO_MP4_720P = "VO - MP4 - 720p";
+	private static final String VO_MP4_480P = "VO - MP4 - 480p";
+	private static final String VO_MP4_360P = "VO - MP4 - 360p";
+	private static final String VO_MP4_240P = "VO - MP4 - 240p";
+	private static final String WEB_M_720P_3D = "WebM - 720p (3D)";
+	private static final String WEB_M_360P_3D = "WebM - 360p (3D)";
+	private static final String MP4_520P_3D = "MP4 - 520p (3D)";
+	private static final String MP4_720P_3D = "MP4 - 720p (3D)";
+	private static final String MP4_240P_3D = "MP4 - 240p (3D)";
+	private static final String MP4_360P_3D = "MP4 - 360p (3D)";
+	private static final String WEB_M_1080P = "WebM - 1080p";
+	private static final String WEB_M_720P = "WebM - 720p";
+	private static final String WEB_M_480P = "WebM - 480p";
+	private static final String WEB_M_360P = "WebM - 360p";
+	private static final String MP4_ORIGINAL = "MP4 - Original";
+	private static final String MP4_1080P = "MP4 - 1080p";
+	private static final String _3GP_240P = "3GP - 240p";
+	private static final String FLV_480P = "FLV - 480p";
+	private static final String FLV_360P = "FLV - 360p";
+	private static final String MP4_720P = "MP4 - 720p";
+	private static final String MP4_270P_360P = "MP4 - 270p/360p";
+	private static final String _3GP_144P = "3GP - 144p";
+	private static final String FLV_270P = "FLV - 270p";
+	private static final String FLV_240P = "FLV - 240p";
 	private ProgressBar progressBar1;
 	private ProgressBar progressBarD;
 	private ProgressBar progressBarL;
@@ -145,8 +184,10 @@ public class ShareActivity extends Activity {
 	private boolean restartModeEnabled = false;
 	private String extraId;
 	private boolean autoFFmpegTaskAlreadySent = false;
-	public String mComposedName;
+	private String mComposedName;
 	private String jsonDataType = YTD.JSON_DATA_TYPE_V;
+	private String dashUrl = "";
+	private String dashStartUrl;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -461,7 +502,13 @@ public class ShareActivity extends Activity {
             	assignBitmapToVideoListThumbnail(generateThumbUrls());
 
             	FetchUrl fu = new FetchUrl(sShare);
-            	return urlBlockMatchAndDecode(fu.doFetch(urls[0])); 
+            	String content = fu.doFetch(urls[0]);
+            	
+            	if (!content.isEmpty()) {
+            		return urlBlockMatchAndDecode(content);
+            	} else {
+            		return "e";
+            	}
             } catch (Exception e) {
             	Log.e(DEBUG_TAG, "downloadUrl: " + e.getMessage());
 		    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> downloadUrl: ", e.getMessage(), e);
@@ -1087,28 +1134,20 @@ public class ShareActivity extends Activity {
         findVideoFilenameBase(content);
         findJs(content);
         
-        String ueStreams = matchStreams(content, "url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
+        String ueStreams = findMatchGroupOne(content, "url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
+        
         String asStreams;
         boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
         if (asEnabled || autoModeEnabled) {
-        	asStreams = matchStreams(content, "adaptive_fmts\\\": \\\"(.*?)\\\"");
+        	asStreams = "," + findMatchGroupOne(content, "adaptive_fmts\\\": \\\"(.*?)\\\"");
         } else {
         	asStreams = "";
         }
         
-        return splitStreamsGroups(ueStreams + "," + asStreams);
+        return splitStreamsGroups(ueStreams + asStreams, content);
     }
-    
-    private String matchStreams(String content, String regEx) {
-    	Pattern streamsPattern = Pattern.compile(regEx);
-        Matcher streamsMatcher = streamsPattern.matcher(content);
-        if (streamsMatcher.find()) {
-        	return streamsMatcher.group(1);
-        }
-		return "";
-	}
 
-	private String splitStreamsGroups(String streams) {
+	private String splitStreamsGroups(String streams, String content) {
 		Pattern blockPattern = Pattern.compile(",");
         Matcher blockMatcher = blockPattern.matcher(streams);
         if (blockMatcher.find() && !asyncDownload.isCancelled()) {
@@ -1117,7 +1156,6 @@ public class ShareActivity extends Activity {
         	
         	if (count == 0) return "e";
         	
-            Utils.logger("d", "*** streams ***", DEBUG_TAG);
             progressBar1.setIndeterminate(false);
             decryptionArray = null;
             int i = 0;
@@ -1130,7 +1168,8 @@ public class ShareActivity extends Activity {
             	
             	asyncDownload.doProgress((int) ((i / count) * 100));
             	
-            	Utils.logger("v", "block " + i + ": " + blocks[i], DEBUG_TAG);
+            	Utils.logger("d", "*** streams ***", DEBUG_TAG);
+            	Utils.logger("v", "index " + i + ", block: " + blocks[i], DEBUG_TAG);
             	
                 codecMatcher(blocks[i], i);
                 qualityMatcher(blocks[i], i);
@@ -1139,6 +1178,7 @@ public class ShareActivity extends Activity {
                 
                 i++;
             }
+            findDashUrl(content);
         } else {
         	Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
         }
@@ -1161,7 +1201,8 @@ public class ShareActivity extends Activity {
 						Utils.logger("w", "trying getVideoFileSize 2nd time", DEBUG_TAG);
 						size = getVideoFileSize(urls[i]);
 					}
-					Utils.logger("d", "index: " + i + ", size: " + size, DEBUG_TAG);
+					//Utils.logger("d", "index: " + i + ", size: " + size, DEBUG_TAG);
+					Utils.logger("d", "size: " + size, DEBUG_TAG);
 
 					publishProgress(String.valueOf(i), size);
 				}
@@ -1275,8 +1316,8 @@ public class ShareActivity extends Activity {
         	}
     	}
 
-		Utils.logger("v", "url " + i + ": " + url, DEBUG_TAG);
-		Utils.logger("v", "sig " + i + ": " + sig, DEBUG_TAG);
+		Utils.logger("v", "index " + i + ", url: " + url, DEBUG_TAG);
+		Utils.logger("v", "index " + i + ", sig: " + sig, DEBUG_TAG);
     	
 		String composedLink = url + "&" + sig;
 
@@ -1399,6 +1440,70 @@ public class ShareActivity extends Activity {
         }
         Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
     }
+    
+    @SuppressLint("DefaultLocale")
+	private void findDashUrl(String content) {
+    	Utils.logger("d", "*** dash signated streams ***", DEBUG_TAG);
+    	String[] dashElements;
+    	
+    	String dashManifest = findMatchGroupOne(content, "\"dashmpd\":\\s*\"([^\"]+)\"");
+    	//Utils.logger("i", "dashManifest: " + dashManifest, DEBUG_TAG);
+    	if (!dashManifest.isEmpty()) {
+    		String dashParams = findMatchGroupOne(dashManifest, "youtube.com\\\\\\/api\\\\\\/manifest\\\\\\/dash\\\\\\/(.+)");
+    		//Utils.logger("i", "dashParams: " + dashParams, DEBUG_TAG);
+        	if (!dashParams.isEmpty()) {
+        		dashElements = dashParams.split("\\\\\\/");
+        		for (int i=0; i < dashElements.length; i+=2) {
+        			if (i>0) dashUrl = dashUrl + "&";
+        			dashUrl = dashUrl + (dashElements[i] + '=' + dashElements[i+1]);
+        		}
+        		//Utils.logger("i", "dashUrl (partial): " + dashUrl, DEBUG_TAG);
+        		if (!links.get(0).isEmpty()) {
+        			dashStartUrl = findMatchGroupOne(links.get(0), "(http.*?videoplayback\\?)");
+        			//Utils.logger("i", "dashStartURL: " + dashStartUrl, DEBUG_TAG);
+        		}
+        		if (!dashStartUrl.isEmpty()) {
+        			dashUrl = dashStartUrl + dashUrl;
+        		} else {
+        			dashUrl = "";
+        		}
+        		if (dashUrl.toLowerCase().indexOf("ratebypass") == -1) {
+        			dashUrl = dashUrl + "&ratebypass=yes";
+        		}
+        		if (!dashUrl.isEmpty()) {
+        			if (itags.contains((String) VO_MP4_1080P)) addDashUrlEntries(0, dashUrl, "mp4", "", "", "37"); 
+        			
+        			/*
+        			 *  TODO 
+        			 *  implement other hidden itags
+        			 *  fix: doesn't fire if adaptive streams are disabled
+        			 *  
+        			 */
+        		}
+        	}
+    	}
+    }
+    
+    private void addDashUrlEntries(int i, String link, String codec, String quality, String size, String itagNum) {
+    	links.add(i, link + "&itag=" + itagNum);
+        codecs.add(i, codec);
+        qualities.add(i, quality);
+        sizes.add(i, size);
+        String itag = findItag(itagNum);
+        itags.add(i, itag);
+        
+        Utils.logger("d", "inserted at index: " + i + ", codec: " + codec, DEBUG_TAG);
+        Utils.logger("d", "inserted at index: " + i + ", quality: " + quality, DEBUG_TAG);
+        Utils.logger("d", "inserted at index: " + i + ", itag: " + itagNum + "(" + itag + ")", DEBUG_TAG);
+        Utils.logger("v", "inserted at index: " + i + ", url: " + dashUrl, DEBUG_TAG);
+    }
+
+	private String findMatchGroupOne(String text, String regEx) {
+		Pattern pattern = Pattern.compile(regEx);
+    	Matcher matcher = pattern.matcher(text);
+		if (matcher.find()) return matcher.group(1);
+		return "";
+	}
 
 	private String getVideoFileSize(String link) {
 		try {
@@ -1420,7 +1525,7 @@ public class ShareActivity extends Activity {
         } else {
             codecs.add("video");
         }
-        Utils.logger("d", "index: " + i + ", Codec: " + codecs.get(i), DEBUG_TAG);
+        Utils.logger("d", "index: " + i + ", codec: " + codecs.get(i), DEBUG_TAG);
     }
 
     private void qualityMatcher(String current, int i) {
@@ -1431,7 +1536,7 @@ public class ShareActivity extends Activity {
         } else {
             qualities.add("-");
         }
-        Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
+        Utils.logger("d", "index: " + i + ", quality: " + qualities.get(i), DEBUG_TAG);
     }
     
     /*private void stereoMatcher(String current, int i) {
@@ -1450,13 +1555,13 @@ public class ShareActivity extends Activity {
     	Pattern itagPattern = Pattern.compile("itag=([0-9]{1,3})\\\\u0026");
     	Matcher itagMatcher = itagPattern.matcher(current);
     	if (itagMatcher.find()) {
-    		res = findItag(itagMatcher, res);
+    		res = findItag(itagMatcher.group(1));
     		Utils.logger("d", "index: " + i + ", itag: " + itagMatcher.group(1) + " (" + res + ")", DEBUG_TAG);
     	} else {
     		Pattern itagPattern2 = Pattern.compile("itag=([0-9]{1,3})$");
         	Matcher itagMatcher2 = itagPattern2.matcher(current);
 	    	if (itagMatcher2.find()) {
-	    		res = findItag(itagMatcher2, res);
+	    		res = findItag(itagMatcher2.group(1));
 	    		Utils.logger("d", "index: " + i + ", itag: " + itagMatcher2.group(1) + " (" + res + ")", DEBUG_TAG);
 	    	}
     	}
@@ -1473,8 +1578,8 @@ public class ShareActivity extends Activity {
     	}
     }
 
-	private String findItag(Matcher itagMatcher, String res) {
-		String itag = itagMatcher.group(1);
+	private String findItag(String itag) {
+		String res = "-";
 		if (itag != null) {
 			try {
 				switch (Integer.parseInt(itag)) {
@@ -1482,124 +1587,130 @@ public class ShareActivity extends Activity {
 				// *** url encoded streams ***
 				// ***************************
 				case 5:
-					res = "FLV - 240p";
+					res = FLV_240P;
 					break;
 				case 6:
-					res = "FLV - 270p";
+					res = FLV_270P;
 					break;
 				case 17:
-					res = "3GP - 144p";
+					res = _3GP_144P;
 					break;
 				case 18:
-					res = "MP4 - 270p/360p";
+					res = MP4_270P_360P;
 					break;
 				case 22:
-					res = "MP4 - 720p";
+					res = MP4_720P;
 					break;
 				case 34:
-					res = "FLV - 360p";
+					res = FLV_360P;
 					break;
 				case 35:
-					res = "FLV - 480p";
+					res = FLV_480P;
 					break;
 				case 36:
-					res = "3GP - 240p";
+					res = _3GP_240P;
 					break;
 				case 37:
-					res = "MP4 - 1080p";
+					res = MP4_1080P;
 					break;
 				case 38:
-					res = "MP4 - Original";
+					res = MP4_ORIGINAL;
 					break;
 				case 43:
-					res = "WebM - 360p";
+					res = WEB_M_360P;
 					break;
 				case 44:
-					res = "WebM - 480p";
+					res = WEB_M_480P;
 					break;
 				case 45:
-					res = "WebM - 720p";
+					res = WEB_M_720P;
 					break;
 				case 46:
-					res = "WebM - 1080p";
+					res = WEB_M_1080P;
 					break;
 				case 82:
-					res = "MP4 - 360p (3D)";
+					res = MP4_360P_3D;
 					break;
 				case 83:
-					res = "MP4 - 240p (3D)";
+					res = MP4_240P_3D;
 					break;
 				case 84:
-					res = "MP4 - 720p (3D)";
+					res = MP4_720P_3D;
 					break;
 				case 85:
-					res = "MP4 - 520p (3D)";
+					res = MP4_520P_3D;
 					break;
 				case 100:
-					res = "WebM - 360p (3D)";
+					res = WEB_M_360P_3D;
 					break;
 				case 101:
-					res = "WebM - 360p (3D)";
+					res = WEB_M_360P_3D;
 					break;
 				case 102:
-					res = "WebM - 720p (3D)";
+					res = WEB_M_720P_3D;
 					break;
 				// ************************
 				// *** adaptive streams ***
 				// ************************
 				case 133:
-					res = "VO - MP4 - 240p";
+					res = VO_MP4_240P;
 					break;
 				case 134:
-					res = "VO - MP4 - 360p";
+					res = VO_MP4_360P;
 					break;
 				case 135:
-					res = "VO - MP4 - 480p";
+					res = VO_MP4_480P;
 					break;
 				case 136:
-					res = "VO - MP4 - 720p";
+					res = VO_MP4_720P;
 					break;
 				case 137:
-					res = "VO - MP4 - 1080p";
+					res = VO_MP4_1080P;
+					break;
+				case 138:
+					res = VO_MP4_ORIGINAL;
 					break;
 				case 139:
-					res = "AO - MP4 - Low-Q";
+					res = AO_M4A_LOW_Q;
 					break;
 				case 140:
-					res = "AO - MP4 - Med-Q";
+					res = AO_M4A_MED_Q;
 					break;
 				case 141:
-					res = "AO - MP4 - Hi-Q";
+					res = AO_M4A_HI_Q;
 					break;
 				case 160:
-					res = "VO - MP4 - 144p";
+					res = VO_MP4_144P;
 					break;
 				case 171:
-					res = "AO - WebM - Med-Q";
+					res = AO_OGG_MED_Q;
 					break;
 				case 172:
-					res = "AO - WebM - Hi-Q";
+					res = AO_OGG_HI_Q;
 					break;
 				case 242:
-					res = "VO - WebM - 240p";
+					res = VO_WEB_M_240P;
 					break;
 				case 243:
-					res = "VO - WebM - 360p";
+					res = VO_WEB_M_360P;
 					break;
 				case 244:
-					res = "VO - WebM - 480p";
+					res = VO_WEB_M_480P;
 					break;
 				case 245:
-					res = "VO - WebM - 480p";
+					res = VO_WEB_M_480P;
 					break;
 				case 246:
-					res = "VO - WebM - 480p";
+					res = VO_WEB_M_480P;
 					break;
 				case 247:
-					res = "VO - WebM - 720p";
+					res = VO_WEB_M_720P;
 					break;
 				case 248:
-					res = "VO - WebM - 1080p";
+					res = VO_WEB_M_1080P;
+					break;
+				case 264:
+					res = VO_MP4_1080P_HBR;
 					break;
 				}
 				
