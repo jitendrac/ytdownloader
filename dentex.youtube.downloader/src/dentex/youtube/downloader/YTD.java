@@ -42,7 +42,6 @@ import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.WindowManager;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -109,8 +108,6 @@ public class YTD extends Application implements QueueThreadListener{
 	public static QueueThread queueThread;
 	public static Handler handler;
 	
-	public static SparseArray<List<Integer>> filtersMap;
-	
 	@Override
 	public void onCreate() {
 		Log.d(DEBUG_TAG, "onCreate");
@@ -135,8 +132,6 @@ public class YTD extends Application implements QueueThreadListener{
 		detectSysDefLang();
 		
 		detectFirstLaunch();
-		
-		filtersMap = ShareActivityListFilters.getListFilters();
 		
 		mBuilder =  new NotificationCompat.Builder(ctx);
 		mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);

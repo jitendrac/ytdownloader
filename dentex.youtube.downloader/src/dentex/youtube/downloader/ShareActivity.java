@@ -38,11 +38,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -576,8 +575,8 @@ public class ShareActivity extends Activity {
 				listEntriesBuilder();
 				lv.setAdapter(aA);
 				
-				asyncSizesFiller = new AsyncSizesFiller();
-				asyncSizesFiller.execute(links.toArray(new String[0]));
+				//asyncSizesFiller = new AsyncSizesFiller();
+				//asyncSizesFiller.execute(links.toArray(new String[0])); //TODO remove comments
 			}
 
 			tv.setText(titleRaw);
@@ -1124,8 +1123,8 @@ public class ShareActivity extends Activity {
 	private String urlBlockMatchAndDecode(String content) {
 		
 		// log entire YouTube requests
-		//File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
-		//Utils.appendStringToFile(req, content);
+		File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
+		Utils.appendStringToFile(req, content);
 		
 		if (asyncDownload.isCancelled()) {
 			Utils.logger("d", "asyncDownload cancelled @ urlBlockMatchAndDecode begin", DEBUG_TAG);
@@ -1150,19 +1149,19 @@ public class ShareActivity extends Activity {
 		String ueStreams = findMatchGroupOne(content, "url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
 		String asStreams = findMatchGroupOne(content, "adaptive_fmts\\\": \\\"(.*?)\\\"");
 		
-		itagMatcher(asStreams);
+		findItags(ueStreams + "," + asStreams);
 		
 		//TODO
 		//adaptive streams always enabled to test filters
-		/*boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
-		if (asEnabled || autoModeEnabled) {*/
-			return splitStreamsGroups(urlDecode(ueStreams + "," + asStreams), content);
-		/*} else {
-			return splitStreamsGroups(urlDecode(ueStreams), content);
-		}*/
+		boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
+		if (asEnabled || autoModeEnabled) {
+			return splitStreamsGroups(ueStreams + "," + asStreams, content);
+		} else {
+			return splitStreamsGroups(ueStreams, content);
+		}
 	}
 	
-	private void itagMatcher(String streams) {
+	private void findItags(String streams) {
 		Pattern blockPattern = Pattern.compile(",");
 		Matcher blockMatcher = blockPattern.matcher(streams);
 		if (blockMatcher.find()) {
@@ -1173,16 +1172,11 @@ public class ShareActivity extends Activity {
 				itagMatcher(blocks[i], i, false);
 				i++;
 			}
+			
+			int[] log = new int[itags.size()];
+			for(int j = 0; j < itags.size(); j++) log[j] = itags.get(j);
+			Utils.logger("d", "itags matched: " + Arrays.toString(log), DEBUG_TAG);
 		}
-	}
-
-	private String urlDecode(String html) {
-		try {
-			html = URLDecoder.decode(html, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			Log.e(DEBUG_TAG, "UnsupportedEncodingException @ splitStreamsGroups: " + e.getMessage());
-		}
-		return html;
 	}
 
 	private String splitStreamsGroups(String streams, String content) {
@@ -1197,10 +1191,16 @@ public class ShareActivity extends Activity {
 			progressBar1.setIndeterminate(false);
 			decryptionArray = null;
 			int i = 0;
+			Utils.logger("d", "*** decoded streams ***", DEBUG_TAG);
 			while (i < count) {
+				try {
+					blocks[i] = URLDecoder.decode(blocks[i], "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					Log.e(DEBUG_TAG, "UnsupportedEncodingException @ splitStreamsGroups: " + e.getMessage());
+				}
+				
 				asyncDownload.doProgress((int) ((i / count) * 100));
 				
-				Utils.logger("d", "*** streams ***", DEBUG_TAG);
 				Utils.logger("v", "index " + i + ", block: " + blocks[i], DEBUG_TAG);
 				
 				codecMatcher(blocks[i], i);
@@ -1251,6 +1251,9 @@ public class ShareActivity extends Activity {
 			
 			listEntries.clear();
 			listEntriesBuilder();
+			
+			//listEntries.remove(index);
+			//listEntries.add(index, itagsText.get(index) + sizes.get(index));
 
 			aA.notifyDataSetChanged();
 		}
@@ -1265,7 +1268,7 @@ public class ShareActivity extends Activity {
 	private void findVideoFilenameBase(String content) {
 		String title = findMatchGroupOne(content, "<title>(.*?)</title>");
 		if (!title.isEmpty()) {
-			titleRaw = title.replaceAll("(<| - YouTube</)title>", "");
+			titleRaw = title.replaceAll("(<|\\s*-\\s*YouTube</)title>", "");
 			titleRaw = android.text.Html.fromHtml(titleRaw).toString();
 			basename = titleRaw.replaceAll("\\W", "_");
 		} else {
@@ -1278,30 +1281,33 @@ public class ShareActivity extends Activity {
 		
 		/*
 		 *  TODO: 
-		 *  retrieve similar array from Preferences/action-bar 
-		 *  and pass it to "listEntriesBuilder"
+		 *  finish
 		 */
-		int[] enabledFilters = { 0, 1, 2, 3 }; //example array
 		
-		List<Integer> filterInUseNoDup = null;
+		// MULTIPLE filters test
+		/*int[] enabledFilters = { 0, 3 }; //example array
 		for (int i=0; i < enabledFilters.length; i++) {
 			if (i == 0) filterInUse = new ArrayList<Integer>(YTD.filtersMap.get(enabledFilters[i]));
 			filterInUse.addAll(YTD.filtersMap.get(enabledFilters[i]));
-			Set<Integer> filterInUseSet = new HashSet<Integer>(filterInUse);
-			filterInUseNoDup = new ArrayList<Integer>(filterInUseSet);
-		}
+			//Set<Integer> filterInUseSet = new HashSet<Integer>(filterInUse);
+			//List<Integer> filterInUseNoDup = new ArrayList<Integer>(filterInUseSet);
+		}*/
 		
-		Utils.logger("i", "filterInUseNoDup: " + filterInUseNoDup, DEBUG_TAG);
+		// SINGLE filter test
+		/*int[] log = new int[ShareActivityListFilters.getListFilters(0).size()];
+		for(int j = 0; j < ShareActivityListFilters.getListFilters(0).size(); j++) log[j] = ShareActivityListFilters.getListFilters(0).get(j);
+		Utils.logger("d", "itags to filter: " + Arrays.toString(log), DEBUG_TAG);*/
 		
-		Iterator<String> sizesIter = sizes.iterator();
-		Iterator<Integer> itagsIter = itags.iterator();
-		//while (itagsIter.hasNext()) {
-		while (itagsIter.hasNext() && filterInUseNoDup.contains(itagsIter.next())) {			
-			try {
-				listEntries.add(itagsIter.next() + sizesIter.next());
-			} catch (NoSuchElementException e) {
-				listEntries.add("//");
-			}
+		for (int i = 0; i < itagsText.size(); i++) {
+			//if (ShareActivityListFilters.getListFilters(0).contains(itags.get(i))) {
+				try {
+					listEntries.add(itagsText.get(i) + sizes.get(i));
+				} catch (NoSuchElementException e) {
+					listEntries.add("//");
+				} catch (IndexOutOfBoundsException e) {
+					listEntries.add("--");
+				}
+			//}
 		}
 	}
 
@@ -1504,7 +1510,13 @@ public class ShareActivity extends Activity {
 				dashElements = dashParams.split("\\\\\\/");
 				for (int i=0; i < dashElements.length; i+=2) {
 					if (i>0) dashUrl = dashUrl + "&";
-					dashUrl = dashUrl + (dashElements[i] + '=' + dashElements[i+1]);
+					if (dashElements[i].equals("s")) {
+						dashUrl = dashUrl + ("signature=" + decryptExpSig(dashElements[i+1]));
+					} else if (dashElements[i].equals("sig")) {
+						dashUrl = dashUrl + ("signature=" + dashElements[i+1]);
+					} else {
+						dashUrl = dashUrl + (dashElements[i] + '=' + dashElements[i+1]);
+					}
 				}
 				//Utils.logger("i", "dashUrl (partial): " + dashUrl, DEBUG_TAG);
 				if (!links.get(0).isEmpty()) {
@@ -1520,8 +1532,9 @@ public class ShareActivity extends Activity {
 					dashUrl = dashUrl + "&ratebypass=yes";
 				}
 				if (!dashUrl.isEmpty()) { //TODO tests
-					if (itags.contains(135)) 
-						addDashUrlEntries(0, dashUrl, "flv", "large", "35"); 
+					if (itags.contains(135))
+						
+						addDashUrlEntries(3, dashUrl, "flv", "large", "35"); 
 					
 					if (itags.contains(137) || itags.contains(264)) 
 						addDashUrlEntries(0, dashUrl, "mp4", "hd1080", "37");
@@ -1530,23 +1543,27 @@ public class ShareActivity extends Activity {
 						addDashUrlEntries(0, dashUrl, "mp4", "highres", "38");
 					
 					if (itags.contains(248)) 
-						addDashUrlEntries(0, dashUrl, "webm", "hd1080", "46"); 
+						addDashUrlEntries(2, dashUrl, "webm", "hd1080", "46"); 
 				}
 			}
 		}
 	}
 	
-	private void addDashUrlEntries(int i, String link, String codec, String quality, String itagNum) {
-		links.add(i, link + "&itag=" + itagNum);
+	private void addDashUrlEntries(int i, String link, String codec, String quality, String itag) {
+		links.add(i, link + "&itag=" + itag);
 		codecs.add(i, codec);
 		qualities.add(i, quality);
 		sizes.add(i, "");
-		String itag = findItag(itagNum);
-		itagsText.add(i, itag);
+		String itagText = findItag(itag);
+		
+		//itagsText.add(i, itagText);
+		itagsText.add(i, "[" + itag + "d] " + itagText); //debug
+		
+		itags.add(i, Integer.parseInt(itag));
 		
 		Utils.logger("d", "inserted at index: " + i + ", codec: " + codec, DEBUG_TAG);
 		Utils.logger("d", "inserted at index: " + i + ", quality: " + quality, DEBUG_TAG);
-		Utils.logger("d", "inserted at index: " + i + ", itag: " + itagNum + "(" + itag + ")", DEBUG_TAG);
+		Utils.logger("d", "inserted at index: " + i + ", itag: " + itag + " (" + itagText + ")", DEBUG_TAG);
 		Utils.logger("v", "inserted at index: " + i + ", url: " + dashUrl, DEBUG_TAG);
 	}
 
@@ -1606,7 +1623,8 @@ public class ShareActivity extends Activity {
 			res = findItag(itag);
 			Utils.logger("d", "index: " + i + ", itag: " + itag + " (" + res + ")", DEBUG_TAG);
 			
-			itagsText.add(res);
+			//itagsText.add(res);
+			itagsText.add("[" + itag + "] " + res); //debug
 			
 			if (itag.equals("139") || itag.equals("140") || itag.equals("141")) {
 				codecs.remove(i);

@@ -30,8 +30,10 @@ import java.util.List;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 
-public class ShareListAdapter extends ArrayAdapter<String> {
+public class ShareListAdapter extends ArrayAdapter<String> implements Filterable {
 
 	private List<String> items;
 	
@@ -47,5 +49,22 @@ public class ShareListAdapter extends ArrayAdapter<String> {
 	/*public long getItemId(int position) {
 		return items.get(position).hashCode();
 	}*/
+	
+	public class ItemsFilter extends Filter {
+
+		@Override
+		protected FilterResults performFiltering(CharSequence constraint) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		protected void publishResults(CharSequence constraint,
+				FilterResults results) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 }
 

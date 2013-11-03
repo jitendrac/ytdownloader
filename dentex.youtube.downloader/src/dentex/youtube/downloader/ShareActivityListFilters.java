@@ -22,7 +22,8 @@ public class ShareActivityListFilters {
 	static Integer[] iVo = { 133, 134, 135, 136, 137, 138, 160, 242, 243, 244, 245, 246, 247, 248, 264 };
 	static Integer[] iAo = { 139, 140, 141, 171, 172 };
 
-	public static SparseArray<List<Integer>> getListFilters() {
+	public static List<Integer> getListFilters(int i) {
+		
 		//0
 		List<Integer> iMp4List = Arrays.asList(iMp4);
 		//1
@@ -63,6 +64,6 @@ public class ShareActivityListFilters {
 		filtersMap.put(9, iVoList);
 		filtersMap.put(10, iAoList);
 		
-		return filtersMap;
+		return filtersMap.get(i);
 	}
 }
