@@ -17,7 +17,7 @@
 	***
 	
 	https://github.com/dentex/ytdownloader/
-    https://sourceforge.net/projects/ytdownloader/
+	https://sourceforge.net/projects/ytdownloader/
 	
 	***
 	
@@ -38,9 +38,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,73 +99,76 @@ import dentex.youtube.downloader.utils.Utils;
 
 public class ShareActivity extends Activity {
 	
-	private static final String VO_WEB_M_480P = "VO - WebM - 480p";
-	private static final String VO_MP4_1080P_HBR = "VO - MP4 - 1080p (HBR)";
-	private static final String VO_WEB_M_1080P = "VO - WebM - 1080p";
-	private static final String VO_WEB_M_720P = "VO - WebM - 720p";
-	private static final String VO_WEB_M_360P = "VO - WebM - 360p";
-	private static final String VO_WEB_M_240P = "VO - WebM - 240p";
-	private static final String AO_OGG_HI_Q = "AO - OGG - Hi-Q";
-	private static final String AO_OGG_MED_Q = "AO - OGG - Med-Q";
-	private static final String VO_MP4_144P = "VO - MP4 - 144p";
-	private static final String AO_M4A_HI_Q = "AO - M4A - Hi-Q";
-	private static final String AO_M4A_MED_Q = "AO - M4A - Med-Q";
-	private static final String AO_M4A_LOW_Q = "AO - M4A - Low-Q";
-	private static final String VO_MP4_ORIGINAL = "VO - MP4 - Original";
-	private static final String VO_MP4_1080P = "VO - MP4 - 1080p";
-	private static final String VO_MP4_720P = "VO - MP4 - 720p";
-	private static final String VO_MP4_480P = "VO - MP4 - 480p";
-	private static final String VO_MP4_360P = "VO - MP4 - 360p";
-	private static final String VO_MP4_240P = "VO - MP4 - 240p";
-	private static final String WEB_M_720P_3D = "WebM - 720p (3D)";
-	private static final String WEB_M_360P_3D = "WebM - 360p (3D)";
-	private static final String MP4_520P_3D = "MP4 - 520p (3D)";
-	private static final String MP4_720P_3D = "MP4 - 720p (3D)";
-	private static final String MP4_240P_3D = "MP4 - 240p (3D)";
-	private static final String MP4_360P_3D = "MP4 - 360p (3D)";
-	private static final String WEB_M_1080P = "WebM - 1080p";
-	private static final String WEB_M_720P = "WebM - 720p";
-	private static final String WEB_M_480P = "WebM - 480p";
-	private static final String WEB_M_360P = "WebM - 360p";
-	private static final String MP4_ORIGINAL = "MP4 - Original";
-	private static final String MP4_1080P = "MP4 - 1080p";
+	private static final String _VO_WEBM_480P = "VO - WebM - 480p";
+	private static final String _VO_MP4_1080P_HBR = "VO - MP4 - 1080p (HBR)";
+	private static final String _VO_WEBM_1080P = "VO - WebM - 1080p";
+	private static final String _VO_WEBM_720P = "VO - WebM - 720p";
+	private static final String _VO_WEBM_360P = "VO - WebM - 360p";
+	private static final String _VO_WEBM_240P = "VO - WebM - 240p";
+	private static final String _AO_OGG_HI_Q = "AO - OGG - Hi-Q";
+	private static final String _AO_OGG_MED_Q = "AO - OGG - Med-Q";
+	private static final String _VO_MP4_144P = "VO - MP4 - 144p";
+	private static final String _AO_M4A_HI_Q = "AO - M4A - Hi-Q";
+	private static final String _AO_M4A_MED_Q = "AO - M4A - Med-Q";
+	private static final String _AO_M4A_LOW_Q = "AO - M4A - Low-Q";
+	private static final String _VO_MP4_ORIGINAL = "VO - MP4 - Original";
+	private static final String _VO_MP4_1080P = "VO - MP4 - 1080p";
+	private static final String _VO_MP4_720P = "VO - MP4 - 720p";
+	private static final String _VO_MP4_480P = "VO - MP4 - 480p";
+	private static final String _VO_MP4_360P = "VO - MP4 - 360p";
+	private static final String _VO_MP4_240P = "VO - MP4 - 240p";
+	private static final String _WEBM_720P_3D = "WebM - 720p (3D)";
+	private static final String _WEBM_360P_3D = "WebM - 360p (3D)";
+	private static final String _MP4_520P_3D = "MP4 - 520p (3D)";
+	private static final String _MP4_720P_3D = "MP4 - 720p (3D)";
+	private static final String _MP4_240P_3D = "MP4 - 240p (3D)";
+	private static final String _MP4_360P_3D = "MP4 - 360p (3D)";
+	private static final String _WEBM_1080P = "WebM - 1080p";
+	private static final String _WEBM_720P = "WebM - 720p";
+	private static final String _WEBM_480P = "WebM - 480p";
+	private static final String _WEBM_360P = "WebM - 360p";
+	private static final String _MP4_ORIGINAL = "MP4 - Original";
+	private static final String _MP4_1080P = "MP4 - 1080p";
 	private static final String _3GP_240P = "3GP - 240p";
-	private static final String FLV_480P = "FLV - 480p";
-	private static final String FLV_360P = "FLV - 360p";
-	private static final String MP4_720P = "MP4 - 720p";
-	private static final String MP4_270P_360P = "MP4 - 270p/360p";
+	private static final String _FLV_480P = "FLV - 480p";
+	private static final String _FLV_360P = "FLV - 360p";
+	private static final String _MP4_720P = "MP4 - 720p";
+	private static final String _MP4_270P_360P = "MP4 - 270p/360p";
 	private static final String _3GP_144P = "3GP - 144p";
-	private static final String FLV_270P = "FLV - 270p";
-	private static final String FLV_240P = "FLV - 240p";
+	private static final String _FLV_270P = "FLV - 270p";
+	private static final String _FLV_240P = "FLV - 240p";
+	private static final String _UNKNOWN = "Unknown";
+	
 	private ProgressBar progressBar1;
 	private ProgressBar progressBarD;
 	private ProgressBar progressBarL;
 	private static final String DEBUG_TAG = "ShareActivity";
-    private TextView tv;
-    private TextView noVideoInfo;
-    private ListView lv;
-    private ArrayAdapter<String> aA;
-    private List<String> links = new ArrayList<String>();
-    private List<String> codecs = new ArrayList<String>();
-    private List<String> qualities = new ArrayList<String>();
-    private List<String> sizes = new ArrayList<String>();
-    private List<String> itags = new ArrayList<String>();
-    private List<String> listEntries = new ArrayList<String>();
-    private String titleRaw;
-    private String basename;
-    private int pos;
-    private File path;
-    private String validatedLink;
-    private String vFilename = "";
-    public static Uri videoUri;
-    private int icon;
-    private CheckBox showAgain1;
-    private CheckBox showAgain2;
-    private TextView userFilename;
-    private boolean sshInfoCheckboxEnabled;
-    private boolean generalInfoCheckboxEnabled;
-    private boolean fileRenameEnabled;
-    private File chooserFolder;
+	private TextView tv;
+	private TextView noVideoInfo;
+	private ListView lv;
+	private ArrayAdapter<String> aA;
+	private List<String> links = new ArrayList<String>();
+	private List<String> codecs = new ArrayList<String>();
+	private List<String> qualities = new ArrayList<String>();
+	private List<String> sizes = new ArrayList<String>();
+	private List<String> itagsText = new ArrayList<String>();
+	private List<Integer> itags = new ArrayList<Integer>();
+	private List<String> listEntries = new ArrayList<String>();
+	private String titleRaw;
+	private String basename;
+	private int pos;
+	private File path;
+	private String validatedLink;
+	private String vFilename = "";
+	public static Uri videoUri;
+	private int icon;
+	private CheckBox showAgain1;
+	private CheckBox showAgain2;
+	private TextView userFilename;
+	private boolean sshInfoCheckboxEnabled;
+	private boolean generalInfoCheckboxEnabled;
+	private boolean fileRenameEnabled;
+	private File chooserFolder;
 	private AsyncDownload asyncDownload;
 	private AsyncSizesFiller asyncSizesFiller;
 	private boolean isAsyncDownloadRunning = false;
@@ -188,217 +193,218 @@ public class ShareActivity extends Activity {
 	private String jsonDataType = YTD.JSON_DATA_TYPE_V;
 	private String dashUrl = "";
 	private String dashStartUrl;
+	List<Integer> filterInUse;
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
-        sShare = getBaseContext();
-        
-    	// Theme init
-    	Utils.themeInit(this);
-    	
-        setContentView(R.layout.activity_share);
-        
-    	//showSizesInVideoList = YTD.settings.getBoolean("show_size_list", false);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
+		sShare = getBaseContext();
+		
+		// Theme init
+		Utils.themeInit(this);
+		
+		setContentView(R.layout.activity_share);
+		
+		//showSizesInVideoList = YTD.settings.getBoolean("show_size_list", false);
 
-    	// Language init
-    	Utils.langInit(this);
-        
-        // loading views from the layout xml
-        tv = (TextView) findViewById(R.id.textView1);
-        noVideoInfo = (TextView) findViewById(R.id.share_activity_info);
-        
-        progressBarD = (ProgressBar) findViewById(R.id.progressBarD);
-        progressBarL = (ProgressBar) findViewById(R.id.progressBarL);
-        
-        String theme = YTD.settings.getString("choose_theme", "D");
-    	if (theme.equals("D")) {
-    		progressBar1 = progressBarD;
-    		progressBarL.setVisibility(View.GONE);
-    	} else {
-    		progressBar1 = progressBarL;
-    		progressBarD.setVisibility(View.GONE);
-    	}
+		// Language init
+		Utils.langInit(this);
+		
+		// loading views from the layout xml
+		tv = (TextView) findViewById(R.id.textView1);
+		noVideoInfo = (TextView) findViewById(R.id.share_activity_info);
+		
+		progressBarD = (ProgressBar) findViewById(R.id.progressBarD);
+		progressBarL = (ProgressBar) findViewById(R.id.progressBarL);
+		
+		String theme = YTD.settings.getString("choose_theme", "D");
+		if (theme.equals("D")) {
+			progressBar1 = progressBarD;
+			progressBarL.setVisibility(View.GONE);
+		} else {
+			progressBar1 = progressBarL;
+			progressBarD.setVisibility(View.GONE);
+		}
 
-        imgView = (ImageView)findViewById(R.id.imgview);
-        
-        lv = (ListView) findViewById(R.id.list);
+		imgView = (ImageView)findViewById(R.id.imgview);
+		
+		lv = (ListView) findViewById(R.id.list);
 
-        // YTD update initialization
-        updateInit();
-        
-        // Get intent, action and MIME type
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
+		// YTD update initialization
+		updateInit();
+		
+		// Get intent, action and MIME type
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		String type = intent.getType();
 
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-        	BugSenseHandler.leaveBreadcrumb("Intent.ACTION_SEND");
-            if ("text/plain".equals(type)) {
-                try {
-                	handleSendText(intent, action);
-                	Utils.logger("d", "handling ACTION_SEND", DEBUG_TAG);
-                } catch (IOException e) {
-                    Log.e(DEBUG_TAG, "Error: " + e.getMessage(), e);
-                }
-            }
-        }
-        
-        if (Intent.ACTION_VIEW.equals(action)) {
-        	BugSenseHandler.leaveBreadcrumb("Intent.ACTION_VIEW");
-        	if (intent.hasCategory("AUTO")) {
-        		autoModeEnabled = true;
-        		extraId = intent.getStringExtra("id");
-        		pos = intent.getIntExtra("position", 0);
-        		vFilename = intent.getStringExtra("filename");
-        		
-        		Utils.logger("i", "Auto Mode Enabled:"
-        				+ "\n -> id: " + extraId
-        				+ "\n -> position: " + pos
-        				+ "\n -> filename: " + vFilename, DEBUG_TAG);
-        	} else if (intent.hasCategory("RESTART")) {
-        		restartModeEnabled = true; 
-        		extraId = intent.getStringExtra("id");
-        		
-        		Utils.logger("i", "Restart Mode Enabled:"
-        				+ "\n -> id: " + extraId, DEBUG_TAG);
-        	}
-            try {
-            	handleSendText(intent, action);
-            	Utils.logger("d", "handling ACTION_VIEW", DEBUG_TAG);
-            } catch (IOException e) {
-                Log.e(DEBUG_TAG, "Error: " + e.getMessage(), e);
-            }
-        }
-    }
+		if (Intent.ACTION_SEND.equals(action) && type != null) {
+			BugSenseHandler.leaveBreadcrumb("Intent.ACTION_SEND");
+			if ("text/plain".equals(type)) {
+				try {
+					handleSendText(intent, action);
+					Utils.logger("d", "handling ACTION_SEND", DEBUG_TAG);
+				} catch (IOException e) {
+					Log.e(DEBUG_TAG, "Error: " + e.getMessage(), e);
+				}
+			}
+		}
+		
+		if (Intent.ACTION_VIEW.equals(action)) {
+			BugSenseHandler.leaveBreadcrumb("Intent.ACTION_VIEW");
+			if (intent.hasCategory("AUTO")) {
+				autoModeEnabled = true;
+				extraId = intent.getStringExtra("id");
+				pos = intent.getIntExtra("position", 0);
+				vFilename = intent.getStringExtra("filename");
+				
+				Utils.logger("i", "Auto Mode Enabled:"
+						+ "\n -> id: " + extraId
+						+ "\n -> position: " + pos
+						+ "\n -> filename: " + vFilename, DEBUG_TAG);
+			} else if (intent.hasCategory("RESTART")) {
+				restartModeEnabled = true; 
+				extraId = intent.getStringExtra("id");
+				
+				Utils.logger("i", "Restart Mode Enabled:"
+						+ "\n -> id: " + extraId, DEBUG_TAG);
+			}
+			try {
+				handleSendText(intent, action);
+				Utils.logger("d", "handling ACTION_VIEW", DEBUG_TAG);
+			} catch (IOException e) {
+				Log.e(DEBUG_TAG, "Error: " + e.getMessage(), e);
+			}
+		}
+	}
 
-    public static Context getContext() {
-        return sShare;
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_share, menu);
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        if (!autoModeEnabled) {
-	        switch(item.getItemId()){
-	        	case R.id.menu_donate:
-	    			startActivity(new Intent(this, DonateActivity.class));
-	    			return true;
-	        	case R.id.menu_settings:
-	        		Intent sIntent = new Intent(this, SettingsActivity.class);
-	        		sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-	        		startActivity(sIntent);
-	    			return true;
-	        	case R.id.menu_about:
-	        		startActivity(new Intent(this, AboutActivity.class));
-	        		return true;
-	        	case R.id.menu_dashboard:
+	public static Context getContext() {
+		return sShare;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_share, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		if (!autoModeEnabled) {
+			switch(item.getItemId()){
+				case R.id.menu_donate:
+					startActivity(new Intent(this, DonateActivity.class));
+					return true;
+				case R.id.menu_settings:
+					Intent sIntent = new Intent(this, SettingsActivity.class);
+					sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+					startActivity(sIntent);
+					return true;
+				case R.id.menu_about:
+					startActivity(new Intent(this, AboutActivity.class));
+					return true;
+				case R.id.menu_dashboard:
 				launchDashboardActivity();
-	        		return true;
-	        	case R.id.menu_tutorials:
-	        		startActivity(new Intent(this, TutorialsActivity.class));
-	        		return true;
-	        	default:
-	        		return super.onOptionsItemSelected(item);
-	        }
-        } else {
-        	return super.onOptionsItemSelected(item);
-        }
-    }
+					return true;
+				case R.id.menu_tutorials:
+					startActivity(new Intent(this, TutorialsActivity.class));
+					return true;
+				default:
+					return super.onOptionsItemSelected(item);
+			}
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
 	private void launchDashboardActivity() {
 		Intent dashboardIntent = new Intent(this, DashboardActivity.class);
 		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(dashboardIntent);
 	}
-    
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        Utils.logger("v", "_onStart", DEBUG_TAG);
-    }
-    
-    @Override
-    protected void onRestart() {
-    	super.onRestart();
-    	Utils.logger("v", "_onRestart");
-    }
-
-    @Override
-    public void onPause() {
-    	super.onPause();
-    	Utils.logger("v", "_onPause");
-    }
-    
-    @Override
-    protected void onStop() {
-        super.onStop();
-    	Utils.logger("v", "_onStop", DEBUG_TAG);
-    }*/
-    
-    @Override
-	public void onBackPressed() {
-    	Utils.logger("v", "_onBackPressed", DEBUG_TAG);
-    	super.onBackPressed();
-    	
-    	// To cancel the AsyncDownload AsyncSizesFiller tasks only on back button pressed (not when switching to other activities)
-    	if (isAsyncDownloadRunning) {
-    		Utils.logger("v", "canceling asyncDownload", DEBUG_TAG);
-    		asyncDownload.cancel(true);
-    	}
-    	if (isAsyncSizesFillerRunning) {
-    		Utils.logger("v", "canceling asyncSizesFiller", DEBUG_TAG);
-    		asyncSizesFiller.cancel(true);
-    	}
+	
+	/*@Override
+	protected void onStart() {
+		super.onStart();
+		Utils.logger("v", "_onStart", DEBUG_TAG);
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Utils.logger("v", "_onRestart");
 	}
 
-    void handleSendText(Intent intent, String action) throws IOException {
+	@Override
+	public void onPause() {
+		super.onPause();
+		Utils.logger("v", "_onPause");
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Utils.logger("v", "_onStop", DEBUG_TAG);
+	}*/
+	
+	@Override
+	public void onBackPressed() {
+		Utils.logger("v", "_onBackPressed", DEBUG_TAG);
+		super.onBackPressed();
+		
+		// To cancel the AsyncDownload AsyncSizesFiller tasks only on back button pressed (not when switching to other activities)
+		if (isAsyncDownloadRunning) {
+			Utils.logger("v", "canceling asyncDownload", DEBUG_TAG);
+			asyncDownload.cancel(true);
+		}
+		if (isAsyncSizesFillerRunning) {
+			Utils.logger("v", "canceling asyncSizesFiller", DEBUG_TAG);
+			asyncSizesFiller.cancel(true);
+		}
+	}
 
-        /*ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {*/
-        if (NetworkUtils.isNetworkAvailable(sShare)) {
-        	String sharedText = null;
+	void handleSendText(Intent intent, String action) throws IOException {
+
+		/*ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {*/
+		if (NetworkUtils.isNetworkAvailable(sShare)) {
+			String sharedText = null;
 			if (action.equals(Intent.ACTION_SEND)) {
-            	sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-        	} else if (action.equals(Intent.ACTION_VIEW)) {
-        		sharedText = intent.getDataString();
-        	}
-            
+				sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+			} else if (action.equals(Intent.ACTION_VIEW)) {
+				sharedText = intent.getDataString();
+			}
+			
 			if (sharedText != null) {
-	            if (linkValidator(sharedText) == "bad_link") {
-	            	badOrNullLinkAlert();
-	            } else if (sharedText != null) {
-	            	showGeneralInfoTutorial();
-	            	asyncDownload = new AsyncDownload();
-	            	asyncDownload.execute(validatedLink);
-	            }
+				if (linkValidator(sharedText) == "bad_link") {
+					badOrNullLinkAlert();
+				} else if (sharedText != null) {
+					showGeneralInfoTutorial();
+					asyncDownload = new AsyncDownload();
+					asyncDownload.execute(validatedLink);
+				}
 			} else {
 				badOrNullLinkAlert();
 			}
-        } else {
-        	progressBar1.setVisibility(View.GONE);
-        	tv.setVisibility(View.GONE);
-        	noVideoInfo.setText(getString(R.string.no_net));
-        	noVideoInfo.setVisibility(View.VISIBLE);
-        	PopUps.showPopUp(getString(R.string.no_net), getString(R.string.no_net_dialog_msg), "alert", this);
-        	Button retry = (Button) findViewById(R.id.share_activity_retry_button);
-        	retry.setVisibility(View.VISIBLE);
-        	retry.setOnClickListener(new OnClickListener() {
+		} else {
+			progressBar1.setVisibility(View.GONE);
+			tv.setVisibility(View.GONE);
+			noVideoInfo.setText(getString(R.string.no_net));
+			noVideoInfo.setVisibility(View.VISIBLE);
+			PopUps.showPopUp(getString(R.string.no_net), getString(R.string.no_net_dialog_msg), "alert", this);
+			Button retry = (Button) findViewById(R.id.share_activity_retry_button);
+			retry.setVisibility(View.VISIBLE);
+			retry.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Utils.reload(ShareActivity.this);					
 				}
 			});
-        }
-    }
+		}
+	}
 
 	public void badOrNullLinkAlert() {
 		BugSenseHandler.leaveBreadcrumb("badOrNullLinkAlert");
@@ -408,329 +414,329 @@ public class ShareActivity extends Activity {
 		noVideoInfo.setText(getString(R.string.bad_link));
 		noVideoInfo.setVisibility(View.VISIBLE);
 	}
-    
-    private void showGeneralInfoTutorial() {
-        generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
-        if (generalInfoCheckboxEnabled == true) {
-        	AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-    	    LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-    	    View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
-    	    showAgain1 = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
-    	    showAgain1.setChecked(true);
-    	    adb.setView(generalInfo);
-    	    adb.setTitle(getString(R.string.tutorial_title));    	    
-    	    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-    	    	public void onClick(DialogInterface dialog, int which) {
-    	    		if (!showAgain1.isChecked()) {
-    	    			YTD.settings.edit().putBoolean("general_info", false).commit();
-    	    			sshInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
-    	    			Utils.logger("v", "generalInfoCheckboxEnabled: " + generalInfoCheckboxEnabled, DEBUG_TAG);
-    	    		}
-        		}
-        	});
-    	    if (! ((Activity) this).isFinishing()) {
-    	    	adb.show();
-    	    }
-        }
-    }
-    
-    private String linkValidator(String sharedText) {
-    	Pattern pattern = Pattern.compile("(http://|https://).*(v=.{11}).*");
-        Matcher matcher = pattern.matcher(sharedText);
-        if (matcher.find()) {
-            //validatedLink = matcher.group(1) + "www.youtube.com/watch?" + matcher.group(2);
-            validatedLink = "http://www.youtube.com/watch?" + matcher.group(2);
-            videoId = matcher.group(2).replace("v=", "");
-            return validatedLink;
-        }
-        return "bad_link";
-    }
-    
-    public void assignPath() {
-    	boolean Location = YTD.settings.getBoolean("swap_location", false);
-        
-        if (Location == false) {
-            String location = YTD.settings.getString("standard_location", "Downloads");
-            Utils.logger("d", "location: " + location, DEBUG_TAG);
-            
-            if (location.equals("DCIM") == true) {
-            	path = YTD.dir_DCIM;
-            }
-            if (location.equals("Movies") == true) {
-            	path = YTD.dir_Movies;
-            } 
-            if (location.equals("Downloads") == true) {
-            	path = YTD.dir_Downloads;
-            }
-            
-        } else {
-        	String cs = YTD.settings.getString("CHOOSER_FOLDER", "");
-        	chooserFolder = new File(cs);
-        	if (chooserFolder.exists()) {
-        		Utils.logger("d", "chooserFolder: " + chooserFolder, DEBUG_TAG);
-        		path = chooserFolder;
-        	} else {
-        		path = YTD.dir_Downloads;
-        		Utils.logger("w", "chooserFolder not found, falling back to Download path", DEBUG_TAG);
-        	}
-        }
-        
-        if (!path.exists()) {
-        	if (new File(path.getAbsolutePath()).mkdirs()) {
-        		Utils.logger("w", "destination path not found, creating it now", DEBUG_TAG);
-        	} else {
-        		Log.e(DEBUG_TAG, "Something really bad happened with the download destination...");
-        	}
-        	
-        }
-        	
-        Utils.logger("d", "path: " + path, DEBUG_TAG);
-    }
+	
+	private void showGeneralInfoTutorial() {
+		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
+		if (generalInfoCheckboxEnabled == true) {
+			AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
+			showAgain1 = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
+			showAgain1.setChecked(true);
+			adb.setView(generalInfo);
+			adb.setTitle(getString(R.string.tutorial_title));			
+			adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					if (!showAgain1.isChecked()) {
+						YTD.settings.edit().putBoolean("general_info", false).commit();
+						sshInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
+						Utils.logger("v", "generalInfoCheckboxEnabled: " + generalInfoCheckboxEnabled, DEBUG_TAG);
+					}
+				}
+			});
+			if (! ((Activity) this).isFinishing()) {
+				adb.show();
+			}
+		}
+	}
+	
+	private String linkValidator(String sharedText) {
+		Pattern pattern = Pattern.compile("(http://|https://).*(v=.{11}).*");
+		Matcher matcher = pattern.matcher(sharedText);
+		if (matcher.find()) {
+			//validatedLink = matcher.group(1) + "www.youtube.com/watch?" + matcher.group(2);
+			validatedLink = "http://www.youtube.com/watch?" + matcher.group(2);
+			videoId = matcher.group(2).replace("v=", "");
+			return validatedLink;
+		}
+		return "bad_link";
+	}
+	
+	public void assignPath() {
+		boolean Location = YTD.settings.getBoolean("swap_location", false);
+		
+		if (Location == false) {
+			String location = YTD.settings.getString("standard_location", "Downloads");
+			Utils.logger("d", "location: " + location, DEBUG_TAG);
+			
+			if (location.equals("DCIM") == true) {
+				path = YTD.dir_DCIM;
+			}
+			if (location.equals("Movies") == true) {
+				path = YTD.dir_Movies;
+			} 
+			if (location.equals("Downloads") == true) {
+				path = YTD.dir_Downloads;
+			}
+			
+		} else {
+			String cs = YTD.settings.getString("CHOOSER_FOLDER", "");
+			chooserFolder = new File(cs);
+			if (chooserFolder.exists()) {
+				Utils.logger("d", "chooserFolder: " + chooserFolder, DEBUG_TAG);
+				path = chooserFolder;
+			} else {
+				path = YTD.dir_Downloads;
+				Utils.logger("w", "chooserFolder not found, falling back to Download path", DEBUG_TAG);
+			}
+		}
+		
+		if (!path.exists()) {
+			if (new File(path.getAbsolutePath()).mkdirs()) {
+				Utils.logger("w", "destination path not found, creating it now", DEBUG_TAG);
+			} else {
+				Log.e(DEBUG_TAG, "Something really bad happened with the download destination...");
+			}
+			
+		}
+			
+		Utils.logger("d", "path: " + path, DEBUG_TAG);
+	}
 
-    private class AsyncDownload extends AsyncTask<String, Integer, String> {
+	private class AsyncDownload extends AsyncTask<String, Integer, String> {
 
 		protected void onPreExecute() {
-    		isAsyncDownloadRunning = true;
-    		tv.setText(R.string.loading);
-    		progressBar1.setIndeterminate(true);
-    		progressBar1.setVisibility(View.VISIBLE);
-    	}
-    	
-    	protected String doInBackground(String... urls) {
-            try {
-            	Utils.logger("d", "doInBackground...", DEBUG_TAG);
-            	assignBitmapToVideoListThumbnail(generateThumbUrls());
+			isAsyncDownloadRunning = true;
+			tv.setText(R.string.loading);
+			progressBar1.setIndeterminate(true);
+			progressBar1.setVisibility(View.VISIBLE);
+		}
+		
+		protected String doInBackground(String... urls) {
+			try {
+				Utils.logger("d", "doInBackground...", DEBUG_TAG);
+				assignBitmapToVideoListThumbnail(generateThumbUrls());
 
-            	FetchUrl fu = new FetchUrl(sShare);
-            	String content = fu.doFetch(urls[0]);
-            	
-            	if (!content.isEmpty()) {
-            		return urlBlockMatchAndDecode(content);
-            	} else {
-            		return "e";
-            	}
-            } catch (Exception e) {
-            	Log.e(DEBUG_TAG, "downloadUrl: " + e.getMessage());
-		    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> downloadUrl: ", e.getMessage(), e);
-                return "e";
-            } 
-        }
-    	
-    	public void doProgress(int value){
-            publishProgress(value);
-        }
-    	
-    	protected void onProgressUpdate(Integer... values) {
-    		progressBar1.setProgress(values[0]);
-    	}
+				FetchUrl fu = new FetchUrl(sShare);
+				String content = fu.doFetch(urls[0]);
+				
+				if (!content.isEmpty()) {
+					return urlBlockMatchAndDecode(content);
+				} else {
+					return "e";
+				}
+			} catch (Exception e) {
+				Log.e(DEBUG_TAG, "downloadUrl: " + e.getMessage());
+				BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> downloadUrl: ", e.getMessage(), e);
+				return "e";
+			} 
+		}
+		
+		public void doProgress(int value){
+			publishProgress(value);
+		}
+		
+		protected void onProgressUpdate(Integer... values) {
+			progressBar1.setProgress(values[0]);
+		}
 
-        @Override
-        protected void onPostExecute(String result) {
+		@Override
+		protected void onPostExecute(String result) {
 
-        	progressBar1.setVisibility(View.GONE);
-        	
-        	isAsyncDownloadRunning = false;
-        	
-        	if (YTD.settings.getBoolean("show_thumb", false) && 
-        			!((result == null || result.equals("e")) ||
-        			  (result != null && result.equals("login_required")) ||
-        			  (result != null && result.equals("rtmpe")) ) ) {
-        		imgView.setImageBitmap(img);
-        	}
-        	
-            if (result == null || result.equals("e") && !autoModeEnabled) {
-            	BugSenseHandler.leaveBreadcrumb("invalid_url");
-            	noVideosMsgs("alert", getString(R.string.invalid_url));
-            }
-            
-            if (result != null && result.equals("login_required") && !autoModeEnabled) {
-            	BugSenseHandler.leaveBreadcrumb("login_required");
-            	noVideosMsgs("info", getString(R.string.login_required));
-            }
-            
-            if (result != null && result.equals("rtmpe")) {
-            	BugSenseHandler.leaveBreadcrumb("encrypted_streams");
-            	listEntries.clear();
-            	noVideosMsgs("info", getString(R.string.encrypted_streams));
-            }
-            
-            aA = new ShareListAdapter(listEntries, ShareActivity.this);
-            
-            if (autoModeEnabled) {
-            	BugSenseHandler.leaveBreadcrumb("autoModeEnabled");
-            	assignPath();
-            	
-            	try {
-            		callDownloadManager(links.get(pos), pos, vFilename);
-            	} catch (IndexOutOfBoundsException e) {
-            		Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
-            		launchDashboardActivity();
-            	}
-            } else {
-            	listEntriesBuilder();
-            	lv.setAdapter(aA);
-            	
-            	asyncSizesFiller = new AsyncSizesFiller();
-            	asyncSizesFiller.execute(links.toArray(new String[0]));
-            }
+			progressBar1.setVisibility(View.GONE);
+			
+			isAsyncDownloadRunning = false;
+			
+			if (YTD.settings.getBoolean("show_thumb", false) && 
+					!((result == null || result.equals("e")) ||
+					  (result != null && result.equals("login_required")) ||
+					  (result != null && result.equals("rtmpe")) ) ) {
+				imgView.setImageBitmap(img);
+			}
+			
+			if (result == null || result.equals("e") && !autoModeEnabled) {
+				BugSenseHandler.leaveBreadcrumb("invalid_url");
+				noVideosMsgs("alert", getString(R.string.invalid_url));
+			}
+			
+			if (result != null && result.equals("login_required") && !autoModeEnabled) {
+				BugSenseHandler.leaveBreadcrumb("login_required");
+				noVideosMsgs("info", getString(R.string.login_required));
+			}
+			
+			if (result != null && result.equals("rtmpe")) {
+				BugSenseHandler.leaveBreadcrumb("encrypted_streams");
+				listEntries.clear();
+				noVideosMsgs("info", getString(R.string.encrypted_streams));
+			}
+			
+			aA = new ShareListAdapter(listEntries, ShareActivity.this);
+			
+			if (autoModeEnabled) {
+				BugSenseHandler.leaveBreadcrumb("autoModeEnabled");
+				assignPath();
+				
+				try {
+					callDownloadManager(links.get(pos), pos, vFilename);
+				} catch (IndexOutOfBoundsException e) {
+					Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
+					launchDashboardActivity();
+				}
+			} else {
+				listEntriesBuilder();
+				lv.setAdapter(aA);
+				
+				asyncSizesFiller = new AsyncSizesFiller();
+				asyncSizesFiller.execute(links.toArray(new String[0]));
+			}
 
-            tv.setText(titleRaw);
-            
-            lv.setOnItemClickListener(new OnItemClickListener() {
+			tv.setText(titleRaw);
+			
+			lv.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					//Utils.logger("i", "Selected link: " + links.get(pos), DEBUG_TAG);
 					BugSenseHandler.leaveBreadcrumb("ShareActivity_onItemClick");
 					assignPath();
 					
-                    pos = position;     
-                    //pos = 45;		// to test IndexOutOfBound Exception...
-                    
-                    mComposedName = composeVideoFilenameNoExt();
-                    vFilename = composeVideoFilename(mComposedName);
-                    
-                	helpBuilder = new AlertDialog.Builder(boxThemeContextWrapper);
-                    helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
-                    helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
+					pos = position;	 
+					//pos = 45;		// to test IndexOutOfBound Exception...
+					
+					mComposedName = composeVideoFilenameNoExt();
+					vFilename = composeVideoFilename(mComposedName);
+					
+					helpBuilder = new AlertDialog.Builder(boxThemeContextWrapper);
+					helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
+					helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
 
 					boolean showSize = false;
 					try {
-                        if (sizes.get(pos).equals("")) {
-                        	helpBuilder.setMessage(titleRaw + "\n" +
-	                        		getString(R.string.quality) + " " + itags.get(pos));
-                        } else {
-                        	helpBuilder.setMessage(titleRaw +  "\n" +
-        							getString(R.string.quality) + " " + itags.get(pos) +
-        							getString(R.string.size) + " " + sizes.get(pos).replace(" - ", ""));
-                        }
-                        
+						if (sizes.get(pos).equals("")) {
+							helpBuilder.setMessage(titleRaw + "\n" +
+									getString(R.string.quality) + " " + itagsText.get(pos));
+						} else {
+							helpBuilder.setMessage(titleRaw +  "\n" +
+									getString(R.string.quality) + " " + itagsText.get(pos) +
+									getString(R.string.size) + " " + sizes.get(pos).replace(" - ", ""));
+						}
+						
 					} catch (IndexOutOfBoundsException e) {
-			    		Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
-			    	}
+						Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
+					}
 					
-                    helpBuilder.setPositiveButton(getString(R.string.list_click_download_local), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        	try {
-                        		fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
-	                            if (fileRenameEnabled == true) {
+					helpBuilder.setPositiveButton(getString(R.string.list_click_download_local), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							try {
+								fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
+								if (fileRenameEnabled == true) {
 									AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-	                            	LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-		                    	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
-		                    	    userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
-		                    	    userFilename.setText(mComposedName);
-		                    	    adb.setView(inputFilename);
-		                    	    adb.setTitle(getString(R.string.rename_dialog_title));
-		                    	    adb.setMessage(getString(R.string.rename_dialog_msg));
-		                    	    
-		                    	    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-		                    	    	public void onClick(DialogInterface dialog, int which) {
-		                    	    		mComposedName = userFilename.getText().toString();
+									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
+									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
+									userFilename.setText(mComposedName);
+									adb.setView(inputFilename);
+									adb.setTitle(getString(R.string.rename_dialog_title));
+									adb.setMessage(getString(R.string.rename_dialog_msg));
+									
+									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int which) {
+											mComposedName = userFilename.getText().toString();
 											vFilename = composeVideoFilename(mComposedName);
 											callDownloadManager(links.get(pos), pos, vFilename);
-		                    	    	}
-		                    	    });
-		                    	    
-		                    	    adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
-		                	        	public void onClick(DialogInterface dialog, int which) {
-		                	                // cancel
-		                	            }
-		                	        });
-		                    	    
-		                    	    if (! ((Activity) ShareActivity.this).isFinishing()) {
-		                    	    	adb.show();
-		                    	    }
-	                            } else {
-	                            	callDownloadManager(links.get(pos), pos, vFilename);
-	                            }
-                        	} catch (IndexOutOfBoundsException e) {
-    							Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
-    						}
-                        }
-                    });
+										}
+									});
+									
+									adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int which) {
+											// cancel
+										}
+									});
+									
+									if (! ((Activity) ShareActivity.this).isFinishing()) {
+										adb.show();
+									}
+								} else {
+									callDownloadManager(links.get(pos), pos, vFilename);
+								}
+							} catch (IndexOutOfBoundsException e) {
+								Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
 					
-                    // show central button for SSH send if enabled in prefs
-                    if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
-	                    helpBuilder.setNeutralButton(getString(R.string.list_click_download_ssh), new DialogInterface.OnClickListener() {
+					// show central button for SSH send if enabled in prefs
+					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
+						helpBuilder.setNeutralButton(getString(R.string.list_click_download_ssh), new DialogInterface.OnClickListener() {
 	
-	                        public void onClick(DialogInterface dialog, int which) {
-	                        	sendViaSsh();
-	                        }
-	                    });
-                    }
+							public void onClick(DialogInterface dialog, int which) {
+								sendViaSsh();
+							}
+						});
+					}
 
-                    helpBuilder.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+					helpBuilder.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
 
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Toast.makeText(ShareActivity.this, "Download canceled...", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    
-                    if (!showSize) {
-                    	helpDialog = helpBuilder.create();
-                    	
-                    	if (! ((Activity) ShareActivity.this).isFinishing()) {
-                    		helpDialog.show();
-                	    }
-                    }
-                }
-            });
-            
-            lv.setLongClickable(true);
-            lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							//Toast.makeText(ShareActivity.this, "Download canceled...", Toast.LENGTH_SHORT).show();
+						}
+					});
+					
+					if (!showSize) {
+						helpDialog = helpBuilder.create();
+						
+						if (! ((Activity) ShareActivity.this).isFinishing()) {
+							helpDialog.show();
+						}
+					}
+				}
+			});
+			
+			lv.setLongClickable(true);
+			lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-            	@Override
-            	public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-            		BugSenseHandler.leaveBreadcrumb("ShareActivity_onItemLongClick");
-            		pos = position;
-            		
-            		String base = composeVideoFilenameNoExt();
-            		vFilename = composeVideoFilename(base);
-            		
-            		AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
-            		if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
-	            		builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries, new DialogInterface.OnClickListener() {
-					    	public void onClick(DialogInterface dialog, int which) {
-					    		switch (which) {
-					    			case 0: // copy
-					    				copy(position);
-					    				break;
-					    			case 1: // share
-					    				share(position, vFilename);
-					    		}
-					    	}
-	            		});
-            		} else {
-            			builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries2, new DialogInterface.OnClickListener() {
-					    	public void onClick(DialogInterface dialog, int which) {
-					    		switch (which) {
-					    			case 0: // copy
-					    				copy(position);
-					    				break;
-					    			case 1: // share
-					    				share(position, vFilename);
-					    				break;
-					    			case 2: // SSH
-					    				sendViaSsh();
-					    		}
-					    	}
-	            		});
-            		}
-            		builder.create();
-            		if (! ((Activity) ShareActivity.this).isFinishing()) {
-            			builder.show();
-            		}
-				    return true;
-            	}
-            });
-        }
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+					BugSenseHandler.leaveBreadcrumb("ShareActivity_onItemLongClick");
+					pos = position;
+					
+					String base = composeVideoFilenameNoExt();
+					vFilename = composeVideoFilename(base);
+					
+					AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
+					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
+						builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries, new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								switch (which) {
+									case 0: // copy
+										copy(position);
+										break;
+									case 1: // share
+										share(position, vFilename);
+								}
+							}
+						});
+					} else {
+						builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries2, new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								switch (which) {
+									case 0: // copy
+										copy(position);
+										break;
+									case 1: // share
+										share(position, vFilename);
+										break;
+									case 2: // SSH
+										sendViaSsh();
+								}
+							}
+						});
+					}
+					builder.create();
+					if (! ((Activity) ShareActivity.this).isFinishing()) {
+						builder.show();
+					}
+					return true;
+				}
+			});
+		}
 
 		private void noVideosMsgs(String type, String cause) {
 			PopUps.showPopUp(getString(R.string.no_video_available), cause, type, ShareActivity.this);
 			tv.setVisibility(View.GONE);
 			noVideoInfo.setVisibility(View.VISIBLE);
 		}
-        
-        private void share(final int position, String filename) {
-        	BugSenseHandler.leaveBreadcrumb("ShareActivity_share");
+		
+		private void share(final int position, String filename) {
+			BugSenseHandler.leaveBreadcrumb("ShareActivity_share");
 			Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 			sharingIntent.setType("text/plain");
 			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, filename);
@@ -745,75 +751,75 @@ public class ShareActivity extends Activity {
 			cb.setPrimaryClip(cmd);
 			Toast.makeText(ShareActivity.this, getString(R.string.link_copied), Toast.LENGTH_SHORT).show();
 		}
-        
+		
 		private String composeVideoFilenameNoExt() {
-        	String suffix = itags.get(pos)
-        			.replace("MP4 - ", "")
-        			.replace("WebM - ", "")
-        			.replace("FLV - ", "")
-        			.replace("3GP - ", "")
-        			.replace("/", "-")
-        			.replace(" - ", "_");
-        	
-        	String composedName = basename + "_" + suffix;
-        	
-    	    Utils.logger("d", "videoFilename with no EXT: " + composedName, DEBUG_TAG);
-    	    return composedName;
-        }
+			String suffix = itagsText.get(pos)
+					.replace("MP4 - ", "")
+					.replace("WebM - ", "")
+					.replace("FLV - ", "")
+					.replace("3GP - ", "")
+					.replace("/", "-")
+					.replace(" - ", "_");
+			
+			String composedName = basename + "_" + suffix;
+			
+			Utils.logger("d", "videoFilename with no EXT: " + composedName, DEBUG_TAG);
+			return composedName;
+		}
 		
 		private String composeVideoFilename(String base) {
-        	
-        	String composedName = base + "." + codecs.get(pos);
-        	
-    	    Utils.logger("d", "COMPLETE videoFilename: " + composedName, DEBUG_TAG);
-    	    return composedName;
-        }
+			
+			String composedName = base + "." + codecs.get(pos);
+			
+			Utils.logger("d", "COMPLETE videoFilename: " + composedName, DEBUG_TAG);
+			return composedName;
+		}
 
 		private void callConnectBot() {
 			BugSenseHandler.leaveBreadcrumb("callConnectBot");
-        	Context context = getApplicationContext();
-    		PackageManager pm = context.getPackageManager();
-    		
-    		final String connectBotFlavour = YTD.settings.getString("connectbot_flavour", "org.connectbot");
-    		
-    		String connectBotFlavourPlain = "ConnectBot";
-    		if (connectBotFlavour.equals("sk.vx.connectbot")) connectBotFlavourPlain = "VX " + connectBotFlavourPlain;
-    		if (connectBotFlavour.equals("org.woltage.irssiconnectbot")) connectBotFlavourPlain = "Irssi " + connectBotFlavourPlain;
-    		
+			Context context = getApplicationContext();
+			PackageManager pm = context.getPackageManager();
+			
+			final String connectBotFlavour = YTD.settings.getString("connectbot_flavour", "org.connectbot");
+			
+			String connectBotFlavourPlain = "ConnectBot";
+			if (connectBotFlavour.equals("sk.vx.connectbot")) connectBotFlavourPlain = "VX " + connectBotFlavourPlain;
+			if (connectBotFlavour.equals("org.woltage.irssiconnectbot")) connectBotFlavourPlain = "Irssi " + connectBotFlavourPlain;
+			
 			Intent appStartIntent = pm.getLaunchIntentForPackage(connectBotFlavour);
-    		if (null != appStartIntent) {
-    			Utils.logger("d", "appStartIntent: " + appStartIntent, DEBUG_TAG);
-    			context.startActivity(appStartIntent);
-    		} else {
-    			AlertDialog.Builder cb = new AlertDialog.Builder(boxThemeContextWrapper);
-    	        cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
-    	        cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
-    	        icon = android.R.drawable.ic_dialog_alert;
-    	        cb.setIcon(icon);
-    	        cb.setPositiveButton(getString(R.string.callConnectBot_dialog_positive), new DialogInterface.OnClickListener() {
-    	            public void onClick(DialogInterface dialog, int which) {
-    	            	Intent intent = new Intent(Intent.ACTION_VIEW); 
-    	            	intent.setData(Uri.parse("market://details?id=" + connectBotFlavour));
-    	            	try {
-    	            		startActivity(intent);
-    	            	} catch (ActivityNotFoundException exception){
-    	            		PopUps.showPopUp(getString(R.string.no_market), getString(R.string.no_net_dialog_msg), "alert", ShareActivity.this);
-    	            	}
-    	            }
-    	        });
-    	        cb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
-    	        	public void onClick(DialogInterface dialog, int which) {
-    	                // cancel
-    	            }
-    	        });
+			if (null != appStartIntent) {
+				Utils.logger("d", "appStartIntent: " + appStartIntent, DEBUG_TAG);
+				context.startActivity(appStartIntent);
+			} else {
+				AlertDialog.Builder cb = new AlertDialog.Builder(boxThemeContextWrapper);
+				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
+				cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
+				icon = android.R.drawable.ic_dialog_alert;
+				cb.setIcon(icon);
+				cb.setPositiveButton(getString(R.string.callConnectBot_dialog_positive), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(Intent.ACTION_VIEW); 
+						intent.setData(Uri.parse("market://details?id=" + connectBotFlavour));
+						try {
+							startActivity(intent);
+						} catch (ActivityNotFoundException exception){
+							PopUps.showPopUp(getString(R.string.no_market), getString(R.string.no_net_dialog_msg), "alert", ShareActivity.this);
+						}
+					}
+				});
+				cb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						// cancel
+					}
+				});
 
-    	        AlertDialog helpDialog = cb.create();
-    	        
-    	        if (! ((Activity) ShareActivity.this).isFinishing()) {
-    	        	helpDialog.show();
-        		}
-    		}
-        }
+				AlertDialog helpDialog = cb.create();
+				
+				if (! ((Activity) ShareActivity.this).isFinishing()) {
+					helpDialog.show();
+				}
+			}
+		}
 
 		private void sendViaSsh() {
 			BugSenseHandler.leaveBreadcrumb("sendViaSsh");
@@ -838,54 +844,54 @@ public class ShareActivity extends Activity {
 				}
 				
 				Utils.logger("d", "wgetCmd: " + wgetCmd, DEBUG_TAG);
-			    
+				
 				ClipData cmd = ClipData.newPlainText("simple text", wgetCmd);
-			    ClipboardManager cb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-			    cb.setPrimaryClip(cmd);
-			    
-			    sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
-			    if (sshInfoCheckboxEnabled == true) {
-			        AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-				    LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-				    View showAgain = adbInflater.inflate(R.layout.dialog_show_again_checkbox, null);
-				    showAgain2 = (CheckBox) showAgain.findViewById(R.id.showAgain2);
-				    showAgain2.setChecked(true);
-				    adb.setView(showAgain);
-				    adb.setTitle(getString(R.string.ssh_info_tutorial_title));
-				    adb.setMessage(getString(R.string.ssh_info_tutorial_msg));
-				    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				    	public void onClick(DialogInterface dialog, int which) {
-				    		if (!showAgain2.isChecked()) {
-				    			YTD.settings.edit().putBoolean("ssh_info", false).apply();
-				    			Utils.logger("d", "sshInfoCheckboxEnabled: " + false, DEBUG_TAG);
-				    		}
-				    		callConnectBot(); 
-			    		}
-			    	});
-				    if (! ((Activity) ShareActivity.this).isFinishing()) {
-	    	        	adb.show();
-	        		}
-			    } else {
-			    	callConnectBot();
-			    }
+				ClipboardManager cb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+				cb.setPrimaryClip(cmd);
+				
+				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
+				if (sshInfoCheckboxEnabled == true) {
+					AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+					View showAgain = adbInflater.inflate(R.layout.dialog_show_again_checkbox, null);
+					showAgain2 = (CheckBox) showAgain.findViewById(R.id.showAgain2);
+					showAgain2.setChecked(true);
+					adb.setView(showAgain);
+					adb.setTitle(getString(R.string.ssh_info_tutorial_title));
+					adb.setMessage(getString(R.string.ssh_info_tutorial_msg));
+					adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							if (!showAgain2.isChecked()) {
+								YTD.settings.edit().putBoolean("ssh_info", false).apply();
+								Utils.logger("d", "sshInfoCheckboxEnabled: " + false, DEBUG_TAG);
+							}
+							callConnectBot(); 
+						}
+					});
+					if (! ((Activity) ShareActivity.this).isFinishing()) {
+						adb.show();
+					}
+				} else {
+					callConnectBot();
+				}
 			} catch (IndexOutOfBoundsException e) {
 				Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
-    
-    private void callDownloadManager(final String link, final int position, final String nameOfVideo) {
-    	BugSenseHandler.leaveBreadcrumb("callDownloadManager");
-    	final String aExt = findAudioCodec();
-    	if (codecs.get(pos).equals("m4a") || codecs.get(pos).equals("ogg")) {
-    		jsonDataType = YTD.JSON_DATA_TYPE_A_E;
-    	} else {
-    		jsonDataType = YTD.JSON_DATA_TYPE_V;
-    	}
-    	
-    	dtl = new DownloadTaskListener() {
-    		
-    		@Override
+	
+	private void callDownloadManager(final String link, final int position, final String nameOfVideo) {
+		BugSenseHandler.leaveBreadcrumb("callDownloadManager");
+		final String aExt = findAudioCodec();
+		if (codecs.get(pos).equals("m4a") || codecs.get(pos).equals("ogg")) {
+			jsonDataType = YTD.JSON_DATA_TYPE_A_E;
+		} else {
+			jsonDataType = YTD.JSON_DATA_TYPE_V;
+		}
+		
+		dtl = new DownloadTaskListener() {
+			
+			@Override
 			public void preDownload(DownloadTask task) {
 				long ID = task.getDownloadId();
 				Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
@@ -1058,7 +1064,7 @@ public class ShareActivity extends Activity {
 			}
 		};
 		
-    	//TODO
+		//TODO
 		File dest = new File(path, vFilename);
 		File destTemp = new File(path, vFilename + DownloadTask.TEMP_SUFFIX);
 		String previousJson = Json.readJsonDashboardFile(sShare);
@@ -1068,7 +1074,7 @@ public class ShareActivity extends Activity {
 		if (dest.exists() || (destTemp.exists() && previousJson.contains(dest.getName())) && !autoModeEnabled && !restartModeEnabled) {
 			blockDashboardLaunch = true;
 			PopUps.showPopUp(getString(R.string.long_press_warning_title), 
-    				getString(R.string.menu_import_double), "info", ShareActivity.this);
+					getString(R.string.menu_import_double), "info", ShareActivity.this);
 		} else {
 			long id = 0;
 			if (autoModeEnabled || restartModeEnabled) {
@@ -1077,7 +1083,7 @@ public class ShareActivity extends Activity {
 				id = System.currentTimeMillis();
 			}
 			
-	        try {
+			try {
 				DownloadTask dt = new DownloadTask(this, id, link, vFilename, path.getPath(), dtl, false);
 				YTD.videoinfo.edit().putString(String.valueOf(id) + "_link", link).apply();
 				//YTD.videoinfo.edit().putInt(String.valueOf(id) + "_position", position).apply();
@@ -1091,28 +1097,35 @@ public class ShareActivity extends Activity {
 		if (autoModeEnabled && !blockDashboardLaunch) {
 			launchDashboardActivity();
 		}
-    }
-    
-    private String findAudioCodec() {
-    	String aExt = null;
-    	
+	}
+	
+	private String findAudioCodec() {
+		String aExt = null;
+		
 		if (codecs.get(pos).equals("webm")) aExt = ".ogg";
-	    if (codecs.get(pos).equals("mp4")) aExt = ".aac";
-	    if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("small")) aExt = ".mp3";
-	    if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("medium")) aExt = ".aac";
-	    if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("large")) aExt = ".aac";
-	    if (codecs.get(pos).equals("3gp")) aExt = ".aac";
-	    
-	    if (codecs.get(pos).equals("m4a")) aExt = ".aac";
-	    if (codecs.get(pos).equals("ogg")) aExt = ".ogg";
-    	return aExt;
-    }
+		if (codecs.get(pos).equals("mp4")) aExt = ".aac";
+		if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("small")) aExt = ".mp3";
+		if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("medium")) aExt = ".aac";
+		if (codecs.get(pos).equals("flv") && qualities.get(pos).equals("large")) aExt = ".aac";
+		if (codecs.get(pos).equals("3gp")) aExt = ".aac";
+		
+		if (codecs.get(pos).equals("m4a")) aExt = ".aac";
+		if (codecs.get(pos).equals("ogg")) aExt = ".ogg";
+		return aExt;
+	}
+	
+	private String findMatchGroupOne(String text, String regEx) {
+		Pattern pattern = Pattern.compile(regEx);
+		Matcher matcher = pattern.matcher(text);
+		if (matcher.find()) return matcher.group(1);
+		return "";
+	}
 
-    private String urlBlockMatchAndDecode(String content) {
-    	
-    	// log entire YouTube requests
-    	//File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
-    	//Utils.appendStringToFile(req, content);
+	private String urlBlockMatchAndDecode(String content) {
+		
+		// log entire YouTube requests
+		//File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
+		//Utils.appendStringToFile(req, content);
 		
 		if (asyncDownload.isCancelled()) {
 			Utils.logger("d", "asyncDownload cancelled @ urlBlockMatchAndDecode begin", DEBUG_TAG);
@@ -1124,73 +1137,92 @@ public class ShareActivity extends Activity {
 		if (rtmpeMatcher.find()) {
 			return "rtmpe";
 		}
-        
-        Pattern loginPattern = Pattern.compile("restrictions:age");
-        Matcher loginMatcher = loginPattern.matcher(content);
-        if (loginMatcher.find()) {
-        	return "login_required";
-        }
-        
-        findVideoFilenameBase(content);
-        findJs(content);
-        
-        String ueStreams = findMatchGroupOne(content, "url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
-        
-        String asStreams;
-        boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
-        if (asEnabled || autoModeEnabled) {
-        	asStreams = "," + findMatchGroupOne(content, "adaptive_fmts\\\": \\\"(.*?)\\\"");
-        } else {
-        	asStreams = "";
-        }
-        
-        return splitStreamsGroups(ueStreams + asStreams, content);
-    }
+		
+		Pattern loginPattern = Pattern.compile("restrictions:age");
+		Matcher loginMatcher = loginPattern.matcher(content);
+		if (loginMatcher.find()) {
+			return "login_required";
+		}
+		
+		findVideoFilenameBase(content);
+		findJs(content);
+		
+		String ueStreams = findMatchGroupOne(content, "url_encoded_fmt_stream_map\\\": \\\"(.*?)\\\"");
+		String asStreams = findMatchGroupOne(content, "adaptive_fmts\\\": \\\"(.*?)\\\"");
+		
+		itagMatcher(asStreams);
+		
+		//TODO
+		//adaptive streams always enabled to test filters
+		/*boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
+		if (asEnabled || autoModeEnabled) {*/
+			return splitStreamsGroups(urlDecode(ueStreams + "," + asStreams), content);
+		/*} else {
+			return splitStreamsGroups(urlDecode(ueStreams), content);
+		}*/
+	}
+	
+	private void itagMatcher(String streams) {
+		Pattern blockPattern = Pattern.compile(",");
+		Matcher blockMatcher = blockPattern.matcher(streams);
+		if (blockMatcher.find()) {
+			String[] blocks = streams.split(blockPattern.toString());
+			int count = blocks.length-1;
+			int i = 0;
+			while (i < count) {
+				itagMatcher(blocks[i], i, false);
+				i++;
+			}
+		}
+	}
+
+	private String urlDecode(String html) {
+		try {
+			html = URLDecoder.decode(html, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			Log.e(DEBUG_TAG, "UnsupportedEncodingException @ splitStreamsGroups: " + e.getMessage());
+		}
+		return html;
+	}
 
 	private String splitStreamsGroups(String streams, String content) {
 		Pattern blockPattern = Pattern.compile(",");
-        Matcher blockMatcher = blockPattern.matcher(streams);
-        if (blockMatcher.find() && !asyncDownload.isCancelled()) {
-        	String[] blocks = streams.split(blockPattern.toString());
-        	int count = blocks.length-1;
-        	
-        	if (count == 0) return "e";
-        	
-            progressBar1.setIndeterminate(false);
-            decryptionArray = null;
-            int i = 0;
-            while (i < count) {
-            	try {
-					blocks[i] = URLDecoder.decode(blocks[i], "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					Log.e(DEBUG_TAG, "UnsupportedEncodingException @ splitStreamsGroups: " + e.getMessage());
-				}
-            	
-            	asyncDownload.doProgress((int) ((i / count) * 100));
-            	
-            	Utils.logger("d", "*** streams ***", DEBUG_TAG);
-            	Utils.logger("v", "index " + i + ", block: " + blocks[i], DEBUG_TAG);
-            	
-                codecMatcher(blocks[i], i);
-                qualityMatcher(blocks[i], i);
-                itagMatcher(blocks[i], i);
-                linkComposer(blocks[i], i);
-                
-                i++;
-            }
-            findDashUrl(content);
-        } else {
-        	Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
-        }
-    	return "ok";
-    }
+		Matcher blockMatcher = blockPattern.matcher(streams);
+		if (blockMatcher.find() && !asyncDownload.isCancelled()) {
+			String[] blocks = streams.split(blockPattern.toString());
+			int count = blocks.length-1;
+			
+			if (count == 0) return "e";
+			
+			progressBar1.setIndeterminate(false);
+			decryptionArray = null;
+			int i = 0;
+			while (i < count) {
+				asyncDownload.doProgress((int) ((i / count) * 100));
+				
+				Utils.logger("d", "*** streams ***", DEBUG_TAG);
+				Utils.logger("v", "index " + i + ", block: " + blocks[i], DEBUG_TAG);
+				
+				codecMatcher(blocks[i], i);
+				qualityMatcher(blocks[i], i);
+				itagMatcher(blocks[i], i, true);
+				linkComposer(blocks[i], i);
+				
+				i++;
+			}
+			findDashUrl(content);
+		} else {
+			Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
+		}
+		return "ok";
+	}
 	
-    private class AsyncSizesFiller extends AsyncTask<String, String, Void> {
+	private class AsyncSizesFiller extends AsyncTask<String, String, Void> {
 
-    	protected void onPreExecute() {
-    		isAsyncSizesFillerRunning = true;
-    		Utils.logger("d", "*** sizes ***", DEBUG_TAG);
-    	}
+		protected void onPreExecute() {
+			isAsyncSizesFillerRunning = true;
+			Utils.logger("d", "*** sizes ***", DEBUG_TAG);
+		}
 
 		@Override
 		protected Void doInBackground(String... urls) {
@@ -1209,116 +1241,134 @@ public class ShareActivity extends Activity {
 			}
 			return null;
 		}
-    	
-    	protected void onProgressUpdate(String... i) {
-    		Integer index = Integer.valueOf(i[0]);
-    		String newValue = i[1];
-    		
+		
+		protected void onProgressUpdate(String... i) {
+			Integer index = Integer.valueOf(i[0]);
+			String newValue = i[1];
+			
 			sizes.remove(index);
 			sizes.add(index, " - " + newValue);
-    		
-    		listEntries.clear();
-    		listEntriesBuilder();
+			
+			listEntries.clear();
+			listEntriesBuilder();
 
 			aA.notifyDataSetChanged();
-    	}
+		}
 
 		@Override
 		protected void onPostExecute(Void unused) {
 			Utils.logger("v", "AsyncSizesFiller # onPostExecute", DEBUG_TAG);
 			isAsyncSizesFillerRunning = false;
 		}
-    }
+	}
 
 	private void findVideoFilenameBase(String content) {
-        Pattern titlePattern = Pattern.compile("<title>(.*?)</title>");
-        Matcher titleMatcher = titlePattern.matcher(content);
-        if (titleMatcher.find()) {
-            titleRaw = titleMatcher.group().replaceAll("(<| - YouTube</)title>", "");
-            titleRaw = android.text.Html.fromHtml(titleRaw).toString();
-            basename = titleRaw.replaceAll("\\W", "_");
-        } else {
-            basename = "Youtube Video";
-        }
-        Utils.logger("d", "findVideoFilenameBase: " + basename, DEBUG_TAG);
-    }
-    
-    private void listEntriesBuilder() {
-    	Iterator<String> sizesIter = sizes.iterator();
-        Iterator<String> itagsIter = itags.iterator();
-        while (itagsIter.hasNext()) {        	
-        	try {
+		String title = findMatchGroupOne(content, "<title>(.*?)</title>");
+		if (!title.isEmpty()) {
+			titleRaw = title.replaceAll("(<| - YouTube</)title>", "");
+			titleRaw = android.text.Html.fromHtml(titleRaw).toString();
+			basename = titleRaw.replaceAll("\\W", "_");
+		} else {
+			basename = "Youtube Video";
+		}
+		Utils.logger("d", "findVideoFilenameBase: " + basename, DEBUG_TAG);
+	}
+	
+	private void listEntriesBuilder(/*enabledFilters*/) {
+		
+		/*
+		 *  TODO: 
+		 *  retrieve similar array from Preferences/action-bar 
+		 *  and pass it to "listEntriesBuilder"
+		 */
+		int[] enabledFilters = { 0, 1, 2, 3 }; //example array
+		
+		List<Integer> filterInUseNoDup = null;
+		for (int i=0; i < enabledFilters.length; i++) {
+			if (i == 0) filterInUse = new ArrayList<Integer>(YTD.filtersMap.get(enabledFilters[i]));
+			filterInUse.addAll(YTD.filtersMap.get(enabledFilters[i]));
+			Set<Integer> filterInUseSet = new HashSet<Integer>(filterInUse);
+			filterInUseNoDup = new ArrayList<Integer>(filterInUseSet);
+		}
+		
+		Utils.logger("i", "filterInUseNoDup: " + filterInUseNoDup, DEBUG_TAG);
+		
+		Iterator<String> sizesIter = sizes.iterator();
+		Iterator<Integer> itagsIter = itags.iterator();
+		//while (itagsIter.hasNext()) {
+		while (itagsIter.hasNext() && filterInUseNoDup.contains(itagsIter.next())) {			
+			try {
 				listEntries.add(itagsIter.next() + sizesIter.next());
-        	} catch (NoSuchElementException e) {
-        		listEntries.add("//");
-        	}
-        }
-    }
-    
-    private void linkComposer(String block, int i) {
-    	Pattern urlPattern = Pattern.compile("url=(.+?)\\\\u0026");
-    	Matcher urlMatcher = urlPattern.matcher(block);
-    	String url = null;
+			} catch (NoSuchElementException e) {
+				listEntries.add("//");
+			}
+		}
+	}
+
+	private void linkComposer(String block, int i) {
+		Pattern urlPattern = Pattern.compile("url=(.+?)\\\\u0026");
+		Matcher urlMatcher = urlPattern.matcher(block);
+		String url = null;
 		if (urlMatcher.find()) {
-    		url = urlMatcher.group(1);
-    	} else {
-    		Pattern urlPattern2 = Pattern.compile("url=(.+?)$");
-    		Matcher urlMatcher2 = urlPattern2.matcher(block);
-    		if (urlMatcher2.find()) {
-        		url = urlMatcher2.group(1);
-        	} else {
-        		Log.e(DEBUG_TAG, "index: " + i + "url: " + url);
-        	}
-    	}
+			url = urlMatcher.group(1);
+		} else {
+			Pattern urlPattern2 = Pattern.compile("url=(.+?)$");
+			Matcher urlMatcher2 = urlPattern2.matcher(block);
+			if (urlMatcher2.find()) {
+				url = urlMatcher2.group(1);
+			} else {
+				Log.e(DEBUG_TAG, "index: " + i + "url: " + url);
+			}
+		}
 
 		String sig = null;
 		Pattern sigPattern = Pattern.compile("sig=(.+?)\\\\u0026");
-    	Matcher sigMatcher = sigPattern.matcher(block);
+		Matcher sigMatcher = sigPattern.matcher(block);
 		if (sigMatcher.find()) {
-    		sig = "signature=" + sigMatcher.group(1);
-    		Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 1", DEBUG_TAG);
-    	} else {
-    		Pattern sigPattern2 = Pattern.compile("sig=(.+?)$");
-    		Matcher sigMatcher2 = sigPattern2.matcher(block);
-    		if (sigMatcher2.find()) {
-    			sig = "signature=" + sigMatcher2.group(1);
-    			Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 2", DEBUG_TAG);
-        	} else {
-        		Pattern sigPattern3 = Pattern.compile("sig=([[0-9][A-Z]]{39,40}\\.[[0-9][A-Z]]{39,40})");
-        		Matcher sigMatcher3 = sigPattern3.matcher(block);
-        		if (sigMatcher3.find()) {
-        			sig = "signature=" + sigMatcher3.group(1);
-        			Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 3", DEBUG_TAG);
-        		} else {
-        			Pattern sigPattern4 = Pattern.compile("^s=(.+?)\\\\u0026");
-        			Matcher sigMatcher4 = sigPattern4.matcher(block);
-        			if (sigMatcher4.find()) {
-        				Utils.logger("d", "index: " + i + ", encrypted signature found on step 1; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
-        				sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
-        			} else {
-        				Pattern sigPattern5 = Pattern.compile("\\\\u0026s=(.+?)\\\\u0026");
-        	    		Matcher sigMatcher5 = sigPattern5.matcher(block);
-        	    		if (sigMatcher5.find()) {
-        	    			Utils.logger("d", "index: " + i + ", encrypted signature found on step 2; length is " + sigMatcher5.group(1).length(), DEBUG_TAG);
-        	    			sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
-        	    		} else {
-        	    			Pattern sigPattern6 = Pattern.compile("\\\\u0026s=(.+?)$");
-                			Matcher sigMatcher6 = sigPattern6.matcher(block);
-                			if (sigMatcher6.find()) {
-                				Utils.logger("d", "index: " + i + ", encrypted signature found on step 3; length is " + sigMatcher6.group(1).length(), DEBUG_TAG);
-                				sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
-		        			} else {
-		        				Utils.logger("w", "index: " + i + ", sig: " + sig, DEBUG_TAG);
-		        			}
-        	    		}
-        			}
-        		}
-        	}
-    	}
+			sig = "signature=" + sigMatcher.group(1);
+			Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 1", DEBUG_TAG);
+		} else {
+			Pattern sigPattern2 = Pattern.compile("sig=(.+?)$");
+			Matcher sigMatcher2 = sigPattern2.matcher(block);
+			if (sigMatcher2.find()) {
+				sig = "signature=" + sigMatcher2.group(1);
+				Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 2", DEBUG_TAG);
+			} else {
+				Pattern sigPattern3 = Pattern.compile("sig=([[0-9][A-Z]]{39,40}\\.[[0-9][A-Z]]{39,40})");
+				Matcher sigMatcher3 = sigPattern3.matcher(block);
+				if (sigMatcher3.find()) {
+					sig = "signature=" + sigMatcher3.group(1);
+					Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 3", DEBUG_TAG);
+				} else {
+					Pattern sigPattern4 = Pattern.compile("^s=(.+?)\\\\u0026");
+					Matcher sigMatcher4 = sigPattern4.matcher(block);
+					if (sigMatcher4.find()) {
+						Utils.logger("d", "index: " + i + ", encrypted signature found on step 1; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
+						sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
+					} else {
+						Pattern sigPattern5 = Pattern.compile("\\\\u0026s=(.+?)\\\\u0026");
+						Matcher sigMatcher5 = sigPattern5.matcher(block);
+						if (sigMatcher5.find()) {
+							Utils.logger("d", "index: " + i + ", encrypted signature found on step 2; length is " + sigMatcher5.group(1).length(), DEBUG_TAG);
+							sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
+						} else {
+							Pattern sigPattern6 = Pattern.compile("\\\\u0026s=(.+?)$");
+							Matcher sigMatcher6 = sigPattern6.matcher(block);
+							if (sigMatcher6.find()) {
+								Utils.logger("d", "index: " + i + ", encrypted signature found on step 3; length is " + sigMatcher6.group(1).length(), DEBUG_TAG);
+								sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
+							} else {
+								Utils.logger("w", "index: " + i + ", sig: " + sig, DEBUG_TAG);
+							}
+						}
+					}
+				}
+			}
+		}
 
 		Utils.logger("v", "index " + i + ", url: " + url, DEBUG_TAG);
 		Utils.logger("v", "index " + i + ", sig: " + sig, DEBUG_TAG);
-    	
+		
 		String composedLink = url + "&" + sig;
 
 		links.add(composedLink);
@@ -1326,13 +1376,13 @@ public class ShareActivity extends Activity {
 		
 		sizes.add("");
 	}
-    
-    private String decryptExpSig(String sig) {
-    	FetchUrl fu = new FetchUrl(sShare);
-    	
-    	if (decryptionArray == null) {
-    		decryptionRule = null;
-    		String jsCode = null;
+	
+	private String decryptExpSig(String sig) {
+		FetchUrl fu = new FetchUrl(sShare);
+		
+		if (decryptionArray == null) {
+			decryptionRule = null;
+			String jsCode = null;
 			if (!jslink.equals("e")) {
 				jsCode = fu.doFetch(jslink);
 			} else {
@@ -1391,7 +1441,7 @@ public class ShareActivity extends Activity {
 					"	}" +
 					"	return decodeArray;" +
 					"}";
-	    	
+			
 			decryptionArray = RhinoRunner.obtainDecryptionArray(jsCode, findSignatureCode);
 			decryptionFunction = "function decryptSignature(a){ a=a.split(\"\"); ";
 			
@@ -1414,95 +1464,90 @@ public class ShareActivity extends Activity {
 			Utils.logger("i", "decryptionRule (lenght is " + decryptionArray.length + "): " + decryptionRule, DEBUG_TAG);
 			Utils.logger("i", "decryptionFunction: " + decryptionFunction, DEBUG_TAG);
 		}
-    	
-    	String signature = RhinoRunner.decipher(sig, decryptionFunction);
-    	
-    	/*if (signature == sig || signature.isEmpty() || signature == null) {
-    		String decryptSignatureLinkAtSf = 
-    				"http://sourceforge.net/projects/ytdownloader/files/utils/decryptSignature/download";
-    		Utils.logger("w", "signature empty, null or not deciphered" +
-    				"\n -> falling back on JS function from " + decryptSignatureLinkAtSf, DEBUG_TAG);
-    		
-    		String decryptFunction2 = fu.doFetch(decryptSignatureLinkAtSf);
-    		signature = RhinoRunner.decipher2(sig, decryptionRule, decryptFunction2);
-    	}*/
+		
+		String signature = RhinoRunner.decipher(sig, decryptionFunction);
+		
+		/*if (signature == sig || signature.isEmpty() || signature == null) {
+			String decryptSignatureLinkAtSf = 
+					"http://sourceforge.net/projects/ytdownloader/files/utils/decryptSignature/download";
+			Utils.logger("w", "signature empty, null or not deciphered" +
+					"\n -> falling back on JS function from " + decryptSignatureLinkAtSf, DEBUG_TAG);
+			
+			String decryptFunction2 = fu.doFetch(decryptSignatureLinkAtSf);
+			signature = RhinoRunner.decipher2(sig, decryptionRule, decryptFunction2);
+		}*/
 		
 		return signature;
 	}
-    
-    private void findJs(String content) {
-    	Pattern jsPattern = Pattern.compile("\"js\":\\s*\"([^\"]+)\"");
-        Matcher jsMatcher = jsPattern.matcher(content);
-        if (jsMatcher.find()) {
-            jslink = jsMatcher.group(1).replaceAll("\\\\", "");
-        } else {
-            jslink = "e";
-        }
-        Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
-    }
-    
-    @SuppressLint("DefaultLocale")
+	
+	private void findJs(String content) {
+		String jslinkRaw = findMatchGroupOne(content, "\"js\":\\s*\"([^\"]+)\"");
+		if (!jslinkRaw.isEmpty()) {
+			jslink = jslinkRaw.replaceAll("\\\\", "");
+		} else {
+			jslink = "e";
+		}
+		Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
+	}
+	
+	@SuppressLint("DefaultLocale")
 	private void findDashUrl(String content) {
-    	Utils.logger("d", "*** dash signated streams ***", DEBUG_TAG);
-    	String[] dashElements;
-    	
-    	String dashManifest = findMatchGroupOne(content, "\"dashmpd\":\\s*\"([^\"]+)\"");
-    	//Utils.logger("i", "dashManifest: " + dashManifest, DEBUG_TAG);
-    	if (!dashManifest.isEmpty()) {
-    		String dashParams = findMatchGroupOne(dashManifest, "youtube.com\\\\\\/api\\\\\\/manifest\\\\\\/dash\\\\\\/(.+)");
-    		//Utils.logger("i", "dashParams: " + dashParams, DEBUG_TAG);
-        	if (!dashParams.isEmpty()) {
-        		dashElements = dashParams.split("\\\\\\/");
-        		for (int i=0; i < dashElements.length; i+=2) {
-        			if (i>0) dashUrl = dashUrl + "&";
-        			dashUrl = dashUrl + (dashElements[i] + '=' + dashElements[i+1]);
-        		}
-        		//Utils.logger("i", "dashUrl (partial): " + dashUrl, DEBUG_TAG);
-        		if (!links.get(0).isEmpty()) {
-        			dashStartUrl = findMatchGroupOne(links.get(0), "(http.*?videoplayback\\?)");
-        			//Utils.logger("i", "dashStartURL: " + dashStartUrl, DEBUG_TAG);
-        		}
-        		if (!dashStartUrl.isEmpty()) {
-        			dashUrl = dashStartUrl + dashUrl;
-        		} else {
-        			dashUrl = "";
-        		}
-        		if (dashUrl.toLowerCase().indexOf("ratebypass") == -1) {
-        			dashUrl = dashUrl + "&ratebypass=yes";
-        		}
-        		if (!dashUrl.isEmpty()) {
-        			if (itags.contains((String) VO_MP4_1080P)) addDashUrlEntries(0, dashUrl, "mp4", "", "", "37"); 
-        			
-        			/*
-        			 *  TODO 
-        			 *  implement other hidden itags
-        			 *  fix: doesn't fire if adaptive streams are disabled
-        			 *  
-        			 */
-        		}
-        	}
-    	}
-    }
-    
-    private void addDashUrlEntries(int i, String link, String codec, String quality, String size, String itagNum) {
-    	links.add(i, link + "&itag=" + itagNum);
-        codecs.add(i, codec);
-        qualities.add(i, quality);
-        sizes.add(i, size);
-        String itag = findItag(itagNum);
-        itags.add(i, itag);
-        
-        Utils.logger("d", "inserted at index: " + i + ", codec: " + codec, DEBUG_TAG);
-        Utils.logger("d", "inserted at index: " + i + ", quality: " + quality, DEBUG_TAG);
-        Utils.logger("d", "inserted at index: " + i + ", itag: " + itagNum + "(" + itag + ")", DEBUG_TAG);
-        Utils.logger("v", "inserted at index: " + i + ", url: " + dashUrl, DEBUG_TAG);
-    }
-
-	private String findMatchGroupOne(String text, String regEx) {
-		Pattern pattern = Pattern.compile(regEx);
-    	Matcher matcher = pattern.matcher(text);
-		if (matcher.find()) return matcher.group(1);
-		return "";
+		Utils.logger("d", "*** dash signated streams ***", DEBUG_TAG);
+		String[] dashElements;
+		
+		String dashManifest = findMatchGroupOne(content, "\"dashmpd\":\\s*\"([^\"]+)\"");
+		//Utils.logger("i", "dashManifest: " + dashManifest, DEBUG_TAG);
+		if (!dashManifest.isEmpty()) {
+			String dashParams = findMatchGroupOne(dashManifest, "youtube.com\\\\\\/api\\\\\\/manifest\\\\\\/dash\\\\\\/(.+)");
+			//Utils.logger("i", "dashParams: " + dashParams, DEBUG_TAG);
+			if (!dashParams.isEmpty()) {
+				dashElements = dashParams.split("\\\\\\/");
+				for (int i=0; i < dashElements.length; i+=2) {
+					if (i>0) dashUrl = dashUrl + "&";
+					dashUrl = dashUrl + (dashElements[i] + '=' + dashElements[i+1]);
+				}
+				//Utils.logger("i", "dashUrl (partial): " + dashUrl, DEBUG_TAG);
+				if (!links.get(0).isEmpty()) {
+					dashStartUrl = findMatchGroupOne(links.get(0), "(http.*?videoplayback\\?)");
+					//Utils.logger("i", "dashStartURL: " + dashStartUrl, DEBUG_TAG);
+				}
+				if (!dashStartUrl.isEmpty()) {
+					dashUrl = dashStartUrl + dashUrl;
+				} else {
+					dashUrl = "";
+				}
+				if (dashUrl.toLowerCase().indexOf("ratebypass") == -1) {
+					dashUrl = dashUrl + "&ratebypass=yes";
+				}
+				if (!dashUrl.isEmpty()) { //TODO tests
+					if (itags.contains(135)) 
+						addDashUrlEntries(0, dashUrl, "flv", "large", "35"); 
+					
+					if (itags.contains(137) || itags.contains(264)) 
+						addDashUrlEntries(0, dashUrl, "mp4", "hd1080", "37");
+					
+					if (itags.contains(138)) 
+						addDashUrlEntries(0, dashUrl, "mp4", "highres", "38");
+					
+					if (itags.contains(248)) 
+						addDashUrlEntries(0, dashUrl, "webm", "hd1080", "46"); 
+				}
+			}
+		}
+	}
+	
+	private void addDashUrlEntries(int i, String link, String codec, String quality, String itagNum) {
+		links.add(i, link + "&itag=" + itagNum);
+		codecs.add(i, codec);
+		qualities.add(i, quality);
+		sizes.add(i, "");
+		String itag = findItag(itagNum);
+		itagsText.add(i, itag);
+		
+		Utils.logger("d", "inserted at index: " + i + ", codec: " + codec, DEBUG_TAG);
+		Utils.logger("d", "inserted at index: " + i + ", quality: " + quality, DEBUG_TAG);
+		Utils.logger("d", "inserted at index: " + i + ", itag: " + itagNum + "(" + itag + ")", DEBUG_TAG);
+		Utils.logger("v", "inserted at index: " + i + ", url: " + dashUrl, DEBUG_TAG);
 	}
 
 	private String getVideoFileSize(String link) {
@@ -1525,7 +1570,7 @@ public class ShareActivity extends Activity {
         } else {
             codecs.add("video");
         }
-        Utils.logger("d", "index: " + i + ", codec: " + codecs.get(i), DEBUG_TAG);
+        Utils.logger("d", "index: " + i + ", Codec: " + codecs.get(i), DEBUG_TAG);
     }
 
     private void qualityMatcher(String current, int i) {
@@ -1536,7 +1581,7 @@ public class ShareActivity extends Activity {
         } else {
             qualities.add("-");
         }
-        Utils.logger("d", "index: " + i + ", quality: " + qualities.get(i), DEBUG_TAG);
+        Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
     }
     
     /*private void stereoMatcher(String current, int i) {
@@ -1550,242 +1595,239 @@ public class ShareActivity extends Activity {
         //Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
     }*/
     
-    private void itagMatcher(String current, int i) {
-    	String res = "-";
-    	Pattern itagPattern = Pattern.compile("itag=([0-9]{1,3})\\\\u0026");
-    	Matcher itagMatcher = itagPattern.matcher(current);
-    	if (itagMatcher.find()) {
-    		res = findItag(itagMatcher.group(1));
-    		Utils.logger("d", "index: " + i + ", itag: " + itagMatcher.group(1) + " (" + res + ")", DEBUG_TAG);
-    	} else {
-    		Pattern itagPattern2 = Pattern.compile("itag=([0-9]{1,3})$");
-        	Matcher itagMatcher2 = itagPattern2.matcher(current);
-	    	if (itagMatcher2.find()) {
-	    		res = findItag(itagMatcher2.group(1));
-	    		Utils.logger("d", "index: " + i + ", itag: " + itagMatcher2.group(1) + " (" + res + ")", DEBUG_TAG);
-	    	}
-    	}
-    	itags.add(res);
-    	if (res.contains("AO")) {
-    		if (codecs.get(i).equals("mp4")) {
-    			codecs.remove(i);
-    			codecs.add(i, "m4a");
-    		}
-    		if (codecs.get(i).equals("webm")) {
-    			codecs.remove(i);
-    			codecs.add(i, "ogg");
-    		}
-    	}
-    }
+    private void itagMatcher(String current, int i, boolean isItagsTextRun) {
+		String res = "-";
+		String itag = findMatchGroupOne(current, "itag=([0-9]{1,3})\\\\u0026");
+		if (itag.isEmpty()) {
+			itag = findMatchGroupOne(current, "itag=([0-9]{1,3})$");
+		}
+		
+		if (isItagsTextRun) {
+			res = findItag(itag);
+			Utils.logger("d", "index: " + i + ", itag: " + itag + " (" + res + ")", DEBUG_TAG);
+			
+			itagsText.add(res);
+			
+			if (itag.equals("139") || itag.equals("140") || itag.equals("141")) {
+				codecs.remove(i);
+				codecs.add(i, "m4a");
+			}
+			
+			if (itag.equals("171") || itag.equals("172")) {
+				codecs.remove(i);
+				codecs.add(i, "ogg");
+			}
+		} else {
+			itags.add(Integer.parseInt(itag));
+		}
+	}
 
 	private String findItag(String itag) {
 		String res = "-";
 		if (itag != null) {
 			try {
 				switch (Integer.parseInt(itag)) {
-				// ***************************
 				// *** url encoded streams ***
-				// ***************************
 				case 5:
-					res = FLV_240P;
+					res = _FLV_240P;
 					break;
 				case 6:
-					res = FLV_270P;
+					res = _FLV_270P;
 					break;
 				case 17:
 					res = _3GP_144P;
 					break;
 				case 18:
-					res = MP4_270P_360P;
+					res = _MP4_270P_360P;
 					break;
 				case 22:
-					res = MP4_720P;
+					res = _MP4_720P;
 					break;
 				case 34:
-					res = FLV_360P;
+					res = _FLV_360P;
 					break;
 				case 35:
-					res = FLV_480P;
+					res = _FLV_480P;
 					break;
 				case 36:
 					res = _3GP_240P;
 					break;
 				case 37:
-					res = MP4_1080P;
+					res = _MP4_1080P;
 					break;
 				case 38:
-					res = MP4_ORIGINAL;
+					res = _MP4_ORIGINAL;
 					break;
 				case 43:
-					res = WEB_M_360P;
+					res = _WEBM_360P;
 					break;
 				case 44:
-					res = WEB_M_480P;
+					res = _WEBM_480P;
 					break;
 				case 45:
-					res = WEB_M_720P;
+					res = _WEBM_720P;
 					break;
 				case 46:
-					res = WEB_M_1080P;
+					res = _WEBM_1080P;
 					break;
 				case 82:
-					res = MP4_360P_3D;
+					res = _MP4_360P_3D;
 					break;
 				case 83:
-					res = MP4_240P_3D;
+					res = _MP4_240P_3D;
 					break;
 				case 84:
-					res = MP4_720P_3D;
+					res = _MP4_720P_3D;
 					break;
 				case 85:
-					res = MP4_520P_3D;
+					res = _MP4_520P_3D;
 					break;
 				case 100:
-					res = WEB_M_360P_3D;
+					res = _WEBM_360P_3D;
 					break;
 				case 101:
-					res = WEB_M_360P_3D;
+					res = _WEBM_360P_3D;
 					break;
 				case 102:
-					res = WEB_M_720P_3D;
+					res = _WEBM_720P_3D;
 					break;
-				// ************************
 				// *** adaptive streams ***
-				// ************************
 				case 133:
-					res = VO_MP4_240P;
+					res = _VO_MP4_240P;
 					break;
 				case 134:
-					res = VO_MP4_360P;
+					res = _VO_MP4_360P;
 					break;
 				case 135:
-					res = VO_MP4_480P;
+					res = _VO_MP4_480P;
 					break;
 				case 136:
-					res = VO_MP4_720P;
+					res = _VO_MP4_720P;
 					break;
 				case 137:
-					res = VO_MP4_1080P;
+					res = _VO_MP4_1080P;
 					break;
 				case 138:
-					res = VO_MP4_ORIGINAL;
+					res = _VO_MP4_ORIGINAL;
 					break;
 				case 139:
-					res = AO_M4A_LOW_Q;
+					res = _AO_M4A_LOW_Q;
 					break;
 				case 140:
-					res = AO_M4A_MED_Q;
+					res = _AO_M4A_MED_Q;
 					break;
 				case 141:
-					res = AO_M4A_HI_Q;
+					res = _AO_M4A_HI_Q;
 					break;
 				case 160:
-					res = VO_MP4_144P;
+					res = _VO_MP4_144P;
 					break;
 				case 171:
-					res = AO_OGG_MED_Q;
+					res = _AO_OGG_MED_Q;
 					break;
 				case 172:
-					res = AO_OGG_HI_Q;
+					res = _AO_OGG_HI_Q;
 					break;
 				case 242:
-					res = VO_WEB_M_240P;
+					res = _VO_WEBM_240P;
 					break;
 				case 243:
-					res = VO_WEB_M_360P;
+					res = _VO_WEBM_360P;
 					break;
 				case 244:
-					res = VO_WEB_M_480P;
+					res = _VO_WEBM_480P;
 					break;
 				case 245:
-					res = VO_WEB_M_480P;
+					res = _VO_WEBM_480P;
 					break;
 				case 246:
-					res = VO_WEB_M_480P;
+					res = _VO_WEBM_480P;
 					break;
 				case 247:
-					res = VO_WEB_M_720P;
+					res = _VO_WEBM_720P;
 					break;
 				case 248:
-					res = VO_WEB_M_1080P;
+					res = _VO_WEBM_1080P;
 					break;
 				case 264:
-					res = VO_MP4_1080P_HBR;
+					res = _VO_MP4_1080P_HBR;
 					break;
+				default:
+					res = _UNKNOWN;
 				}
 				
 			} catch (NumberFormatException e) {
-				Log.e(DEBUG_TAG, "resolutionMatcher --> " + e.getMessage());
+				Log.e(DEBUG_TAG, "findItag --> " + e.getMessage());
 			}
 		}
 		return res;
 	}
-    
-    private String[] generateThumbUrls() {
-    	
-    	String url1 = "http://i1.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
-    	String url2 = "http://i2.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
-    	String url3 = "http://i3.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
-    	String url4 = "http://i4.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
-    	
-    	String[] urls = { url1, url2, url3, url4 };
-    	return urls;
+	
+	private String[] generateThumbUrls() {
+		
+		String url1 = "http://i1.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
+		String url2 = "http://i2.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
+		String url3 = "http://i3.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
+		String url4 = "http://i4.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
+		
+		String[] urls = { url1, url2, url3, url4 };
+		return urls;
 	}
-    
-    private Bitmap downloadThumbnail(String fileUrl) {
-    	InputStream is = null;
-    	URL myFileUrl = null;
-    	try {
-    		myFileUrl = new URL(fileUrl);
-    		HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
-    		conn.setDoInput(true);
-    		conn.connect();
-    		is = conn.getInputStream();
-    		return BitmapFactory.decodeStream(is);
-    	} catch (IOException e) {
-    		Log.e(DEBUG_TAG, "IOException @ " + e.getMessage());
-            return null;
+	
+	private Bitmap downloadThumbnail(String fileUrl) {
+		InputStream is = null;
+		URL myFileUrl = null;
+		try {
+			myFileUrl = new URL(fileUrl);
+			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
+			conn.setDoInput(true);
+			conn.connect();
+			is = conn.getInputStream();
+			return BitmapFactory.decodeStream(is);
+		} catch (IOException e) {
+			Log.e(DEBUG_TAG, "IOException @ " + e.getMessage());
+			return null;
 		}
-    }
-    
-    private void assignBitmapToVideoListThumbnail(String[] url) {
-    	Bitmap bm0  = downloadThumbnail(url[0]);
-    	if (bm0 != null) {
-    		img = bm0;
-    		Utils.logger("d", "assigning bitmap from url[0]: " + url[0], DEBUG_TAG);
-    	} else {
-    		Bitmap bm1  = downloadThumbnail(url[1]);
-    		if (bm1 != null) {
-        		img = bm1;
-        		Utils.logger("d", "assigning bitmap from url[1]: " + url[1], DEBUG_TAG);
-        	} else {
-        		Bitmap bm2  = downloadThumbnail(url[2]);
-        		if (bm2 != null) {
-            		img = bm2;
-            		Utils.logger("d", "assigning bitmap from url[2]: " + url[2], DEBUG_TAG);
-            	} else {
-            		Bitmap bm3  = downloadThumbnail(url[3]);
-            		if (bm3 != null) {
-            			img = bm3;
-            			Utils.logger("d", "assigning bitmap from url[3]: " + url[3], DEBUG_TAG);
-            		} else {
-            			Log.e(DEBUG_TAG, "\nFalling back on asset's placeholder");
-                		InputStream assIs = null;
-                		AssetManager assMan = getAssets();
-                        try {
-            				assIs = assMan.open("placeholder.png");
-            			} catch (IOException e1) {
-            				Log.e(DEBUG_TAG, "downloadThumbnail -> " + e1.getMessage());
-            			}
-                        img = BitmapFactory.decodeStream(assIs);
-            		}
-            	}
-        	}
-    	}
-    }
-    
-    private void writeThumbToDisk() {
-    	File thumbFile = new File(sShare.getDir(YTD.THUMBS_FOLDER, 0), videoId + ".png");
+	}
+	
+	private void assignBitmapToVideoListThumbnail(String[] url) {
+		Bitmap bm0  = downloadThumbnail(url[0]);
+		if (bm0 != null) {
+			img = bm0;
+			Utils.logger("d", "assigning bitmap from url[0]: " + url[0], DEBUG_TAG);
+		} else {
+			Bitmap bm1  = downloadThumbnail(url[1]);
+			if (bm1 != null) {
+				img = bm1;
+				Utils.logger("d", "assigning bitmap from url[1]: " + url[1], DEBUG_TAG);
+			} else {
+				Bitmap bm2  = downloadThumbnail(url[2]);
+				if (bm2 != null) {
+					img = bm2;
+					Utils.logger("d", "assigning bitmap from url[2]: " + url[2], DEBUG_TAG);
+				} else {
+					Bitmap bm3  = downloadThumbnail(url[3]);
+					if (bm3 != null) {
+						img = bm3;
+						Utils.logger("d", "assigning bitmap from url[3]: " + url[3], DEBUG_TAG);
+					} else {
+						Log.e(DEBUG_TAG, "\nFalling back on asset's placeholder");
+						InputStream assIs = null;
+						AssetManager assMan = getAssets();
+						try {
+							assIs = assMan.open("placeholder.png");
+						} catch (IOException e1) {
+							Log.e(DEBUG_TAG, "downloadThumbnail -> " + e1.getMessage());
+						}
+						img = BitmapFactory.decodeStream(assIs);
+					}
+				}
+			}
+		}
+	}
+	
+	private void writeThumbToDisk() {
+		File thumbFile = new File(sShare.getDir(YTD.THUMBS_FOLDER, 0), videoId + ".png");
 		//if (!thumbFile.exists()) {
 			try {
 				FileOutputStream os = new FileOutputStream(thumbFile);
@@ -1794,9 +1836,9 @@ public class ShareActivity extends Activity {
 				Log.e(DEBUG_TAG, "writeThumbToDisk -> " + e.getMessage());
 			}
 		//}
-    }
-    
-    private void updateInit() {
+	}
+	
+	private void updateInit() {
 		int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
 		Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
 		
@@ -1812,3 +1854,4 @@ public class ShareActivity extends Activity {
 		}
 	}
 }
+
