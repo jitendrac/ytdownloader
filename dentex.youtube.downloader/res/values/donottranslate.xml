@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.3 - Nov 04 2013
+        \n-----------------------------------
+        \n[x] MP4 1080p and FLV 480p "hidden" streams support
+        \n[x] again, better support for "secondary" YouTube streams
+        \n[x] fixed important bugs on resumed downloads and storage free space (thanks Christophelaures from XDA)
+        \n
         \n v3.2 - Oct 30 2013
         \n-----------------------------------
         \n[x] better support for "secondary" YouTube streams

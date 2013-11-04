@@ -151,14 +151,14 @@
 	<string name="menu_backup">Λήψη αντιγράφου ασφαλείας</string>
 	<string name="menu_restore">Επαναφορά</string>
 	<string name="menu_import">Εισαγωγή βίντεο</string>
-	<string name="menu_import_file">Import a file</string>
+	<string name="menu_import_file">Εισαγωγή αρχείου</string>
 	<string name="menu_import_double">Το βίντεο έχει ήδη προστεθεί.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file_double">Το αρχείο έχει ήδη προστεθεί.</string>
 	<string name="menu_backup_info">Επιλέξτε ένα φάκελο για αποθήκευση των δεδομένων του Πίνακα Ελέγχου</string>
 	<string name="menu_restore_info">Επαναφορά των δεδομένων του Πίνακα Ελέγχου από αρχείο</string>
 	<string name="menu_restore_info_msg">Τα υπάρχοντα δεδομένα θα διαγραφούν.</string>
 	<string name="menu_import_info">Εισαγωγή βίντεο και διαχείριση του από τον Πίνακα Ελέγχου</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Εισαγωγή αρχείου και διαχείριση του από τον Πίνακα Ελέγχου</string>
 	<string name="menu_backup_result_ok">Η λήψη αντιγράφου ασφαλείας του Πίνακα Ελέγχου ολοκληρώθηκε.</string>
 	<string name="menu_backup_result_failed">Σφάλμα κατά τη λήψη αντιγράφου ασφαλείας.</string>
 	<string name="menu_restore_result_ok">Τα δεδομένα του Πίνακα Ελέγχου ανακτήθηκαν.</string>
@@ -202,7 +202,7 @@
         <item>Παύση/Συνέχιση</item>
     </string-array>
     
-	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
+	<string name="operation_standby">Αναμονή: μια άλλη εργασία είναι σε εξέλιξη.</string>
     
 	<string name="move_error">Σφάλμα κατά τη μετακίνηση.</string>
     <string name="move_progress">Μετακίνηση αρχείου σε εξέλιξη&#8230;</string>

@@ -74,7 +74,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 	private Context context;
 	private Filter itemsFilter;
 	private List<DashboardListItem> origItemsList;
-	public ArrayList<DashboardListItem> filteredList;
+	private ArrayList<DashboardListItem> filteredList;
 	
 	public DashboardAdapter(List<DashboardListItem> itemsList, Context ctx) {
 		super(ctx, R.layout.activity_dashboard_list_item, itemsList);
@@ -290,7 +290,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 	 
 	    @SuppressWarnings("unchecked")
 		@Override
-	    public void publishResults(CharSequence constraint,FilterResults results) {
+	    public void publishResults(CharSequence constraint, FilterResults results) {
 	    	itemsList = (List<DashboardListItem>) results.values;
 	        notifyDataSetChanged();
 	    }

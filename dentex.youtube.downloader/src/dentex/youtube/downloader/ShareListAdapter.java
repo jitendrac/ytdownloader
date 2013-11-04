@@ -30,41 +30,24 @@ import java.util.List;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 
-public class ShareListAdapter extends ArrayAdapter<String> implements Filterable {
+public class ShareListAdapter extends ArrayAdapter<String> {
 
-	private List<String> items;
+	//private Context context;
+	private List<String> itemsList;
 	
-	public ShareListAdapter(List<String> items, Context ctx) {
-		super(ctx, android.R.layout.simple_list_item_1, items);
-		this.items = items;
+	public ShareListAdapter(List<String> itemsList, Context ctx) {
+		super(ctx, android.R.layout.simple_list_item_1, itemsList);
+		this.itemsList = itemsList;
 	}
 	
 	public int getCount() {
-		return items.size();
+		return itemsList.size();
 	}
 
 	/*public long getItemId(int position) {
 		return items.get(position).hashCode();
 	}*/
 	
-	public class ItemsFilter extends Filter {
-
-		@Override
-		protected FilterResults performFiltering(CharSequence constraint) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		protected void publishResults(CharSequence constraint,
-				FilterResults results) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 }
 

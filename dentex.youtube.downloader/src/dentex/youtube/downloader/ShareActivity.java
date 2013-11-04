@@ -39,7 +39,6 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
@@ -257,6 +256,7 @@ public class ShareActivity extends Activity {
 				extraId = intent.getStringExtra("id");
 				pos = intent.getIntExtra("position", 0);
 				vFilename = intent.getStringExtra("filename");
+				mComposedName = Utils.getFileNameWithoutExt(vFilename);
 				
 				Utils.logger("i", "Auto Mode Enabled:"
 						+ "\n -> id: " + extraId
@@ -575,8 +575,8 @@ public class ShareActivity extends Activity {
 				listEntriesBuilder();
 				lv.setAdapter(aA);
 				
-				//asyncSizesFiller = new AsyncSizesFiller();
-				//asyncSizesFiller.execute(links.toArray(new String[0])); //TODO remove comments
+				asyncSizesFiller = new AsyncSizesFiller();
+				asyncSizesFiller.execute(links.toArray(new String[0])); //TODO remove comments
 			}
 
 			tv.setText(titleRaw);
@@ -1123,8 +1123,10 @@ public class ShareActivity extends Activity {
 	private String urlBlockMatchAndDecode(String content) {
 		
 		// log entire YouTube requests
-		File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
-		Utils.appendStringToFile(req, content);
+		//File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
+		//Utils.appendStringToFile(req, content);
+		
+		if (content.equals("e")) return "e";
 		
 		if (asyncDownload.isCancelled()) {
 			Utils.logger("d", "asyncDownload cancelled @ urlBlockMatchAndDecode begin", DEBUG_TAG);
@@ -1268,11 +1270,11 @@ public class ShareActivity extends Activity {
 	private void findVideoFilenameBase(String content) {
 		String title = findMatchGroupOne(content, "<title>(.*?)</title>");
 		if (!title.isEmpty()) {
-			titleRaw = title.replaceAll("(<|\\s*-\\s*YouTube</)title>", "");
+			titleRaw = title.replaceAll("\\s*-\\s*YouTube", "");
 			titleRaw = android.text.Html.fromHtml(titleRaw).toString();
 			basename = titleRaw.replaceAll("\\W", "_");
 		} else {
-			basename = "Youtube Video";
+			basename = "Youtube_Video";
 		}
 		Utils.logger("d", "findVideoFilenameBase: " + basename, DEBUG_TAG);
 	}
@@ -1511,6 +1513,7 @@ public class ShareActivity extends Activity {
 				for (int i=0; i < dashElements.length; i+=2) {
 					if (i>0) dashUrl = dashUrl + "&";
 					if (dashElements[i].equals("s")) {
+						Utils.logger("i", "ecrypted signature found into dash manifest", DEBUG_TAG);
 						dashUrl = dashUrl + ("signature=" + decryptExpSig(dashElements[i+1]));
 					} else if (dashElements[i].equals("sig")) {
 						dashUrl = dashUrl + ("signature=" + dashElements[i+1]);
@@ -1556,15 +1559,15 @@ public class ShareActivity extends Activity {
 		sizes.add(i, "");
 		String itagText = findItag(itag);
 		
-		//itagsText.add(i, itagText);
-		itagsText.add(i, "[" + itag + "d] " + itagText); //debug
+		itagsText.add(i, itagText);
+		//itagsText.add(i, "[" + itag + "d] " + itagText); //debug
 		
 		itags.add(i, Integer.parseInt(itag));
 		
 		Utils.logger("d", "inserted at index: " + i + ", codec: " + codec, DEBUG_TAG);
 		Utils.logger("d", "inserted at index: " + i + ", quality: " + quality, DEBUG_TAG);
 		Utils.logger("d", "inserted at index: " + i + ", itag: " + itag + " (" + itagText + ")", DEBUG_TAG);
-		Utils.logger("v", "inserted at index: " + i + ", url: " + dashUrl, DEBUG_TAG);
+		Utils.logger("v", "inserted at index: " + i + ", url: " + link + "&itag=" + itag, DEBUG_TAG);
 	}
 
 	private String getVideoFileSize(String link) {
@@ -1623,8 +1626,8 @@ public class ShareActivity extends Activity {
 			res = findItag(itag);
 			Utils.logger("d", "index: " + i + ", itag: " + itag + " (" + res + ")", DEBUG_TAG);
 			
-			//itagsText.add(res);
-			itagsText.add("[" + itag + "] " + res); //debug
+			itagsText.add(res);
+			//itagsText.add("[" + itag + "] " + res); //debug
 			
 			if (itag.equals("139") || itag.equals("140") || itag.equals("141")) {
 				codecs.remove(i);

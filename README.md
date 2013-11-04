@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="66"`
+`versionCode="67"`
 
-`versionName="3.2"`
+`versionName="3.3"`
 
-MD5 checksum: `5792bfd5651b457f0ca31946c7fdfd71` dentex.youtube.downloader_v3.2.apk
+MD5 checksum: `2989e5dc2f1e1c3e21bfa5a2a606f900` dentex.youtube.downloader_v3.3.apk
 
 DISCLAIMER
 ================================================================
@@ -143,6 +143,13 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.3 - Nov 04 2013 
+    ----------------------------------- 
+    [x] MP4 1080p and FLV 480p "hidden" streams support 
+    [x] again, better support for "secondary" YouTube streams 
+    [x] fixed important bugs on resumed downloads and storage 
+		free space (thanks Christophelaures from XDA) 
+     
      v3.2 - Oct 30 2013 
     ----------------------------------- 
     [x] better support for "secondary" YouTube streams 
@@ -154,7 +161,7 @@ CHANGELOG
     [x] option to auto-enqueue FFmpeg tasks on downloads completion 
     [x] support for FLV video import into Dashboard 
     [x] support for video-only and audio-only "secondary" 
-        streams from YouTube (experimental) 
+		streams from YouTube (experimental) 
     [x] various bug fixes 
      
      v3.0.2 - Oct 11 2013 
@@ -241,7 +248,7 @@ CHANGELOG
      v2.3 - Jun 25 2013 
     ----------------------------------- 
     [x] experimantal signature support 
-        (thanks Gantt@userscripts.org) 
+		(thanks Gantt@userscripts.org) 
     [x] other bug/stability fixes 
      
      v2.2 - May 12 2013 
@@ -286,7 +293,7 @@ CHANGELOG
      v2.0 - May 06 2013 
     ----------------------------------- 
     [x] audio extraction from downloaded video with 
-        optional conversion to mp3 (with FFmpeg) 
+		optional conversion to mp3 (with FFmpeg) 
     [x] PayPal donation menu 
     [x] BugSense integration 
     [x] on the fly language switch 
@@ -422,9 +429,11 @@ TO-DO LIST
 	[ ] compile FFmpeg to support x86 Android ABI [wip]
 	[ ] support subtitles download
 	[ ] default format/filter selection for video download
-	[ ] use icon/logo to identify codecs available (expand the custom ShareActivity adapter)
+	[ ] use icon/logo to identify codecs available 
+        (expand the custom ShareActivity adapter)
 	[ ] make the App tablet friendly
-	[ ] use custom DM for other download tasks (apk update, ffmpeg binary [wip - on hold])
+	[ ] use custom DM for other download tasks 
+        (apk update, ffmpeg binary [wip - on hold])
 	[ ] dashboard option to include downloaded videos into backups 
         (or make menu entry "archive")
 	[ ] dashboard option to "nuke" all entries (remove and delete all)
