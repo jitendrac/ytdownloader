@@ -151,14 +151,14 @@
 	<string name="menu_backup">Резервное копирование</string>
 	<string name="menu_restore">Восстановление</string>
 	<string name="menu_import">Импортировать видео</string>
-	<string name="menu_import_file">Import a file</string>
+	<string name="menu_import_file">Импортировать файл</string>
 	<string name="menu_import_double">Видео уже добавлено.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file_double">Файл уже добавлен.</string>
 	<string name="menu_backup_info">Выбрать папку для резервного копирования данных инстр. панели</string>
 	<string name="menu_restore_info">Восстановить данные инстр. панели из файла</string>
 	<string name="menu_restore_info_msg">Текущие данные будут переписаны.</string>
 	<string name="menu_import_info">Импорт видео и управление им из инстр. панели</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Импорт файла и управление им из инстр. панели</string>
 	<string name="menu_backup_result_ok">Копия данных инстр. панели ОК.</string>
 	<string name="menu_backup_result_failed">Ошибка рез. копирования.</string>
 	<string name="menu_restore_result_ok">Данные инстр. панели восстановлены.</string>
