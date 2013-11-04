@@ -144,14 +144,14 @@ public class ShareActivity extends Activity {
 	private TextView tv;
 	private TextView noVideoInfo;
 	private ListView lv;
-	private ArrayAdapter<String> aA;
+	private ArrayAdapter<ShareActivityListItem> aA;
 	private List<String> links = new ArrayList<String>();
 	private List<String> codecs = new ArrayList<String>();
 	private List<String> qualities = new ArrayList<String>();
 	private List<String> sizes = new ArrayList<String>();
 	private List<String> itagsText = new ArrayList<String>();
 	private List<Integer> itags = new ArrayList<Integer>();
-	private List<String> listEntries = new ArrayList<String>();
+	private List<ShareActivityListItem> listEntries = new ArrayList<ShareActivityListItem>();
 	private String titleRaw;
 	private String basename;
 	private int pos;
@@ -305,11 +305,21 @@ public class ShareActivity extends Activity {
 					startActivity(new Intent(this, AboutActivity.class));
 					return true;
 				case R.id.menu_dashboard:
-				launchDashboardActivity();
+					launchDashboardActivity();
 					return true;
 				case R.id.menu_tutorials:
 					startActivity(new Intent(this, TutorialsActivity.class));
 					return true;
+				// filter-test
+				case R.id.menu_filter_test:
+					CharSequence constraint = null;
+					List<Integer> l = ShareActivityListFilters.getListFilters(1); //test filter for all webm video
+					for (int i : l) {
+						if (constraint == null) constraint = String.valueOf(i);
+						constraint = constraint + "/" + i;
+					}
+					Utils.logger("i", "constraint: " + constraint, DEBUG_TAG);
+					aA.getFilter().filter(constraint);
 				default:
 					return super.onOptionsItemSelected(item);
 			}
@@ -575,8 +585,8 @@ public class ShareActivity extends Activity {
 				listEntriesBuilder();
 				lv.setAdapter(aA);
 				
-				asyncSizesFiller = new AsyncSizesFiller();
-				asyncSizesFiller.execute(links.toArray(new String[0])); //TODO remove comments
+				//asyncSizesFiller = new AsyncSizesFiller();
+				//asyncSizesFiller.execute(links.toArray(new String[0])); //TODO remove comments
 			}
 
 			tv.setText(titleRaw);
@@ -1303,11 +1313,11 @@ public class ShareActivity extends Activity {
 		for (int i = 0; i < itagsText.size(); i++) {
 			//if (ShareActivityListFilters.getListFilters(0).contains(itags.get(i))) {
 				try {
-					listEntries.add(itagsText.get(i) + sizes.get(i));
+					listEntries.add(new ShareActivityListItem(itagsText.get(i) + sizes.get(i), itags.get(i)));
 				} catch (NoSuchElementException e) {
-					listEntries.add("//");
+					listEntries.add(new ShareActivityListItem("//", -1));
 				} catch (IndexOutOfBoundsException e) {
-					listEntries.add("--");
+					listEntries.add(new ShareActivityListItem("--", -1));
 				}
 			//}
 		}
@@ -1582,40 +1592,40 @@ public class ShareActivity extends Activity {
 		}
 	}
 
-    private void codecMatcher(String current, int i) {
-        Pattern codecPattern = Pattern.compile("(webm|mp4|flv|3gp)");
-        Matcher codecMatcher = codecPattern.matcher(current);
-        if (codecMatcher.find()) {
-            codecs.add(codecMatcher.group());
-        } else {
-            codecs.add("video");
-        }
-        Utils.logger("d", "index: " + i + ", Codec: " + codecs.get(i), DEBUG_TAG);
-    }
+	private void codecMatcher(String current, int i) {
+		Pattern codecPattern = Pattern.compile("(webm|mp4|flv|3gp)");
+		Matcher codecMatcher = codecPattern.matcher(current);
+		if (codecMatcher.find()) {
+			codecs.add(codecMatcher.group());
+		} else {
+			codecs.add("video");
+		}
+		Utils.logger("d", "index: " + i + ", Codec: " + codecs.get(i), DEBUG_TAG);
+	}
 
-    private void qualityMatcher(String current, int i) {
-        Pattern qualityPattern = Pattern.compile("(highres|hd1080|hd720|large|medium|small)");
-        Matcher qualityMatcher = qualityPattern.matcher(current);
-        if (qualityMatcher.find()) {
-            qualities.add(qualityMatcher.group().replace("highres", "Original"));
-        } else {
-            qualities.add("-");
-        }
-        Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
-    }
-    
-    /*private void stereoMatcher(String current, int i) {
-        Pattern qualityPattern = Pattern.compile("stereo3d=1");
-        Matcher qualityMatcher = qualityPattern.matcher(current);
-        if (qualityMatcher.find()) {
-            stereo.add(qualityMatcher.group().replace("stereo3d=1", "_3D"));
-        } else {
-            stereo.add("");
-        }
-        //Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
-    }*/
-    
-    private void itagMatcher(String current, int i, boolean isItagsTextRun) {
+	private void qualityMatcher(String current, int i) {
+		Pattern qualityPattern = Pattern.compile("(highres|hd1080|hd720|large|medium|small)");
+		Matcher qualityMatcher = qualityPattern.matcher(current);
+		if (qualityMatcher.find()) {
+			qualities.add(qualityMatcher.group().replace("highres", "Original"));
+		} else {
+			qualities.add("-");
+		}
+		Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
+	}
+	
+	/*private void stereoMatcher(String current, int i) {
+		Pattern qualityPattern = Pattern.compile("stereo3d=1");
+		Matcher qualityMatcher = qualityPattern.matcher(current);
+		if (qualityMatcher.find()) {
+			stereo.add(qualityMatcher.group().replace("stereo3d=1", "_3D"));
+		} else {
+			stereo.add("");
+		}
+		//Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
+	}*/
+	
+	private void itagMatcher(String current, int i, boolean isItagsTextRun) {
 		String res = "-";
 		String itag = findMatchGroupOne(current, "itag=([0-9]{1,3})\\\\u0026");
 		if (itag.isEmpty()) {
