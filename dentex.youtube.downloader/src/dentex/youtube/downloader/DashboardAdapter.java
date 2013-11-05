@@ -281,7 +281,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 	                if (p.getFilename().toUpperCase().startsWith(constraint.toString().toUpperCase()))
 	                    filteredList.add(p);
 	            }
-	             
+	            
 	            results.values = filteredList;
 	            results.count = filteredList.size();
 	        }

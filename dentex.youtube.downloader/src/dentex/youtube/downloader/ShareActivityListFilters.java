@@ -8,7 +8,7 @@ import android.util.SparseArray;
 public class ShareActivityListFilters {
 	
 	static Integer[] iMp4 = { 18, 22, 37, 38, 82, 83, 84, 133, 134, 135, 136, 137, 138, 160, 264 };
-	static Integer[] iWebm = { 43, 44, 45, 46, 101, 102, 242, 243, 244, 245, 246, 247, 248 };
+	static Integer[] iWebm = { 43, 44, 45, 46, 100, 101, 102, 242, 243, 244, 245, 246, 247, 248 };
 	static Integer[] iFlv = { 5, 6, 34, 35 };
 	static Integer[] i3gp = { 17, 36 };
 	
@@ -22,8 +22,7 @@ public class ShareActivityListFilters {
 	static Integer[] iVo = { 133, 134, 135, 136, 137, 138, 160, 242, 243, 244, 245, 246, 247, 248, 264 };
 	static Integer[] iAo = { 139, 140, 141, 171, 172 };
 
-	public static List<Integer> getListFilters(int i) {
-		
+	public static CharSequence getListFilterConstraint(int c) {
 		//0
 		List<Integer> iMp4List = Arrays.asList(iMp4);
 		//1
@@ -64,6 +63,28 @@ public class ShareActivityListFilters {
 		filtersMap.put(9, iVoList);
 		filtersMap.put(10, iAoList);
 		
-		return filtersMap.get(i);
+		CharSequence constraint = null;
+		List<Integer> selectedMap = filtersMap.get(c);
+		
+		for (int i = 0; i < selectedMap.size(); i++) {
+			if (constraint == null) { 
+				constraint = String.valueOf(selectedMap.get(i));
+			} else {
+				constraint = constraint + "/" + selectedMap.get(i);
+			}
+		}
+		return constraint;
+	}
+	
+	public static CharSequence getMultipleListFilterConstraints(int[] c) {
+		CharSequence constraint = null;
+		for (int i = 0 ; i < c.length; i++) {
+			if (constraint == null) { 
+				constraint = getListFilterConstraint(c[i]);
+			} else {
+				constraint = constraint + "/" + getListFilterConstraint(c[i]);
+			}
+		}
+		return constraint;
 	}
 }

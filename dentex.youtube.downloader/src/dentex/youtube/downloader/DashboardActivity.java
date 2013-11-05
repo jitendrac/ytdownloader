@@ -154,7 +154,6 @@ public class DashboardActivity extends Activity {
 	private DashboardListItem currentItem = null;
 	private TextView userFilename;
 	private boolean extrTypeIsMp3Conv;
-	int posX;
 	private String type;
 	private boolean isFfmpegRunning = false;
 	private boolean isAnyAsyncInProgress = false;

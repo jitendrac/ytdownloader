@@ -39,9 +39,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import dentex.youtube.downloader.utils.Utils;
 
 public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> implements Filterable {
 
+	private final static String DEBUG_TAG = "ShareListAdapter";
 	private Context context;
 	private List<ShareActivityListItem> itemsList;
 	private List<ShareActivityListItem> origItemsList;
@@ -63,9 +65,9 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> implem
 		return itemsList.get(position);
 	}
 	
-	/*public long getItemId(int position) {
-		return items.get(position).hashCode();
-	}*/
+	public long getItemId(int position) {
+		return itemsList.get(position).hashCode();
+	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
@@ -102,24 +104,30 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> implem
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
-	        if (TextUtils.isEmpty(constraint)) {
-	            results.values = origItemsList;
-	            results.count = origItemsList.size();
-	        } else {
-	            filteredList = new ArrayList<ShareActivityListItem>();
-	            String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
-	            
-	            for (int i = 0; i < itemsList.size(); i++) {
-	            	int currentItag = itemsList.get(i).getItag();
+			
+			if (TextUtils.isEmpty(constraint)) {
+            	int[] c = { 1,2,3,4,5,6,7,8,9,10 };
+            	constraint = ShareActivityListFilters.getMultipleListFilterConstraints(c);
+            }
+            
+            String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
+            filteredList = new ArrayList<ShareActivityListItem>();
+            
+            for (ShareActivityListItem p : itemsList) {
+            	int currentItag = p.getItag();
+            	Utils.logger("i", "currentItag: " + currentItag, DEBUG_TAG);
 
-	                if (Integer.parseInt(constraintItags[i]) == currentItag)
-	                    filteredList.add(itemsList.get(i));
-	            }
-	             
-	            results.values = filteredList;
-	            results.count = filteredList.size();
-	        }
-			return results;
+            	for (int j = 0; j < constraintItags.length; j++) {
+            		if (currentItag == Integer.valueOf(constraintItags[j])) {
+            			Utils.logger("i", "currentItag matched: -> " + constraintItags[j], DEBUG_TAG);
+            			filteredList.add(p); 
+            		}
+            	}
+            }
+            results.values = filteredList;
+            results.count = filteredList.size();
+            
+            return results;
 		}
 
 		@SuppressWarnings("unchecked")

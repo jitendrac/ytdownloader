@@ -108,6 +108,8 @@ public class YTD extends Application implements QueueThreadListener{
 	public static QueueThread queueThread;
 	public static Handler handler;
 	
+	public static List<ShareActivityListItem> sAli;
+	
 	@Override
 	public void onCreate() {
 		Log.d(DEBUG_TAG, "onCreate");

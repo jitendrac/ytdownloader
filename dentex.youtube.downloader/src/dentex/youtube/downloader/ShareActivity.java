@@ -70,7 +70,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -144,7 +143,7 @@ public class ShareActivity extends Activity {
 	private TextView tv;
 	private TextView noVideoInfo;
 	private ListView lv;
-	private ArrayAdapter<ShareActivityListItem> aA;
+	private ShareListAdapter aA;
 	private List<String> links = new ArrayList<String>();
 	private List<String> codecs = new ArrayList<String>();
 	private List<String> qualities = new ArrayList<String>();
@@ -192,6 +191,7 @@ public class ShareActivity extends Activity {
 	private String dashUrl = "";
 	private String dashStartUrl;
 	List<Integer> filterInUse;
+	private boolean SHOW_ITAG_FOR_DUBUG = true; //TODO
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -310,16 +310,44 @@ public class ShareActivity extends Activity {
 				case R.id.menu_tutorials:
 					startActivity(new Intent(this, TutorialsActivity.class));
 					return true;
+				// TODO
 				// filter-test
 				case R.id.menu_filter_test:
-					CharSequence constraint = null;
-					List<Integer> l = ShareActivityListFilters.getListFilters(1); //test filter for all webm video
-					for (int i : l) {
-						if (constraint == null) constraint = String.valueOf(i);
-						constraint = constraint + "/" + i;
+			        AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+					View inputFilename = adbInflater.inflate(R.layout.dialog_input_map_num, null);
+					final TextView mapNum = (TextView) inputFilename.findViewById(R.id.input_map_num);
+					adb.setView(inputFilename);
+					adb.setTitle("filterMap: ");
+					
+					adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							if (aA != null) {
+								CharSequence constraint = "";
+								String num = mapNum.getText().toString();
+								
+								if (num.isEmpty()) {
+									aA.resetData();
+								} else {
+									constraint = ShareActivityListFilters.
+											getListFilterConstraint(Integer.valueOf(num));
+								}
+								
+								Utils.logger("i", "constraint: " + constraint, DEBUG_TAG);
+								aA.getFilter().filter(constraint);
+							}
+						}
+					});
+					
+					adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							// cancel
+						}
+					});
+					
+					if (! ((Activity) ShareActivity.this).isFinishing()) {
+						adb.show();
 					}
-					Utils.logger("i", "constraint: " + constraint, DEBUG_TAG);
-					aA.getFilter().filter(constraint);
 				default:
 					return super.onOptionsItemSelected(item);
 			}
@@ -586,7 +614,7 @@ public class ShareActivity extends Activity {
 				lv.setAdapter(aA);
 				
 				//asyncSizesFiller = new AsyncSizesFiller();
-				//asyncSizesFiller.execute(links.toArray(new String[0])); //TODO remove comments
+				//asyncSizesFiller.execute(links.toArray(new String[0])); 
 			}
 
 			tv.setText(titleRaw);
@@ -976,7 +1004,6 @@ public class ShareActivity extends Activity {
 				
 				Maps.removeFromAllMaps(ID);
 				
-				// TODO Auto FFmpeg task
 				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !autoFFmpegTaskAlreadySent) {
 					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 					
@@ -1073,7 +1100,6 @@ public class ShareActivity extends Activity {
 			}
 		};
 		
-		//TODO
 		File dest = new File(path, vFilename);
 		File destTemp = new File(path, vFilename + DownloadTask.TEMP_SUFFIX);
 		String previousJson = Json.readJsonDashboardFile(sShare);
@@ -1163,8 +1189,6 @@ public class ShareActivity extends Activity {
 		
 		findItags(ueStreams + "," + asStreams);
 		
-		//TODO
-		//adaptive streams always enabled to test filters
 		boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
 		if (asEnabled || autoModeEnabled) {
 			return splitStreamsGroups(ueStreams + "," + asStreams, content);
@@ -1187,7 +1211,7 @@ public class ShareActivity extends Activity {
 			
 			int[] log = new int[itags.size()];
 			for(int j = 0; j < itags.size(); j++) log[j] = itags.get(j);
-			Utils.logger("d", "itags matched: " + Arrays.toString(log), DEBUG_TAG);
+			Utils.logger("v", "itags matched: " + Arrays.toString(log), DEBUG_TAG);
 		}
 	}
 
@@ -1222,7 +1246,7 @@ public class ShareActivity extends Activity {
 				
 				i++;
 			}
-			findDashUrl(content);
+			//findDashUrl(content);
 		} else {
 			Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
 		}
@@ -1263,9 +1287,6 @@ public class ShareActivity extends Activity {
 			
 			listEntries.clear();
 			listEntriesBuilder();
-			
-			//listEntries.remove(index);
-			//listEntries.add(index, itagsText.get(index) + sizes.get(index));
 
 			aA.notifyDataSetChanged();
 		}
@@ -1289,37 +1310,15 @@ public class ShareActivity extends Activity {
 		Utils.logger("d", "findVideoFilenameBase: " + basename, DEBUG_TAG);
 	}
 	
-	private void listEntriesBuilder(/*enabledFilters*/) {
-		
-		/*
-		 *  TODO: 
-		 *  finish
-		 */
-		
-		// MULTIPLE filters test
-		/*int[] enabledFilters = { 0, 3 }; //example array
-		for (int i=0; i < enabledFilters.length; i++) {
-			if (i == 0) filterInUse = new ArrayList<Integer>(YTD.filtersMap.get(enabledFilters[i]));
-			filterInUse.addAll(YTD.filtersMap.get(enabledFilters[i]));
-			//Set<Integer> filterInUseSet = new HashSet<Integer>(filterInUse);
-			//List<Integer> filterInUseNoDup = new ArrayList<Integer>(filterInUseSet);
-		}*/
-		
-		// SINGLE filter test
-		/*int[] log = new int[ShareActivityListFilters.getListFilters(0).size()];
-		for(int j = 0; j < ShareActivityListFilters.getListFilters(0).size(); j++) log[j] = ShareActivityListFilters.getListFilters(0).get(j);
-		Utils.logger("d", "itags to filter: " + Arrays.toString(log), DEBUG_TAG);*/
-		
+	private void listEntriesBuilder() {
 		for (int i = 0; i < itagsText.size(); i++) {
-			//if (ShareActivityListFilters.getListFilters(0).contains(itags.get(i))) {
-				try {
-					listEntries.add(new ShareActivityListItem(itagsText.get(i) + sizes.get(i), itags.get(i)));
-				} catch (NoSuchElementException e) {
-					listEntries.add(new ShareActivityListItem("//", -1));
-				} catch (IndexOutOfBoundsException e) {
-					listEntries.add(new ShareActivityListItem("--", -1));
-				}
-			//}
+			try {
+				listEntries.add(new ShareActivityListItem(itagsText.get(i) + sizes.get(i), itags.get(i)));
+			} catch (NoSuchElementException e) {
+				listEntries.add(new ShareActivityListItem("//", -1));
+			} catch (IndexOutOfBoundsException e) {
+				listEntries.add(new ShareActivityListItem("--", -1));
+			}
 		}
 	}
 
@@ -1541,10 +1540,13 @@ public class ShareActivity extends Activity {
 				} else {
 					dashUrl = "";
 				}
-				if (dashUrl.toLowerCase().indexOf("ratebypass") == -1) {
-					dashUrl = dashUrl + "&ratebypass=yes";
-				}
-				if (!dashUrl.isEmpty()) { //TODO tests
+				
+				if (!dashUrl.isEmpty()) {
+					if (dashUrl.toLowerCase().indexOf("ratebypass") == -1) {
+						dashUrl = dashUrl + "&ratebypass=yes";
+					}
+				
+					//TODO test
 					if (itags.contains(135))
 						
 						addDashUrlEntries(3, dashUrl, "flv", "large", "35"); 
@@ -1556,7 +1558,7 @@ public class ShareActivity extends Activity {
 						addDashUrlEntries(0, dashUrl, "mp4", "highres", "38");
 					
 					if (itags.contains(248)) 
-						addDashUrlEntries(2, dashUrl, "webm", "hd1080", "46"); 
+						addDashUrlEntries(2, dashUrl, "webm", "hd1080", "46");
 				}
 			}
 		}
@@ -1569,8 +1571,11 @@ public class ShareActivity extends Activity {
 		sizes.add(i, "");
 		String itagText = findItag(itag);
 		
-		itagsText.add(i, itagText);
-		//itagsText.add(i, "[" + itag + "d] " + itagText); //debug
+		if (SHOW_ITAG_FOR_DUBUG) {
+			itagsText.add(i, "[" + itag + "d]_" + itagText);
+		} else {
+			itagsText.add(i, itagText);
+		}
 		
 		itags.add(i, Integer.parseInt(itag));
 		
@@ -1636,8 +1641,11 @@ public class ShareActivity extends Activity {
 			res = findItag(itag);
 			Utils.logger("d", "index: " + i + ", itag: " + itag + " (" + res + ")", DEBUG_TAG);
 			
-			itagsText.add(res);
-			//itagsText.add("[" + itag + "] " + res); //debug
+			if (SHOW_ITAG_FOR_DUBUG) {
+				itagsText.add("[" + itag + "]_" + res);
+			} else {
+				itagsText.add(res);
+			}
 			
 			if (itag.equals("139") || itag.equals("140") || itag.equals("141")) {
 				codecs.remove(i);
