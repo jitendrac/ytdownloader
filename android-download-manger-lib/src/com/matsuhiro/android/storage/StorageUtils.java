@@ -7,15 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import com.matsuhiro.android.download.DownloadTask;
-
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
 import android.util.Log;
 
+@SuppressLint("SdCardPath")
 public class StorageUtils {
 	
 	private static final String TAG = DownloadTask.class.getSimpleName();
@@ -23,9 +23,6 @@ public class StorageUtils {
 	@SuppressWarnings("deprecation")
 	public static long getAvailableStorage(String storageDirectory) {
 
-        /*String storageDirectory = null;
-        storageDirectory = Environment.getExternalStorageDirectory().toString();*/
-		
         try {
             StatFs stat = new StatFs(storageDirectory);
             long avaliableSize = ((long) stat.getAvailableBlocks() * (long) stat.getBlockSize());
@@ -62,6 +59,7 @@ public class StorageUtils {
         final String rawSecondaryStoragesStr = System.getenv("SECONDARY_STORAGE");
         // Primary emulated SD-CARD
         final String rawEmulatedStorageTarget = System.getenv("EMULATED_STORAGE_TARGET");
+        
         if(TextUtils.isEmpty(rawEmulatedStorageTarget)) {
             // Device has physical external storage; use plain paths.
             if(TextUtils.isEmpty(rawExternalStorage)) {
@@ -105,24 +103,55 @@ public class StorageUtils {
         return rv.toArray(new String[rv.size()]);
     }
     
-	private static String findMatch(String text, String regEx) {
+	private static boolean matchFound(String text, String regEx) {
 		Pattern pattern = Pattern.compile(regEx);
 		Matcher matcher = pattern.matcher(text);
-		if (matcher.find()) return matcher.group();
-		return "";
+		if (matcher.find()) return true;
+		return false;
+	}
+	
+	public static String[] getAlternateStorageDirectories() {
+		return new String[] {
+				"/mnt/sdcard",
+				"/emmc",
+				"/mnt/sdcard/external_sd",
+				"/mnt/external_sd",
+				"/sdcard/sd",
+				"/mnt/sdcard/bpemmctest",
+				"/mnt/sdcard/_ExternalSD",
+				"/mnt/sdcard-ext",
+				"/mnt/Removable/MicroSD",
+				"/Removable/MicroSD",
+				"/mnt/external1",
+				"/mnt/extSdCard",
+				"/mnt/extsd",
+				"/mnt/usb_storage",
+				"/extSdCard",
+				"/mnt/extSdCard",
+				"/mnt/UsbDriveA",
+				"/mnt/UsbDriveB", };
 	}
 	
 	public static String findStoragePathForGivenFile(File file) {
-		String[] storages = getStorageDirectories();
+		
 		String path = file.getAbsolutePath();
 		
-		String storageInUse = null;
-		
+		String[] storages = getStorageDirectories();		
 		for (int i = 0; i < storages.length; i++) {
-			String test = findMatch(path, storages[i]);
-			if (!test.isEmpty()) storageInUse = test;
+			if (matchFound(path, storages[i])) {
+				Log.v(TAG, "storageInUse: " + storages[i]);
+				return storages[i];
+			}
 		}
-		Log.d(TAG, "storageInUse: " + storageInUse);
-		return storageInUse;
+		
+		String[] alt_storages = getAlternateStorageDirectories();		
+		for (int i = 0; i < alt_storages.length; i++) {
+			if (matchFound(path, alt_storages[i])) {
+				Log.v(TAG, "storageInUse: " + alt_storages[i]);
+				return alt_storages[i];
+			}
+		}
+		
+		return Environment.getExternalStorageDirectory().getPath();
 	}
 }

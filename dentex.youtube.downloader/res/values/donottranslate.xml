@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.3.1 - Nov 06 2013
+        \n-----------------------------------
+        \n[x] fix for storage free space check
+        \n
         \n v3.3 - Nov 04 2013
         \n-----------------------------------
         \n[x] MP4 1080p and FLV 480p "hidden" streams support

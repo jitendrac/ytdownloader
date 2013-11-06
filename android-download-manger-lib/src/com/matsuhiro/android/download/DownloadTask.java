@@ -142,13 +142,13 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
 	
 	/*public Map<Long, Long> getDownloadSizeMap() {
 		return Maps.mDownloadSizeMap;
-	}
+	}*/
 
     public long getTotalSize() {
         return mTotalSize;
     }
 
-    public Map<Long, Long> getTotalSizeMap() {
+    /*public Map<Long, Long> getTotalSizeMap() {
     	return Maps.mTotalSizeMap;
 	}
 
