@@ -326,11 +326,11 @@ public class ShareActivity extends Activity {
 								CharSequence constraint = "";
 								String num = mapNum.getText().toString();
 								
-								if (num.isEmpty()) {
-									aA.resetData();
-								} else {
-									constraint = ShareActivityListFilters.
-											getListFilterConstraint(Integer.valueOf(num));
+								if (!num.isEmpty()) {
+									Integer numInt = Integer.valueOf(num);
+									if (numInt >= 0 && numInt <= 10) {
+										constraint = ShareActivityListFilters.getListFilterConstraint(numInt);
+									}
 								}
 								
 								Utils.logger("i", "constraint: " + constraint, DEBUG_TAG);
@@ -1246,7 +1246,7 @@ public class ShareActivity extends Activity {
 				
 				i++;
 			}
-			//findDashUrl(content);
+			findDashUrl(content);
 		} else {
 			Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
 		}

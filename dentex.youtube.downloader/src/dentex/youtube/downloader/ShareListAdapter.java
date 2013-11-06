@@ -37,46 +37,49 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 import dentex.youtube.downloader.utils.Utils;
 
-public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> implements Filterable {
+/* ShareListAdapter adapted from Stack Overflow:
+ * 
+ * http://stackoverflow.com/questions/13809585/android-filter-custom-array-adapter-and-bring-back-old-items-again
+ * 
+ * Q & A: http://stackoverflow.com/users/1610167/joda
+ */
+
+public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
 
 	private final static String DEBUG_TAG = "ShareListAdapter";
 	private Context context;
-	private List<ShareActivityListItem> itemsList;
-	private List<ShareActivityListItem> origItemsList;
-	private ArrayList<ShareActivityListItem> filteredList;
-	private Filter itemsFilter;
+	private List<ShareActivityListItem> filteredResultList;
+	private List<ShareActivityListItem> originalResultList;
+	private Filter filter;
 	
-	public ShareListAdapter(List<ShareActivityListItem> itemsList, Context ctx) {
-		super(ctx, R.layout.activity_share_list_item, itemsList);
-		this.itemsList = itemsList;
+	public ShareListAdapter(List<ShareActivityListItem> objects, Context ctx) {
+		super(ctx, R.layout.activity_share_list_item, objects);
 		this.context = ctx;
-		this.origItemsList = new ArrayList<ShareActivityListItem>(itemsList);
+		this.filteredResultList = objects;
+        this.originalResultList = objects;
 	}
 	
 	public int getCount() {
-		return itemsList.size();
+		return originalResultList.size();
 	}
 
 	public ShareActivityListItem getItem(int position) {
-		return itemsList.get(position);
+		return originalResultList.get(position);
 	}
 	
-	public long getItemId(int position) {
-		return itemsList.get(position).hashCode();
-	}
+	/*public long getItemId(int position) {
+		return filteredResultList.get(position).hashCode();
+	}*/
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
 		
 		ItemHolder holder = new ItemHolder();
 		
-		// First let's verify the convertView is not null
 		if (convertView == null) {
-			// This a new view we inflate the new layout
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(R.layout.activity_share_list_item, null);
 			
@@ -89,7 +92,7 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> implem
 			holder = (ItemHolder) v.getTag();
 		}
 		
-		ShareActivityListItem sli = itemsList.get(position);
+		ShareActivityListItem sli = originalResultList.get(position);
 		
 		holder.text.setText(sli.getText());
 		return v;
@@ -104,50 +107,53 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> implem
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
-			
-			if (TextUtils.isEmpty(constraint)) {
-            	int[] c = { 1,2,3,4,5,6,7,8,9,10 };
-            	constraint = ShareActivityListFilters.getMultipleListFilterConstraints(c);
-            }
-            
-            String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
-            filteredList = new ArrayList<ShareActivityListItem>();
-            
-            for (ShareActivityListItem p : itemsList) {
-            	int currentItag = p.getItag();
-            	Utils.logger("i", "currentItag: " + currentItag, DEBUG_TAG);
 
-            	for (int j = 0; j < constraintItags.length; j++) {
-            		if (currentItag == Integer.valueOf(constraintItags[j])) {
-            			Utils.logger("i", "currentItag matched: -> " + constraintItags[j], DEBUG_TAG);
-            			filteredList.add(p); 
-            		}
+            if (constraint == null || TextUtils.isEmpty(constraint)) {
+            	synchronized (this) {
+            		results.values = filteredResultList;
+                    results.count = filteredResultList.size();
             	}
+            } else {
+            	String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
+            	
+            	List<ShareActivityListItem> filteredList = new ArrayList<ShareActivityListItem>();
+            	List<ShareActivityListItem> unfilteredList = new ArrayList<ShareActivityListItem>();
+            	synchronized (this) {
+            		unfilteredList.addAll(filteredResultList);
+            	}
+            	
+            	for (int i = 0, l = unfilteredList.size(); i < l; i++) {
+	            	int currentItag = unfilteredList.get(i).getItag();
+	            	ShareActivityListItem p = unfilteredList.get(i);
+	            	Utils.logger("i", "currentItag: " + currentItag, DEBUG_TAG);
+	
+	            	for (int j = 0; j < constraintItags.length; j++) {
+	            		if (currentItag == Integer.valueOf(constraintItags[j])) {
+	            			Utils.logger("i", "currentItag matched: -> " + constraintItags[j], DEBUG_TAG);
+	            			filteredList.add(p); 
+	            		}
+	            	}
+            	}
+            	results.values = filteredList;
+            	results.count = filteredList.size();
             }
-            results.values = filteredList;
-            results.count = filteredList.size();
-            
             return results;
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			itemsList = (List<ShareActivityListItem>) results.values;
-	        notifyDataSetChanged();
+			originalResultList = (ArrayList<ShareActivityListItem>) results.values;
+			notifyDataSetChanged();
 		}
 	}
 	
 	@Override
 	public Filter getFilter() {
-	    if (itemsFilter == null)
-	        itemsFilter = new ItemsFilter();
+	    if (filter == null)
+	        filter = new ItemsFilter();
 	     
-	    return itemsFilter;
+	    return filter;
 	}
-	
-	public void resetData() {
-		itemsList = origItemsList;
-	}	
 }
 
