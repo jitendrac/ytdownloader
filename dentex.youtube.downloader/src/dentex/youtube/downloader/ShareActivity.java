@@ -973,7 +973,7 @@ public class ShareActivity extends Activity {
 				
 				String size;
 				try {
-					long downloadTotalSize = Maps.mTotalSizeMap.get(ID);
+					long downloadTotalSize = task.getTotalSize(); //Maps.mTotalSizeMap.get(ID);
 					size = String.valueOf(Utils.MakeSizeHumanReadable(downloadTotalSize, false));
 				} catch (NullPointerException e) {
 					Utils.logger("w", "NPE getting finished download size for ID: " + ID, DEBUG_TAG);

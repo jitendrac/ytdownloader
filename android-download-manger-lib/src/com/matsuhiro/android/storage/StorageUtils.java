@@ -9,13 +9,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.matsuhiro.android.download.DownloadTask;
-
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
 import android.util.Log;
 
+@SuppressLint("SdCardPath")
 public class StorageUtils {
 	
 	private static final String TAG = DownloadTask.class.getSimpleName();
@@ -139,7 +140,7 @@ public class StorageUtils {
 		String[] storages = getStorageDirectories();		
 		for (int i = 0; i < storages.length; i++) {
 			if (matchFound(path, storages[i])) {
-				Log.d(TAG, "storageInUse: " + storages[i]);
+				Log.v(TAG, "storageInUse: " + storages[i]);
 				return storages[i];
 			}
 		}
@@ -147,7 +148,7 @@ public class StorageUtils {
 		String[] alt_storages = getAlternateStorageDirectories();		
 		for (int i = 0; i < alt_storages.length; i++) {
 			if (matchFound(path, alt_storages[i])) {
-				Log.d(TAG, "storageInUse: " + alt_storages[i]);
+				Log.v(TAG, "storageInUse: " + alt_storages[i]);
 				return alt_storages[i];
 			}
 		}

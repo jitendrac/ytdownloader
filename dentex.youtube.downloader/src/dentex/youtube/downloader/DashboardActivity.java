@@ -814,7 +814,7 @@ public class DashboardActivity extends Activity {
 								new String[] { currentItem.getPath() + File.separator + currentItem.getFilename() }, 
 								new String[] {"video/*"});
 						
-						long downloadTotalSize = Maps.mTotalSizeMap.get(ID);
+						long downloadTotalSize = task.getTotalSize(); //Maps.mTotalSizeMap.get(ID);
 						String size = String.valueOf(Utils.MakeSizeHumanReadable(downloadTotalSize, false));
 						
 						Json.addEntryToJsonFile(

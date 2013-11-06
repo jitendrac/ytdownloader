@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="67"`
+`versionCode="68"`
 
-`versionName="3.3"`
+`versionName="3.3.1"`
 
-MD5 checksum: `2989e5dc2f1e1c3e21bfa5a2a606f900` dentex.youtube.downloader_v3.3.apk
+MD5 checksum: `2cad6b56392073580d70e483cbfecfdf` dentex.youtube.downloader_v3.3.1.apk
 
 DISCLAIMER
 ================================================================
@@ -143,6 +143,10 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.3.1 - Nov 06 2013 
+    ----------------------------------- 
+    [x] fix for storage free space check 
+     
      v3.3 - Nov 04 2013 
     ----------------------------------- 
     [x] MP4 1080p and FLV 480p "hidden" streams support 
