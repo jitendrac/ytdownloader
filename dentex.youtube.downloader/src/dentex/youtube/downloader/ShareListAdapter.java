@@ -40,19 +40,12 @@ import android.widget.Filter;
 import android.widget.TextView;
 import dentex.youtube.downloader.utils.Utils;
 
-/* ShareListAdapter adapted from Stack Overflow:
- * 
- * http://stackoverflow.com/questions/13809585/android-filter-custom-array-adapter-and-bring-back-old-items-again
- * 
- * Q & A: http://stackoverflow.com/users/1610167/joda
- */
-
 public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
 
 	private final static String DEBUG_TAG = "ShareListAdapter";
 	private Context context;
-	private List<ShareActivityListItem> filteredResultList;
-	private List<ShareActivityListItem> originalResultList;
+	private List<ShareActivityListItem> filteredResultList = new ArrayList<ShareActivityListItem>();
+	private List<ShareActivityListItem> originalResultList = new ArrayList<ShareActivityListItem>();
 	private Filter filter;
 	
 	public ShareListAdapter(List<ShareActivityListItem> objects, Context ctx) {
@@ -62,17 +55,24 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
         this.originalResultList = objects;
 	}
 	
+	@Override
 	public int getCount() {
 		return originalResultList.size();
 	}
-
+	
+	@Override
+	public int getPosition(ShareActivityListItem item) {
+		return originalResultList.indexOf(item);
+	}
+	
+	@Override
 	public ShareActivityListItem getItem(int position) {
 		return originalResultList.get(position);
 	}
 	
-	/*public long getItemId(int position) {
-		return filteredResultList.get(position).hashCode();
-	}*/
+	public long getItemId(int position) {
+		return originalResultList.get(position).hashCode();
+	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
@@ -125,7 +125,7 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
             	for (int i = 0, l = unfilteredList.size(); i < l; i++) {
 	            	int currentItag = unfilteredList.get(i).getItag();
 	            	ShareActivityListItem p = unfilteredList.get(i);
-	            	Utils.logger("i", "currentItag: " + currentItag, DEBUG_TAG);
+	            	//Utils.logger("i", "currentItag: " + currentItag, DEBUG_TAG);
 	
 	            	for (int j = 0; j < constraintItags.length; j++) {
 	            		if (currentItag == Integer.valueOf(constraintItags[j])) {

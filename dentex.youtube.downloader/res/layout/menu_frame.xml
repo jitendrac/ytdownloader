@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/filter_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filter by FORMAT" 
+    	android:textAppearance="?android:attr/textAllCaps"/>
+
+    <TextView
+        android:id="@+id/MP4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MP4" 
+    	android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    	android:gravity="center_vertical"
+    	android:paddingStart="6dp"
+    	android:paddingEnd="6dp"
+    	android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+
+    <TextView
+        android:id="@+id/WEBM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="WEBM"
+    	android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    	android:gravity="center_vertical"
+    	android:paddingStart="6dp"
+    	android:paddingEnd="6dp"
+    	android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    
+    <TextView
+        android:id="@+id/FLV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FLV"
+    	android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    	android:gravity="center_vertical"
+    	android:paddingStart="6dp"
+    	android:paddingEnd="6dp"
+    	android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    
+    <TextView
+        android:id="@+id/_3GP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3GP"
+    	android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    	android:gravity="center_vertical"
+    	android:paddingStart="6dp"
+    	android:paddingEnd="6dp"
+    	android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    
+    <TextView
+        android:id="@+id/ALL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View ALL"
+    	android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    	android:gravity="center_vertical"
+    	android:paddingStart="6dp"
+    	android:paddingEnd="6dp"
+    	android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    
+</LinearLayout>

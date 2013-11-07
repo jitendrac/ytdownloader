@@ -79,6 +79,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.matsuhiro.android.connect.NetworkUtils;
 import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
@@ -144,13 +145,13 @@ public class ShareActivity extends Activity {
 	private TextView noVideoInfo;
 	private ListView lv;
 	private ShareListAdapter aA;
-	private List<String> links = new ArrayList<String>();
-	private List<String> codecs = new ArrayList<String>();
-	private List<String> qualities = new ArrayList<String>();
-	private List<String> sizes = new ArrayList<String>();
-	private List<String> itagsText = new ArrayList<String>();
-	private List<Integer> itags = new ArrayList<Integer>();
-	private List<ShareActivityListItem> listEntries = new ArrayList<ShareActivityListItem>();
+	private static List<String> links = new ArrayList<String>();
+	private static List<String> codecs = new ArrayList<String>();
+	private static List<String> qualities = new ArrayList<String>();
+	private static List<String> sizes = new ArrayList<String>();
+	private static List<String> itagsText = new ArrayList<String>();
+	private static List<Integer> itags = new ArrayList<Integer>();
+	private static List<ShareActivityListItem> listEntries = new ArrayList<ShareActivityListItem>();
 	private String titleRaw;
 	private String basename;
 	private int pos;
@@ -191,6 +192,8 @@ public class ShareActivity extends Activity {
 	private String dashUrl = "";
 	private String dashStartUrl;
 	List<Integer> filterInUse;
+	SlidingMenu slMenu;
+	
 	private boolean SHOW_ITAG_FOR_DUBUG = true; //TODO
 
 	@Override
@@ -204,6 +207,31 @@ public class ShareActivity extends Activity {
 		
 		setContentView(R.layout.activity_share);
 		
+		if (aA != null) aA.clear();
+
+		links.clear();
+		codecs.clear();
+		qualities.clear();
+		sizes.clear();
+		itagsText.clear();
+		itags.clear();
+		listEntries.clear();
+		
+		// configure the SlidingMenu
+		slMenu = new SlidingMenu(this);
+		slMenu.setMode(SlidingMenu.LEFT);
+		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slMenu.setShadowWidthRes(R.dimen.shadow_width);
+		slMenu.setShadowDrawable(R.drawable.shadow);
+		slMenu.setBehindWidthRes(R.dimen.slidingmenu_width);
+		slMenu.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+		slMenu.setFadeDegree(0.35f);
+		slMenu.setHapticFeedbackEnabled(true);
+		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+
+		slMenu.setMenu(R.layout.menu_frame);
+
 		//showSizesInVideoList = YTD.settings.getBoolean("show_size_list", false);
 
 		// Language init
@@ -313,7 +341,7 @@ public class ShareActivity extends Activity {
 				// TODO
 				// filter-test
 				case R.id.menu_filter_test:
-			        AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+					AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 					View inputFilename = adbInflater.inflate(R.layout.dialog_input_map_num, null);
 					final TextView mapNum = (TextView) inputFilename.findViewById(R.id.input_map_num);
@@ -599,6 +627,8 @@ public class ShareActivity extends Activity {
 			
 			aA = new ShareListAdapter(listEntries, ShareActivity.this);
 			
+			ShareActivityListFilters.slideMenuItemsClickListenersSetup(ShareActivity.this, aA);
+			
 			if (autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("autoModeEnabled");
 				assignPath();
@@ -624,8 +654,14 @@ public class ShareActivity extends Activity {
 					//Utils.logger("i", "Selected link: " + links.get(pos), DEBUG_TAG);
 					BugSenseHandler.leaveBreadcrumb("ShareActivity_onItemClick");
 					assignPath();
+
+					Utils.logger("i", "click @ position: " + position, DEBUG_TAG);
 					
-					pos = position;	 
+					// get the filtered position
+					ShareActivityListItem item = aA.getItem(position);
+					int currItag = item.getItag();
+					pos = itags.indexOf(currItag);
+
 					//pos = 45;		// to test IndexOutOfBound Exception...
 					
 					mComposedName = composeVideoFilenameNoExt();
@@ -1310,7 +1346,7 @@ public class ShareActivity extends Activity {
 		Utils.logger("d", "findVideoFilenameBase: " + basename, DEBUG_TAG);
 	}
 	
-	private void listEntriesBuilder() {
+	public static void listEntriesBuilder() {
 		for (int i = 0; i < itagsText.size(); i++) {
 			try {
 				listEntries.add(new ShareActivityListItem(itagsText.get(i) + sizes.get(i), itags.get(i)));

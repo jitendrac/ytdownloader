@@ -570,13 +570,15 @@ public class Utils {
         	videoId = cursor.getLong(columnIndex);
         	videoUri = videosUri + "/" + videoId; 
         	logger("d", " -> contentUri: " + videoUri, DEBUG_TAG);
+        	
+        	cursor.close();
         } catch (IndexOutOfBoundsException e) {
         	logger("w", " -> contentUri not available", DEBUG_TAG);
         } catch (NullPointerException e) {
         	logger("w", " -> contentUri not available (NPE)", DEBUG_TAG);	
-        } finally {
+        } /*finally {
         	cursor.close();
-        }
+        }*/
 		
         return videoUri;
     }

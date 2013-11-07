@@ -3,24 +3,30 @@ package dentex.youtube.downloader;
 import java.util.Arrays;
 import java.util.List;
 
+import dentex.youtube.downloader.utils.Utils;
+import android.app.Activity;
 import android.util.SparseArray;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 public class ShareActivityListFilters {
 	
-	static Integer[] iMp4 = { 18, 22, 37, 38, 82, 83, 84, 133, 134, 135, 136, 137, 138, 160, 264 };
-	static Integer[] iWebm = { 43, 44, 45, 46, 100, 101, 102, 242, 243, 244, 245, 246, 247, 248 };
-	static Integer[] iFlv = { 5, 6, 34, 35 };
-	static Integer[] i3gp = { 17, 36 };
+	private static final String DEBUG_TAG = "ShareActivityListFilters";
 	
-	static Integer[] iHd = { 22, 37, 38, 45, 46, 84, 102, 136, 137, 138, 247, 248, 264 };
-	static Integer[] iLd = { 35, 44, 85, 135, 244, 245, 246 };
-	static Integer[] iMd = { 18, 34, 43, 82, 100, 101, 134, 243 };
-	static Integer[] iSd = { 5, 6, 17, 36, 83, 133 };
+	private static Integer[] iMp4 = { 18, 22, 37, 38, 82, 83, 84, 133, 134, 135, 136, 137, 138, 160, 264 };
+	private static Integer[] iWebm = { 43, 44, 45, 46, 100, 101, 102, 242, 243, 244, 245, 246, 247, 248 };
+	private static Integer[] iFlv = { 5, 6, 34, 35 };
+	private static Integer[] i3gp = { 17, 36 };
 	
-	static Integer[] i3d = { 82, 83, 84, 85, 100, 101, 102 };
+	private static Integer[] iHd = { 22, 37, 38, 45, 46, 84, 102, 136, 137, 138, 247, 248, 264 };
+	private static Integer[] iLd = { 35, 44, 85, 135, 244, 245, 246 };
+	private static Integer[] iMd = { 18, 34, 43, 82, 100, 101, 134, 243 };
+	private static Integer[] iSd = { 5, 6, 17, 36, 83, 133 };
 	
-	static Integer[] iVo = { 133, 134, 135, 136, 137, 138, 160, 242, 243, 244, 245, 246, 247, 248, 264 };
-	static Integer[] iAo = { 139, 140, 141, 171, 172 };
+	private static Integer[] i3d = { 82, 83, 84, 85, 100, 101, 102 };
+	
+	private static Integer[] iVo = { 133, 134, 135, 136, 137, 138, 160, 242, 243, 244, 245, 246, 247, 248, 264 };
+	private static Integer[] iAo = { 139, 140, 141, 171, 172 };
 
 	public static CharSequence getListFilterConstraint(int c) {
 		//0
@@ -86,5 +92,51 @@ public class ShareActivityListFilters {
 			}
 		}
 		return constraint;
+	}
+	
+	public static void slideMenuItemsClickListenersSetup(Activity act, final ShareListAdapter a) {
+		act.findViewById(R.id.MP4).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "MP4 filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(0);
+				a.getFilter().filter(constraint);
+			}
+		});
+		
+		act.findViewById(R.id.WEBM).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "WEBM filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(1);
+				a.getFilter().filter(constraint);
+			}
+		});
+		
+		act.findViewById(R.id.FLV).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "FLV filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(2);
+				a.getFilter().filter(constraint);
+			}
+		});
+		
+		act.findViewById(R.id._3GP).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "3GP filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(3);
+				a.getFilter().filter(constraint);
+			}
+		});
+		
+		act.findViewById(R.id.ALL).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
+				a.getFilter().filter("");
+			}
+		});
 	}
 }
