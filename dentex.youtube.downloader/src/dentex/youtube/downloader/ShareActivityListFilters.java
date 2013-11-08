@@ -94,48 +94,135 @@ public class ShareActivityListFilters {
 		return constraint;
 	}
 	
-	public static void slideMenuItemsClickListenersSetup(Activity act, final ShareListAdapter a) {
-		act.findViewById(R.id.MP4).setOnClickListener(new OnClickListener() {
+	public static void slideMenuItemsClickListenersSetup(final Activity act, final ShareListAdapter a) {
+		final View mp4 = act.findViewById(R.id.MP4);
+		mp4.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "MP4 filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(0);
 				a.getFilter().filter(constraint);
+				mp4.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
 			}
 		});
 		
-		act.findViewById(R.id.WEBM).setOnClickListener(new OnClickListener() {
+		final View webm = act.findViewById(R.id.WEBM);
+		webm.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "WEBM filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(1);
 				a.getFilter().filter(constraint);
+				webm.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
 			}
 		});
 		
-		act.findViewById(R.id.FLV).setOnClickListener(new OnClickListener() {
+		final View flv = act.findViewById(R.id.FLV);
+		flv.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "FLV filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(2);
 				a.getFilter().filter(constraint);
+				flv.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
 			}
 		});
 		
-		act.findViewById(R.id._3GP).setOnClickListener(new OnClickListener() {
+		final View _3gp = act.findViewById(R.id._3GP);
+		_3gp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "3GP filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(3);
 				a.getFilter().filter(constraint);
+				_3gp.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
 			}
 		});
 		
-		act.findViewById(R.id.ALL).setOnClickListener(new OnClickListener() {
+		final View all = act.findViewById(R.id.ALL);
+		all.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
 				a.getFilter().filter("");
+				all.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+			}
+		});
+		
+		final View hd = act.findViewById(R.id.HD);
+		hd.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "HD filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(4);
+				a.getFilter().filter(constraint);
+				hd.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+			}
+		});
+		
+		final View ld = act.findViewById(R.id.LD);
+		ld.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "LD filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(5);
+				a.getFilter().filter(constraint);
+				ld.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+			}
+		});
+		
+		final View md = act.findViewById(R.id.MD);
+		md.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "MD filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(6);
+				a.getFilter().filter(constraint);
+				md.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+			}
+		});
+		
+		final View sd = act.findViewById(R.id.SD);
+		sd.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "SD filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(7);
+				a.getFilter().filter(constraint);
+				sd.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+			}
+		});
+		
+		final View _3d = act.findViewById(R.id._3D);
+		_3d.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "3D filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(8);
+				a.getFilter().filter(constraint);
+				_3d.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+			}
+		});
+		
+		final View vo = act.findViewById(R.id.VO);
+		vo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "VO filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(9);
+				a.getFilter().filter(constraint);
+				vo.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+			}
+		});
+		
+		final View ao = act.findViewById(R.id.AO);
+		ao.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "AO filter clicked", DEBUG_TAG);
+				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(10);
+				a.getFilter().filter(constraint);
+				ao.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
 			}
 		});
 	}

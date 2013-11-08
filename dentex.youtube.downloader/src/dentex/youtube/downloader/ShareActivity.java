@@ -194,7 +194,7 @@ public class ShareActivity extends Activity {
 	List<Integer> filterInUse;
 	SlidingMenu slMenu;
 	
-	private boolean SHOW_ITAG_FOR_DUBUG = true; //TODO
+	private boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; //TODO set to false for release
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -231,7 +231,9 @@ public class ShareActivity extends Activity {
 		slMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 
 		slMenu.setMenu(R.layout.menu_frame);
-
+		
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		//showSizesInVideoList = YTD.settings.getBoolean("show_size_list", false);
 
 		// Language init
@@ -338,44 +340,6 @@ public class ShareActivity extends Activity {
 				case R.id.menu_tutorials:
 					startActivity(new Intent(this, TutorialsActivity.class));
 					return true;
-				// TODO
-				// filter-test
-				case R.id.menu_filter_test:
-					AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-					View inputFilename = adbInflater.inflate(R.layout.dialog_input_map_num, null);
-					final TextView mapNum = (TextView) inputFilename.findViewById(R.id.input_map_num);
-					adb.setView(inputFilename);
-					adb.setTitle("filterMap: ");
-					
-					adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							if (aA != null) {
-								CharSequence constraint = "";
-								String num = mapNum.getText().toString();
-								
-								if (!num.isEmpty()) {
-									Integer numInt = Integer.valueOf(num);
-									if (numInt >= 0 && numInt <= 10) {
-										constraint = ShareActivityListFilters.getListFilterConstraint(numInt);
-									}
-								}
-								
-								Utils.logger("i", "constraint: " + constraint, DEBUG_TAG);
-								aA.getFilter().filter(constraint);
-							}
-						}
-					});
-					
-					adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							// cancel
-						}
-					});
-					
-					if (! ((Activity) ShareActivity.this).isFinishing()) {
-						adb.show();
-					}
 				default:
 					return super.onOptionsItemSelected(item);
 			}
@@ -643,8 +607,10 @@ public class ShareActivity extends Activity {
 				listEntriesBuilder();
 				lv.setAdapter(aA);
 				
-				//asyncSizesFiller = new AsyncSizesFiller();
-				//asyncSizesFiller.execute(links.toArray(new String[0])); 
+				if (!SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
+					asyncSizesFiller = new AsyncSizesFiller();
+					asyncSizesFiller.execute(links.toArray(new String[0]));
+				}
 			}
 
 			tv.setText(titleRaw);
@@ -1607,7 +1573,7 @@ public class ShareActivity extends Activity {
 		sizes.add(i, "");
 		String itagText = findItag(itag);
 		
-		if (SHOW_ITAG_FOR_DUBUG) {
+		if (SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
 			itagsText.add(i, "[" + itag + "d]_" + itagText);
 		} else {
 			itagsText.add(i, itagText);
@@ -1677,7 +1643,7 @@ public class ShareActivity extends Activity {
 			res = findItag(itag);
 			Utils.logger("d", "index: " + i + ", itag: " + itag + " (" + res + ")", DEBUG_TAG);
 			
-			if (SHOW_ITAG_FOR_DUBUG) {
+			if (SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
 				itagsText.add("[" + itag + "]_" + res);
 			} else {
 				itagsText.add(res);

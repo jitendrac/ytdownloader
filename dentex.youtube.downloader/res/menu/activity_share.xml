@@ -31,10 +31,4 @@
         android:orderInCategory="10"
         android:showAsAction="collapseActionView" />
     
-    <item android:id="@+id/menu_filter_test"
-        android:title="filter-test"
-        android:titleCondensed="filter-test"
-        android:orderInCategory="5"
-        android:showAsAction="collapseActionView" />
-    
 </menu>
