@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 
 public class ShareActivityListFilters {
 	
@@ -102,6 +103,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "MP4 filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(0);
 				a.getFilter().filter(constraint);
+				resetAllBkg(act);
 				mp4.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
@@ -113,6 +115,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "WEBM filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(1);
 				a.getFilter().filter(constraint);
+				resetAllBkg(act);
 				webm.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
@@ -124,6 +127,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "FLV filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(2);
 				a.getFilter().filter(constraint);
+				resetAllBkg(act);
 				flv.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
@@ -135,6 +139,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "3GP filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(3);
 				a.getFilter().filter(constraint);
+				resetAllBkg(act);
 				_3gp.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
@@ -145,6 +150,7 @@ public class ShareActivityListFilters {
 			public void onClick(View v) {
 				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
 				a.getFilter().filter("");
+				resetAllBkg(act);
 				all.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
@@ -156,7 +162,8 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "HD filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(4);
 				a.getFilter().filter(constraint);
-				hd.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				resetAllBkg(act);
+				hd.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -167,7 +174,8 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "LD filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(5);
 				a.getFilter().filter(constraint);
-				ld.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				resetAllBkg(act);
+				ld.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -178,7 +186,8 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "MD filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(6);
 				a.getFilter().filter(constraint);
-				md.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				resetAllBkg(act);
+				md.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -189,7 +198,8 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "SD filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(7);
 				a.getFilter().filter(constraint);
-				sd.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				resetAllBkg(act);
+				sd.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -200,7 +210,8 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "3D filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(8);
 				a.getFilter().filter(constraint);
-				_3d.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				resetAllBkg(act);
+				_3d.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -211,7 +222,8 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "VO filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(9);
 				a.getFilter().filter(constraint);
-				vo.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				resetAllBkg(act);
+				vo.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -222,8 +234,17 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "AO filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(10);
 				a.getFilter().filter(constraint);
-				ao.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				resetAllBkg(act);
+				ao.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
+	}
+
+	private static void resetAllBkg(final Activity act) {
+		LinearLayout ll = (LinearLayout) act.findViewById(R.id.all_filters);
+		int childCount = ll.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			ll.getChildAt(i).setBackgroundColor(act.getResources().getColor(R.color.half_gray));
+		}
 	}
 }

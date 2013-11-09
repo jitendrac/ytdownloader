@@ -191,8 +191,7 @@ public class ShareActivity extends Activity {
 	private String jsonDataType = YTD.JSON_DATA_TYPE_V;
 	private String dashUrl = "";
 	private String dashStartUrl;
-	List<Integer> filterInUse;
-	SlidingMenu slMenu;
+	private SlidingMenu slMenu;
 	
 	private boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; //TODO set to false for release
 
@@ -229,7 +228,7 @@ public class ShareActivity extends Activity {
 //		if (theme.equals("D")) {
 //			slMenu.setBackgroundColor(getResources().getColor(android.R.color.background_dark));
 //		} else {
-//			slMenu.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+			slMenu.setBackgroundColor(getResources().getColor(R.color.half_gray));
 //		}
 		slMenu.setFadeDegree(0.35f);
 		slMenu.setHapticFeedbackEnabled(true);
@@ -1253,7 +1252,7 @@ public class ShareActivity extends Activity {
 				
 				i++;
 			}
-			findDashUrl(content);
+			//findDashUrl(content);
 		} else {
 			Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
 		}
