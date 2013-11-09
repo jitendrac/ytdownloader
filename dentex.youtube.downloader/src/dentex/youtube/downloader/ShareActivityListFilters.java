@@ -102,7 +102,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "MP4 filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(0);
 				a.getFilter().filter(constraint);
-				mp4.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				mp4.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -113,7 +113,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "WEBM filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(1);
 				a.getFilter().filter(constraint);
-				webm.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				webm.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -124,7 +124,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "FLV filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(2);
 				a.getFilter().filter(constraint);
-				flv.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				flv.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -135,7 +135,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "3GP filter clicked", DEBUG_TAG);
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(3);
 				a.getFilter().filter(constraint);
-				_3gp.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				_3gp.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		
@@ -145,7 +145,7 @@ public class ShareActivityListFilters {
 			public void onClick(View v) {
 				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
 				a.getFilter().filter("");
-				all.setBackgroundColor(act.getResources().getColor(android.R.color.holo_red_dark));
+				all.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
 			}
 		});
 		

@@ -1,152 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sv"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+	
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/sv"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
 
-    <LinearLayout
-        android:id="@+id/menu_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+		<LinearLayout
+			android:id="@+id/all_filters"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/filter_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Filter by format"
-            android:textAppearance="?android:attr/listSeparatorTextViewStyle"
-            android:textColor="@android:color/holo_orange_light" />
+			<TextView
+				android:id="@+id/filter_title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Filter by format"
+				android:textAppearance="?android:attr/listSeparatorTextViewStyle"
+				android:textColor="@android:color/holo_orange_light" />
 
-        <TextView
-            android:id="@+id/MP4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="MP4"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/MP4"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="MP4"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" 
+				android:textColor="@android:color/darker_gray"/>
 
-        <TextView
-            android:id="@+id/WEBM"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="WEBM"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/WEBM"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="WEBM"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall"
+				android:textColor="@android:color/darker_gray"/>
 
-        <TextView
-            android:id="@+id/FLV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="FLV"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/FLV"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="FLV"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall"
+				android:textColor="@android:color/darker_gray"/>
 
-        <TextView
-            android:id="@+id/_3GP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="3GP"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/_3GP"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="3GP"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall"
+				android:textColor="@android:color/darker_gray"/>
+			
+			<TextView
+		 		android:id="@+id/ALL"
+		 		android:layout_width="match_parent"
+		 		android:layout_height="wrap_content"
+		 		android:layout_gravity="bottom"
+		 		android:gravity="center_vertical"
+		 		android:padding="7dp"
+		 		android:text="View ALL"
+		 		android:textAppearance="?android:attr/textAppearanceListItemSmall"
+		 		android:textColor="@android:color/darker_gray"/>
 
-        <TextView
-            android:id="@+id/ALL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="View ALL"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/filter_quality"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Filter by quality"
+				android:textAppearance="?android:attr/listSeparatorTextViewStyle"
+				android:textColor="@android:color/holo_orange_light" />
 
-        <TextView
-            android:id="@+id/filter_quality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Filter by quality"
-            android:textAppearance="?android:attr/listSeparatorTextViewStyle"
-            android:textColor="@android:color/holo_orange_light" />
+			<TextView
+				android:id="@+id/HD"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="HD"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-        <TextView
-            android:id="@+id/HD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="HD"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/LD"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Large"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-        <TextView
-            android:id="@+id/LD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Large"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/MD"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Medium"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-        <TextView
-            android:id="@+id/MD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Medium"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/SD"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Small"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-        <TextView
-            android:id="@+id/SD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Small"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/filter_other"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Other filters"
+				android:textAppearance="?android:attr/listSeparatorTextViewStyle"
+				android:textColor="@android:color/holo_orange_light" />
 
-        <TextView
-            android:id="@+id/filter_other"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Other filters"
-            android:textAppearance="?android:attr/listSeparatorTextViewStyle"
-            android:textColor="@android:color/holo_orange_light" />
+			<TextView
+				android:id="@+id/_3D"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="3D"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-        <TextView
-            android:id="@+id/_3D"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="3D"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+			<TextView
+				android:id="@+id/VO"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Video-only"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-        <TextView
-            android:id="@+id/VO"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Video-only"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-
-        <TextView
-            android:id="@+id/AO"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="7dp"
-            android:text="Audio-only"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-    </LinearLayout>
-
-</ScrollView>
+			<TextView
+				android:id="@+id/AO"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="7dp"
+				android:text="Audio-only"
+				android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+	</LinearLayout>
+		
+	</ScrollView>

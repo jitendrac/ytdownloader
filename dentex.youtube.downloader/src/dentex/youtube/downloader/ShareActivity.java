@@ -217,6 +217,8 @@ public class ShareActivity extends Activity {
 		itags.clear();
 		listEntries.clear();
 		
+		String theme = YTD.settings.getString("choose_theme", "D");
+		
 		// configure the SlidingMenu
 		slMenu = new SlidingMenu(this);
 		slMenu.setMode(SlidingMenu.LEFT);
@@ -224,7 +226,11 @@ public class ShareActivity extends Activity {
 		slMenu.setShadowWidthRes(R.dimen.shadow_width);
 		slMenu.setShadowDrawable(R.drawable.shadow);
 		slMenu.setBehindWidthRes(R.dimen.slidingmenu_width);
-		slMenu.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+//		if (theme.equals("D")) {
+//			slMenu.setBackgroundColor(getResources().getColor(android.R.color.background_dark));
+//		} else {
+//			slMenu.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+//		}
 		slMenu.setFadeDegree(0.35f);
 		slMenu.setHapticFeedbackEnabled(true);
 		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -246,7 +252,6 @@ public class ShareActivity extends Activity {
 		progressBarD = (ProgressBar) findViewById(R.id.progressBarD);
 		progressBarL = (ProgressBar) findViewById(R.id.progressBarL);
 		
-		String theme = YTD.settings.getString("choose_theme", "D");
 		if (theme.equals("D")) {
 			progressBar1 = progressBarD;
 			progressBarL.setVisibility(View.GONE);
