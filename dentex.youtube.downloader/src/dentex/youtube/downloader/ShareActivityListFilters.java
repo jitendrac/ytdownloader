@@ -104,7 +104,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(0);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				mp4.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				mp4.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -116,7 +116,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(1);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				webm.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				webm.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -128,7 +128,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(2);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				flv.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				flv.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -140,7 +140,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(3);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				_3gp.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				_3gp.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -151,7 +151,7 @@ public class ShareActivityListFilters {
 				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
 				a.getFilter().filter("");
 				resetAllBkg(act);
-				all.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				all.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -163,7 +163,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(4);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				hd.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				hd.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -175,7 +175,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(5);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				ld.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				ld.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -187,7 +187,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(6);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				md.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				md.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -199,7 +199,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(7);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				sd.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				sd.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -211,7 +211,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(8);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				_3d.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				_3d.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -223,7 +223,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(9);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				vo.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				vo.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 		
@@ -235,7 +235,7 @@ public class ShareActivityListFilters {
 				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(10);
 				a.getFilter().filter(constraint);
 				resetAllBkg(act);
-				ao.setBackground(act.getResources().getDrawable(R.drawable.grad_bg_sel));
+				ao.setBackgroundResource(R.drawable.grad_bg_sel);
 			}
 		});
 	}
@@ -244,7 +244,7 @@ public class ShareActivityListFilters {
 		LinearLayout ll = (LinearLayout) act.findViewById(R.id.all_filters);
 		int childCount = ll.getChildCount();
 		for (int i = 0; i < childCount; i++) {
-			ll.getChildAt(i).setBackgroundColor(act.getResources().getColor(R.color.half_gray));
+			ll.getChildAt(i).setBackgroundResource(R.color.half_gray);
 		}
 	}
 }

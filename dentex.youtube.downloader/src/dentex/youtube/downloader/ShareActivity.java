@@ -225,11 +225,7 @@ public class ShareActivity extends Activity {
 		slMenu.setShadowWidthRes(R.dimen.shadow_width);
 		slMenu.setShadowDrawable(R.drawable.shadow);
 		slMenu.setBehindWidthRes(R.dimen.slidingmenu_width);
-//		if (theme.equals("D")) {
-//			slMenu.setBackgroundColor(getResources().getColor(android.R.color.background_dark));
-//		} else {
-			slMenu.setBackgroundColor(getResources().getColor(R.color.half_gray));
-//		}
+		slMenu.setBackgroundColor(getResources().getColor(R.color.half_gray));
 		slMenu.setFadeDegree(0.35f);
 		slMenu.setHapticFeedbackEnabled(true);
 		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -237,7 +233,7 @@ public class ShareActivity extends Activity {
 
 		slMenu.setMenu(R.layout.menu_frame);
 		
-		//getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		//showSizesInVideoList = YTD.settings.getBoolean("show_size_list", false);
 
@@ -327,25 +323,28 @@ public class ShareActivity extends Activity {
 		super.onOptionsItemSelected(item);
 		if (!autoModeEnabled) {
 			switch(item.getItemId()){
-				case R.id.menu_donate:
-					startActivity(new Intent(this, DonateActivity.class));
-					return true;
-				case R.id.menu_settings:
-					Intent sIntent = new Intent(this, SettingsActivity.class);
-					sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-					startActivity(sIntent);
-					return true;
-				case R.id.menu_about:
-					startActivity(new Intent(this, AboutActivity.class));
-					return true;
-				case R.id.menu_dashboard:
-					launchDashboardActivity();
-					return true;
-				case R.id.menu_tutorials:
-					startActivity(new Intent(this, TutorialsActivity.class));
-					return true;
-				default:
-					return super.onOptionsItemSelected(item);
+			case android.R.id.home:
+				slMenu.toggle();
+				return true;
+			case R.id.menu_donate:
+				startActivity(new Intent(this, DonateActivity.class));
+				return true;
+			case R.id.menu_settings:
+				Intent sIntent = new Intent(this, SettingsActivity.class);
+				sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				startActivity(sIntent);
+				return true;
+			case R.id.menu_about:
+				startActivity(new Intent(this, AboutActivity.class));
+				return true;
+			case R.id.menu_dashboard:
+				launchDashboardActivity();
+				return true;
+			case R.id.menu_tutorials:
+				startActivity(new Intent(this, TutorialsActivity.class));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 			}
 		} else {
 			return super.onOptionsItemSelected(item);
