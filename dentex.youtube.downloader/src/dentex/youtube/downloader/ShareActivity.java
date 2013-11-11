@@ -224,8 +224,8 @@ public class ShareActivity extends Activity {
 		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		slMenu.setShadowWidthRes(R.dimen.shadow_width);
 		slMenu.setShadowDrawable(R.drawable.shadow);
-		slMenu.setBehindWidthRes(R.dimen.slidingmenu_width);
-		slMenu.setBackgroundColor(getResources().getColor(R.color.half_gray));
+		slMenu.setBehindOffsetRes(R.dimen.slidingmenu_width);
+		//slMenu.setBackgroundColor(getResources().getColor(R.color.half_gray));
 		slMenu.setFadeDegree(0.35f);
 		slMenu.setHapticFeedbackEnabled(true);
 		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -384,16 +384,20 @@ public class ShareActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		Utils.logger("v", "_onBackPressed", DEBUG_TAG);
-		super.onBackPressed();
-		
-		// To cancel the AsyncDownload AsyncSizesFiller tasks only on back button pressed (not when switching to other activities)
-		if (isAsyncDownloadRunning) {
-			Utils.logger("v", "canceling asyncDownload", DEBUG_TAG);
-			asyncDownload.cancel(true);
-		}
-		if (isAsyncSizesFillerRunning) {
-			Utils.logger("v", "canceling asyncSizesFiller", DEBUG_TAG);
-			asyncSizesFiller.cancel(true);
+		if (slMenu.isMenuShowing()) {
+			slMenu.showContent(true);
+		} else {
+			super.onBackPressed();
+			// To cancel the AsyncDownload AsyncSizesFiller tasks only on 
+			// back button pressed (not when switching to other activities)
+			if (isAsyncDownloadRunning) {
+				Utils.logger("v", "canceling asyncDownload", DEBUG_TAG);
+				asyncDownload.cancel(true);
+			}
+			if (isAsyncSizesFillerRunning) {
+				Utils.logger("v", "canceling asyncSizesFiller", DEBUG_TAG);
+				asyncSizesFiller.cancel(true);
+			}
 		}
 	}
 
@@ -594,8 +598,6 @@ public class ShareActivity extends Activity {
 			
 			aA = new ShareListAdapter(listEntries, ShareActivity.this);
 			
-			ShareActivityListFilters.slideMenuItemsClickListenersSetup(ShareActivity.this, aA);
-			
 			if (autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("autoModeEnabled");
 				assignPath();
@@ -607,6 +609,8 @@ public class ShareActivity extends Activity {
 					launchDashboardActivity();
 				}
 			} else {
+				ShareActivityListFilters.slideMenuItemsClickListenersSetup(ShareActivity.this, aA);
+				
 				listEntriesBuilder();
 				lv.setAdapter(aA);
 				

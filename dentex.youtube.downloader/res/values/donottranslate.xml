@@ -510,6 +510,8 @@
     <string name="app_name">YouTube Downloader</string>
     <string name="title_activity_share">YouTube Downloader</string>
     
+    <string name="dividers_descr">Divider</string>
+    
     <string-array name="standard_location_entries">
         <item>Downloads</item>
         <item>DCIM</item>
@@ -661,5 +663,12 @@
     </string-array>
     
     <string name="lang_default">default</string>
+    
+    <string name="filter_mp4">MP4</string>
+    <string name="filter_webm">WEBM</string>
+    <string name="filter_flv">FLV</string>
+    <string name="filter_3gp">3GP</string>
+    <string name="filter_hd">HD</string>
+    <string name="filter_3d">3D</string>
 
 </resources>

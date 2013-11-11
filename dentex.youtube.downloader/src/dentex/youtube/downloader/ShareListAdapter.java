@@ -109,18 +109,18 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
 			FilterResults results = new FilterResults();
 
             if (constraint == null || TextUtils.isEmpty(constraint)) {
-            	synchronized (this) {
+            	//synchronized (this) {
             		results.values = filteredResultList;
                     results.count = filteredResultList.size();
-            	}
+            	//}
             } else {
             	String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
             	
             	List<ShareActivityListItem> filteredList = new ArrayList<ShareActivityListItem>();
             	List<ShareActivityListItem> unfilteredList = new ArrayList<ShareActivityListItem>();
-            	synchronized (this) {
+            	//synchronized (this) {
             		unfilteredList.addAll(filteredResultList);
-            	}
+            	//}
             	
             	for (int i = 0, l = unfilteredList.size(); i < l; i++) {
 	            	int currentItag = unfilteredList.get(i).getItag();

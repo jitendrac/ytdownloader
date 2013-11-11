@@ -37,6 +37,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
@@ -108,7 +109,7 @@ public class YTD extends Application implements QueueThreadListener{
 	public static QueueThread queueThread;
 	public static Handler handler;
 	
-	public static List<ShareActivityListItem> sAli;
+	public static Drawable slMenuOrigBkg;
 	
 	@Override
 	public void onCreate() {

@@ -9,9 +9,27 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ShareActivityListFilters {
 	
+	private static final String VIEW_ALL_STRING = "";
+	private static final int VIEW_ALL = -1;
+	
+	private static final int AO_FILTER = 10;
+	private static final int VO_FILTER = 9;
+	private static final int _3D_FILTER = 8;
+	
+	private static final int SD_FILTER = 7;
+	private static final int MD_FILTER = 6;
+	private static final int LD_FILTER = 5;
+	private static final int HD_FILTER = 4;
+
+	private static final int _3GP_FILTER = 3;
+	private static final int FLV_FILTER = 2;
+	private static final int WEBM_FILTER = 1;
+	private static final int MP4_FILTER = 0;
+
 	private static final String DEBUG_TAG = "ShareActivityListFilters";
 	
 	private static Integer[] iMp4 = { 18, 22, 37, 38, 82, 83, 84, 133, 134, 135, 136, 137, 138, 160, 264 };
@@ -58,17 +76,19 @@ public class ShareActivityListFilters {
 		
 		SparseArray<List<Integer>> filtersMap = new SparseArray<List<Integer>>();
 		
-		filtersMap.put(0, iMp4List);
-		filtersMap.put(1, iWebmList);
-		filtersMap.put(2, iFlvList);
-		filtersMap.put(3, i3gpList);
-		filtersMap.put(4, iHdList);
-		filtersMap.put(5, iLdList);
-		filtersMap.put(6, iMdList);
-		filtersMap.put(7, iSdList);
-		filtersMap.put(8, i3dList);
-		filtersMap.put(9, iVoList);
-		filtersMap.put(10, iAoList);
+		filtersMap.put(MP4_FILTER, iMp4List);
+		filtersMap.put(WEBM_FILTER, iWebmList);
+		filtersMap.put(FLV_FILTER, iFlvList);
+		filtersMap.put(_3GP_FILTER, i3gpList);
+		filtersMap.put(HD_FILTER, iHdList);
+		filtersMap.put(LD_FILTER, iLdList);
+		filtersMap.put(MD_FILTER, iMdList);
+		filtersMap.put(SD_FILTER, iSdList);
+		filtersMap.put(_3D_FILTER, i3dList);
+		filtersMap.put(VO_FILTER, iVoList);
+		filtersMap.put(AO_FILTER, iAoList);
+		
+		if (c == -1) return VIEW_ALL_STRING;
 		
 		CharSequence constraint = null;
 		List<Integer> selectedMap = filtersMap.get(c);
@@ -96,155 +116,142 @@ public class ShareActivityListFilters {
 	}
 	
 	public static void slideMenuItemsClickListenersSetup(final Activity act, final ShareListAdapter a) {
+		final int storedFilterInt = YTD.settings.getInt("list_filter", VIEW_ALL);
+		final CharSequence listFilterConstraint = getListFilterConstraint(storedFilterInt);
+		a.getFilter().filter(listFilterConstraint);
+		
 		final View mp4 = act.findViewById(R.id.MP4);
+		final View webm = act.findViewById(R.id.WEBM);
+		final View flv = act.findViewById(R.id.FLV);
+		final View _3gp = act.findViewById(R.id._3GP);
+		final View hd = act.findViewById(R.id.HD);
+		final View ld = act.findViewById(R.id.LD);
+		final View md = act.findViewById(R.id.MD);
+		final View sd = act.findViewById(R.id.SD);
+		final View _3d = act.findViewById(R.id._3D);
+		final View vo = act.findViewById(R.id.VO);
+		final View ao = act.findViewById(R.id.AO);
+		final View all = act.findViewById(R.id.ALL);
+		
+		YTD.slMenuOrigBkg = mp4.getBackground();
+		
 		mp4.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "MP4 filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(0);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				mp4.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, MP4_FILTER);
 			}
 		});
 		
-		final View webm = act.findViewById(R.id.WEBM);
 		webm.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "WEBM filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(1);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				webm.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, WEBM_FILTER);
 			}
 		});
 		
-		final View flv = act.findViewById(R.id.FLV);
 		flv.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "FLV filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(2);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				flv.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, FLV_FILTER);
 			}
 		});
 		
-		final View _3gp = act.findViewById(R.id._3GP);
+		
 		_3gp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "3GP filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(3);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				_3gp.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, _3GP_FILTER);
 			}
 		});
 		
-		final View all = act.findViewById(R.id.ALL);
-		all.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
-				a.getFilter().filter("");
-				resetAllBkg(act);
-				all.setBackgroundResource(R.drawable.grad_bg_sel);
-			}
-		});
-		
-		final View hd = act.findViewById(R.id.HD);
 		hd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "HD filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(4);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				hd.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, HD_FILTER);
 			}
 		});
 		
-		final View ld = act.findViewById(R.id.LD);
 		ld.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "LD filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(5);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				ld.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, LD_FILTER);
 			}
 		});
 		
-		final View md = act.findViewById(R.id.MD);
 		md.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "MD filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(6);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				md.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, MD_FILTER);
 			}
 		});
 		
-		final View sd = act.findViewById(R.id.SD);
 		sd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "SD filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(7);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				sd.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, SD_FILTER);
 			}
 		});
 		
-		final View _3d = act.findViewById(R.id._3D);
 		_3d.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "3D filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(8);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				_3d.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, _3D_FILTER);
 			}
 		});
 		
-		final View vo = act.findViewById(R.id.VO);
 		vo.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "VO filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(9);
-				a.getFilter().filter(constraint);
-				resetAllBkg(act);
-				vo.setBackgroundResource(R.drawable.grad_bg_sel);
+				reactToViewClick(act, a, v, VO_FILTER);
 			}
 		});
 		
-		final View ao = act.findViewById(R.id.AO);
 		ao.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Utils.logger("d", "AO filter clicked", DEBUG_TAG);
-				CharSequence constraint = ShareActivityListFilters.getListFilterConstraint(10);
-				a.getFilter().filter(constraint);
+				reactToViewClick(act, a, v, AO_FILTER);
+			}
+		});
+		
+		all.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
+				a.getFilter().filter(VIEW_ALL_STRING);
 				resetAllBkg(act);
-				ao.setBackgroundResource(R.drawable.grad_bg_sel);
+				YTD.settings.edit().putInt("list_filter", VIEW_ALL).commit();
 			}
 		});
 	}
+	
+	private static void reactToViewClick(final Activity act, final ShareListAdapter a, View v, int filterInt) {
+		CharSequence constraint = getListFilterConstraint(filterInt);
+		a.getFilter().filter(constraint);
+		resetAllBkg(act);
+		v.setBackgroundResource(R.drawable.grad_bg_sel);
+		YTD.settings.edit().putInt("list_filter", filterInt).commit();
+	}
 
+	@SuppressWarnings("deprecation")
 	private static void resetAllBkg(final Activity act) {
 		LinearLayout ll = (LinearLayout) act.findViewById(R.id.all_filters);
 		int childCount = ll.getChildCount();
 		for (int i = 0; i < childCount; i++) {
-			ll.getChildAt(i).setBackgroundResource(R.color.half_gray);
+			
+			final View childAt = ll.getChildAt(i);
+			if (childAt instanceof TextView)
+				childAt.setBackgroundDrawable(YTD.slMenuOrigBkg);
 		}
 	}
 }
