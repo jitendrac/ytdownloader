@@ -40,39 +40,41 @@ import android.widget.Filter;
 import android.widget.TextView;
 import dentex.youtube.downloader.utils.Utils;
 
-public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
+public class ShareActivityAdapter extends ArrayAdapter<ShareActivityListItem> {
 
-	private final static String DEBUG_TAG = "ShareListAdapter";
+	private final static String DEBUG_TAG = "ShareActivityAdapter";
+		
 	private Context context;
-	private List<ShareActivityListItem> filteredResultList = new ArrayList<ShareActivityListItem>();
-	private List<ShareActivityListItem> originalResultList = new ArrayList<ShareActivityListItem>();
 	private Filter filter;
 	
-	public ShareListAdapter(List<ShareActivityListItem> objects, Context ctx) {
-		super(ctx, R.layout.activity_share_list_item, objects);
+	private List<ShareActivityListItem> itemsList;
+	private List<ShareActivityListItem> origItemsList;
+	
+	public ShareActivityAdapter(List<ShareActivityListItem> itemsList, Context ctx) {
+		super(ctx, R.layout.activity_share_list_item, itemsList);
 		this.context = ctx;
-		this.filteredResultList = objects;
-        this.originalResultList = objects;
+        this.itemsList = itemsList;
+        this.origItemsList = itemsList; //new ArrayList<ShareActivityListItem>(itemsList);
 	}
 	
 	@Override
 	public int getCount() {
-		return originalResultList.size();
+		return itemsList.size();
 	}
 	
 	@Override
 	public int getPosition(ShareActivityListItem item) {
-		return originalResultList.indexOf(item);
+		return itemsList.indexOf(item);
 	}
 	
 	@Override
 	public ShareActivityListItem getItem(int position) {
-		return originalResultList.get(position);
+		return itemsList.get(position);
 	}
 	
-	public long getItemId(int position) {
-		return originalResultList.get(position).hashCode();
-	}
+	/*public long getItemId(int position) {
+		return itemsList.get(position).hashCode();
+	}*/
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
@@ -92,7 +94,7 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
 			holder = (ItemHolder) v.getTag();
 		}
 		
-		ShareActivityListItem sli = originalResultList.get(position);
+		ShareActivityListItem sli = itemsList.get(position);
 		
 		holder.text.setText(sli.getText());
 		return v;
@@ -109,31 +111,23 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
 			FilterResults results = new FilterResults();
 
             if (constraint == null || TextUtils.isEmpty(constraint)) {
-            	//synchronized (this) {
-            		results.values = filteredResultList;
-                    results.count = filteredResultList.size();
-            	//}
+            	results.values = origItemsList;
+                results.count = origItemsList.size();
             } else {
             	String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
             	
             	List<ShareActivityListItem> filteredList = new ArrayList<ShareActivityListItem>();
-            	List<ShareActivityListItem> unfilteredList = new ArrayList<ShareActivityListItem>();
-            	//synchronized (this) {
-            		unfilteredList.addAll(filteredResultList);
-            	//}
             	
-            	for (int i = 0, l = unfilteredList.size(); i < l; i++) {
-	            	int currentItag = unfilteredList.get(i).getItag();
-	            	ShareActivityListItem p = unfilteredList.get(i);
-	            	//Utils.logger("i", "currentItag: " + currentItag, DEBUG_TAG);
-	
-	            	for (int j = 0; j < constraintItags.length; j++) {
-	            		if (currentItag == Integer.valueOf(constraintItags[j])) {
+            	for (ShareActivityListItem p : itemsList) {
+            		int currentItag = p.getItag();
+            		for (int j = 0; j < constraintItags.length; j++) {
+            			if (currentItag == Integer.valueOf(constraintItags[j])) {
 	            			Utils.logger("i", "currentItag matched: -> " + constraintItags[j], DEBUG_TAG);
 	            			filteredList.add(p); 
 	            		}
-	            	}
+            		}
             	}
+            	
             	results.values = filteredList;
             	results.count = filteredList.size();
             }
@@ -143,7 +137,7 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			originalResultList = (ArrayList<ShareActivityListItem>) results.values;
+			itemsList = (ArrayList<ShareActivityListItem>) results.values;
 			notifyDataSetChanged();
 		}
 	}
@@ -156,4 +150,3 @@ public class ShareListAdapter extends ArrayAdapter<ShareActivityListItem> {
 	    return filter;
 	}
 }
-

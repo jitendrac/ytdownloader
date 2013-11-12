@@ -144,7 +144,7 @@ public class ShareActivity extends Activity {
 	private TextView tv;
 	private TextView noVideoInfo;
 	private ListView lv;
-	private ShareListAdapter aA;
+	private ShareActivityAdapter aA;
 	private static List<String> links = new ArrayList<String>();
 	private static List<String> codecs = new ArrayList<String>();
 	private static List<String> qualities = new ArrayList<String>();
@@ -225,7 +225,6 @@ public class ShareActivity extends Activity {
 		slMenu.setShadowWidthRes(R.dimen.shadow_width);
 		slMenu.setShadowDrawable(R.drawable.shadow);
 		slMenu.setBehindOffsetRes(R.dimen.slidingmenu_width);
-		//slMenu.setBackgroundColor(getResources().getColor(R.color.half_gray));
 		slMenu.setFadeDegree(0.35f);
 		slMenu.setHapticFeedbackEnabled(true);
 		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -596,7 +595,7 @@ public class ShareActivity extends Activity {
 				noVideosMsgs("info", getString(R.string.encrypted_streams));
 			}
 			
-			aA = new ShareListAdapter(listEntries, ShareActivity.this);
+			aA = new ShareActivityAdapter(listEntries, ShareActivity.this);
 			
 			if (autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("autoModeEnabled");
@@ -608,9 +607,8 @@ public class ShareActivity extends Activity {
 					Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 					launchDashboardActivity();
 				}
-			} else {
-				ShareActivityListFilters.slideMenuItemsClickListenersSetup(ShareActivity.this, aA);
-				
+			} else {				
+				ShareActivityListFilters.setupFilters(ShareActivity.this, aA);
 				listEntriesBuilder();
 				lv.setAdapter(aA);
 				
@@ -1833,29 +1831,29 @@ public class ShareActivity extends Activity {
 			is = conn.getInputStream();
 			return BitmapFactory.decodeStream(is);
 		} catch (IOException e) {
-			Log.e(DEBUG_TAG, "IOException @ " + e.getMessage());
+			Log.e(DEBUG_TAG, "IOException:" + e.getMessage());
 			return null;
 		}
 	}
 	
 	private void assignBitmapToVideoListThumbnail(String[] url) {
 		Bitmap bm0  = downloadThumbnail(url[0]);
-		if (bm0 != null) {
+		if (bm0 != null && !asyncDownload.isCancelled()) {
 			img = bm0;
 			Utils.logger("d", "assigning bitmap from url[0]: " + url[0], DEBUG_TAG);
 		} else {
 			Bitmap bm1  = downloadThumbnail(url[1]);
-			if (bm1 != null) {
+			if (bm1 != null && !asyncDownload.isCancelled()) {
 				img = bm1;
 				Utils.logger("d", "assigning bitmap from url[1]: " + url[1], DEBUG_TAG);
 			} else {
 				Bitmap bm2  = downloadThumbnail(url[2]);
-				if (bm2 != null) {
+				if (bm2 != null && !asyncDownload.isCancelled()) {
 					img = bm2;
 					Utils.logger("d", "assigning bitmap from url[2]: " + url[2], DEBUG_TAG);
 				} else {
 					Bitmap bm3  = downloadThumbnail(url[3]);
-					if (bm3 != null) {
+					if (bm3 != null && !asyncDownload.isCancelled()) {
 						img = bm3;
 						Utils.logger("d", "assigning bitmap from url[3]: " + url[3], DEBUG_TAG);
 					} else {

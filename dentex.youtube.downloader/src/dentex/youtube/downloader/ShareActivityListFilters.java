@@ -115,10 +115,10 @@ public class ShareActivityListFilters {
 		return constraint;
 	}
 	
-	public static void slideMenuItemsClickListenersSetup(final Activity act, final ShareListAdapter a) {
-		final int storedFilterInt = YTD.settings.getInt("list_filter", VIEW_ALL);
+	public static void setupFilters(final Activity act, final ShareActivityAdapter a) {
+		/*final int storedFilterInt = YTD.settings.getInt("list_filter", VIEW_ALL);
 		final CharSequence listFilterConstraint = getListFilterConstraint(storedFilterInt);
-		a.getFilter().filter(listFilterConstraint);
+		if (storedFilterInt != VIEW_ALL) a.getFilter().filter(listFilterConstraint);*/
 		
 		final View mp4 = act.findViewById(R.id.MP4);
 		final View webm = act.findViewById(R.id.WEBM);
@@ -235,12 +235,12 @@ public class ShareActivityListFilters {
 		});
 	}
 	
-	private static void reactToViewClick(final Activity act, final ShareListAdapter a, View v, int filterInt) {
+	private static void reactToViewClick(final Activity act, final ShareActivityAdapter a, View v, int filterInt) {
 		CharSequence constraint = getListFilterConstraint(filterInt);
 		a.getFilter().filter(constraint);
 		resetAllBkg(act);
 		v.setBackgroundResource(R.drawable.grad_bg_sel);
-		YTD.settings.edit().putInt("list_filter", filterInt).commit();
+		//YTD.settings.edit().putInt("list_filter", filterInt).commit();
 	}
 
 	@SuppressWarnings("deprecation")

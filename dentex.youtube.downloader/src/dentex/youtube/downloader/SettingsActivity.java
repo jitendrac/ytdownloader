@@ -590,11 +590,7 @@ public class SettingsActivity extends Activity {
 		private void initFFmpegAutoCb() {
 			boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
 			CheckBoxPreference cb = (CheckBoxPreference) findPreference("ffmpeg_auto_cb");
-			if (advancedFeatures) {
-				cb.setEnabled(true);
-			} else {
-				cb.setEnabled(false);
-			}
+			if (!advancedFeatures) cb.setChecked(false);
 		}
         
 		/*@Override
