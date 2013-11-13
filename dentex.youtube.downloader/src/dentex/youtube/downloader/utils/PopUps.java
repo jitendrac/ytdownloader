@@ -28,7 +28,6 @@ package dentex.youtube.downloader.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.ContextThemeWrapper;
 import dentex.youtube.downloader.R;
@@ -37,9 +36,9 @@ public class PopUps {
 	
 	static int icon;
 
-	public static void showPopUp(String title, String message, String type, Context context) {
+	public static void showPopUp(String title, String message, String type, Activity activity) {
         
-	    AlertDialog.Builder helpBuilder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.BoxTheme));
+	    AlertDialog.Builder helpBuilder = new AlertDialog.Builder(new ContextThemeWrapper(activity, R.style.BoxTheme));
 	    helpBuilder.setTitle(title);
 	    helpBuilder.setMessage(message);
 	
@@ -53,12 +52,12 @@ public class PopUps {
 	    helpBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	
 	        public void onClick(DialogInterface dialog, int which) {
-	            // Do nothing but close the dialog
+	            // close the dialog
 	        }
 	    });
 	
 	    AlertDialog helpDialog = helpBuilder.create();
-	    if (! ((Activity) context).isFinishing()) {
+	    if (! activity.isFinishing()) {
 	    	helpDialog.show();
 	    } else {
 	    	Utils.logger("w", "PopUp not showed", "PopUps");

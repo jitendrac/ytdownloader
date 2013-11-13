@@ -552,7 +552,7 @@ public class DashboardActivity extends Activity {
 	
 	private void notifyOpsNotSupported() {
 		Utils.logger("d", "notifyOpsNotSupported()", DEBUG_TAG);
-		PopUps.showPopUp(getString(R.string.information), getString(R.string.unsupported_operation), "alert", sDashboard);
+		PopUps.showPopUp(getString(R.string.information), getString(R.string.unsupported_operation), "alert", sDashboardActivity);
 	}
 	
 	private void notifyAsVideoOnly() {

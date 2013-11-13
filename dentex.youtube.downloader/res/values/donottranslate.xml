@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.4 - Nov 13 2013
+        \n-----------------------------------
+        \n[x] video list filters via sliding menu
+        \n[x] removing MP4 1080p and FLV 480p "hidden" streams support since it doesn\'t work anymore 
+        \n
         \n v3.3.1 - Nov 06 2013
         \n-----------------------------------
         \n[x] fix for storage free space check
@@ -291,7 +296,7 @@
     <string name="lgpl_summary">liblame</string>
     
     <string name="apache_title">Apache</string>
-    <string name="apache_summary">Picasso\nMyID3 &amp; Jakarta</string>
+    <string name="apache_summary">SlidingMenu\nPicasso\nMyID3 &amp; Jakarta</string>
     
     <string name="cc_title">CC BY-NC-ND 3.0</string>
     <string name="cc_summary">App\'s icons\nStack Overflow\'s snippets</string>
@@ -414,6 +419,9 @@
     	\n
     	\nThe filechooser library is released under the MIT license.
     	\n(android-filechooser Copyright &#169; 2012 Hai Bison)
+    	\n
+    	\nThe SlidingMenu library is released under the Apache License.
+    	\n(Copyright &#169; 2012 Jeremy Feinstein)
     	\n
     	\nThe liblame library, used to compile FFmpeg, is released under the LGPL.
     		A GitHub project, https://github.com/intervigilium/liblame, 

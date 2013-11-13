@@ -26,35 +26,24 @@
 
 package dentex.youtube.downloader;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.TextView;
-import dentex.youtube.downloader.utils.Utils;
 
 public class ShareActivityAdapter extends ArrayAdapter<ShareActivityListItem> {
-
-	private final static String DEBUG_TAG = "ShareActivityAdapter";
 		
-	private Context context;
-	private Filter filter;
-	
+	private Context context;	
 	private List<ShareActivityListItem> itemsList;
-	private List<ShareActivityListItem> origItemsList;
 	
 	public ShareActivityAdapter(List<ShareActivityListItem> itemsList, Context ctx) {
 		super(ctx, R.layout.activity_share_list_item, itemsList);
 		this.context = ctx;
         this.itemsList = itemsList;
-        this.origItemsList = itemsList; //new ArrayList<ShareActivityListItem>(itemsList);
 	}
 	
 	@Override
@@ -102,51 +91,5 @@ public class ShareActivityAdapter extends ArrayAdapter<ShareActivityListItem> {
 
 	private static class ItemHolder {
 		public TextView text;
-	}
-	
-	public class ItemsFilter extends Filter {
-
-		@Override
-		protected FilterResults performFiltering(CharSequence constraint) {
-			FilterResults results = new FilterResults();
-
-            if (constraint == null || TextUtils.isEmpty(constraint)) {
-            	results.values = origItemsList;
-                results.count = origItemsList.size();
-            } else {
-            	String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
-            	
-            	List<ShareActivityListItem> filteredList = new ArrayList<ShareActivityListItem>();
-            	
-            	for (ShareActivityListItem p : itemsList) {
-            		int currentItag = p.getItag();
-            		for (int j = 0; j < constraintItags.length; j++) {
-            			if (currentItag == Integer.valueOf(constraintItags[j])) {
-	            			Utils.logger("i", "currentItag matched: -> " + constraintItags[j], DEBUG_TAG);
-	            			filteredList.add(p); 
-	            		}
-            		}
-            	}
-            	
-            	results.values = filteredList;
-            	results.count = filteredList.size();
-            }
-            return results;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		protected void publishResults(CharSequence constraint, FilterResults results) {
-			itemsList = (ArrayList<ShareActivityListItem>) results.values;
-			notifyDataSetChanged();
-		}
-	}
-	
-	@Override
-	public Filter getFilter() {
-	    if (filter == null)
-	        filter = new ItemsFilter();
-	     
-	    return filter;
 	}
 }

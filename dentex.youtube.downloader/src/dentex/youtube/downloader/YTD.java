@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -193,8 +194,8 @@ public class YTD extends Application implements QueueThreadListener{
 	    return rf;
 	}
 
-	public static void NoDownProvPopUp(Context context) {
-		PopUps.showPopUp(context.getString(R.string.no_downloads_sys_app), context.getString(R.string.ytd_useless), "alert", context);
+	public static void NoDownProvPopUp(Activity act) {
+		PopUps.showPopUp(act.getString(R.string.no_downloads_sys_app), act.getString(R.string.ytd_useless), "alert", act);
 	}
 	
     public static void NotificationHelper(Context ctx) {

@@ -44,7 +44,6 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -60,6 +59,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -135,16 +135,21 @@ public class ShareActivity extends Activity {
 	private static final String _3GP_144P = "3GP - 144p";
 	private static final String _FLV_270P = "FLV - 270p";
 	private static final String _FLV_240P = "FLV - 240p";
+	private static final String _MP4_480P = "MP4 - 480p";
+	private static final String _MP4_360P = "MP4 - 360p";
 	private static final String _UNKNOWN = "Unknown";
 	
 	private ProgressBar progressBar1;
 	private ProgressBar progressBarD;
 	private ProgressBar progressBarL;
 	private static final String DEBUG_TAG = "ShareActivity";
+	
 	private TextView tv;
 	private TextView noVideoInfo;
 	private ListView lv;
-	private ShareActivityAdapter aA;
+	private static ShareActivityAdapter aA;
+	//private static ShareActivityAdapterSimple aA;
+	//private static ArrayAdapter<String> aA;
 	private static List<String> links = new ArrayList<String>();
 	private static List<String> codecs = new ArrayList<String>();
 	private static List<String> qualities = new ArrayList<String>();
@@ -189,11 +194,12 @@ public class ShareActivity extends Activity {
 	private boolean autoFFmpegTaskAlreadySent = false;
 	private String mComposedName;
 	private String jsonDataType = YTD.JSON_DATA_TYPE_V;
-	private String dashUrl = "";
-	private String dashStartUrl;
+	//private String dashUrl = "";
+	//private String dashStartUrl;
 	private SlidingMenu slMenu;
+	private static CharSequence constraint;
 	
-	private boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; //TODO set to false for release
+	private boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; //TODO set to 'false' for release
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -596,6 +602,8 @@ public class ShareActivity extends Activity {
 			}
 			
 			aA = new ShareActivityAdapter(listEntries, ShareActivity.this);
+			//aA = new ArrayAdapter<String>(sShare, android.R.layout.simple_list_item_1, listEntries);
+			
 			
 			if (autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("autoModeEnabled");
@@ -608,8 +616,8 @@ public class ShareActivity extends Activity {
 					launchDashboardActivity();
 				}
 			} else {				
-				ShareActivityListFilters.setupFilters(ShareActivity.this, aA);
-				listEntriesBuilder();
+				ShareActivityListFilters.setupStoredFilters(ShareActivity.this, aA);
+				//listEntriesBuilder();
 				lv.setAdapter(aA);
 				
 				if (!SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
@@ -626,12 +634,12 @@ public class ShareActivity extends Activity {
 					BugSenseHandler.leaveBreadcrumb("ShareActivity_onItemClick");
 					assignPath();
 
-					Utils.logger("i", "click @ position: " + position, DEBUG_TAG);
-					
 					// get the filtered position
 					ShareActivityListItem item = aA.getItem(position);
 					int currItag = item.getItag();
 					pos = itags.indexOf(currItag);
+					
+					Utils.logger("i", "click @ position: " + pos, DEBUG_TAG);
 
 					//pos = 45;		// to test IndexOutOfBound Exception...
 					
@@ -1207,17 +1215,17 @@ public class ShareActivity extends Activity {
 	private void findItags(String streams) {
 		Pattern blockPattern = Pattern.compile(",");
 		Matcher blockMatcher = blockPattern.matcher(streams);
-		if (blockMatcher.find()) {
+		if (blockMatcher.find() && !asyncDownload.isCancelled()) {
 			String[] blocks = streams.split(blockPattern.toString());
 			int count = blocks.length-1;
 			int i = 0;
-			while (i < count) {
+			while (i < count && !asyncDownload.isCancelled()) {
 				itagMatcher(blocks[i], i, false);
 				i++;
 			}
 			
 			int[] log = new int[itags.size()];
-			for(int j = 0; j < itags.size(); j++) log[j] = itags.get(j);
+			for (int j = 0; j < itags.size(); j++) log[j] = itags.get(j);
 			Utils.logger("v", "itags matched: " + Arrays.toString(log), DEBUG_TAG);
 		}
 	}
@@ -1235,7 +1243,7 @@ public class ShareActivity extends Activity {
 			decryptionArray = null;
 			int i = 0;
 			Utils.logger("d", "*** decoded streams ***", DEBUG_TAG);
-			while (i < count) {
+			while (i < count && !asyncDownload.isCancelled()) {
 				try {
 					blocks[i] = URLDecoder.decode(blocks[i], "UTF-8");
 				} catch (UnsupportedEncodingException e) {
@@ -1317,14 +1325,37 @@ public class ShareActivity extends Activity {
 		Utils.logger("d", "findVideoFilenameBase: " + basename, DEBUG_TAG);
 	}
 	
+	public static void assignConstraint(CharSequence pConstraint) {
+		constraint = pConstraint;
+		listEntries.clear();
+		listEntriesBuilder();
+		aA.notifyDataSetChanged();
+	}
+	
 	public static void listEntriesBuilder() {
 		for (int i = 0; i < itagsText.size(); i++) {
-			try {
-				listEntries.add(new ShareActivityListItem(itagsText.get(i) + sizes.get(i), itags.get(i)));
-			} catch (NoSuchElementException e) {
-				listEntries.add(new ShareActivityListItem("//", -1));
-			} catch (IndexOutOfBoundsException e) {
-				listEntries.add(new ShareActivityListItem("--", -1));
+			if (constraint == null || TextUtils.isEmpty(constraint)) {
+				try {
+					listEntries.add(new ShareActivityListItem(itagsText.get(i) + sizes.get(i), itags.get(i)));
+				} catch (NoSuchElementException e) {
+					listEntries.add(new ShareActivityListItem("//", -1));
+				} catch (IndexOutOfBoundsException e) {
+					listEntries.add(new ShareActivityListItem("--", -1));
+				}
+			} else {
+				String[] constraintItags = Pattern.compile("/", Pattern.LITERAL).split(constraint);
+				for (int j = 0; j < constraintItags.length; j++) {
+					if (itags.get(i) == Integer.parseInt(constraintItags[j])) {
+						Utils.logger("i", "matched itag -> " + constraintItags[j], DEBUG_TAG);
+						try {
+							listEntries.add(new ShareActivityListItem(itagsText.get(i) + sizes.get(i), itags.get(i)));
+						} catch (NoSuchElementException e) {
+							listEntries.add(new ShareActivityListItem("//", -1));
+						} catch (IndexOutOfBoundsException e) {
+							listEntries.add(new ShareActivityListItem("--", -1));
+						}
+					}
+				}
 			}
 		}
 	}
@@ -1368,19 +1399,31 @@ public class ShareActivity extends Activity {
 					Matcher sigMatcher4 = sigPattern4.matcher(block);
 					if (sigMatcher4.find()) {
 						Utils.logger("d", "index: " + i + ", encrypted signature found on step 1; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
-						sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
+						if (sigMatcher4.group(1).length() == 81) {
+							sig = "signature=" + sigMatcher4.group(1);
+						} else {
+							sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
+						}
 					} else {
 						Pattern sigPattern5 = Pattern.compile("\\\\u0026s=(.+?)\\\\u0026");
 						Matcher sigMatcher5 = sigPattern5.matcher(block);
 						if (sigMatcher5.find()) {
 							Utils.logger("d", "index: " + i + ", encrypted signature found on step 2; length is " + sigMatcher5.group(1).length(), DEBUG_TAG);
-							sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
+							if (sigMatcher5.group(1).length() == 81) {
+								sig = "signature=" + sigMatcher5.group(1);
+							} else {
+								sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
+							}
 						} else {
 							Pattern sigPattern6 = Pattern.compile("\\\\u0026s=(.+?)$");
 							Matcher sigMatcher6 = sigPattern6.matcher(block);
 							if (sigMatcher6.find()) {
 								Utils.logger("d", "index: " + i + ", encrypted signature found on step 3; length is " + sigMatcher6.group(1).length(), DEBUG_TAG);
-								sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
+								if (sigMatcher6.group(1).length() == 81) {
+									sig = "signature=" + sigMatcher6.group(1);
+								} else {
+									sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
+								}
 							} else {
 								Utils.logger("w", "index: " + i + ", sig: " + sig, DEBUG_TAG);
 							}
@@ -1514,7 +1557,7 @@ public class ShareActivity extends Activity {
 		Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
 	}
 	
-	@SuppressLint("DefaultLocale")
+	/*@SuppressLint("DefaultLocale")
 	private void findDashUrl(String content) {
 		Utils.logger("d", "*** dash signated streams ***", DEBUG_TAG);
 		String[] dashElements;
@@ -1553,7 +1596,6 @@ public class ShareActivity extends Activity {
 						dashUrl = dashUrl + "&ratebypass=yes";
 					}
 				
-					//TODO test
 					if (itags.contains(135))
 						
 						addDashUrlEntries(3, dashUrl, "flv", "large", "35"); 
@@ -1590,7 +1632,7 @@ public class ShareActivity extends Activity {
 		Utils.logger("d", "inserted at index: " + i + ", quality: " + quality, DEBUG_TAG);
 		Utils.logger("d", "inserted at index: " + i + ", itag: " + itag + " (" + itagText + ")", DEBUG_TAG);
 		Utils.logger("v", "inserted at index: " + i + ", url: " + link + "&itag=" + itag, DEBUG_TAG);
-	}
+	}*/
 
 	private String getVideoFileSize(String link) {
 		try {
@@ -1715,6 +1757,12 @@ public class ShareActivity extends Activity {
 					break;
 				case 46:
 					res = _WEBM_1080P;
+					break;
+				case 59:
+					res = _MP4_480P;
+					break;
+				case 78:
+					res = _MP4_360P;
 					break;
 				case 82:
 					res = _MP4_360P_3D;
