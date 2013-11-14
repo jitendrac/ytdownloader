@@ -35,8 +35,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
-import com.bugsense.trace.BugSenseHandler;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -65,12 +63,15 @@ import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.bugsense.trace.BugSenseHandler;
+
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.service.AutoUpgradeApkService;
 import dentex.youtube.downloader.service.FfmpegDownloadService;
-import dentex.youtube.downloader.utils.Json;
+import dentex.youtube.downloader.utils.DashboardClearHelper;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -79,6 +80,7 @@ public class SettingsActivity extends Activity {
 	public static final String DEBUG_TAG = "SettingsActivity";
 	public static String chooserSummary;
 	public static Activity sSettings;
+	private static ContextThemeWrapper boxThemeContextWrapper;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +159,7 @@ public class SettingsActivity extends Activity {
 
             addPreferencesFromResource(R.xml.settings);
             
-            final ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(getActivity(), R.style.BoxTheme);
+            boxThemeContextWrapper = new ContextThemeWrapper(getActivity(), R.style.BoxTheme);
             sSettings = getActivity();
             
             srcDir = getActivity().getExternalFilesDir(null);
@@ -195,57 +197,7 @@ public class SettingsActivity extends Activity {
             clear.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             	
             	public boolean onPreferenceClick(Preference preference) {
-                	
-            		String previousJson = Json.readJsonDashboardFile(sSettings);
-            		boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
-            										 previousJson.contains(YTD.JSON_DATA_STATUS_PAUSED)) ;
-            		
-    	        	if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
-    	        		
-	            		AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-	                    adb.setIcon(android.R.drawable.ic_dialog_info);
-	                    adb.setTitle(getString(R.string.information));
-	                    adb.setMessage(getString(R.string.clear_dashboard_msg));
-	                    
-	                    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-	                    	
-	                        public void onClick(DialogInterface dialog, int which) {
-	                        	if (YTD.JSON_FILE.delete()) {
-	                        		Toast.makeText(getActivity(), getString(R.string.clear_dashboard_ok), Toast.LENGTH_SHORT).show();
-	                        		Utils.logger("v", "Dashboard cleared", DEBUG_TAG);
-	                        		
-	                        		// clean thumbnails dir
-		                        	File thFolder = sSettings.getDir(YTD.THUMBS_FOLDER, 0);
-		                        	for(File file: thFolder.listFiles()) file.delete();
-		                        	
-		                        	// clear the videoinfo shared pref
-		                        	YTD.videoinfo.edit().clear().apply();
-	                        	} else {
-	                        		Toast.makeText(getActivity(), getString(R.string.clear_dashboard_failed), Toast.LENGTH_SHORT).show();
-	                        		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
-	                        	}
-	                        }
-	                    });
-	                    
-	                    adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
-	                    	
-	                    	public void onClick(DialogInterface dialog, int which) {
-	                        	// cancel
-	                        }
-	                    });
-	
-	                    AlertDialog helpDialog = adb.create();
-	                    if (! (getActivity()).isFinishing()) {
-	                    	helpDialog.show();
-	                    }
-    	        	} else {
-    	        		Toast.makeText(sSettings, getString(R.string.long_press_warning_title) + 
-    	        				"\n- " + getString(R.string.notification_downloading_pt1) + " (" + 
-    	        				getString(R.string.json_status_paused) + "/" + getString(R.string.json_status_in_progress) + " )" + 
-    	        				"\n- " + getString(R.string.empty_dashboard), 
-    	        				Toast.LENGTH_SHORT).show();
-    	        	}
-            		
+            		DashboardClearHelper.confirmClearDashboard(sSettings, boxThemeContextWrapper, false);
                     return true;
             	}
             });
@@ -309,7 +261,7 @@ public class SettingsActivity extends Activity {
 				
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
 					boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
-					boolean ffmpegInstalled = new File(dstDir, "ffmpeg").exists();
+					boolean ffmpegInstalled = dstFile.exists();
 					if (!advancedFeatures) {
 						cpuVers = armCpuVersion();
 						boolean isCpuSupported = (cpuVers > 0) ? true : false;
@@ -752,5 +704,7 @@ public class SettingsActivity extends Activity {
 	        	return Intent.createChooser(source, chooserTitle);
 	        }
 		}
+
+		
 	}
 }

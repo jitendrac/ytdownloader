@@ -62,7 +62,7 @@
 			    android:textAppearance="?android:attr/listSeparatorTextViewStyle"
 			    android:textColor="@android:color/holo_orange_light" />
 			
-			<include layout="@layout/hor_divider_double" />
+			<include layout="@layout/horizontal_divider" />
 
 			<TextView
 			    android:id="@+id/MP4"
@@ -126,7 +126,7 @@
 			    android:textAppearance="?android:attr/listSeparatorTextViewStyle"
 			    android:textColor="@android:color/holo_orange_light" />
 			
-			<include layout="@layout/hor_divider_double" />
+			<include layout="@layout/horizontal_divider" />
 
 			<TextView
 			    android:id="@+id/HD"
@@ -190,7 +190,7 @@
 			    android:textAppearance="?android:attr/listSeparatorTextViewStyle"
 			    android:textColor="@android:color/holo_orange_light" />
 			
-			<include layout="@layout/hor_divider_double" />
+			<include layout="@layout/horizontal_divider" />
 
 			<TextView
 			    android:id="@+id/_3D"

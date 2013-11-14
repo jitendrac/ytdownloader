@@ -193,7 +193,7 @@ public class ShareActivity extends Activity {
 	private String extraId;
 	private boolean autoFFmpegTaskAlreadySent = false;
 	private String mComposedName;
-	private String jsonDataType = YTD.JSON_DATA_TYPE_V;
+	//private String jsonDataType = YTD.JSON_DATA_TYPE_V;
 	//private String dashUrl = "";
 	//private String dashStartUrl;
 	private SlidingMenu slMenu;
@@ -610,7 +610,7 @@ public class ShareActivity extends Activity {
 				assignPath();
 				
 				try {
-					callDownloadManager(links.get(pos), pos, vFilename);
+					callDownloadManager(links.get(pos), pos, vFilename, codecs.get(pos));
 				} catch (IndexOutOfBoundsException e) {
 					Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 					launchDashboardActivity();
@@ -683,7 +683,7 @@ public class ShareActivity extends Activity {
 										public void onClick(DialogInterface dialog, int which) {
 											mComposedName = userFilename.getText().toString();
 											vFilename = composeVideoFilename(mComposedName);
-											callDownloadManager(links.get(pos), pos, vFilename);
+											callDownloadManager(links.get(pos), pos, vFilename, codecs.get(pos));
 										}
 									});
 									
@@ -697,7 +697,7 @@ public class ShareActivity extends Activity {
 										adb.show();
 									}
 								} else {
-									callDownloadManager(links.get(pos), pos, vFilename);
+									callDownloadManager(links.get(pos), pos, vFilename, codecs.get(pos));
 								}
 							} catch (IndexOutOfBoundsException e) {
 								Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
@@ -810,6 +810,8 @@ public class ShareActivity extends Activity {
 					.replace("WebM - ", "")
 					.replace("FLV - ", "")
 					.replace("3GP - ", "")
+					.replace("M4A - ", "")
+					.replace("OGG - ", "")
 					.replace("/", "-")
 					.replace(" - ", "_");
 			
@@ -932,20 +934,17 @@ public class ShareActivity extends Activity {
 		}
 	}
 	
-	private void callDownloadManager(final String link, final int position, final String nameOfVideo) {
+	private void callDownloadManager(final String link, final int position, final String nameOfVideo, final String vExt) {
 		BugSenseHandler.leaveBreadcrumb("callDownloadManager");
-		final String aExt = findAudioCodec();
-		if (codecs.get(pos).equals("m4a") || codecs.get(pos).equals("ogg")) {
-			jsonDataType = YTD.JSON_DATA_TYPE_A_E;
-		} else {
-			jsonDataType = YTD.JSON_DATA_TYPE_V;
-		}
 		
 		dtl = new DownloadTaskListener() {
 			
 			@Override
 			public void preDownload(DownloadTask task) {
 				long ID = task.getDownloadId();
+				String pathOfVideo = task.getPath();
+				String jsonDataType = task.getType();
+				String aExt = task.getAudioExt();
 				Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
 				
 				Maps.mNetworkSpeedMap.put(ID, (long) 0);
@@ -957,7 +956,7 @@ public class ShareActivity extends Activity {
 						videoId,
 						pos, 
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
-						path.getAbsolutePath(), 
+						pathOfVideo, 
 						nameOfVideo, 
 						mComposedName, 
 						aExt, 
@@ -979,7 +978,10 @@ public class ShareActivity extends Activity {
 			@Override
 			public void finishDownload(DownloadTask task) {
 				long ID = task.getDownloadId();
-				String nameOfVideo = task.getDownloadedFileName();
+				String nameOfVideo = task.getFileName();
+				String pathOfVideo = task.getPath();
+				String jsonDataType = task.getType();
+				String aExt = task.getAudioExt();
 				Utils.logger("d", "__finishDownload on ID: " + ID, DEBUG_TAG);
 				
 				Utils.scanMedia(getApplicationContext(), 
@@ -1002,7 +1004,7 @@ public class ShareActivity extends Activity {
 						videoId, 
 						pos, 
 						YTD.JSON_DATA_STATUS_COMPLETED, 
-						path.getPath(), 
+						pathOfVideo, 
 						nameOfVideo, 
 						mComposedName, 
 						aExt, 
@@ -1063,7 +1065,10 @@ public class ShareActivity extends Activity {
 			@Override
 			public void errorDownload(DownloadTask task, Throwable error) {
 				long ID = task.getDownloadId();
-				String nameOfVideo = task.getDownloadedFileName();
+				String nameOfVideo = task.getFileName();
+				String pathOfVideo = task.getPath();
+				String jsonDataType = task.getType();
+				String aExt = task.getAudioExt();
 				
 				Utils.logger("w", "__errorDownload on ID: " + ID, DEBUG_TAG);
 				
@@ -1101,7 +1106,7 @@ public class ShareActivity extends Activity {
 						videoId, 
 						pos, 
 						status, 
-						path.getPath(), 
+						pathOfVideo, 
 						nameOfVideo, 
 						mComposedName, 
 						aExt, 
@@ -1119,6 +1124,14 @@ public class ShareActivity extends Activity {
 		File destTemp = new File(path, vFilename + DownloadTask.TEMP_SUFFIX);
 		String previousJson = Json.readJsonDashboardFile(sShare);
 		
+		String aExt = findAudioCodec();
+		String jsonDataType;
+		if (vExt.equals("m4a") || codecs.get(pos).equals("ogg")) {
+			jsonDataType = YTD.JSON_DATA_TYPE_A_E;
+		} else {
+			jsonDataType = YTD.JSON_DATA_TYPE_V;
+		}
+		
 		boolean blockDashboardLaunch = false;
 		
 		if (dest.exists() || (destTemp.exists() && previousJson.contains(dest.getName())) && !autoModeEnabled && !restartModeEnabled) {
@@ -1134,7 +1147,10 @@ public class ShareActivity extends Activity {
 			}
 			
 			try {
-				DownloadTask dt = new DownloadTask(this, id, link, vFilename, path.getPath(), dtl, false);
+				DownloadTask dt = new DownloadTask(this, id, link, 
+						vFilename, path.getPath(), 
+						aExt, jsonDataType, 
+						dtl, false);
 				YTD.videoinfo.edit().putString(String.valueOf(id) + "_link", link).apply();
 				//YTD.videoinfo.edit().putInt(String.valueOf(id) + "_position", position).apply();
 				Maps.dtMap.put(id, dt);

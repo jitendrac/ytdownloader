@@ -39,6 +39,10 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
     private File mFile;
 
     private File mTempFile;
+    
+    private String mAudioExt;
+    
+    private String mType;
 
     private String mUrlString;
 
@@ -97,7 +101,9 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
         this(context, id, url, null, path, listener, checkIp);
     }*/
 
-    public DownloadTask(Context context, long id, String url, String name, String path, DownloadTaskListener listener, boolean checkLink) 
+    public DownloadTask(Context context, long id, String url, 
+    		String name, String path, String audioExt, String type,
+    		DownloadTaskListener listener, boolean checkLink) 
     		throws MalformedURLException {
     	
         super();
@@ -108,6 +114,9 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
         
         if (TextUtils.isEmpty(name))
             name = new File(mURL.getFile()).getName();
+        
+        this.mAudioExt = audioExt;
+        this.mType = type;
         
         this.mFile = new File(path, name);
         this.mTempFile = new File(path, name + TEMP_SUFFIX);
@@ -164,8 +173,20 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
         return this.mListener;
     }*/
     
-    public String getDownloadedFileName() {
+    public String getPath() {
+    	return this.mFile.getParent();
+    }
+    
+    public String getFileName() {
     	return this.mFile.getName();
+    }
+    
+    public String getType() {
+    	return this.mType;
+    }
+    
+    public String getAudioExt() {
+    	return this.mAudioExt;
     }
 
     @Override

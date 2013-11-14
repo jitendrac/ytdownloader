@@ -110,6 +110,7 @@ import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.queue.FFmpegExtractFlvThumbTask;
+import dentex.youtube.downloader.utils.DashboardClearHelper;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
@@ -882,7 +883,7 @@ public class DashboardActivity extends Activity {
 					
 					@Override
 					public void errorDownload(DownloadTask task, Throwable error) {
-						String nameOfVideo = task.getDownloadedFileName();
+						String nameOfVideo = task.getFileName();
 						long ID = task.getDownloadId();
 							
 						Utils.logger("w", "__errorDownload on ID: " + ID, DEBUG_TAG);
@@ -938,6 +939,7 @@ public class DashboardActivity extends Activity {
 				try {
 					DownloadTask dt = new DownloadTask(this, itemIDlong, link, 
 							currentItem.getFilename(), currentItem.getPath(), 
+							currentItem.getAudioExt(), currentItem.getType(), 
 							dtl, true);
 					Maps.dtMap.put(itemIDlong, dt);
 					dt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1119,6 +1121,9 @@ public class DashboardActivity extends Activity {
 			    } else {
 			    	launchFcForImport();
 			    }
+        		return true;
+        	case R.id.menu_clear_dashboard:
+        		DashboardClearHelper.confirmClearDashboard(sDashboardActivity, boxThemeContextWrapper, true);
         		return true;
         	default:
         		return super.onOptionsItemSelected(item);
@@ -1710,7 +1715,9 @@ public class DashboardActivity extends Activity {
 			}
 		} else {
 			if (!bmFile.exists()) {
-				YTD.queueThread.enqueueTask(new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile), 1);
+				File ffmpeg = new File(getDir("bin", 0), YTD.ffmpegBinName);
+				if (ffmpeg.exists())
+					YTD.queueThread.enqueueTask(new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile), 1);
 			}
 		}
 	}
