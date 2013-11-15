@@ -185,7 +185,6 @@ public class ShareActivity extends Activity {
 	private ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(this, R.style.BoxTheme);
 	private String[] decryptionArray = null;
 	private String jslink;
-	private String decryptionRule = null;
 	private String decryptionFunction;
 	private DownloadTaskListener dtl;
 	private boolean autoModeEnabled = false;
@@ -907,9 +906,10 @@ public class ShareActivity extends Activity {
 				if (sshInfoCheckboxEnabled == true) {
 					AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-					View showAgain = adbInflater.inflate(R.layout.dialog_show_again_checkbox, null);
-					showAgain2 = (CheckBox) showAgain.findViewById(R.id.showAgain2);
+					View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+					showAgain2 = (CheckBox) showAgain.findViewById(R.id.infl_cb);
 					showAgain2.setChecked(true);
+					showAgain2.setText(getString(R.string.show_again_checkbox));
 					adb.setView(showAgain);
 					adb.setTitle(getString(R.string.ssh_info_tutorial_title));
 					adb.setMessage(getString(R.string.ssh_info_tutorial_msg));
@@ -1464,13 +1464,10 @@ public class ShareActivity extends Activity {
 		FetchUrl fu = new FetchUrl(sShare);
 		
 		if (decryptionArray == null) {
-			decryptionRule = null;
 			String jsCode = null;
-			if (!jslink.equals("e")) {
-				jsCode = fu.doFetch(jslink);
-			} else {
-				jsCode = fu.doFetch("https://s.ytimg.com/yts/jsbin/html5player-vflW444Sr.js");
-			}
+			
+			if (!jslink.equals("e")) jsCode = fu.doFetch(jslink);
+			
 			String findSignatureCode = 
 					"function isInteger(n) {" +
 					"	return (typeof n==='number' && n%1==0);" +
@@ -1526,46 +1523,44 @@ public class ShareActivity extends Activity {
 					"}";
 			
 			decryptionArray = RhinoRunner.obtainDecryptionArray(jsCode, findSignatureCode);
+			
+			if (decryptionArray[0].equals("e")) decryptionArray = downloadHardCodedArray();
+			
 			decryptionFunction = "function decryptSignature(a){ a=a.split(\"\"); ";
 			
 			for (int i = 0; i < decryptionArray.length; i++) {
-				//Utils.logger("i", "decryptionArray: " + decryptionArray[i], DEBUG_TAG);
-				if (i == 0) {
-					decryptionRule = decryptionArray[i];
-				} else {
-					decryptionRule = decryptionRule + "," + decryptionArray[i];
-				}
-				
 				int rule = Integer.parseInt(decryptionArray[i]);
-				
 				if (rule == 0) decryptionFunction = decryptionFunction + "a=a.reverse(); ";
 				if (rule < 0) decryptionFunction = decryptionFunction + "a=a.slice("+ -rule +"); ";
 				if (rule > 0) decryptionFunction = decryptionFunction + "a=swap(a,"+ rule +"); ";
 			}
 			decryptionFunction = decryptionFunction + "return a.join(\"\")} function swap(a,b){ var c=a[0]; a[0]=a[b%a.length]; a[b]=c; return a };";
 			
-			Utils.logger("i", "decryptionRule (lenght is " + decryptionArray.length + "): " + decryptionRule, DEBUG_TAG);
+			Utils.logger("i", "decryptionArray: " + Arrays.toString(decryptionArray), DEBUG_TAG);
 			Utils.logger("i", "decryptionFunction: " + decryptionFunction, DEBUG_TAG);
 		}
 		
 		String signature = RhinoRunner.decipher(sig, decryptionFunction);
 		
-		/*if (signature == sig || signature.isEmpty() || signature == null) {
-			String decryptSignatureLinkAtSf = 
-					"http://sourceforge.net/projects/ytdownloader/files/utils/decryptSignature/download";
-			Utils.logger("w", "signature empty, null or not deciphered" +
-					"\n -> falling back on JS function from " + decryptSignatureLinkAtSf, DEBUG_TAG);
-			
-			String decryptFunction2 = fu.doFetch(decryptSignatureLinkAtSf);
-			signature = RhinoRunner.decipher2(sig, decryptionRule, decryptFunction2);
-		}*/
-		
 		return signature;
+	}
+
+	private String[] downloadHardCodedArray() {
+		Utils.logger("w", "downloading hard-coded decryption array", DEBUG_TAG);
+		FetchUrl fu = new FetchUrl(sShare);
+		String arrayLink =  "http://sourceforge.net/projects/ytdownloader/files/utils/array/download";
+		String as = fu.doFetch(arrayLink);
+		String[] arr = Pattern.compile(",", Pattern.LITERAL).split(as.replaceAll("\\n", ""));
+		return arr;
 	}
 	
 	private void findJs(String content) {
 		String jslinkRaw = findMatchGroupOne(content, "\"js\":\\s*\"([^\"]+)\"");
 		if (!jslinkRaw.isEmpty()) {
+			if (!(jslinkRaw.indexOf("//") == 0)) {
+				Utils.logger("w", "adding 'http:' to jslinkRaw", DEBUG_TAG);
+				jslinkRaw = "http:" + jslinkRaw;
+			}
 			jslink = jslinkRaw.replaceAll("\\\\", "");
 		} else {
 			jslink = "e";
@@ -1683,17 +1678,6 @@ public class ShareActivity extends Activity {
 		}
 		Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
 	}
-	
-	/*private void stereoMatcher(String current, int i) {
-		Pattern qualityPattern = Pattern.compile("stereo3d=1");
-		Matcher qualityMatcher = qualityPattern.matcher(current);
-		if (qualityMatcher.find()) {
-			stereo.add(qualityMatcher.group().replace("stereo3d=1", "_3D"));
-		} else {
-			stereo.add("");
-		}
-		//Utils.logger("d", "index: " + i + ", Quality: " + qualities.get(i), DEBUG_TAG);
-	}*/
 	
 	private void itagMatcher(String current, int i, boolean isItagsTextRun) {
 		String res = "-";

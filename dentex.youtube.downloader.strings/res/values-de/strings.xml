@@ -81,6 +81,18 @@ Verzeichnis, fügen den Befehl (über die Menü-Taste) ein und drücken ENTER.</
     <string name="link_copied">Link in Zwischenablage kopiert</string>
     <string name="share_link_via">Link teilen</string>
     
+    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_view_all">View all</string>
+    <string name="filter_header_format">Filter by format</string>
+    <string name="filter_header_quality">Filter by quality</string>
+    <string name="filter_header_others">Other filters</string>
+
+    <string name="filter_ld">Large</string>
+    <string name="filter_md">Medium</string>
+    <string name="filter_sd">Small</string>
+    <string name="filter_vo">Video-only</string>
+    <string name="filter_ao">Audio-only</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Achtung!</string>
@@ -103,11 +115,11 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <!-- ### UpgradeApkActivity ### -->
     
     <string name="upgrade_button_init">Update</string>
-    <string name="upgrade_button_download">Laden\nund installieren</string>
+    <string name="upgrade_button_download">Laden und\ninstallieren</string>
     <string name="upgrade_uppertext_searching">Suchen&#8230;</string>
     <string name="upgrade_uppertext_init">Installierte Version:\n</string>
 
-    <string name="upgrade_latest">Neueste:\t</string>
+    <string name="upgrade_latest">Aktuell:\t</string>
     <string name="upgrade_installed">\nInstalliert:\t</string>
     <string name="upgraded_dialog_msg">Neue Version im Ordner \'Download\' gespeichert.\n\nJetzt installieren?</string>
     <string name="upgraded_dialog_negative">Später\n(manuell)</string>
@@ -203,6 +215,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     </string-array>
     
 	<string name="operation_standby">Bitte warten. Anderer Prozess wird gerade ausgeführt!</string>
+	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
     
 	<string name="move_error">Fehler beim Verschieben!</string>
     <string name="move_progress">Datei wird verschoben&#8230;</string>
@@ -269,9 +282,9 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <string name="enable_advanced_features_summary">FFmpeg-\'Plugin\' herunterladen</string>
     <string name="mp3_bitrate_title">Mp3-Kodierungs-Bitrate:</string>
     
-    <string name="ffmpeg_auto_title">Autom. Tonextraktion</string>
+    <string name="ffmpeg_auto_title">Automatische Tonextraktion</string>
     <string name="ffmpeg_auto_summary">Nach jedem Herunterladen wird der Ton automatisch in MP3 konvertiert</string>
-    <string name="ffmpeg_auto_cb_title">Autom. Tonextraktion aktivieren</string>
+    <string name="ffmpeg_auto_cb_title">Automatische Tonextraktion aktivieren</string>
     <string name="ffmpeg_auto_cb_summary">Aus den Parametern unten auswählen</string>
     
     <string name="audio_extraction_type_title">Extraktionstyp</string>
@@ -283,7 +296,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <string name="remove_video_title">Video entfernen</string>
     
     <string name="enable_adaptive_title">2ten Stream empfangen</string>
-    <string name="enable_adaptive_summary">[Experimentell]\nZusätzlichen Ton- und/oder Video-Stream (falls verfügbar) der Video-Liste hinzufügen</string>
+    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Benachrichtigungen</string>

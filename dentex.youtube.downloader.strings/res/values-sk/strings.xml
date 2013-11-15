@@ -81,6 +81,18 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="link_copied">Odkaz skopírovaný do schránky</string>
     <string name="share_link_via">Zdiaľať odkaz cez:</string>
     
+    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_view_all">View all</string>
+    <string name="filter_header_format">Filter by format</string>
+    <string name="filter_header_quality">Filter by quality</string>
+    <string name="filter_header_others">Other filters</string>
+
+    <string name="filter_ld">Large</string>
+    <string name="filter_md">Medium</string>
+    <string name="filter_sd">Small</string>
+    <string name="filter_vo">Video-only</string>
+    <string name="filter_ao">Audio-only</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Upozornenie!</string>
@@ -203,6 +215,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     </string-array>
     
 	<string name="operation_standby">Počkajte: prebieha iná operácia.</string>
+	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
     
 	<string name="move_error">Chyba počas presúvania.</string>
     <string name="move_progress">Prebieha presúvanie súboru&#8230;</string>
@@ -283,7 +296,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="remove_video_title">Odstránenie videa</string>
     
     <string name="enable_adaptive_title">Získať sekundárne streamy</string>
-    <string name="enable_adaptive_summary">[Experimentálne]\nPridá ďalšie video a/alebo audio streamy (ak sú dostupné) do zoznamu videí</string>
+    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Oznámenia</string>

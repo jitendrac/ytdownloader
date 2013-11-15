@@ -4,7 +4,7 @@
         \n v3.4 - Nov 13 2013
         \n-----------------------------------
         \n[x] video list filters via sliding menu
-        \n[x] removing MP4 1080p and FLV 480p "hidden" streams support since it doesn\'t work anymore 
+        \n[x] MP4 1080p and FLV 480p "hidden" streams support removed (it doesn\'t work anymore) 
         \n
         \n v3.3.1 - Nov 06 2013
         \n-----------------------------------

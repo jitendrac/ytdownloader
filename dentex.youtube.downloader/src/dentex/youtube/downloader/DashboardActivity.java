@@ -132,14 +132,15 @@ public class DashboardActivity extends Activity {
 	private boolean removeAudio;
 	private ListView lv;
 	private Editable searchText;
+	public static ProgressBar progressBar;
 	
-	static List<String> idEntries = new ArrayList<String>();
+	public static List<String> idEntries = new ArrayList<String>();
 	static List<String> typeEntries = new ArrayList<String>();
 	static List<String> linkEntries = new ArrayList<String>();
 	static List<Integer> posEntries = new ArrayList<Integer>();
 	static List<String> statusEntries = new ArrayList<String>();
-	static List<String> pathEntries = new ArrayList<String>();
-	static List<String> filenameEntries = new ArrayList<String>();
+	public static List<String> pathEntries = new ArrayList<String>();
+	public static List<String> filenameEntries = new ArrayList<String>();
 	static List<String> basenameEntries = new ArrayList<String>();
 	static List<String> audioExtEntries = new ArrayList<String>();
 	static List<String> sizeEntries = new ArrayList<String>();
@@ -157,7 +158,7 @@ public class DashboardActivity extends Activity {
 	private boolean extrTypeIsMp3Conv;
 	private String type;
 	private boolean isFfmpegRunning = false;
-	private boolean isAnyAsyncInProgress = false;
+	public static boolean isAnyAsyncInProgress = false;
 	
 	private String tagArtist;
 	private String tagAlbum;
@@ -1003,9 +1004,10 @@ public class DashboardActivity extends Activity {
 			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
 			        	
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-					    View showAgainView = adbInflater.inflate(R.layout.dialog_show_again_checkbox, null);
-					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.showAgain2);
+					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
 					    showAgain.setChecked(true);
+					    showAgain.setText(getString(R.string.show_again_checkbox));
 					    adb.setView(showAgainView);
 					    
 			    		adb.setTitle(getString(R.string.information));
@@ -1049,9 +1051,10 @@ public class DashboardActivity extends Activity {
 			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
 			        	
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-					    View showAgainView = adbInflater.inflate(R.layout.dialog_show_again_checkbox, null);
-					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.showAgain2);
+					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
 					    showAgain.setChecked(true);
+					    showAgain.setText(getString(R.string.show_again_checkbox));
 					    adb.setView(showAgainView);
 					    
 			    		adb.setTitle(getString(R.string.information));
@@ -1091,9 +1094,10 @@ public class DashboardActivity extends Activity {
 		        	AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
 		        	
 		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-				    View showAgainView = adbInflater.inflate(R.layout.dialog_show_again_checkbox, null);
-				    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.showAgain2);
+				    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+				    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
 				    showAgain.setChecked(true);
+				    showAgain.setText(getString(R.string.show_again_checkbox));
 				    adb.setView(showAgainView);
 				    
 		    		adb.setTitle(getString(R.string.information));
@@ -1213,7 +1217,8 @@ public class DashboardActivity extends Activity {
 	private class AsyncDelete extends AsyncTask<File, Void, Boolean> {
 
 		File fileToDelete;
-		
+
+		@Override
 		protected void onPreExecute() {
 			isAnyAsyncInProgress = true;
 		}
@@ -1507,19 +1512,18 @@ public class DashboardActivity extends Activity {
     }
 
 	private class AsyncImport extends AsyncTask<File, Void, String> {
-		
-		private ProgressBar progressBar;
 
 		@Override
 		protected void onPreExecute() {
-			TextView info = (TextView) findViewById(R.id.dashboard_activity_info);
+			isAnyAsyncInProgress = true;
+			TextView info = (TextView) sDashboardActivity.findViewById(R.id.dashboard_activity_info);
 			info.setVisibility(View.GONE);
 			
-			ListView list = (ListView) findViewById(R.id.dashboard_list);
+			ListView list = (ListView) sDashboardActivity.findViewById(R.id.dashboard_list);
 			list.setVisibility(View.GONE);
 			
-			progressBar = (ProgressBar) findViewById(R.id.dashboard_progressbar);
-    	    progressBar.setVisibility(View.VISIBLE);
+			progressBar = (ProgressBar) sDashboardActivity.findViewById(R.id.dashboard_progressbar);
+			progressBar.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -1600,23 +1604,23 @@ public class DashboardActivity extends Activity {
 						res + " " + getString(R.string.json_status_imported), 
 						Toast.LENGTH_SHORT).show();
 			}
+			isAnyAsyncInProgress = false;
 		}
 	}
 	
 	private class AsyncRestore extends AsyncTask<File, Void, String> {
 		
-		private ProgressBar progressBar;
-
 		@Override
 		protected void onPreExecute() {
-			TextView info = (TextView) findViewById(R.id.dashboard_activity_info);
+			isAnyAsyncInProgress = true;
+			TextView info = (TextView) sDashboardActivity.findViewById(R.id.dashboard_activity_info);
 			info.setVisibility(View.GONE);
 			
-			ListView list = (ListView) findViewById(R.id.dashboard_list);
+			ListView list = (ListView) sDashboardActivity.findViewById(R.id.dashboard_list);
 			list.setVisibility(View.GONE);
 			
-			progressBar = (ProgressBar) findViewById(R.id.dashboard_progressbar);
-    	    progressBar.setVisibility(View.VISIBLE);
+			progressBar = (ProgressBar) sDashboardActivity.findViewById(R.id.dashboard_progressbar);
+			progressBar.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -1697,6 +1701,7 @@ public class DashboardActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 				Utils.logger("d", "Restored " + res + " entries", DEBUG_TAG);
 			}
+			isAnyAsyncInProgress = false;
 		}
 	}
 
@@ -1711,7 +1716,7 @@ public class DashboardActivity extends Activity {
 				Bitmap bmThumbnail = ThumbnailUtils.createVideoThumbnail(selectedFile.getAbsolutePath(), Thumbnails.MINI_KIND);
 				bmThumbnail.compress(Bitmap.CompressFormat.PNG, 90, out);
 			} catch (Exception e) {
-				Log.e(DEBUG_TAG, "writeThumbToDiskForImportedVideo -> " + e.getMessage());
+				Log.e(DEBUG_TAG, "writeThumbToDiskForSelectedFile -> " + e.getMessage());
 			}
 		} else {
 			if (!bmFile.exists()) {
@@ -1861,24 +1866,26 @@ public class DashboardActivity extends Activity {
 	
 	public static int refreshlist(final Activity activity) {
 		entries = 0;
-		activity.runOnUiThread(new Runnable() {
-			public void run() {
-				
-				clearAdapterAndLists();
-			    
-			    // refill the Lists and re-populate the adapter
-			    entries = parseJson((Context) activity);
-			    updateProgressBars();
-				buildList();
-				
-				if (da.isEmpty()) {
-		            showEmptyListInfo(activity);
-		    	}
-				
-				// refresh the list view
-				da.notifyDataSetChanged();
-			}
-		});
+		if (isDashboardRunning) {
+			activity.runOnUiThread(new Runnable() {
+				public void run() {
+
+					clearAdapterAndLists();
+
+					// refill the Lists and re-populate the adapter
+					entries = parseJson((Context) activity);
+					updateProgressBars();
+					buildList();
+
+					if (da.isEmpty()) {
+						showEmptyListInfo(activity);
+					}
+
+					// refresh the list view
+					da.notifyDataSetChanged();
+				}
+			});
+		}
 		return entries;
 	}
 	
@@ -2084,7 +2091,7 @@ public class DashboardActivity extends Activity {
 			}
 		}
 	}
-	
+
 	// #####################################################################
 	
 	public void editId3Tags(View view) {

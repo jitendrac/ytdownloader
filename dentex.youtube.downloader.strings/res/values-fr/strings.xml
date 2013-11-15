@@ -81,6 +81,18 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     <string name="link_copied">Link copied into clipboard</string>
     <string name="share_link_via">Share this link via:</string>
     
+    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_view_all">View all</string>
+    <string name="filter_header_format">Filter by format</string>
+    <string name="filter_header_quality">Filter by quality</string>
+    <string name="filter_header_others">Other filters</string>
+
+    <string name="filter_ld">Large</string>
+    <string name="filter_md">Medium</string>
+    <string name="filter_sd">Small</string>
+    <string name="filter_vo">Video-only</string>
+    <string name="filter_ao">Audio-only</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Attention!</string>
@@ -150,8 +162,8 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
 	<string name="menu_search">Recherche&amp;#8230</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
-	<string name="menu_import">Import a video</string>
-	<string name="menu_import_file">Import a file</string>
+	<string name="menu_import">Importer un vidéo</string>
+	<string name="menu_import_file">Importer un fichier</string>
 	<string name="menu_import_double">Video already added.</string>
 	<string name="menu_import_file_double">File already added.</string>
 	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
@@ -166,7 +178,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
 	<string name="unsupported_operation">Unsupported operation.</string>
 	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
 	<string name="invalid_data">Invalid data.</string>
-	<string name="open_chooser_title">Open with:</string>
+	<string name="open_chooser_title">Ouvrir avec:</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Ouvrir</item>
@@ -203,6 +215,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
+	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
     
 	<string name="move_error">Erreur pendant le déplacement.</string>
     <string name="move_progress">Fichier en-cours de déplacement&#8230;</string>
@@ -283,7 +296,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     <string name="remove_video_title">Suppression vidéo</string>
     
     <string name="enable_adaptive_title">Get secondary streams</string>
-    <string name="enable_adaptive_summary">[Experimental]\nAdd additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notifications</string>
