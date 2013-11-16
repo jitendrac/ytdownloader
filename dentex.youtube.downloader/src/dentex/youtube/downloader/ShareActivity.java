@@ -54,6 +54,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -223,13 +224,19 @@ public class ShareActivity extends Activity {
 		
 		String theme = YTD.settings.getString("choose_theme", "D");
 		
+		int or = this.getResources().getConfiguration().orientation;
+    	boolean isLandscape = (or == 2) ? true : false;
+		
 		// configure the SlidingMenu
 		slMenu = new SlidingMenu(this);
 		slMenu.setMode(SlidingMenu.LEFT);
-		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		slMenu.setShadowWidthRes(R.dimen.shadow_width);
 		slMenu.setShadowDrawable(R.drawable.shadow);
-		slMenu.setBehindOffsetRes(R.dimen.slidingmenu_width);
+		if (isLandscape) {
+			slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_landscape);
+		} else {
+			slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_portrait);
+		}
 		slMenu.setFadeDegree(0.35f);
 		slMenu.setHapticFeedbackEnabled(true);
 		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -311,6 +318,20 @@ public class ShareActivity extends Activity {
 			}
 		}
 	}
+	
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+ 
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        	Utils.logger("i", "...landscape", DEBUG_TAG);
+    		slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_landscape);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Utils.logger("i", "...portrait", DEBUG_TAG);
+            slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_portrait);
+        }
+    }
 
 	public static Context getContext() {
 		return sShare;
