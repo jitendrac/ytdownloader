@@ -133,7 +133,7 @@ public class StorageUtils {
 				"/mnt/UsbDriveB", };
 	}
 	
-	public static String findStoragePathForGivenFile(File file) {
+	public static String findStoragePath(File file) {
 		
 		String path = file.getAbsolutePath();
 		

@@ -4,7 +4,8 @@
         \n v3.4 - Nov 13 2013
         \n-----------------------------------
         \n[x] video list filters via sliding menu
-        \n[x] MP4 1080p and FLV 480p "hidden" streams support removed (it doesn\'t work anymore) 
+        \n[x] option to clear Dashboard into its menu (with checkbox to delete also data)
+        \n[x] removed support for MP4 1080p and FLV 480p "hidden" streams (it doesn\'t work anymore) 
         \n
         \n v3.3.1 - Nov 06 2013
         \n-----------------------------------
@@ -593,9 +594,14 @@
     </string-array>
     
     <string name="audio_extraction_type_default">conv</string>
-	
+    
+    <string name="apk_upgrade_sourceforge_link">http://sourceforge.net/projects/ytdownloader/files/</string>
+    <string name="apk_download_sourceforge_link">http://sourceforge.net/projects/ytdownloader/files/dentex.youtube.downloader_v%1$s.apk/download</string>
+	<string name="apk_filename">dentex.youtube.downloader_v%1$s.apk</string>
+    
     <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s/download</string>
-    <string name="ffmpeg_download_dialog_msg_link_bitbucket">http://bitbucket.org/dentex/ffmpeg_compiled_for_android/src/46f57632886403af8ae2715943bb8572902e16ec/ffmpeg_arm%1$s?at=master</string>
+    <string name="ffmpeg_download_dialog_msg_link_no_red">http://optimate.dl.sourceforge.net/project/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s</string>
+    
     <string name="ffmpeg_size_arm7">6.0 MB</string>
     <string name="ffmpeg_size_arm5">6.4 MB</string>
     

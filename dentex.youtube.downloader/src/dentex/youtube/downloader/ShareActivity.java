@@ -193,13 +193,10 @@ public class ShareActivity extends Activity {
 	private String extraId;
 	private boolean autoFFmpegTaskAlreadySent = false;
 	private String mComposedName;
-	//private String jsonDataType = YTD.JSON_DATA_TYPE_V;
 	//private String dashUrl = "";
 	//private String dashStartUrl;
 	private SlidingMenu slMenu;
 	private static CharSequence constraint;
-	
-	private boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; //TODO set to 'false' for release
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -234,8 +231,10 @@ public class ShareActivity extends Activity {
 		slMenu.setShadowDrawable(R.drawable.shadow);
 		if (isLandscape) {
 			slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_landscape);
+			slMenu.showMenu();
 		} else {
 			slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_portrait);
+			slMenu.showContent();
 		}
 		slMenu.setFadeDegree(0.35f);
 		slMenu.setHapticFeedbackEnabled(true);
@@ -325,11 +324,13 @@ public class ShareActivity extends Activity {
  
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        	Utils.logger("i", "...landscape", DEBUG_TAG);
+        	//Utils.logger("i", "...landscape", DEBUG_TAG);
     		slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_landscape);
+    		slMenu.showMenu();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Utils.logger("i", "...portrait", DEBUG_TAG);
+            //Utils.logger("i", "...portrait", DEBUG_TAG);
             slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_portrait);
+            slMenu.showContent();
         }
     }
 
@@ -640,7 +641,7 @@ public class ShareActivity extends Activity {
 				//listEntriesBuilder();
 				lv.setAdapter(aA);
 				
-				if (!SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
+				if (!YTD.SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
 					asyncSizesFiller = new AsyncSizesFiller();
 					asyncSizesFiller.execute(links.toArray(new String[0]));
 				}
@@ -1652,7 +1653,7 @@ public class ShareActivity extends Activity {
 		sizes.add(i, "");
 		String itagText = findItag(itag);
 		
-		if (SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
+		if (YTD.SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
 			itagsText.add(i, "[" + itag + "d]_" + itagText);
 		} else {
 			itagsText.add(i, itagText);
@@ -1711,7 +1712,7 @@ public class ShareActivity extends Activity {
 			res = findItag(itag);
 			Utils.logger("d", "index: " + i + ", itag: " + itag + " (" + res + ")", DEBUG_TAG);
 			
-			if (SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
+			if (YTD.SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG) {
 				itagsText.add("[" + itag + "]_" + res);
 			} else {
 				itagsText.add(res);
@@ -1957,7 +1958,7 @@ public class ShareActivity extends Activity {
 		int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
 		Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
 		
-		if (prefSig == SettingsActivity.SettingsFragment.YTD_SIG_HASH) {
+		if (prefSig == YTD.SIG_HASH) {
 				Utils.logger("d", "YTD signature in PREFS: update check possile", DEBUG_TAG);
 				
 				if (YTD.settings.getBoolean("autoupdate", false)) {

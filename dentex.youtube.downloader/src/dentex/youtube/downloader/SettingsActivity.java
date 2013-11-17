@@ -138,15 +138,11 @@ public class SettingsActivity extends Activity {
 		private int cpuVers;
 		private String link;
 		private Preference clear;
-
-		public static final int YTD_SIG_HASH = -1892118308; // final string
-		//public static final int YTD_SIG_HASH = -118685648; // dev test: desktop
-		//public static final int YTD_SIG_HASH = 1922021506; // dev test: laptop
 		
-		private File srcDir;
-		private File srcFile;
-		private File dstDir;
-		private File dstFile;
+		private File extDir;
+		private File extFile;
+		private File privateAppDir;
+		private File privateFile;
 		
 		/*private NotificationCompat.Builder aBuilder;
 		private NotificationManager aNotificationManager;
@@ -161,11 +157,6 @@ public class SettingsActivity extends Activity {
             
             boxThemeContextWrapper = new ContextThemeWrapper(getActivity(), R.style.BoxTheme);
             sSettings = getActivity();
-            
-            srcDir = getActivity().getExternalFilesDir(null);
-            srcFile = new File(srcDir, YTD.ffmpegBinName);
-            dstDir = getActivity().getDir("bin", 0);
-    		dstFile = new File(dstDir, YTD.ffmpegBinName);
 
             String cf = YTD.settings.getString("CHOOSER_FOLDER", "");
             if (cf.isEmpty() && cf != null) {
@@ -225,7 +216,7 @@ public class SettingsActivity extends Activity {
                 }
             });
             
-            initUpdate();
+            settingsUpdateInit();
             
             th = (Preference) findPreference("choose_theme");
 			th.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -255,13 +246,18 @@ public class SettingsActivity extends Activity {
 					return true;
 				}
 			});
+			
+            extDir = getActivity().getExternalFilesDir(null);
+            extFile = new File(extDir, YTD.ffmpegBinName);
+            privateAppDir = getActivity().getDir("bin", 0);
+    		privateFile = new File(privateAppDir, YTD.ffmpegBinName);
 
 			advanced = (CheckBoxPreference) findPreference("enable_advanced_features");
 			advanced.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
 					boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
-					boolean ffmpegInstalled = dstFile.exists();
+					boolean ffmpegInstalled = privateFile.exists();
 					if (!advancedFeatures) {
 						cpuVers = armCpuVersion();
 						boolean isCpuSupported = (cpuVers > 0) ? true : false;
@@ -345,14 +341,17 @@ public class SettingsActivity extends Activity {
 	                            	
 	                            	File sdcardAppDir = getActivity().getExternalFilesDir(null);
 	                            	if (sdcardAppDir != null) {
-	                            		if (!srcFile.exists()) {
+	                            		if (!extFile.exists()) {
+	                            			//<<<<<<<<<<<<<
 			                            	Intent intent = new Intent(getActivity(), FfmpegDownloadService.class);
 			                            	intent.putExtra("CPU", cpuVers);
 			                            	intent.putExtra("DIR", sdcardAppDir.getAbsolutePath());
 			                            	getActivity().startService(intent);
+	                            			//=============
 	                            			//downloadFfmpeg();
+	                            			//>>>>>>>>>>>>>
 	                            		} else {
-	                            			copyFfmpegToAppDataDir(getActivity(), srcFile, dstFile);
+	                            			copyFfmpegToAppDataDir(getActivity(), extFile, privateFile);
 	                            		}
 	                            	} else {
 	                            		Utils.logger("w", getString(R.string.unable_save_dialog_msg), DEBUG_TAG);
@@ -384,23 +383,23 @@ public class SettingsActivity extends Activity {
 		}
         
         /*private void downloadFfmpeg() {
-    		String link = getString(R.string.ffmpeg_download_dialog_msg_link_bitbucket, cpuVers);
+    		String link = getString(R.string.ffmpeg_download_dialog_msg_link_no_red, cpuVers);
     		Utils.logger("d", "FFmpeg download link: " + link, DEBUG_TAG);
             
             DownloadTaskListener dtl = new DownloadTaskListener() {
             	
     			@Override
-    			public void finishDownload(TestTask task) {
+    			public void finishDownload(DownloadTask task) {
 
     				String md5 = null;
     				if (cpuVers == 7) md5 = "33fcf4d5a3b2e5193bd42c2c1fc2abc7";
     				if (cpuVers == 5) md5 = "0606931cfbaca351a47e59ab198bc81e";
     				
-    				if (Utils.checkMD5(md5, srcFile)) {
-    					copyFfmpegToAppDataDir(sSettings, srcFile, dstFile);
+    				if (Utils.checkMD5(md5, extFile)) {
+    					copyFfmpegToAppDataDir(sSettings, extFile, privateFile);
     				} else {
     					SettingsActivity.SettingsFragment.touchAdvPref(true, false);
-    					srcFile.delete();
+    					extFile.delete();
     					Toast.makeText(sSettings, getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
     				}
     				
@@ -408,7 +407,7 @@ public class SettingsActivity extends Activity {
     			}
 
     			@Override
-    			public void preDownload(TestTask task) {
+    			public void preDownload(DownloadTask task) {
     				aBuilder =  new NotificationCompat.Builder(sSettings);
     				aNotificationManager = (NotificationManager) sSettings.getSystemService(Context.NOTIFICATION_SERVICE);
     				aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
@@ -420,34 +419,32 @@ public class SettingsActivity extends Activity {
     			}
     			
     			@Override
-    			public void updateProcess(TestTask task) {
+    			public void updateProcess(DownloadTask task) {
     				progress = Maps.mDownloadPercentMap.get(id);
     				aBuilder.setProgress(100, progress, false);
     				aNotificationManager.notify(3, aBuilder.build());
     			}
 
     			@Override
-    			public void errorDownload(TestTask task, Throwable error) {
+    			public void errorDownload(DownloadTask task, Throwable error) {
     				Log.e(DEBUG_TAG, YTD.ffmpegBinName + " download FAILED");
     				Toast.makeText(sSettings,  YTD.ffmpegBinName + ": " + getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
     				
-    				dstFile.delete();
-    				File temp = new File(dstFile.getAbsolutePath() + TestTask.TEMP_SUFFIX);
+    				File temp = new File(extFile.getAbsolutePath() + DownloadTask.TEMP_SUFFIX);
     				temp.delete();
+    				
+    				aNotificationManager.cancel(3);
     				
     				SettingsActivity.SettingsFragment.touchAdvPref(true, false);
     			}
-
-    			@Override
-    			public void resumeFromDifferentIp(TestTask task, Throwable error) {
-    				// nothing to do
-    			}
-            	
             };
             
             id = System.currentTimeMillis();
             try {
-            	TestTask dt = new TestTask(sSettings, id, link, YTD.ffmpegBinName, srcDir.getPath(), dtl, false);
+            	DownloadTask dt = new DownloadTask(sSettings, id, link, 
+            			YTD.ffmpegBinName, extDir.getPath(), 
+            			null, null, 
+            			dtl, false);
     			Maps.dtMap.put(id, dt);
     			dt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     		} catch (MalformedURLException e) {
@@ -482,12 +479,12 @@ public class SettingsActivity extends Activity {
 			}
 		}
 
-		public void initUpdate() {
+		public void settingsUpdateInit() {
 			int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
 			Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
 			
 			if (prefSig == 0 ) {
-				if (Utils.getSigHash(SettingsFragment.this) == YTD_SIG_HASH) {
+				if (Utils.getSigHash(SettingsFragment.this) == YTD.SIG_HASH) {
 					Utils.logger("d", "Found YTD signature: update check possile", DEBUG_TAG);
 					up.setEnabled(true);
 					
@@ -504,7 +501,7 @@ public class SettingsActivity extends Activity {
 		    	editor.putInt("APP_SIGNATURE", Utils.currentHashCode);
 		    	if (editor.commit()) Utils.logger("d", "saving sig pref...", DEBUG_TAG);
 			} else {
-				if (prefSig == YTD_SIG_HASH) {
+				if (prefSig == YTD.SIG_HASH) {
 					Utils.logger("d", "YTD signature in PREFS: update check possile", DEBUG_TAG);
 					up.setEnabled(true);
 					

@@ -27,15 +27,6 @@
 package dentex.youtube.downloader;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -68,7 +59,9 @@ import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
 
+import dentex.youtube.downloader.utils.FetchUrl;
 import dentex.youtube.downloader.utils.PopUps;
+import dentex.youtube.downloader.utils.UpdateHelper;
 import dentex.youtube.downloader.utils.Utils;
 
 public class UpgradeApkActivity extends Activity {
@@ -83,7 +76,6 @@ public class UpgradeApkActivity extends Activity {
 	private Button upgradeButton;
 	private DownloadManager downloadManager;
 	private File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-	private String webPage;
 	private long enqueue;
 	private Uri fileUri;
 	private AsyncUpdate asyncUpdate;
@@ -91,7 +83,6 @@ public class UpgradeApkActivity extends Activity {
 	private String matchedChangeLog;
 	private String matchedMd5;
 	private boolean isAsyncTaskRunning = false;
-	private String compRes = "init";
 	private ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(this, R.style.BoxTheme);
 	
 	@Override
@@ -153,13 +144,12 @@ public class UpgradeApkActivity extends Activity {
 					buttonClickedOnce = true;
 					
 					//init version and changelog
-					matchedChangeLog = null;
+					matchedChangeLog = "n.a.";
 					matchedVersion = null;
 					cl.setText("");
 					
 					asyncUpdate = new AsyncUpdate();
-					webPage = "http://sourceforge.net/projects/ytdownloader/files/";
-					asyncUpdate.execute(webPage);
+					asyncUpdate.execute(getString(R.string.apk_upgrade_sourceforge_link));
 				} else {
 					buttonClickedOnce = false;
 					callDownloadApk(matchedVersion);
@@ -209,7 +199,7 @@ public class UpgradeApkActivity extends Activity {
     	}
     }
 	
-	private class AsyncUpdate extends AsyncTask<String, Void, Integer> {
+	private class AsyncUpdate extends AsyncTask<String, Void, String[]> {
 		
 		protected void onPreExecute() {
 			upgradeButton.setEnabled(false);
@@ -218,142 +208,60 @@ public class UpgradeApkActivity extends Activity {
 			isAsyncTaskRunning = true;
 		}
 
-    	protected Integer doInBackground(String... urls) {
-            // params comes from the execute() call: params[0] is the url.
-            try {
-            	Utils.logger("d", "doInBackground...", DEBUG_TAG);
-                return downloadUrl(urls[0]);
-            } catch (IOException e) {
+		protected String[] doInBackground(String... urls) {
+    		try {
+    			Utils.logger("d", "doInBackground...", DEBUG_TAG);
+    			
+	    		FetchUrl fu = new FetchUrl(UpgradeApkActivity.this);
+				String content = fu.doFetch(urls[0]);
+				
+				if (!content.isEmpty()) {
+					return UpdateHelper.doUpdateCheck(UpgradeApkActivity.this, this, content);
+				} else {
+					return null;//"e";
+				}
+            } catch (Exception e) {
             	Log.e(DEBUG_TAG, "doInBackground: " + e.getMessage());
+            	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> downloadUrl: ", e.getMessage(), e);
             	matchedVersion = "n.a.";
-                return 1;
+                return null;//"e";
             }
-        }
-
-        private int downloadUrl(String myurl) throws IOException {
-            InputStream is = null;
-            int len = 100000;
-            Utils.logger("d", "The link is: " + myurl, DEBUG_TAG);
-            try {
-                URL url = new URL(myurl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestProperty("User-Agent","<em>" + YTD.USER_AGENT_FIREFOX + "</em>");
-                conn.setReadTimeout(20000 /* milliseconds */);
-                conn.setConnectTimeout(30000 /* milliseconds */);
-                conn.setInstanceFollowRedirects(false);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                conn.connect();
-                int response = conn.getResponseCode();
-                Utils.logger("d", "The response is: " + response, DEBUG_TAG);
-                is = conn.getInputStream();
-                if (!asyncUpdate.isCancelled()) {
-                	return readIt(is, len);
-                } else {
-                	Utils.logger("d", "asyncUpdate cancelled @ 'return readIt'", DEBUG_TAG);
-                	return 3;
-                }
-                
-            } finally {
-                if (is != null) {
-                    is.close();
-                }
-            }
-		}
-        
-        public int readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-            Reader reader = null;
-            reader = new InputStreamReader(stream, "UTF-8");
-            char[] buffer = new char[len];
-            reader.read(buffer);
-            String content = new String(buffer);
-           	return OnlineUpdateCheck(content);
         }
         
         @Override
-        protected void onPostExecute(Integer result) {
+        protected void onPostExecute(String[] result) {
         	
         	progressBar2.setVisibility(View.GONE);
+        	
+        	matchedVersion = result[1];
+        	matchedChangeLog = result[2];
+        	matchedMd5 = result[3];
 			
         	tv.setText(getString(R.string.upgrade_latest) + matchedVersion + getString(R.string.upgrade_installed) + currentVersion);
 	        cl.setText(matchedChangeLog);
 	        
-	        if (matchedVersion.contentEquals("n.a.")) {
-	        	Toast.makeText(UpgradeApkActivity.this, "Invalid HTTP server response", Toast.LENGTH_SHORT).show();
-	        }
-	        
-	        if (compRes.contentEquals(">")) {
+	        if (result[0].contentEquals(">")) {
 		        Utils.logger("d", "version comparison: downloading latest version...", DEBUG_TAG);
 			    upgradeButton.setEnabled(true);
 			    upgradeButton.setText(getString(R.string.upgrade_button_download));
-	    	} else if (compRes.contentEquals("==")) {
+	    	} else if (result[0].contentEquals("==")) {
 	    		PopUps.showPopUp(getString(R.string.information), getString(R.string.upgrade_latest_installed), "info", UpgradeApkActivity.this);
 	    		Utils.logger("d", "version comparison: latest version is already installed!", DEBUG_TAG);
 	    		upgradeButton.setEnabled(false);
-	    	} else if (compRes.contentEquals("<")) {
+	    	} else if (result[0].contentEquals("<")) {
 	    		// No need for a popup...
 	    		Utils.logger("d", "version comparison: installed higher than the one online? ...this should not happen...", DEBUG_TAG);
 	    		upgradeButton.setEnabled(false);
-	    	} else if (compRes.contentEquals("init")) {
+	    	} else if (result[0].contentEquals("e")) {
 	    		Utils.logger("d", "version comparison not tested", DEBUG_TAG);
 	    		upgradeButton.setEnabled(false);
 	    	}
         }   
 	}
 	
-	private int OnlineUpdateCheck(String content) {
-		Utils.logger("d", "OnlineUpdateCheck", DEBUG_TAG);
-		int res = 3;
-		if (asyncUpdate.isCancelled()) {
-			Utils.logger("d", "asyncUpdate cancelled @ 'OnlineUpdateCheck' begin", DEBUG_TAG);
-			return 3;
-		}
-		// match version name
-		Pattern v_pattern = Pattern.compile("versionName=\\\"(.*)\\\"");
-        Matcher v_matcher = v_pattern.matcher(content);
-        if (v_matcher.find() && !asyncUpdate.isCancelled()) {
-        	matchedVersion = v_matcher.group(1);
-	    	Utils.logger("i", "_on-line version: " + matchedVersion, DEBUG_TAG);
-	    	res = res - 1;
-	    } else {
-        	matchedVersion = "not_found";
-        	Log.e(DEBUG_TAG, "_online version: not found!");
-        }
-        
-        // match changelog
-        Pattern cl_pattern = Pattern.compile("<pre><code> v(.*?)</code></pre>", Pattern.DOTALL);
-    	Matcher cl_matcher = cl_pattern.matcher(content);
-    	if (cl_matcher.find() && !asyncUpdate.isCancelled()) {
-    		matchedChangeLog = " v" + cl_matcher.group(1);
-    		Utils.logger("i", "_online changelog...", DEBUG_TAG);
-    		res = res - 1;
-    	} else {
-    		matchedChangeLog = "not_found";
-    		Log.e(DEBUG_TAG, "_online changelog not found!");
-    	}
-    	
-    	// match md5
-    	// checksum: <code>d7ef1e4668b24517fb54231571b4a74f</code> dentex.youtube.downloader_v1.4
-    	Pattern md5_pattern = Pattern.compile("checksum: <code>(.{32})</code> dentex.youtube.downloader_v");
-    	Matcher md5_matcher = md5_pattern.matcher(content);
-    	if (md5_matcher.find() && !asyncUpdate.isCancelled()) {
-    		matchedMd5 = md5_matcher.group(1);
-    		Utils.logger("i", "_online md5sum: " + matchedMd5, DEBUG_TAG);
-    		res = res - 1;
-    	} else {
-    		matchedMd5 = "not_found";
-    		Log.e(DEBUG_TAG, "_online md5sum not found!");
-    	}
-    	
-    	compRes = Utils.VersionComparator.compare(matchedVersion, currentVersion);
-    	Utils.logger("d", "version comparison: " + matchedVersion + " " + compRes + " " + currentVersion, DEBUG_TAG);
-    	
-    	return res;
-    }
-	
 	void callDownloadApk(String ver) {
-		String apklink = "http://sourceforge.net/projects/ytdownloader/files/dentex.youtube.downloader_v" + ver + ".apk/download";
-		apkFilename = "dentex.youtube.downloader_v" + ver + ".apk";
+		String apklink = getString(R.string.apk_download_sourceforge_link, ver);
+		apkFilename = getString(R.string.apk_filename, ver);
 		downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
 	    Request request = new Request(Uri.parse(apklink));
 	    fileUri = Uri.parse(dir.toURI() + apkFilename);

@@ -58,7 +58,15 @@ public class YTD extends Application implements QueueThreadListener{
 	static String DEBUG_TAG = "YTD";
 	public static Context ctx;
 
-	public static String BugsenseApiKey = "00000000";
+	// *** development configurations *** // TODO					// for release set to:
+	// ================================== // ====					// ==================
+	public static String BugsenseApiKey = "00000000"; 				// 00000000
+	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; // false
+	
+	//public static int SIG_HASH = -1892118308; // final string
+	//public static int SIG_HASH = -118685648;  // dev test: desktop
+	public static int SIG_HASH = 1922021506;  // dev test: laptop
+	// **********************************
 	
 	public static final String JSON_FILENAME = "dashboard.json";
 	public static final String JSON_FOLDER = "json";

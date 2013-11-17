@@ -376,7 +376,7 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
         /*
          * check memory
          */
-        String mFileStorage = StorageUtils.findStoragePathForGivenFile(mFile);
+        String mFileStorage = StorageUtils.findStoragePath(mFile);
         long storageSpace = StorageUtils.getAvailableStorage(mFileStorage);
         
         if (DEBUG) {
