@@ -4,6 +4,7 @@
         \n v3.4 - Nov 13 2013
         \n-----------------------------------
         \n[x] video list filters via sliding menu
+        \n[x] fix to download video with encrypted signature
         \n[x] option to clear Dashboard into its menu (with checkbox to delete also data)
         \n[x] removed support for MP4 1080p and FLV 480p "hidden" streams (it doesn\'t work anymore) 
         \n

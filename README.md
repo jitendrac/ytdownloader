@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="68"`
+`versionCode="69"`
 
-`versionName="3.3.1"`
+`versionName="3.4"`
 
-MD5 checksum: `2cad6b56392073580d70e483cbfecfdf` dentex.youtube.downloader_v3.3.1.apk
+MD5 checksum: `bb0523eff5bc5404e253568a8691ebe5` dentex.youtube.downloader_v3.4.apk
 
 DISCLAIMER
 ================================================================
@@ -62,9 +62,12 @@ OTHER LICENSES
     The filechooser library is released under the MIT license. 
     (android-filechooser Copyright (C) 2012 Hai Bison) 
      
+    The SlidingMenu library is released under the Apache License. 
+    (Copyright (C) 2012 Jeremy Feinstein) 
+
     The liblame library, used to compile FFmpeg, is released under the LGPL. 
-    A GitHub project, https://github.com/intervigilium/liblame, 
-    has been used to compile the lame libraries for Android. 
+	A GitHub project, https://github.com/intervigilium/liblame, 
+	has been used to compile the lame libraries for Android. 
     (liblame Copyright (C) 2010 Ethan Chen) 
     (LAME Copyright (C) 1999-2007 The LAME Project, 
     Copyright (C) 1999-2001 Mark Taylor, 
@@ -74,11 +77,11 @@ OTHER LICENSES
     YTD`s mp3 tags are written with MyID3: a Java ID3 Tag Library 
     (http://www.fightingquaker.com/myid3 and 
     https://sites.google.com/site/eternalsandbox/myid3-for-android)
-    released under the Apache license, as its dependency Jakarta Regexp library. 
+	released under the Apache license, as its dependency Jakarta Regexp library. 
     (MyID3 Copyright (C) 2008 Charles M. Chen, adapted for Android by Romulus Urakagi Ts`ai) 
      
     Picasso: Image downloading and caching library
-    Copyright 2013 Square, Inc. - http://square.github.io/picasso/ 
+	Copyright 2013 Square, Inc. - http://square.github.io/picasso/ 
      
     Launcher and notification icons by Sam Plane: http://samplane123.deviantart.com/, 
     released under the CC BY-NC-ND (http://creativecommons.org/licenses/by-nc-nd/3.0) 
@@ -89,32 +92,32 @@ OTHER LICENSES
      	Code excerpts Licenses 
      
     Stack Overflow (http://stackoverflow.com), a question and answer site for programmers where
-    all the content is CC BY-SA 3.0 licensed (see http://creativecommons.org/licenses/by-sa/3.0) 
+	all the content is CC BY-SA 3.0 licensed (see http://creativecommons.org/licenses/by-sa/3.0) 
      
     checkMD5(...) and calculateMD5(...): 
     https://github.com/CyanogenMod/android_packages_apps_CMUpdater
-    Copyright (C) 2012 The CyanogenMod Project, licensed under the GNU GPLv2 license 
+	Copyright (C) 2012 The CyanogenMod Project, licensed under the GNU GPLv2 license 
      
     FfmpegController.java: GPL-3.0 - Copyright (C) 2009, Nathan Freitas, Orbot / The Guardian Project
-    http://openideals.com/guardian - https://github.com/guardianproject/android-ffmpeg-java 
+	http://openideals.com/guardian - https://github.com/guardianproject/android-ffmpeg-java 
      
     Observer.java: reference: https://gist.github.com/shirou/659180 
      
     SectionedAdapter.java: GPL-3.0
-    Copyright (C) 2008-2010 CommonsWare, LLC - portions Copyright (C) 2008 Jeffrey Sharkey 
+	Copyright (C) 2008-2010 CommonsWare, LLC - portions Copyright (C) 2008 Jeffrey Sharkey 
      
     Utils.getCpuInfo(): http://www.roman10.net/how-to-get-cpu-information-on-android/ - by Liu Feipeng 
      
     Utils.scanMedia(...):
-    http://www.grokkingandroid.com/adding-files-to-androids-media-library-using-the-mediascanner/
-    by Wolfram Rittmeyer 
+	http://www.grokkingandroid.com/adding-files-to-androids-media-library-using-the-mediascanner/
+	by Wolfram Rittmeyer 
      
     DashboardAdapter.java and DashboardListItem.java: 
     code adapted from https://github.com/survivingwithandroid/Surviving-with-android/
-    by Francesco Azzola (JFrankie) 
+	by Francesco Azzola (JFrankie) 
      
     Rhino.jar: open-source implementation of JavaScript written entirely in Java;
-    https://developer.mozilla.org/en-US/docs/Rhino - license: http://www.mozilla.org/MPL/2.0/ 
+	https://developer.mozilla.org/en-US/docs/Rhino - license: http://www.mozilla.org/MPL/2.0/ 
      
     Javascript function `decryptSignature` from the Greasemonkey script 
     http://userscripts.org/scripts/show/25105 (MIT License) - by Gantt 
@@ -143,6 +146,13 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.4 - Nov 13 2013 
+    ----------------------------------- 
+    [x] video list filters via sliding menu 
+    [x] fix to download video with encrypted signature 
+    [x] option to clear Dashboard into its menu (with checkbox to delete also data) 
+    [x] removed support for MP4 1080p and FLV 480p "hidden" streams (it doesn\'t work anymore) 
+     
      v3.3.1 - Nov 06 2013 
     ----------------------------------- 
     [x] fix for storage free space check 
@@ -151,8 +161,7 @@ CHANGELOG
     ----------------------------------- 
     [x] MP4 1080p and FLV 480p "hidden" streams support 
     [x] again, better support for "secondary" YouTube streams 
-    [x] fixed important bugs on resumed downloads and storage 
-		free space (thanks Christophelaures from XDA) 
+    [x] fixed important bugs on resumed downloads and storage free space (thanks Christophelaures from XDA) 
      
      v3.2 - Oct 30 2013 
     ----------------------------------- 
@@ -164,8 +173,7 @@ CHANGELOG
     ----------------------------------- 
     [x] option to auto-enqueue FFmpeg tasks on downloads completion 
     [x] support for FLV video import into Dashboard 
-    [x] support for video-only and audio-only "secondary" 
-		streams from YouTube (experimental) 
+    [x] support for video-only and audio-only "secondary" streams from YouTube (experimental) 
     [x] various bug fixes 
      
      v3.0.2 - Oct 11 2013 
@@ -194,8 +202,7 @@ CHANGELOG
       ^ pause/resume 
     [x] Custom download manager supporting: 
      - pause/resume 
-     - YouTube link validation on resume through 
-       different networks and/or expire time 
+     - YouTube link validation on resume through different networks and/or expire time 
     [x] new translations: 
      - Slovak 
      - Slovenian 
@@ -251,8 +258,7 @@ CHANGELOG
      
      v2.3 - Jun 25 2013 
     ----------------------------------- 
-    [x] experimantal signature support 
-		(thanks Gantt@userscripts.org) 
+    [x] experimantal signature support (thanks Gantt@userscripts.org) 
     [x] other bug/stability fixes 
      
      v2.2 - May 12 2013 
@@ -296,8 +302,7 @@ CHANGELOG
      
      v2.0 - May 06 2013 
     ----------------------------------- 
-    [x] audio extraction from downloaded video with 
-		optional conversion to mp3 (with FFmpeg) 
+    [x] audio extraction from downloaded video with optional conversion to mp3 (with FFmpeg) 
     [x] PayPal donation menu 
     [x] BugSense integration 
     [x] on the fly language switch 
@@ -440,7 +445,6 @@ TO-DO LIST
         (apk update, ffmpeg binary [wip - on hold])
 	[ ] dashboard option to include downloaded videos into backups 
         (or make menu entry "archive")
-	[ ] dashboard option to "nuke" all entries (remove and delete all)
 
 KNOWN ISSUES
 ================================================================
@@ -448,4 +452,6 @@ KNOWN ISSUES
 		- for a long time (around 20 or 30 minutes)
 		AND 
 		- without having the Dashboard Activity to the front
-		may be forced to PAUSE. In this case a manual resume is needed.
+		may be forced to PAUSE. In this case a manual resume is needed
+	[x] 1080p MP4 and 480p FLV links on some video don't work
+		(note the size not fetched)

@@ -59,13 +59,13 @@ public class YTD extends Application implements QueueThreadListener{
 	public static Context ctx;
 
 	// *** development configurations *** // TODO					// for release set to:
-	// ================================== // ====					// ==================
-	public static String BugsenseApiKey = "00000000"; 				// 00000000
+	// ================================== // ===========			// ==================
+	public static String BugsenseApiKey = "00000000"; 				// actual api key
 	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; // false
 	
-	//public static int SIG_HASH = -1892118308; // final string
+	public static int SIG_HASH = -1892118308; // final string
 	//public static int SIG_HASH = -118685648;  // dev test: desktop
-	public static int SIG_HASH = 1922021506;  // dev test: laptop
+	//public static int SIG_HASH = 1922021506;  // dev test: laptop
 	// **********************************
 	
 	public static final String JSON_FILENAME = "dashboard.json";
@@ -105,7 +105,8 @@ public class YTD extends Application implements QueueThreadListener{
 	public static NotificationCompat.Builder mBuilder;
 	public static List<Long> sequence = new ArrayList<Long>();
 	
-	public static String USER_AGENT_FIREFOX = "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0";
+	//public static String USER_AGENT_FIREFOX = "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0";
+	public static String USER_AGENT_FIREFOX = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0";
 	public static File dir_Downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 	public static File dir_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 	public static File dir_Movies = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);

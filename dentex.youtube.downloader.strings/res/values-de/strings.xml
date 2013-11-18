@@ -81,17 +81,17 @@ Verzeichnis, fügen den Befehl (über die Menü-Taste) ein und drücken ENTER.</
     <string name="link_copied">Link in Zwischenablage kopiert</string>
     <string name="share_link_via">Link teilen</string>
     
-    <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
-    <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_reset">Filter zurücksetzen</string>
+    <string name="filter_view_all">Alles anzeigen</string>
+    <string name="filter_header_format">Filter: Format</string>
+    <string name="filter_header_quality">Filter: Qualität</string>
+    <string name="filter_header_others">Filter: Sonstige</string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">Groß</string>
+    <string name="filter_md">Mittel</string>
+    <string name="filter_sd">Klein</string>
+    <string name="filter_vo">Nur-Video</string>
+    <string name="filter_ao">Nur-Ton</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -215,7 +215,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     </string-array>
     
 	<string name="operation_standby">Bitte warten. Anderer Prozess wird gerade ausgeführt!</string>
-	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
+	<string name="dashboard_delete_data_cb">Löscht auch alle aufgelisteten Video-/Audio-Dateien</string>
     
 	<string name="move_error">Fehler beim Verschieben!</string>
     <string name="move_progress">Datei wird verschoben&#8230;</string>
@@ -296,7 +296,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <string name="remove_video_title">Video entfernen</string>
     
     <string name="enable_adaptive_title">2ten Stream empfangen</string>
-    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_summary">Nur-Video- und/oder Nur-Ton-Streams (falls verfügbar) der Videoliste hinzufügen</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Benachrichtigungen</string>
