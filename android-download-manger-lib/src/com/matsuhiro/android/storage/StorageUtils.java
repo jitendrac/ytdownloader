@@ -7,10 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-<<<<<<< HEAD
-=======
 
->>>>>>> dev
 import com.matsuhiro.android.download.DownloadTask;
 import android.annotation.SuppressLint;
 import android.os.Build;
