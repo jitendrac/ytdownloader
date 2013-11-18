@@ -81,6 +81,18 @@
     <string name="link_copied">Bağlantı panoya kopyalandı</string>
     <string name="share_link_via">Bağlantıyı paylaş:</string>
     
+    <string name="filter_header_reset">Süzgeçleri sıfırla</string>
+    <string name="filter_view_all">Tümünü gör</string>
+    <string name="filter_header_format">Türe göre süz</string>
+    <string name="filter_header_quality">Kaliteye göre süz</string>
+    <string name="filter_header_others">Diğer süzgeçler</string>
+
+    <string name="filter_ld">Büyük</string>
+    <string name="filter_md">Orta</string>
+    <string name="filter_sd">Küçük</string>
+    <string name="filter_vo">Sadece görüntü</string>
+    <string name="filter_ao">Sadece ses</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Dikkat!</string>
@@ -203,6 +215,7 @@
     </string-array>
     
 	<string name="operation_standby">Lütfen bekleyin: şu anda başka bir işlem yapılıyor.</string>
+	<string name="dashboard_delete_data_cb">Listelenen tüm görüntü/ses dosyalarını sil</string>
     
 	<string name="move_error">Taşıma hatası.</string>
     <string name="move_progress">Dosya taşıma devam ediyor&#8230;</string>
@@ -283,7 +296,7 @@
     <string name="remove_video_title">Video removal</string>
     
     <string name="enable_adaptive_title">İkinci akışı al</string>
-    <string name="enable_adaptive_summary">[Deneysel]\nVideo listesine sadece ilave video ve/veya sadece ses akışı ekle.</string>
+    <string name="enable_adaptive_summary">Sadece görüntü ve/veya sadece ses akışını görüntü listesine ekle</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Bildirimler</string>

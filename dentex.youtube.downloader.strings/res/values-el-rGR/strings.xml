@@ -81,6 +81,18 @@
     <string name="link_copied">Ο σύνδεσμος αντιγράφτηκε στο πρόχειρο</string>
     <string name="share_link_via">Αποστολή αυτού του συνδέσμου μέσω:</string>
     
+    <string name="filter_header_reset">Επαναφορά φίλτρων</string>
+    <string name="filter_view_all">Εμφάνιση όλων</string>
+    <string name="filter_header_format">Φιλτράρισμα κατά φορμάτ</string>
+    <string name="filter_header_quality">Φιλτράρισμα κατά ποιότητα</string>
+    <string name="filter_header_others">Άλλα φίλτρα</string>
+
+    <string name="filter_ld">Μεγάλη</string>
+    <string name="filter_md">Μεσαία</string>
+    <string name="filter_sd">Μικρή</string>
+    <string name="filter_vo">Μόνο-βίντεο</string>
+    <string name="filter_ao">Μόνο-ήχος</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Προσοχή!</string>
@@ -203,6 +215,7 @@
     </string-array>
     
 	<string name="operation_standby">Αναμονή: μια άλλη εργασία είναι σε εξέλιξη.</string>
+	<string name="dashboard_delete_data_cb">Διαγραφή και όλων των αρχείων βίντεο/ήχου της λίστας</string>
     
 	<string name="move_error">Σφάλμα κατά τη μετακίνηση.</string>
     <string name="move_progress">Μετακίνηση αρχείου σε εξέλιξη&#8230;</string>
@@ -283,7 +296,7 @@
     <string name="remove_video_title">Αφαίρεση βίντεο</string>
     
     <string name="enable_adaptive_title">Ανάκτηση δευτερευόντων ροών</string>
-    <string name="enable_adaptive_summary">[Πειραματικό]\nΠροσθήκη επιπλέον μόνο-βίντεο και/ή μόνο-ήχου ροών (αν διατίθενται) στη λίστα βίντεο</string>
+    <string name="enable_adaptive_summary">Προσθήκη μόνο-βίντεο και/ή μόνο-ήχου ροών (αν υπάρχουν) στη λίστα βίντεο</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Ειδοποιήσεις</string>

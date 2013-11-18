@@ -1,7 +1,13 @@
 <resources>
 
-    <style name="AppThemeDark" parent="android:Theme.Holo" />
-    <style name="AppThemeLight" parent="android:Theme.Holo.Light.DarkActionBar" />
+    <style name="AppThemeDark" parent="android:Theme.Holo" >
+<!--         <item name="android:homeAsUpIndicator">@drawable/up_indicator</item> -->
+    </style>
+    
+    <style name="AppThemeLight" parent="android:Theme.Holo.Light.DarkActionBar" >
+<!--         <item name="android:homeAsUpIndicator">@drawable/up_indicator</item> -->
+    </style>
+    
     <style name="BoxTheme" parent="android:Theme.Holo.Dialog" />
     <style name="LicenseThemeDark" parent="android:Theme.NoTitleBar" />
     <style name="LicenseThemeLight" parent="android:Theme.Light.NoTitleBar" />
@@ -10,7 +16,7 @@
     
     <style name="HorizontalDivider">
     	<item name="android:layout_width">match_parent</item>
-    	<item name="android:layout_height">1dp</item>
+    	<item name="android:layout_height">2dp</item>
     	<item name="android:background">?android:attr/listDivider</item>
     </style>
     

@@ -81,6 +81,18 @@
     <string name="link_copied">Link copiato nella clipboard</string>
     <string name="share_link_via">Condividi questo link via:</string>
     
+    <string name="filter_header_reset">Reset filtri</string>
+    <string name="filter_view_all">Vedi tutti</string>
+    <string name="filter_header_format">Filtra per formato</string>
+    <string name="filter_header_quality">Filtra per qualità</string>
+    <string name="filter_header_others">Altri filtri</string>
+
+    <string name="filter_ld">Grande</string>
+    <string name="filter_md">Medio</string>
+    <string name="filter_sd">Piccolo</string>
+    <string name="filter_vo">solo video</string>
+    <string name="filter_ao">solo audio</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Attenzione!</string>
@@ -203,6 +215,7 @@
     </string-array>
     
 	<string name="operation_standby">Attendi: un\'altra operazione è già in corso.</string>
+	<string name="dashboard_delete_data_cb">Cancella anche tutti i file video/audio elencati</string>
     
 	<string name="move_error">Errore durante lo spostamento.</string>
     <string name="move_progress">Spostamento del file in corso&#8230;</string>
@@ -283,7 +296,7 @@
     <string name="remove_video_title">Rimozione del video</string>
     
     <string name="enable_adaptive_title">Ottieni flussi secondari</string>
-    <string name="enable_adaptive_summary">[Sperimentale]\nAggiungi flussi solo-video e/o solo-audio addizionali (se disponibili) alla lista video</string>
+    <string name="enable_adaptive_summary">Aggiungi flussi solo-video e/o solo-audio (se disponibili) alla lista dei video</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Notifiche</string>

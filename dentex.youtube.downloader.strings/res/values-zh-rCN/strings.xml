@@ -79,6 +79,18 @@
     <string name="link_copied">Link copied into clipboard</string>
     <string name="share_link_via">Share this link via:</string>
     
+    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_view_all">View all</string>
+    <string name="filter_header_format">Filter by format</string>
+    <string name="filter_header_quality">Filter by quality</string>
+    <string name="filter_header_others">Other filters</string>
+
+    <string name="filter_ld">Large</string>
+    <string name="filter_md">Medium</string>
+    <string name="filter_sd">Small</string>
+    <string name="filter_vo">Video-only</string>
+    <string name="filter_ao">Audio-only</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">注意！</string>
@@ -201,6 +213,7 @@
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
+	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
     
 	<string name="move_error">Error during move.</string>
     <string name="move_progress">File move in progress&#8230;</string>
@@ -281,7 +294,7 @@
     <string name="remove_video_title">移除影片</string>
     
     <string name="enable_adaptive_title">Get secondary streams</string>
-    <string name="enable_adaptive_summary">[Experimental]\nAdd additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">通知</string>

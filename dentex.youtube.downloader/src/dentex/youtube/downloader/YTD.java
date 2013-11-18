@@ -31,12 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
@@ -56,7 +58,15 @@ public class YTD extends Application implements QueueThreadListener{
 	static String DEBUG_TAG = "YTD";
 	public static Context ctx;
 
-	public static String BugsenseApiKey = "00000000";
+	// *** development configurations *** // TODO					// for release set to:
+	// ================================== // ===========			// ==================
+	public static String BugsenseApiKey = "00000000"; 				// actual api key
+	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; // false
+	
+	public static int SIG_HASH = -1892118308; // final string
+	//public static int SIG_HASH = -118685648;  // dev test: desktop
+	//public static int SIG_HASH = 1922021506;  // dev test: laptop
+	// **********************************
 	
 	public static final String JSON_FILENAME = "dashboard.json";
 	public static final String JSON_FOLDER = "json";
@@ -95,7 +105,8 @@ public class YTD extends Application implements QueueThreadListener{
 	public static NotificationCompat.Builder mBuilder;
 	public static List<Long> sequence = new ArrayList<Long>();
 	
-	public static String USER_AGENT_FIREFOX = "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0";
+	//public static String USER_AGENT_FIREFOX = "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0";
+	public static String USER_AGENT_FIREFOX = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0";
 	public static File dir_Downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 	public static File dir_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 	public static File dir_Movies = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
@@ -107,6 +118,8 @@ public class YTD extends Application implements QueueThreadListener{
 	
 	public static QueueThread queueThread;
 	public static Handler handler;
+	
+	public static Drawable slMenuOrigBkg;
 	
 	@Override
 	public void onCreate() {
@@ -190,8 +203,8 @@ public class YTD extends Application implements QueueThreadListener{
 	    return rf;
 	}
 
-	public static void NoDownProvPopUp(Context context) {
-		PopUps.showPopUp(context.getString(R.string.no_downloads_sys_app), context.getString(R.string.ytd_useless), "alert", context);
+	public static void NoDownProvPopUp(Activity act) {
+		PopUps.showPopUp(act.getString(R.string.no_downloads_sys_app), act.getString(R.string.ytd_useless), "alert", act);
 	}
 	
     public static void NotificationHelper(Context ctx) {

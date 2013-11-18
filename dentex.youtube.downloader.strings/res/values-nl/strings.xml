@@ -81,6 +81,18 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="link_copied">Link gekopieerd naar het klembord</string>
     <string name="share_link_via">Deel deze link via:</string>
     
+    <string name="filter_header_reset">Herstel filters</string>
+    <string name="filter_view_all">Alles weergeven</string>
+    <string name="filter_header_format">Filteren op formaat</string>
+    <string name="filter_header_quality">Filteren op kwaliteit</string>
+    <string name="filter_header_others">Andere filters</string>
+
+    <string name="filter_ld">Groot</string>
+    <string name="filter_md">Gemiddeld</string>
+    <string name="filter_sd">Klein</string>
+    <string name="filter_vo">Enkel-video</string>
+    <string name="filter_ao">Enkel-audio</string>
+    
     <!-- ### SettingsActivity ### -->
 
     <string name="attention">Let op!</string>
@@ -203,6 +215,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     </string-array>
     
 	<string name="operation_standby">Even wachten: er is al een andere operatie bezig</string>
+	<string name="dashboard_delete_data_cb">Verwijder ook alle video/audio bestanden in de lijst</string>
     
 	<string name="move_error">Fout bij verplaatsen</string>
     <string name="move_progress">Bestand verplaatsen bezig&#8230;</string>
@@ -283,7 +296,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="remove_video_title">Video verwijdering</string>
     
     <string name="enable_adaptive_title">Krijg secundaire streams</string>
-    <string name="enable_adaptive_summary">(Experimenteel)\nVoeg additionele enkel-video en/of enkel-audio streams toe (indien beschikbaar) aan de video lijst.</string>
+    <string name="enable_adaptive_summary">Voeg enkel-video en/of enkel-audio streams (als beschikbaar) toe aan de video lijst</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Meldingen</string>

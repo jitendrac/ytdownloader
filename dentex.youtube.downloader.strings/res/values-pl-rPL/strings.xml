@@ -78,8 +78,20 @@ Wybierz profil w ConnectBot i kiedy będziesz na zdalnej maszynie, przejdź do w
         <item>Wyślij za pomocą SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Link skopiowano do schowka</string>
+    <string name="share_link_via">Udostępnij link przez:</string>
+    
+    <string name="filter_header_reset">Resetuj filtry</string>
+    <string name="filter_view_all">Pokaż wszystko</string>
+    <string name="filter_header_format">Filtruj wg. formatu</string>
+    <string name="filter_header_quality">Filtruj wg. jakości</string>
+    <string name="filter_header_others">Pozostałe filtry</string>
+
+    <string name="filter_ld">Duże</string>
+    <string name="filter_md">Średnie</string>
+    <string name="filter_sd">Małe</string>
+    <string name="filter_vo">Tylko Wideo</string>
+    <string name="filter_ao">Tylko Dźwięk</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -130,8 +142,8 @@ Pobrać je teraz?</string>
     <string name="audio_conv_completed">Kodowanie dźwięku do mp3 zakończone.</string>
     <string name="audio_extr_error">Wystąpił błąd podczas kodowania dźwięku.</string>
     <string name="audio_conv_error">Wystąpił błąd podczas kodowania dźwięku do mp3.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">Ukończono wyodrębnianie %1$s z %2$s ścieżek audio</string>
+    <string name="auto_audio_extr_completed">Ukończono wyodrębnianie wszystkich ścieżek audio</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -152,20 +164,20 @@ Pobrać je teraz?</string>
 	<string name="menu_backup">Kopia zapasowa</string>
 	<string name="menu_restore">Przywróć</string>
 	<string name="menu_import">Zaimportuj wideo</string>
-	<string name="menu_import_file">Import a file</string>
+	<string name="menu_import_file">Importuj plik</string>
 	<string name="menu_import_double">Video już dodane.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file_double">Plik już dodany</string>
 	<string name="menu_backup_info">Wybierz folder dla kopii danych Tablicy aktywności</string>
 	<string name="menu_restore_info">Przywróć ustawienia Tablicy aktywności z pliku</string>
 	<string name="menu_restore_info_msg">Dotychczasowe dane zostaną nadpisane.</string>
 	<string name="menu_import_info">Zaimportuj wideo i zarządzaj nim z Tablicy aktywności</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Zaimportuj plik i zarządzaj nim z Tablicy aktywności</string>
 	<string name="menu_backup_result_ok">Poprawna kopia zapasowa Tablicy aktywności.</string>
 	<string name="menu_backup_result_failed">Błąd w trakcie tworzenia kopii.</string>
 	<string name="menu_restore_result_ok">Przywrócono dane Tablicy aktywności.</string>
 	<string name="menu_restore_result_failed">Błąd w trakcie przywracania danych.</string>
 	<string name="unsupported_operation">Nie obsługiwana operacja.</string>
-	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
+	<string name="ffmpeg_already_running">FFmpeg jest już uruchomiony.</string>
 	<string name="invalid_data">Błędne dane.</string>
 	<string name="open_chooser_title">Otwórz przy pomocy:</string>
 	
@@ -203,7 +215,8 @@ Pobrać je teraz?</string>
         <item>Pauza/Wznów</item>
     </string-array>
     
-	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
+	<string name="operation_standby">Proszę czekać: inne zadanie jest właśnie przetwarzane.</string>
+	<string name="dashboard_delete_data_cb">Usuń także wszystkie pliki audio/wideo</string>
     
 	<string name="move_error">Błąd w trakcie przenoszenia.</string>
     <string name="move_progress">Przenoszenie pliku&#8230;</string>
@@ -270,21 +283,21 @@ Aplikacja może zostać wybrana poprzez przycisk udostępnij w aplikacji YouTube
     <string name="enable_advanced_features_summary">Pobierz wtyczkę FFmpeg</string>
     <string name="mp3_bitrate_title">Bitrate kodowania MP3:</string>
     
-    <string name="ffmpeg_auto_title">Auto-extract audio</string>
-    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
-    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
-    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    <string name="ffmpeg_auto_title">Auto-wyodrębnianie dźwięku</string>
+    <string name="ffmpeg_auto_summary">Automatycznie wyodrębnij lub przekonwertuj do mp3 każde zakończone pobieranie</string>
+    <string name="ffmpeg_auto_cb_title">Włącz automatyczne wyodrębnianie</string>
+    <string name="ffmpeg_auto_cb_summary">Wybierz parametry</string>
     
     <string name="audio_extraction_type_title">Rodzaj wyodrębniania</string>
     <string-array name="audio_extraction_type_entries">
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>Wyodrębnij tylko dźwięk</item>
+        <item>Wyodrębnij i przekonwertuj ścieżkę audio do MP3</item>
     </string-array>
     
     <string name="remove_video_title">Usuwanie filmu</string>
     
-    <string name="enable_adaptive_title">Get secondary streams</string>
-    <string name="enable_adaptive_summary">[Experimental]\nAdd additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">Pobierz alternatywne strumienie</string>
+    <string name="enable_adaptive_summary">Dodaj do listy tylko wideo i/lub tylko audio (jeśli możliwe)</string>
         
     <!-- -->
     <string name="settings_cat_notifications">Powiadomienia</string>

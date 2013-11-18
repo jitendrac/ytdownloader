@@ -44,7 +44,7 @@ public class FFmpegExtractFlvThumbTask implements Runnable {
 
 		@Override
 		public void processComplete(int exitValue) {
-			Utils.logger("v", aPngFile.getName() + "':\nprocessComplete with exit value: " + exitValue, DEBUG_TAG);
+			Utils.logger("v", aPngFile.getName() + ": processComplete with exit value: " + exitValue, DEBUG_TAG);
 
 			if (DashboardActivity.isDashboardRunning)
 				DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);

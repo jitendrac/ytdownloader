@@ -77,8 +77,20 @@
         <item>SSH로 보내기</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
+    <string name="link_copied">링크를 클립보드에 복사하였습니다</string>
     <string name="share_link_via">Share this link via:</string>
+    
+    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_view_all">View all</string>
+    <string name="filter_header_format">Filter by format</string>
+    <string name="filter_header_quality">Filter by quality</string>
+    <string name="filter_header_others">Other filters</string>
+
+    <string name="filter_ld">Large</string>
+    <string name="filter_md">Medium</string>
+    <string name="filter_sd">Small</string>
+    <string name="filter_vo">Video-only</string>
+    <string name="filter_ao">Audio-only</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -128,8 +140,8 @@
     <string name="audio_conv_completed">mp3 변환이 완료되었습니다.</string>
     <string name="audio_extr_error">오디오 추출 실패.</string>
     <string name="audio_conv_error">mp3 인코딩 실패.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%2$s개의 파일 중 %1$s개 파일의 오디오 추출 완료됨</string>
+    <string name="auto_audio_extr_completed">오디오 추출이 완료되었습니다</string>
     
     <!-- ### DonateActivity ### -->
     
@@ -202,6 +214,7 @@
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
+	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
     
 	<string name="move_error">이동 중 에러가 발생하였습니다.</string>
     <string name="move_progress">파일 이동 진행 중&#8230;</string>
@@ -281,8 +294,8 @@
     
     <string name="remove_video_title">비디오 제거</string>
     
-    <string name="enable_adaptive_title">Get secondary streams</string>
-    <string name="enable_adaptive_summary">[Experimental]\nAdd additional video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">보조 스트림 받기</string>
+    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
         
     <!-- -->
     <string name="settings_cat_notifications">알림</string>

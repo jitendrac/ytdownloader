@@ -70,16 +70,17 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 	private final String GREEN = "#00AD21";
 	private final String YELLOW = "#F5D900";
 	private final String ORANGE = "#F57600";
-	private List<DashboardListItem> itemsList;
+	
 	private Context context;
-	private Filter itemsFilter;
+	private Filter filter;
+	
+	private List<DashboardListItem> itemsList;
 	private List<DashboardListItem> origItemsList;
-	private ArrayList<DashboardListItem> filteredList;
 	
 	public DashboardAdapter(List<DashboardListItem> itemsList, Context ctx) {
 		super(ctx, R.layout.activity_dashboard_list_item, itemsList);
-		this.itemsList = itemsList;
 		this.context = ctx;
+		this.itemsList = itemsList;
 		this.origItemsList = new ArrayList<DashboardListItem>(itemsList);
 	}
 	
@@ -275,13 +276,13 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 	            results.values = origItemsList;
 	            results.count = origItemsList.size();
 	        } else {
-	            filteredList = new ArrayList<DashboardListItem>();
+	        	List<DashboardListItem> filteredList = new ArrayList<DashboardListItem>();
 	             
 	            for (DashboardListItem p : itemsList) {
 	                if (p.getFilename().toUpperCase().startsWith(constraint.toString().toUpperCase()))
 	                    filteredList.add(p);
 	            }
-	             
+	            
 	            results.values = filteredList;
 	            results.count = filteredList.size();
 	        }
@@ -298,10 +299,10 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 	
 	@Override
 	public Filter getFilter() {
-	    if (itemsFilter == null)
-	        itemsFilter = new ItemsFilter();
+	    if (filter == null)
+	        filter = new ItemsFilter();
 	     
-	    return itemsFilter;
+	    return filter;
 	}
 	
 	public void resetData() {
