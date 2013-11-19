@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="69"`
+`versionCode="70"`
 
-`versionName="3.4"`
+`versionName="3.4.1"`
 
-MD5 checksum: `bb0523eff5bc5404e253568a8691ebe5` dentex.youtube.downloader_v3.4.apk
+MD5 checksum: `8bf223b29b43fde7070aa90ccda5d829` dentex.youtube.downloader_v3.4.1.apk
 
 DISCLAIMER
 ================================================================
@@ -146,12 +146,16 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
-     v3.4 - Nov 13 2013 
+     v3.4.1 - Nov 19 2013 
+    [x] encrypted signature patch (7) 
+    [x] layout fix for Samsung GT-P5110 and GT-N8000 devices 
+     
+     v3.4 - Nov 18 2013 
     ----------------------------------- 
     [x] video list filters via sliding menu 
-    [x] fix to download video with encrypted signature 
+    [x] encrypted signature patch (6) 
     [x] option to clear Dashboard into its menu (with checkbox to delete also data) 
-    [x] removed support for MP4 1080p and FLV 480p "hidden" streams (it doesn\'t work anymore) 
+    [x] removed support for MP4 1080p and FLV 480p "hidden" streams (not working anymore) 
      
      v3.3.1 - Nov 06 2013 
     ----------------------------------- 
@@ -216,12 +220,12 @@ CHANGELOG
      
      v2.6.2 - Aug 08 2013 
     ----------------------------------- 
-    [x] experimental signature patch 
+    [x] encrypted signature patch (5) 
      
      v2.6.1 - Jul 26 2013 
     ----------------------------------- 
     [x] option to show resolutions into the video list 
-    [x] experimental signature patch 
+    [x] encrypted signature patch (4) 
      
      v2.6 - Jul 17 2013 
     ----------------------------------- 
@@ -237,11 +241,11 @@ CHANGELOG
      
      v2.5.1 - Jul 12 2013 
     ----------------------------------- 
-    [x] experimantal signature patch 
+    [x] encrypted signature patch (3) 
      
      v2.5 - Jul 11 2013 
     ----------------------------------- 
-    [x] experimantal signature patch (yes, again) 
+    [x] encrypted signature patch (2) 
     [x] other small bugs fixed 
      
      v2.4 - Jul 02 2013 
@@ -254,11 +258,11 @@ CHANGELOG
      
      v2.3.1 - Jun 27 2013 
     ----------------------------------- 
-    [x] experimantal signature patch 
+    [x] encrypted signature patch 
      
      v2.3 - Jun 25 2013 
     ----------------------------------- 
-    [x] experimantal signature support (thanks Gantt@userscripts.org) 
+    [x] encrypted signature support (thanks Gantt@userscripts.org) 
     [x] other bug/stability fixes 
      
      v2.2 - May 12 2013 
@@ -453,5 +457,3 @@ KNOWN ISSUES
 		AND 
 		- without having the Dashboard Activity to the front
 		may be forced to PAUSE. In this case a manual resume is needed
-	[x] 1080p MP4 and 480p FLV links on some video don't work
-		(note the size not fetched)

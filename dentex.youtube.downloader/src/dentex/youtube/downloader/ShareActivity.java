@@ -1437,31 +1437,19 @@ public class ShareActivity extends Activity {
 					Matcher sigMatcher4 = sigPattern4.matcher(block);
 					if (sigMatcher4.find()) {
 						Utils.logger("d", "index: " + i + ", encrypted signature found on step 1; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
-						if (sigMatcher4.group(1).length() == 81) {
-							sig = "signature=" + sigMatcher4.group(1);
-						} else {
-							sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
-						}
+						sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
 					} else {
 						Pattern sigPattern5 = Pattern.compile("\\\\u0026s=(.+?)\\\\u0026");
 						Matcher sigMatcher5 = sigPattern5.matcher(block);
 						if (sigMatcher5.find()) {
 							Utils.logger("d", "index: " + i + ", encrypted signature found on step 2; length is " + sigMatcher5.group(1).length(), DEBUG_TAG);
-							if (sigMatcher5.group(1).length() == 81) {
-								sig = "signature=" + sigMatcher5.group(1);
-							} else {
-								sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
-							}
+							sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
 						} else {
 							Pattern sigPattern6 = Pattern.compile("\\\\u0026s=(.+?)$");
 							Matcher sigMatcher6 = sigPattern6.matcher(block);
 							if (sigMatcher6.find()) {
 								Utils.logger("d", "index: " + i + ", encrypted signature found on step 3; length is " + sigMatcher6.group(1).length(), DEBUG_TAG);
-								if (sigMatcher6.group(1).length() == 81) {
-									sig = "signature=" + sigMatcher6.group(1);
-								} else {
-									sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
-								}
+								sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
 							} else {
 								Utils.logger("w", "index: " + i + ", sig: " + sig, DEBUG_TAG);
 							}
