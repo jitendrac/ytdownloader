@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,11 +118,9 @@ public class DashboardActivity extends Activity {
 	
 	private final static String DEBUG_TAG = "DashboardActivity";
 	public static boolean isDashboardRunning;
-	private ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(this, R.style.BoxTheme);
+	private ContextThemeWrapper boxCtw = new ContextThemeWrapper(this, R.style.BoxTheme);
 	private NotificationCompat.Builder aBuilder;
 	private NotificationManager aNotificationManager;
-	private int totSeconds;
-	private int currentTime;
 	protected File audioFile;
 	protected String basename;
 	private String aSuffix;
@@ -185,7 +182,8 @@ public class DashboardActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("DashboardActivity_onCreate");
 		sDashboard = getBaseContext();
-		
+		sDashboardActivity = DashboardActivity.this;
+
 		// Theme init
     	Utils.themeInit(this);
     	
@@ -197,8 +195,6 @@ public class DashboardActivity extends Activity {
     	// Detect screen orientation
     	int or = this.getResources().getConfiguration().orientation;
     	isLandscape = (or == 2) ? true : false;
-
-    	sDashboardActivity = DashboardActivity.this;
     	
     	if (da != null) {
     		clearAdapterAndLists();
@@ -237,9 +233,9 @@ public class DashboardActivity extends Activity {
 					currentItem = da.getItem(position); // in order to refer to the filtered item
 					newClick = true;
         		
-	        		final boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);				
+	        		final boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
 	        		
-	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
 	        		builder.setTitle(currentItem.getFilename());
 	        		
 	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) || 
@@ -267,7 +263,7 @@ public class DashboardActivity extends Activity {
 							    				BugSenseHandler.leaveBreadcrumb("video_ffmpeg_extract");
 							    				if (audioIsSupported) {
 								    				if (ffmpegEnabled) {
-									    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxThemeContextWrapper);
+									    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxCtw);
 									    			    LayoutInflater inflater0 = getLayoutInflater();
 									    			    final View view0 = inflater0.inflate(R.layout.dialog_audio_extr_only, null);
 									    			    
@@ -303,7 +299,7 @@ public class DashboardActivity extends Activity {
 									    			    
 									    			    secureShowDialog(builder0);
 								    				} else {
-								    					notifyFfmpegNotInstalled();
+								    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
 								    				}
 							    				} else {
 							    					notifyOpsNotSupported();
@@ -321,7 +317,7 @@ public class DashboardActivity extends Activity {
 							    				BugSenseHandler.leaveBreadcrumb("video_ffmpeg_mp3");
 							    				if (audioIsSupported) {
 								    				if (ffmpegEnabled) {
-									    				AlertDialog.Builder builder1 = new AlertDialog.Builder(boxThemeContextWrapper);
+									    				AlertDialog.Builder builder1 = new AlertDialog.Builder(boxCtw);
 									    			    LayoutInflater inflater1 = getLayoutInflater();
 									    			    
 									    			    final View view1 = inflater1.inflate(R.layout.dialog_audio_extr_mp3_conv, null);
@@ -352,7 +348,7 @@ public class DashboardActivity extends Activity {
 									    			    
 									    			    secureShowDialog(builder1);
 								    				} else {
-								    					notifyFfmpegNotInstalled();
+								    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
 								    				}
 							    				} else {
 							    					notifyOpsNotSupported();
@@ -390,7 +386,7 @@ public class DashboardActivity extends Activity {
 						    				if (!isFfmpegRunning) {
 						    					if (ffmpegEnabled) {
 								    				BugSenseHandler.leaveBreadcrumb("audio_ffmpeg_mp3");
-								    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxThemeContextWrapper);
+								    				AlertDialog.Builder builder0 = new AlertDialog.Builder(boxCtw);
 								    			    LayoutInflater inflater0 = getLayoutInflater();
 								    			    final View view2 = inflater0.inflate(R.layout.dialog_audio_mp3_conv, null);
 					
@@ -420,7 +416,7 @@ public class DashboardActivity extends Activity {
 								    			    
 								    			    secureShowDialog(builder0);
 						    					} else {
-							    					notifyFfmpegNotInstalled();
+							    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
 							    				}
 						    				} else {
 				    							notifyFfmpegIsAlreadyRunning();
@@ -485,11 +481,11 @@ public class DashboardActivity extends Activity {
 	        			disabledItems = new int[] { PAUSERESUME };
 	        		}
 	
-	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
 	        		builder.setTitle(currentItem.getFilename());
 	
 	    			final ArrayAdapter<CharSequence> cla = DashboardLongClickAdapter.createFromResource(
-	    					boxThemeContextWrapper,
+	    					boxCtw,
 	    					R.array.dashboard_long_click_entries,
 	    		            android.R.layout.simple_list_item_1, 
 	    		            disabledItems);
@@ -599,7 +595,7 @@ public class DashboardActivity extends Activity {
 	}
 	
 	private void rename(final DashboardListItem currentItem) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+		AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 	    userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
@@ -672,7 +668,7 @@ public class DashboardActivity extends Activity {
 	}
 	
 	public void  removeFromDashboard(final DashboardListItem currentItem) {
-		AlertDialog.Builder rem = new AlertDialog.Builder(boxThemeContextWrapper);
+		AlertDialog.Builder rem = new AlertDialog.Builder(boxCtw);
 		//rem.setTitle(getString(R.string.attention));
 		rem.setTitle(currentItem.getFilename());
 		rem.setMessage(getString(R.string.remove_video_confirm));
@@ -684,7 +680,6 @@ public class DashboardActivity extends Activity {
 				refreshlist(DashboardActivity.this);
 				
 				YTD.videoinfo.edit().remove(currentItem.getId() + "_link").apply();
-				//YTD.videoinfo.edit().remove(currentItem.getId() + "_position").apply();
 			}
 		});
 		
@@ -698,7 +693,7 @@ public class DashboardActivity extends Activity {
 	}
 
 	public void delete(final DashboardListItem currentItem) {
-		AlertDialog.Builder del = new AlertDialog.Builder(boxThemeContextWrapper);
+		AlertDialog.Builder del = new AlertDialog.Builder(boxCtw);
 		//del.setTitle(getString(R.string.attention));
 		del.setTitle(currentItem.getFilename());
 		del.setMessage(getString(R.string.delete_video_confirm));
@@ -839,7 +834,6 @@ public class DashboardActivity extends Activity {
 						YTD.removeIdUpdateNotification(ID);
 						
 						YTD.videoinfo.edit().remove(ID + "_link").apply();
-						//YTD.videoinfo.edit().remove(ID + "_position").apply();
 						
 						Maps.removeFromAllMaps(ID);
 						
@@ -1001,7 +995,7 @@ public class DashboardActivity extends Activity {
 	        		boolean backupCheckboxEnabled = YTD.settings.getBoolean("dashboard_backup_info", true);
 				    if (backupCheckboxEnabled == true) {
 				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 			        	
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
@@ -1048,7 +1042,7 @@ public class DashboardActivity extends Activity {
 	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
 				    if (restoreCheckboxEnabled == true) {
 				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 			        	
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
@@ -1091,7 +1085,7 @@ public class DashboardActivity extends Activity {
         		boolean importCheckboxEnabled1 = YTD.settings.getBoolean("dashboard_import_info", true);
 			    if (importCheckboxEnabled1 == true) {
 			    	
-		        	AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+		        	AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 		        	
 		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 				    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
@@ -1127,7 +1121,7 @@ public class DashboardActivity extends Activity {
 			    }
         		return true;
         	case R.id.menu_clear_dashboard:
-        		DashboardClearHelper.confirmClearDashboard(sDashboardActivity, boxThemeContextWrapper, true);
+        		DashboardClearHelper.confirmClearDashboard(sDashboardActivity, boxCtw, true);
         		return true;
         	default:
         		return super.onOptionsItemSelected(item);
@@ -1290,7 +1284,6 @@ public class DashboardActivity extends Activity {
 		
 		//remove YouTube link from prefs
 		YTD.videoinfo.edit().remove(String.valueOf(id) + "_link").apply();
-		//YTD.videoinfo.edit().remove(String.valueOf(id) + "_position").apply();
 		
 		// delete temp file
 		File temp = new File(fileToDel.getAbsolutePath() + DownloadTask.TEMP_SUFFIX);
@@ -2104,7 +2097,7 @@ public class DashboardActivity extends Activity {
 			tagYear = "";
 		}
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
+		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
 	    LayoutInflater inflater0 = getLayoutInflater();
 	    final View id3s = inflater0.inflate(R.layout.dialog_edit_id3, null);
 	    
@@ -2206,6 +2199,7 @@ public class DashboardActivity extends Activity {
 						aBuilder.setContentTitle(audioFileName);
 						aBuilder.setContentText(text);
 						aBuilder.setOngoing(true);
+						aBuilder.setProgress(0, 0, true);
 						aNotificationManager.notify(2, aBuilder.build());
 						Utils.logger("i", vfilename + " " + text, DEBUG_TAG);
 					} catch (IOException ioe) {
@@ -2238,7 +2232,12 @@ public class DashboardActivity extends Activity {
 		public void shellOut(String shellLine) {
 			findAudioSuffix(shellLine);
 			if (extrTypeIsMp3Conv) {
-				getAudioJobProgress(shellLine);
+				int[] times = Utils.getAudioJobProgress(shellLine);
+				
+				if (times[0] != 0) {
+					aBuilder.setProgress(times[0], times[1], false);
+					aNotificationManager.notify(2, aBuilder.build());
+				}
 			}
 			Utils.logger("d", shellLine, DEBUG_TAG);
 		}
@@ -2452,70 +2451,11 @@ public class DashboardActivity extends Activity {
 		aBuilder.setContentText(text);
 		aBuilder.setOngoing(false);
 	}
-	
-	private void getAudioJobProgress(String shellLine) {
-		Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
-		Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
-		if (totalTimeMatcher.find()) {
-			totSeconds = getTotSeconds(totalTimeMatcher);
-		}
-		
-		Pattern currentTimePattern = Pattern.compile("time=(..):(..):(..)\\.(..)");
-		Matcher currentTimeMatcher = currentTimePattern.matcher(shellLine);
-		if (currentTimeMatcher.find()) {
-			currentTime = getTotSeconds(currentTimeMatcher);
-		}
-		
-		if (totSeconds != 0) {
-			aBuilder.setProgress(totSeconds, currentTime, false);
-			aNotificationManager.notify(2, aBuilder.build());
-		}
-	}
-
-	private int getTotSeconds(Matcher timeMatcher) {
-		int h = Integer.parseInt(timeMatcher.group(1));
-		int m = Integer.parseInt(timeMatcher.group(2));
-		int s = Integer.parseInt(timeMatcher.group(3));
-		int f = Integer.parseInt(timeMatcher.group(4));
-		
-		long hToSec = TimeUnit.HOURS.toSeconds(h);
-		long mToSec = TimeUnit.MINUTES.toSeconds(m);
-		
-		int tot = (int) (hToSec + mToSec + s);
-		if (f > 50) tot = tot + 1;
-		
-		Utils.logger("v", "h=" + h + " m=" + m + " s=" + s + "." + f + " -> tot=" + tot,	DEBUG_TAG);
-		return tot;
-	}
 
 	public void secureShowDialog(AlertDialog.Builder adb) {
-		//builder.create();
-		if (! ((Activity) DashboardActivity.this).isFinishing()) {
+		if (!DashboardActivity.this.isFinishing()) {
 			adb.show();
 		}
-	}
-
-	public void notifyFfmpegNotInstalled() {
-		Utils.logger("w", "FFmpeg not installed/enabled", DEBUG_TAG);
-		BugSenseHandler.leaveBreadcrumb("notifyFfmpegNotInstalled");
-		AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-		adb.setTitle(getString(R.string.ffmpeg_not_enabled_title));
-		adb.setMessage(getString(R.string.ffmpeg_not_enabled_msg));
-		
-		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				startActivity(new Intent(DashboardActivity.this,  SettingsActivity.class));
-			}
-		
-		});
-		
-		adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-		        // cancel
-		    }
-		});
-		
-		secureShowDialog(adb);
 	}
 	
 	public void onConfigurationChanged(Configuration newConfig) {

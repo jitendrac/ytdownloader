@@ -147,6 +147,7 @@ CHANGELOG
 ================================================================
     
      v3.4.1 - Nov 19 2013 
+    ----------------------------------- 
     [x] encrypted signature patch (7) 
     [x] layout fix for Samsung GT-P5110 and GT-N8000 devices 
      

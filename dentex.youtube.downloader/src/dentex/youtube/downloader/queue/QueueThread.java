@@ -27,7 +27,7 @@ public final class QueueThread extends Thread {
 	
 	private int totalCompleted;
 	
-	//private int type;
+	private int _AUDIO_EXTR = 0;
 	
 	private QueueThreadListener listener;
 	
@@ -94,15 +94,15 @@ public final class QueueThread extends Thread {
 					// register task completion
 					synchronized (QueueThread.this) {
 						// type is 0 when the task is an Audio Extraction
-						if (type == 0) totalCompleted++;
+						if (type == _AUDIO_EXTR) totalCompleted++;
 					}
 					// tell the listener something has happened
-					if (type == 0) signalUpdate();
+					if (type == _AUDIO_EXTR) signalUpdate();
 				}				
 			}
 		});
 		
-		if (type == 0) {
+		if (type == _AUDIO_EXTR) {
 			totalQueued++;
 			// tell the listeners the queue is now longer
 			signalUpdate();

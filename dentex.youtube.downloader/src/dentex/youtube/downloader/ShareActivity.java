@@ -46,6 +46,8 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -60,6 +62,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -86,6 +90,8 @@ import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.Maps;
 
+import dentex.youtube.downloader.ffmpeg.FfmpegController;
+import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
@@ -149,8 +155,6 @@ public class ShareActivity extends Activity {
 	private TextView noVideoInfo;
 	private ListView lv;
 	private static ShareActivityAdapter aA;
-	//private static ShareActivityAdapterSimple aA;
-	//private static ArrayAdapter<String> aA;
 	private static List<String> links = new ArrayList<String>();
 	private static List<String> codecs = new ArrayList<String>();
 	private static List<String> qualities = new ArrayList<String>();
@@ -166,8 +170,6 @@ public class ShareActivity extends Activity {
 	private String vFilename = "";
 	public static Uri videoUri;
 	private int icon;
-	private CheckBox showAgain1;
-	private CheckBox showAgain2;
 	private TextView userFilename;
 	private boolean sshInfoCheckboxEnabled;
 	private boolean generalInfoCheckboxEnabled;
@@ -177,13 +179,13 @@ public class ShareActivity extends Activity {
 	private AsyncSizesFiller asyncSizesFiller;
 	private boolean isAsyncDownloadRunning = false;
 	private boolean isAsyncSizesFillerRunning = false;
-	private AlertDialog helpDialog;
 	private AlertDialog.Builder  helpBuilder;
 	private Bitmap img;
 	private ImageView imgView;
 	private String videoId;
 	public static Context sShare;
-	private ContextThemeWrapper boxThemeContextWrapper = new ContextThemeWrapper(this, R.style.BoxTheme);
+	public static Activity sShareActivity;
+	private ContextThemeWrapper boxCtw = new ContextThemeWrapper(this, R.style.BoxTheme);
 	private String[] decryptionArray = null;
 	private String jslink;
 	private String decryptionFunction;
@@ -197,12 +199,21 @@ public class ShareActivity extends Activity {
 	//private String dashStartUrl;
 	private SlidingMenu slMenu;
 	private static CharSequence constraint;
-
+	
+	private int aoIndex;
+	private File muxedVideo;
+	private String muxedFileName;
+	private NotificationCompat.Builder mBuilder;
+	private NotificationManager mNotificationManager;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
 		sShare = getBaseContext();
+		sShareActivity = ShareActivity.this;
+		
+		aoIndex = -1;
 		
 		// Theme init
 		Utils.themeInit(this);
@@ -480,16 +491,16 @@ public class ShareActivity extends Activity {
 	private void showGeneralInfoTutorial() {
 		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
 		if (generalInfoCheckboxEnabled == true) {
-			AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+			AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
-			showAgain1 = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
-			showAgain1.setChecked(true);
+			final CheckBox showAgainCb = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
+			showAgainCb.setChecked(true);
 			adb.setView(generalInfo);
 			adb.setTitle(getString(R.string.tutorial_title));			
 			adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					if (!showAgain1.isChecked()) {
+					if (!showAgainCb.isChecked()) {
 						YTD.settings.edit().putBoolean("general_info", false).commit();
 						sshInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
 						Utils.logger("v", "generalInfoCheckboxEnabled: " + generalInfoCheckboxEnabled, DEBUG_TAG);
@@ -631,7 +642,7 @@ public class ShareActivity extends Activity {
 				assignPath();
 				
 				try {
-					callDownloadManager(links.get(pos), pos, vFilename, codecs.get(pos));
+					callDownloadManager();
 				} catch (IndexOutOfBoundsException e) {
 					Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 					launchDashboardActivity();
@@ -667,7 +678,7 @@ public class ShareActivity extends Activity {
 					mComposedName = composeVideoFilenameNoExt();
 					vFilename = composeVideoFilename(mComposedName);
 					
-					helpBuilder = new AlertDialog.Builder(boxThemeContextWrapper);
+					helpBuilder = new AlertDialog.Builder(boxCtw);
 					helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
 					helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
 
@@ -691,7 +702,7 @@ public class ShareActivity extends Activity {
 							try {
 								fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
 								if (fileRenameEnabled == true) {
-									AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+									AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
@@ -704,7 +715,11 @@ public class ShareActivity extends Activity {
 										public void onClick(DialogInterface dialog, int which) {
 											mComposedName = userFilename.getText().toString();
 											vFilename = composeVideoFilename(mComposedName);
-											callDownloadManager(links.get(pos), pos, vFilename, codecs.get(pos));
+											if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
+												offerFdam();
+											} else {
+												callDownloadManager();
+											}
 										}
 									});
 									
@@ -718,7 +733,11 @@ public class ShareActivity extends Activity {
 										adb.show();
 									}
 								} else {
-									callDownloadManager(links.get(pos), pos, vFilename, codecs.get(pos));
+									if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
+										offerFdam();
+									} else {
+										callDownloadManager();
+									}
 								}
 							} catch (IndexOutOfBoundsException e) {
 								Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
@@ -744,10 +763,8 @@ public class ShareActivity extends Activity {
 					});
 					
 					if (!showSize) {
-						helpDialog = helpBuilder.create();
-						
-						if (! ((Activity) ShareActivity.this).isFinishing()) {
-							helpDialog.show();
+						if (!ShareActivity.this.isFinishing()) {
+							helpBuilder.show();
 						}
 					}
 				}
@@ -764,7 +781,7 @@ public class ShareActivity extends Activity {
 					String base = composeVideoFilenameNoExt();
 					vFilename = composeVideoFilename(base);
 					
-					AlertDialog.Builder builder = new AlertDialog.Builder(boxThemeContextWrapper);
+					AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
 						builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
@@ -793,7 +810,6 @@ public class ShareActivity extends Activity {
 							}
 						});
 					}
-					builder.create();
 					if (! ((Activity) ShareActivity.this).isFinishing()) {
 						builder.show();
 					}
@@ -807,7 +823,7 @@ public class ShareActivity extends Activity {
 			tv.setVisibility(View.GONE);
 			noVideoInfo.setVisibility(View.VISIBLE);
 		}
-		
+
 		private void share(final int position, String filename) {
 			BugSenseHandler.leaveBreadcrumb("ShareActivity_share");
 			Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -866,7 +882,7 @@ public class ShareActivity extends Activity {
 				Utils.logger("d", "appStartIntent: " + appStartIntent, DEBUG_TAG);
 				context.startActivity(appStartIntent);
 			} else {
-				AlertDialog.Builder cb = new AlertDialog.Builder(boxThemeContextWrapper);
+				AlertDialog.Builder cb = new AlertDialog.Builder(boxCtw);
 				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
 				cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
 				icon = android.R.drawable.ic_dialog_alert;
@@ -887,11 +903,9 @@ public class ShareActivity extends Activity {
 						// cancel
 					}
 				});
-
-				AlertDialog helpDialog = cb.create();
 				
-				if (! ((Activity) ShareActivity.this).isFinishing()) {
-					helpDialog.show();
+				if (!ShareActivity.this.isFinishing()) {
+					cb.show();
 				}
 			}
 		}
@@ -926,25 +940,25 @@ public class ShareActivity extends Activity {
 				
 				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
 				if (sshInfoCheckboxEnabled == true) {
-					AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+					AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 					View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-					showAgain2 = (CheckBox) showAgain.findViewById(R.id.infl_cb);
-					showAgain2.setChecked(true);
-					showAgain2.setText(getString(R.string.show_again_checkbox));
+					final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
+					showAgainCb.setChecked(true);
+					showAgainCb.setText(getString(R.string.show_again_checkbox));
 					adb.setView(showAgain);
 					adb.setTitle(getString(R.string.ssh_info_tutorial_title));
 					adb.setMessage(getString(R.string.ssh_info_tutorial_msg));
 					adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							if (!showAgain2.isChecked()) {
+							if (!showAgainCb.isChecked()) {
 								YTD.settings.edit().putBoolean("ssh_info", false).apply();
 								Utils.logger("d", "sshInfoCheckboxEnabled: " + false, DEBUG_TAG);
 							}
 							callConnectBot(); 
 						}
 					});
-					if (! ((Activity) ShareActivity.this).isFinishing()) {
+					if (!ShareActivity.this.isFinishing()) {
 						adb.show();
 					}
 				} else {
@@ -954,9 +968,212 @@ public class ShareActivity extends Activity {
 				Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 			}
 		}
+		
+		private void offerFdam() {
+			Utils.logger("i", "VO entry selected", DEBUG_TAG);
+			
+			String choosenVoMethod = YTD.settings.getString("vo_download_method", "");
+			if (choosenVoMethod.isEmpty()) {
+				AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+				LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+				View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+				final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
+				showAgainCb.setChecked(true);
+				showAgainCb.setText(getString(R.string.show_again_checkbox));
+				adb.setView(showAgain);
+				adb.setTitle("VO entry selected");			//TODO @strings (x2)
+				adb.setMessage("fdam or normal download?"); //     "
+				
+				adb.setPositiveButton("fdam", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						if (!showAgainCb.isChecked()) {
+							YTD.settings.edit().putString("vo_download_method", "fdam").apply();
+							Utils.logger("v", "offerFdamCheckboxEnabled: " + false, DEBUG_TAG);
+						}
+						ffmpegDownloadAndMux();
+					}
+				});
+				
+				adb.setNegativeButton("dm", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						if (!showAgainCb.isChecked()) {
+							YTD.settings.edit().putString("vo_download_method", "dm").apply();
+							Utils.logger("v", "offerFdamCheckboxEnabled: " + false, DEBUG_TAG);
+						}
+						callDownloadManager();			
+					}
+					
+				});
+				
+				if (!ShareActivity.this.isFinishing()) {
+					adb.show();
+				}
+			} else if (choosenVoMethod.equals("fdam")) {
+				ffmpegDownloadAndMux();
+			} else if (choosenVoMethod.equals("dm")) {
+				callDownloadManager();
+			}
+		}
+
+		private void ffmpegDownloadAndMux() {
+			boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
+			if (ffmpegEnabled) {
+				int i = 0;
+				int[] aoItagsInPreferredOrder = new int[] { 141, 172, 140, 171, 139 };
+				int aoItag;
+				while (aoIndex == -1 && i < 5) {
+					aoItag = aoItagsInPreferredOrder[i];
+					aoIndex = itags.indexOf(aoItag);
+					i++;
+				}
+				if (aoIndex == -1) {
+					Utils.logger("i", "No AO itag found", DEBUG_TAG);
+				} else {
+					Utils.logger("i", "1st AO itag found: " + itags.get(aoIndex), DEBUG_TAG);
+					
+					mBuilder =  new NotificationCompat.Builder(ShareActivity.this);
+					mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+					mBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
+					
+					if (vFilename.contains("_VO_")) {
+						muxedFileName = vFilename.replace("VO", "MUX");
+					} else {
+						muxedFileName = vFilename + "_MUX";
+					}
+					
+					muxedVideo = new File (path, muxedFileName);
+					
+					writeThumbToDisk();
+					
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							Looper.prepare();
+	
+							FfmpegController ffmpeg = null;
+							try {
+								ffmpeg = new FfmpegController(ShareActivity.this);
+								
+								mBuilder.setContentTitle(muxedFileName);
+								mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
+								mBuilder.setOngoing(true);
+								mBuilder.setProgress(100, 0, true);
+								mNotificationManager.notify(4, mBuilder.build());
+								
+							} catch (IOException ioe) {
+								Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
+							}
+	
+							ShellDummy shell = new ShellDummy();
+	
+							try {
+								ffmpeg.downloadAndMuxAoVoStreams(links.get(aoIndex), links.get(pos), muxedVideo, shell);
+							} catch (IOException e) {
+								Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
+							} catch (InterruptedException e) {
+								Log.e(DEBUG_TAG, "InterruptedException running ffmpeg" + e.getMessage());
+							}
+							Looper.loop();
+						}
+					}).start();
+				}
+			} else {
+				Utils.notifyFfmpegNotInstalled(sShareActivity, boxCtw);
+			}
+		}
 	}
 	
-	private void callDownloadManager(final String link, final int position, final String nameOfVideo, final String vExt) {
+	private class ShellDummy implements ShellCallback {
+
+		@Override
+		public void shellOut(String shellLine) {
+			int[] times = Utils.getAudioJobProgress(shellLine);
+			if (times[0] != 0) {
+				mBuilder.setProgress(times[0], times[1], false);
+				mNotificationManager.notify(4, mBuilder.build());
+			}
+			
+			Utils.logger("d", shellLine, DEBUG_TAG);
+		}
+
+		@Override
+		public void processComplete(int exitValue) {
+			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
+			
+			Intent muxIntent = new Intent(Intent.ACTION_VIEW);
+			if (exitValue == 0) {
+				mBuilder.setContentTitle(muxedFileName);
+				mBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
+				mBuilder.setOngoing(false);
+				muxIntent.setDataAndType(Uri.fromFile(muxedVideo), "video/*");
+				PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        		mBuilder.setContentIntent(contentIntent);
+        		
+        		Utils.scanMedia(getApplicationContext(), 
+						new String[] {muxedVideo.getAbsolutePath()}, 
+						new String[] {"video/*"});
+        		
+        		Json.addEntryToJsonFile(
+        				ShareActivity.this, 
+        				String.valueOf(System.currentTimeMillis()),
+						YTD.JSON_DATA_TYPE_V, 
+						videoId,
+						pos,
+						YTD.JSON_DATA_STATUS_COMPLETED,
+						muxedVideo.getParent(),
+						muxedFileName, 
+						Utils.getFileNameWithoutExt(muxedFileName), 
+						"", 
+						Utils.MakeSizeHumanReadable((int) muxedVideo.length(), false), 
+						true);
+		} else {
+			setNotificationForAudioJobError();
+			
+			Json.addEntryToJsonFile(
+					ShareActivity.this, 
+					String.valueOf(System.currentTimeMillis()),
+					YTD.JSON_DATA_TYPE_V,  
+					videoId,
+					pos,
+					YTD.JSON_DATA_STATUS_FAILED,
+					muxedVideo.getParent(),
+					muxedFileName, 
+					Utils.getFileNameWithoutExt(muxedFileName), 
+					"", 
+					"-", 
+					true);
+		}
+		
+		if (DashboardActivity.isDashboardRunning)
+			DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+		
+		Utils.setNotificationDefaults(mBuilder);
+		
+		mBuilder.setProgress(0, 0, false);
+		mNotificationManager.cancel(4);
+		mNotificationManager.notify(4, mBuilder.build());
+
+		}
+
+		@Override
+		public void processNotStartedCheck(boolean started) {
+			if (!started) {
+				Utils.logger("w", "FFmpeg process not started or not completed", DEBUG_TAG);
+				setNotificationForAudioJobError();
+			}
+			mNotificationManager.notify(4, mBuilder.build());
+		}
+		
+	}
+	
+	public void setNotificationForAudioJobError() {
+		Log.e(DEBUG_TAG, muxedFileName + " MUX failed");
+		Toast.makeText(ShareActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
+		mBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
+		mBuilder.setOngoing(false);
+	}
+	
+	private void callDownloadManager() {
 		BugSenseHandler.leaveBreadcrumb("callDownloadManager");
 		
 		dtl = new DownloadTaskListener() {
@@ -979,7 +1196,7 @@ public class ShareActivity extends Activity {
 						pos, 
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
 						pathOfVideo, 
-						nameOfVideo, 
+						vFilename, 
 						mComposedName, 
 						aExt, 
 						"-", 
@@ -1039,7 +1256,6 @@ public class ShareActivity extends Activity {
 				YTD.removeIdUpdateNotification(ID);
 				
 				YTD.videoinfo.edit().remove(String.valueOf(ID) + "_link").commit();
-				//YTD.videoinfo.edit().remove(String.valueOf(ID) + "_position").commit();
 				
 				Maps.removeFromAllMaps(ID);
 				
@@ -1148,7 +1364,7 @@ public class ShareActivity extends Activity {
 		
 		String aExt = findAudioCodec();
 		String jsonDataType;
-		if (vExt.equals("m4a") || codecs.get(pos).equals("ogg")) {
+		if (codecs.get(pos).equals("m4a") || codecs.get(pos).equals("ogg")) {
 			jsonDataType = YTD.JSON_DATA_TYPE_A_E;
 		} else {
 			jsonDataType = YTD.JSON_DATA_TYPE_V;
@@ -1169,12 +1385,13 @@ public class ShareActivity extends Activity {
 			}
 			
 			try {
-				DownloadTask dt = new DownloadTask(this, id, link, 
+				DownloadTask dt = new DownloadTask(this, id, links.get(pos), 
 						vFilename, path.getPath(), 
 						aExt, jsonDataType, 
 						dtl, false);
-				YTD.videoinfo.edit().putString(String.valueOf(id) + "_link", link).apply();
-				//YTD.videoinfo.edit().putInt(String.valueOf(id) + "_position", position).apply();
+				
+				YTD.videoinfo.edit().putString(String.valueOf(id) + "_link", links.get(pos)).apply();
+
 				Maps.dtMap.put(id, dt);
 				dt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 			} catch (MalformedURLException e) {

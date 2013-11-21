@@ -154,6 +154,26 @@ public class FfmpegController {
 		
 	}
 	
+	public void downloadAndMuxAoVoStreams(String aoLink, String voLink, File out, 
+			ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
+		
+		List<String> cmd = new ArrayList<String>();
+		
+		cmd.add(mFfmpegBinPath);
+		cmd.add("-y");
+		cmd.add("-i");
+		cmd.add(aoLink);
+		cmd.add("-i");
+		cmd.add(voLink);
+		cmd.add("-acodec");
+		cmd.add("copy");
+		cmd.add("-vcodec");
+		cmd.add("copy");
+		cmd.add(out.getAbsolutePath());
+		
+		execFFMPEG(cmd, sc);
+	}
+	
 	class StreamGobbler extends Thread {
 	    InputStream is;
 	    String type;

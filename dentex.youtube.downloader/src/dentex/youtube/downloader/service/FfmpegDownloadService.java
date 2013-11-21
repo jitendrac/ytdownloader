@@ -101,7 +101,7 @@ public class FfmpegDownloadService extends Service {
 	}
 	
 	private void downloadFfmpeg() {
-		String link = getString(R.string.ffmpeg_download_dialog_msg_link, cpuVers);
+		String link = getString(R.string.ffmpeg_download_dialog_msg_link_test, cpuVers);
 
 		Utils.logger("d", "FFmpeg download link: " + link, DEBUG_TAG);
 		
@@ -157,8 +157,8 @@ public class FfmpegDownloadService extends Service {
 						File dst = new File(nContext.getDir("bin", 0), YTD.ffmpegBinName);
 						
 						String md5 = null;
-						if (cpuVers == 7) md5 = "33fcf4d5a3b2e5193bd42c2c1fc2abc7";
-						if (cpuVers == 5) md5 = "0606931cfbaca351a47e59ab198bc81e";
+						/*if (cpuVers == 7) */md5 = "deadfb4746e4cdf47aa2bcf7b55d718b";
+						//if (cpuVers == 5) md5 = "0606931cfbaca351a47e59ab198bc81e"; //TODO change
 						
 						if (Utils.checkMD5(md5, src)) {
 							SettingsActivity.SettingsFragment.copyFfmpegToAppDataDir(context, src, dst);

@@ -33,7 +33,6 @@ import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Stack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -42,9 +41,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
@@ -80,7 +76,7 @@ public class SettingsActivity extends Activity {
 	public static final String DEBUG_TAG = "SettingsActivity";
 	public static String chooserSummary;
 	public static Activity sSettings;
-	private static ContextThemeWrapper boxThemeContextWrapper;
+	private static ContextThemeWrapper boxCtw;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +151,7 @@ public class SettingsActivity extends Activity {
 
             addPreferencesFromResource(R.xml.settings);
             
-            boxThemeContextWrapper = new ContextThemeWrapper(getActivity(), R.style.BoxTheme);
+            boxCtw = new ContextThemeWrapper(getActivity(), R.style.BoxTheme);
             sSettings = getActivity();
 
             String cf = YTD.settings.getString("CHOOSER_FOLDER", "");
@@ -188,7 +184,7 @@ public class SettingsActivity extends Activity {
             clear.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             	
             	public boolean onPreferenceClick(Preference preference) {
-            		DashboardClearHelper.confirmClearDashboard(sSettings, boxThemeContextWrapper, false);
+            		DashboardClearHelper.confirmClearDashboard(sSettings, boxCtw, false);
                     return true;
             	}
             });
@@ -259,65 +255,20 @@ public class SettingsActivity extends Activity {
 					boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
 					boolean ffmpegInstalled = privateFile.exists();
 					if (!advancedFeatures) {
-						cpuVers = armCpuVersion();
+						cpuVers = Utils.armCpuVersion();
 						boolean isCpuSupported = (cpuVers > 0) ? true : false;
 						Utils.logger("d", "isCpuSupported: " + isCpuSupported, DEBUG_TAG);
 						
-						if (!isCpuSupported) {
-							advanced.setEnabled(false);
-							advanced.setChecked(false);
-							YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", false).commit();
-
-							AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-	                        adb.setIcon(android.R.drawable.ic_dialog_alert);
-	                        adb.setTitle(getString(R.string.ffmpeg_device_not_supported));
-	                        adb.setMessage(getString(R.string.ffmpeg_support_mail));
-	                        
-	                        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-	                        	
-	                            public void onClick(DialogInterface dialog, int which) {
-	                            	/*
-	                            	 * adapted form same source as createEmailOnlyChooserIntent below
-	                            	 */
-	                            	Intent i = new Intent(Intent.ACTION_SEND);
-	                                i.setType("*/*");
-	                                
-	                                String content = Utils.getCpuInfo();
-	                                /*File destDir = getActivity().getExternalFilesDir(null); 
-	                                String filename = "cpuInfo.txt";
-	                                try {
-										Utils.createLogFile(destDir, filename, content);
-										i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(destDir, filename)));*/
-		                                i.putExtra(Intent.EXTRA_EMAIL, new String[] { "samuele.rini76@gmail.com" });
-		                                i.putExtra(Intent.EXTRA_SUBJECT, "YTD: device info report");
-		                                i.putExtra(Intent.EXTRA_TEXT, content);
-
-		                                startActivity(createEmailOnlyChooserIntent(i, getString(R.string.email_via)));
-									/*} catch (IOException e) {
-										Log.e(DEBUG_TAG, "IOException on creating cpuInfo Log file ", e);
-									}*/
-	                            }
-	                        });
-	                        
-	                        adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
-	                        	
-	                        	public void onClick(DialogInterface dialog, int which) {
-	                            	// cancel
-	                            }
-	                        });
-	
-	                        AlertDialog helpDialog = adb.create();
-	                        if (! (getActivity()).isFinishing()) {
-	                        	helpDialog.show();
-	                        }	                            
-						} else {
+						if (isCpuSupported) {
 							YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", true).commit();
+						} else {
+							Utils.offerDevMail(sSettings, advanced, boxCtw);
 						}
 						
 						Utils.logger("d", "ffmpegInstalled: " + ffmpegInstalled, DEBUG_TAG);
 					
 						if (!ffmpegInstalled && isCpuSupported) {	
-							AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
+							AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
 	                        adb.setIcon(android.R.drawable.ic_dialog_info);
 	                        adb.setTitle(getString(R.string.ffmpeg_download_dialog_title));
 	                        
@@ -466,18 +417,6 @@ public class SettingsActivity extends Activity {
     			touchAdvPref(true, false);
     		}
     	}
-        
-        private int armCpuVersion() {
-        	String cpuAbi = Build.CPU_ABI;
-			Utils.logger("d", "CPU_ABI: " + cpuAbi, DEBUG_TAG);
-			if (cpuAbi.equals("armeabi-v7a")) {
-				return 7;
-			} else if (cpuAbi.equals("armeabi")) {
-				return 5;
-			} else {
-				return 0;
-			}
-		}
 
 		public void settingsUpdateInit() {
 			int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
@@ -641,8 +580,8 @@ public class SettingsActivity extends Activity {
 			}
 			YTD.settings.edit().putString("CHOOSER_FOLDER", chooserSummary).apply();
 		}
-        
-        public static void autoUpdate(Context context) {
+
+		public static void autoUpdate(Context context) {
 	        long storedTime = YTD.settings.getLong("time", 0); // final string
 	        //long storedTime = 10000; // dev test: forces auto update
 	        
@@ -668,40 +607,5 @@ public class SettingsActivity extends Activity {
 			    }
 			});
 		}
-		
-		/* Intent createEmailOnlyChooserIntent from Stack Overflow:
-		 * 
-		 * http://stackoverflow.com/questions/2197741/how-to-send-email-from-my-android-application/12804063#12804063
-		 * 
-		 * Q: http://stackoverflow.com/users/138030/rakesh
-		 * A: http://stackoverflow.com/users/1473663/nobu-games
-		 */
-		public Intent createEmailOnlyChooserIntent(Intent source, CharSequence chooserTitle) {
-			BugSenseHandler.leaveBreadcrumb("createEmailOnlyChooserIntent");
-			Stack<Intent> intents = new Stack<Intent>();
-	        Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
-	        		"info@domain.com", null));
-	        List<ResolveInfo> activities = getActivity().getPackageManager()
-	                .queryIntentActivities(i, 0);
-
-	        for(ResolveInfo ri : activities) {
-	            Intent target = new Intent(source);
-	            target.setPackage(ri.activityInfo.packageName);
-	            intents.add(target);
-	        }
-
-	        if(!intents.isEmpty()) {
-	            Intent chooserIntent = Intent.createChooser(intents.remove(0),
-	                    chooserTitle);
-	            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
-	                    intents.toArray(new Parcelable[intents.size()]));
-
-	            return chooserIntent;
-	        } else {
-	        	return Intent.createChooser(source, chooserTitle);
-	        }
-		}
-
-		
 	}
 }

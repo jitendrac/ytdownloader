@@ -60,8 +60,8 @@ public class YTD extends Application implements QueueThreadListener{
 
 	// *** development configurations *** // TODO					// for release set to:
 	// ================================== // ===========			// ==================
-	public static String BugsenseApiKey = "00000000"; 				// actual api key
-	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; // false
+	public static String BugsenseApiKey = "00000000";				// actual api key
+	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false;	// false
 	
 	public static int SIG_HASH = -1892118308; // final string
 	//public static int SIG_HASH = -118685648;  // dev test: desktop
@@ -260,6 +260,7 @@ public class YTD extends Application implements QueueThreadListener{
 
     @Override
 	public void handleQueueThreadUpdate() {
+    	
 		handler.post(new Runnable() {
 			@Override
 			public void run() {

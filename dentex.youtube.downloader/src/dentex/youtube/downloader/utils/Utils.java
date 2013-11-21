@@ -43,17 +43,24 @@ import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -62,11 +69,18 @@ import android.media.MediaScannerConnection.OnScanCompletedListener;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Parcelable;
+import android.preference.CheckBoxPreference;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+
+import com.bugsense.trace.BugSenseHandler;
+
 import dentex.youtube.downloader.R;
+import dentex.youtube.downloader.SettingsActivity;
 import dentex.youtube.downloader.SettingsActivity.SettingsFragment;
 import dentex.youtube.downloader.YTD;
 
@@ -244,8 +258,124 @@ public class Utils {
 			Utils.logger("w", "mediaUriString for " + fileToDel.getName() + " null", DEBUG_TAG);
 		}
 	}
+	
+	public static int armCpuVersion() {
+    	String cpuAbi = Build.CPU_ABI;
+		Utils.logger("d", "CPU_ABI: " + cpuAbi, DEBUG_TAG);
+		if (cpuAbi.equals("armeabi-v7a")) {
+			return 7;
+		} else if (cpuAbi.equals("armeabi")) {
+			return 5;
+		} else {
+			return 0;
+		}
+	}
+	
+	public static void offerDevMail(final Context ctx, CheckBoxPreference advanced, ContextThemeWrapper tw) {
+		advanced.setEnabled(false);
+		advanced.setChecked(false);
+		YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", false).commit();
+
+		AlertDialog.Builder adb = new AlertDialog.Builder(tw);
+		adb.setIcon(android.R.drawable.ic_dialog_alert);
+		adb.setTitle(ctx.getString(R.string.ffmpeg_device_not_supported));
+		adb.setMessage(ctx.getString(R.string.ffmpeg_support_mail));
+		
+		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			
+		    public void onClick(DialogInterface dialog, int which) {
+		    	/*
+		    	 * adapted form same source as createEmailOnlyChooserIntent below
+		    	 */
+		    	Intent i = new Intent(Intent.ACTION_SEND);
+		        i.setType("*/*");
+		        
+		        String content = Utils.getCpuInfo();
+		        /*File destDir = getActivity().getExternalFilesDir(null); 
+		        String filename = "cpuInfo.txt";
+		        try {
+					Utils.createLogFile(destDir, filename, content);
+					i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(destDir, filename)));*/
+		            i.putExtra(Intent.EXTRA_EMAIL, new String[] { "samuele.rini76@gmail.com" });
+		            i.putExtra(Intent.EXTRA_SUBJECT, "YTD: device info report");
+		            i.putExtra(Intent.EXTRA_TEXT, content);
+
+		            ctx.startActivity(createEmailOnlyChooserIntent(ctx, i, ctx.getString(R.string.email_via)));
+				/*} catch (IOException e) {
+					Log.e(DEBUG_TAG, "IOException on creating cpuInfo Log file ", e);
+				}*/
+		    }
+		});
+		
+		adb.setNegativeButton(ctx.getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+		    	// cancel
+		    }
+		});
+
+		AlertDialog helpDialog = adb.create();
+		if (! ((Activity) ctx).isFinishing()) {
+			helpDialog.show();
+		}
+	}
     
-    // --------------------------------------------------------------------------
+	/* Intent createEmailOnlyChooserIntent from Stack Overflow:
+	 * 
+	 * http://stackoverflow.com/questions/2197741/how-to-send-email-from-my-android-application/12804063#12804063
+	 * 
+	 * Q: http://stackoverflow.com/users/138030/rakesh
+	 * A: http://stackoverflow.com/users/1473663/nobu-games
+	 */
+	public static Intent createEmailOnlyChooserIntent(Context ctx, Intent source, CharSequence chooserTitle) {
+		BugSenseHandler.leaveBreadcrumb("createEmailOnlyChooserIntent");
+		Stack<Intent> intents = new Stack<Intent>();
+        Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
+        		"info@domain.com", null));
+        List<ResolveInfo> activities = ctx.getPackageManager()
+                .queryIntentActivities(i, 0);
+
+        for(ResolveInfo ri : activities) {
+            Intent target = new Intent(source);
+            target.setPackage(ri.activityInfo.packageName);
+            intents.add(target);
+        }
+
+        if(!intents.isEmpty()) {
+            Intent chooserIntent = Intent.createChooser(intents.remove(0),
+                    chooserTitle);
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
+                    intents.toArray(new Parcelable[intents.size()]));
+
+            return chooserIntent;
+        } else {
+        	return Intent.createChooser(source, chooserTitle);
+        }
+	}
+	
+	public static void notifyFfmpegNotInstalled(final Activity act, ContextThemeWrapper tw) {
+		Utils.logger("w", "FFmpeg not installed/enabled", DEBUG_TAG);
+		BugSenseHandler.leaveBreadcrumb("notifyFfmpegNotInstalled");
+		AlertDialog.Builder adb = new AlertDialog.Builder(tw);
+		adb.setTitle(act.getString(R.string.ffmpeg_not_enabled_title));
+		adb.setMessage(act.getString(R.string.ffmpeg_not_enabled_msg));
+		
+		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				act.startActivity(new Intent(act,  SettingsActivity.class));
+			}
+		});
+		
+		adb.setNegativeButton(act.getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+		        // cancel
+		    }
+		});
+		
+		if (!act.isFinishing()) {
+			adb.show();
+		}
+	}
     
     /*
      * method readFromFile adapted from Stack Overflow:
@@ -254,7 +384,6 @@ public class Utils {
 	 * Q: http://stackoverflow.com/users/349664/rsss
 	 * A: http://stackoverflow.com/users/3171/dave-webb
 	 */
-    
     public static String readFromFile(File file) throws IOException {
  
         StringBuilder text = null;
@@ -615,6 +744,48 @@ public class Utils {
     	    }
     	} 
     }
+    
+    private static int totSeconds = 0;
+	private static int currentTime = 0;
+	private static boolean reset = true;
+	
+	public static int[] getAudioJobProgress(String shellLine) {
+		if (reset) {
+			totSeconds = 0;
+			currentTime = 0;
+			reset = false;
+		}
+		
+		Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
+		Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
+		if (totalTimeMatcher.find()) {
+			totSeconds = getTotSeconds(totalTimeMatcher);
+		}
+		
+		Pattern currentTimePattern = Pattern.compile("time=(..):(..):(..)\\.(..)");
+		Matcher currentTimeMatcher = currentTimePattern.matcher(shellLine);
+		if (currentTimeMatcher.find()) {
+			currentTime = getTotSeconds(currentTimeMatcher);
+		}
+		logger("v", "seconds " + currentTime + "/" + totSeconds, DEBUG_TAG);
+		return new int[] { totSeconds, currentTime };
+	}
+
+    private static int getTotSeconds(Matcher timeMatcher) {
+		int h = Integer.parseInt(timeMatcher.group(1));
+		int m = Integer.parseInt(timeMatcher.group(2));
+		int s = Integer.parseInt(timeMatcher.group(3));
+		int f = Integer.parseInt(timeMatcher.group(4));
+		
+		long hToSec = TimeUnit.HOURS.toSeconds(h);
+		long mToSec = TimeUnit.MINUTES.toSeconds(m);
+		
+		int tot = (int) (hToSec + mToSec + s);
+		if (f > 50) tot = tot + 1;
+		
+		//logger("v", "h=" + h + " m=" + m + " s=" + s + "." + f + " -> tot=" + tot,	DEBUG_TAG);
+		return tot;
+	}
 }
 
 // ---------------------------------------------------------
