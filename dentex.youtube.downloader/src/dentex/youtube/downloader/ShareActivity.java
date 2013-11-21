@@ -46,8 +46,6 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -62,8 +60,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
-import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -90,12 +86,11 @@ import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.Maps;
 
-import dentex.youtube.downloader.ffmpeg.FfmpegController;
-import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
+import dentex.youtube.downloader.service.FfmpegDownloadAndMuxService;
 import dentex.youtube.downloader.utils.FetchUrl;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
@@ -201,10 +196,10 @@ public class ShareActivity extends Activity {
 	private static CharSequence constraint;
 	
 	private int aoIndex;
-	private File muxedVideo;
-	private String muxedFileName;
-	private NotificationCompat.Builder mBuilder;
-	private NotificationManager mNotificationManager;
+	//private File muxedVideo;
+	//private String muxedFileName;
+	//private NotificationCompat.Builder mBuilder;
+	//private NotificationManager mNotificationManager;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -1031,146 +1026,34 @@ public class ShareActivity extends Activity {
 				} else {
 					Utils.logger("i", "1st AO itag found: " + itags.get(aoIndex), DEBUG_TAG);
 					
-					mBuilder =  new NotificationCompat.Builder(ShareActivity.this);
-					mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-					mBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
 					
+					String muxedFileName;
 					if (vFilename.contains("_VO_")) {
 						muxedFileName = vFilename.replace("VO", "MUX");
 					} else {
 						muxedFileName = vFilename + "_MUX";
 					}
 					
-					muxedVideo = new File (path, muxedFileName);
+					//muxedVideo = new File (path, muxedFileName);
 					
 					writeThumbToDisk();
 					
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							Looper.prepare();
-	
-							FfmpegController ffmpeg = null;
-							try {
-								ffmpeg = new FfmpegController(ShareActivity.this);
-								
-								mBuilder.setContentTitle(muxedFileName);
-								mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
-								mBuilder.setOngoing(true);
-								mBuilder.setProgress(100, 0, true);
-								mNotificationManager.notify(4, mBuilder.build());
-								
-							} catch (IOException ioe) {
-								Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
-							}
-	
-							ShellDummy shell = new ShellDummy();
-	
-							try {
-								ffmpeg.downloadAndMuxAoVoStreams(links.get(aoIndex), links.get(pos), muxedVideo, shell);
-							} catch (IOException e) {
-								Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
-							} catch (InterruptedException e) {
-								Log.e(DEBUG_TAG, "InterruptedException running ffmpeg" + e.getMessage());
-							}
-							Looper.loop();
-						}
-					}).start();
+					// launch the service:
+					Intent intent = new Intent(sShare, FfmpegDownloadAndMuxService.class);
+		        	intent.putExtra("A_LINK", links.get(aoIndex));
+		        	intent.putExtra("V_LINK", links.get(pos));
+		        	intent.putExtra("POS", pos);
+		        	intent.putExtra("YT_ID", videoId);
+		        	intent.putExtra("FILENAME", muxedFileName);
+		        	intent.putExtra("PATH", path.getAbsolutePath());
+
+		        	startService(intent);
+					
 				}
 			} else {
 				Utils.notifyFfmpegNotInstalled(sShareActivity, boxCtw);
 			}
 		}
-	}
-	
-	private class ShellDummy implements ShellCallback {
-
-		@Override
-		public void shellOut(String shellLine) {
-			int[] times = Utils.getAudioJobProgress(shellLine);
-			if (times[0] != 0) {
-				mBuilder.setProgress(times[0], times[1], false);
-				mNotificationManager.notify(4, mBuilder.build());
-			}
-			
-			Utils.logger("d", shellLine, DEBUG_TAG);
-		}
-
-		@Override
-		public void processComplete(int exitValue) {
-			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
-			
-			Intent muxIntent = new Intent(Intent.ACTION_VIEW);
-			if (exitValue == 0) {
-				mBuilder.setContentTitle(muxedFileName);
-				mBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
-				mBuilder.setOngoing(false);
-				muxIntent.setDataAndType(Uri.fromFile(muxedVideo), "video/*");
-				PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        		mBuilder.setContentIntent(contentIntent);
-        		
-        		Utils.scanMedia(getApplicationContext(), 
-						new String[] {muxedVideo.getAbsolutePath()}, 
-						new String[] {"video/*"});
-        		
-        		Json.addEntryToJsonFile(
-        				ShareActivity.this, 
-        				String.valueOf(System.currentTimeMillis()),
-						YTD.JSON_DATA_TYPE_V, 
-						videoId,
-						pos,
-						YTD.JSON_DATA_STATUS_COMPLETED,
-						muxedVideo.getParent(),
-						muxedFileName, 
-						Utils.getFileNameWithoutExt(muxedFileName), 
-						"", 
-						Utils.MakeSizeHumanReadable((int) muxedVideo.length(), false), 
-						true);
-		} else {
-			setNotificationForAudioJobError();
-			
-			Json.addEntryToJsonFile(
-					ShareActivity.this, 
-					String.valueOf(System.currentTimeMillis()),
-					YTD.JSON_DATA_TYPE_V,  
-					videoId,
-					pos,
-					YTD.JSON_DATA_STATUS_FAILED,
-					muxedVideo.getParent(),
-					muxedFileName, 
-					Utils.getFileNameWithoutExt(muxedFileName), 
-					"", 
-					"-", 
-					true);
-		}
-		
-		if (DashboardActivity.isDashboardRunning)
-			DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
-		
-		Utils.setNotificationDefaults(mBuilder);
-		
-		mBuilder.setProgress(0, 0, false);
-		mNotificationManager.cancel(4);
-		mNotificationManager.notify(4, mBuilder.build());
-
-		}
-
-		@Override
-		public void processNotStartedCheck(boolean started) {
-			if (!started) {
-				Utils.logger("w", "FFmpeg process not started or not completed", DEBUG_TAG);
-				setNotificationForAudioJobError();
-			}
-			mNotificationManager.notify(4, mBuilder.build());
-		}
-		
-	}
-	
-	public void setNotificationForAudioJobError() {
-		Log.e(DEBUG_TAG, muxedFileName + " MUX failed");
-		Toast.makeText(ShareActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
-		mBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
-		mBuilder.setOngoing(false);
 	}
 	
 	private void callDownloadManager() {
@@ -1181,7 +1064,7 @@ public class ShareActivity extends Activity {
 			@Override
 			public void preDownload(DownloadTask task) {
 				long ID = task.getDownloadId();
-				String pathOfVideo = task.getPath();
+				String pathOfVideo = task.getAbsolutePath();
 				String jsonDataType = task.getType();
 				String aExt = task.getAudioExt();
 				Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
@@ -1218,13 +1101,13 @@ public class ShareActivity extends Activity {
 			public void finishDownload(DownloadTask task) {
 				long ID = task.getDownloadId();
 				String nameOfVideo = task.getFileName();
-				String pathOfVideo = task.getPath();
+				String pathOfVideo = task.getAbsolutePath();
 				String jsonDataType = task.getType();
 				String aExt = task.getAudioExt();
 				Utils.logger("d", "__finishDownload on ID: " + ID, DEBUG_TAG);
 				
 				Utils.scanMedia(getApplicationContext(), 
-						new String[] { path.getPath() + File.separator + nameOfVideo }, 
+						new String[] { path.getAbsolutePath() + File.separator + nameOfVideo }, 
 						new String[] {"video/*"});
 				
 				String size;
@@ -1281,10 +1164,10 @@ public class ShareActivity extends Activity {
 						
 					}
 					
-					File audioFile = new File(path.getPath(), audioFileName);
+					File audioFile = new File(path.getAbsolutePath(), audioFileName);
 					
 					if (!audioFile.exists()) { 
-						File videoFileToConvert = new File(path.getPath(), vFilename);
+						File videoFileToConvert = new File(path.getAbsolutePath(), vFilename);
 						
 						YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
 								sShare, 
@@ -1304,7 +1187,7 @@ public class ShareActivity extends Activity {
 			public void errorDownload(DownloadTask task, Throwable error) {
 				long ID = task.getDownloadId();
 				String nameOfVideo = task.getFileName();
-				String pathOfVideo = task.getPath();
+				String pathOfVideo = task.getAbsolutePath();
 				String jsonDataType = task.getType();
 				String aExt = task.getAudioExt();
 				
@@ -1386,7 +1269,7 @@ public class ShareActivity extends Activity {
 			
 			try {
 				DownloadTask dt = new DownloadTask(this, id, links.get(pos), 
-						vFilename, path.getPath(), 
+						vFilename, path.getAbsolutePath(), 
 						aExt, jsonDataType, 
 						dtl, false);
 				

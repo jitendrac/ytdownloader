@@ -393,7 +393,7 @@ public class SettingsActivity extends Activity {
             id = System.currentTimeMillis();
             try {
             	DownloadTask dt = new DownloadTask(sSettings, id, link, 
-            			YTD.ffmpegBinName, extDir.getPath(), 
+            			YTD.ffmpegBinName, extDir.getAbsolutePath(), 
             			null, null, 
             			dtl, false);
     			Maps.dtMap.put(id, dt);

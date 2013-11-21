@@ -72,7 +72,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 			
 			if (exitValue == 0) {
 				Utils.scanMedia(aContext, 
-						new String[] {aAudioFile.getPath()}, 
+						new String[] {aAudioFile.getAbsolutePath()}, 
 						new String[] {"audio/*"});
 				
 				boolean removeVideo = YTD.settings.getBoolean("ffmpeg_auto_rem_video", false);

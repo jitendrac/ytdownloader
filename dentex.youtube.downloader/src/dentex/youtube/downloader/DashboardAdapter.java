@@ -168,7 +168,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		// ------------------------------------------------------------------------
 		
 		holder.size.setText(dli.getSize());
-		holder.path.setText(dli.getPath());
+		holder.path.setText(dli.getAbsolutePath());
 		
 		if (dli.getSpeed() == 0) {
 			holder.speed.setText("");

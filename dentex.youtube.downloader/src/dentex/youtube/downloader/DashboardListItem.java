@@ -76,7 +76,7 @@ public class DashboardListItem {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getPath() {
+	public String getAbsolutePath() {
 		return path;
 	}
 	public void setPath(String name) {

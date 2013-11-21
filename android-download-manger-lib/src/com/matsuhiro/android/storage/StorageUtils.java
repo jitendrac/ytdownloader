@@ -153,6 +153,6 @@ public class StorageUtils {
 			}
 		}
 		
-		return Environment.getExternalStorageDirectory().getPath();
+		return Environment.getExternalStorageDirectory().getAbsolutePath();
 	}
 }

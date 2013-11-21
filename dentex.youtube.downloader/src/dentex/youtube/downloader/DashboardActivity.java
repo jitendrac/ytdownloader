@@ -242,7 +242,7 @@ public class DashboardActivity extends Activity {
 	        				currentItem.getStatus().equals(getString(R.string.json_status_imported))) {
 	        			
 	        			final boolean audioIsSupported = !currentItem.getAudioExt().equals("unsupported");
-	        			final File in = new File (currentItem.getPath(), currentItem.getFilename());
+	        			final File in = new File (currentItem.getAbsolutePath(), currentItem.getFilename());
 	        			
 		        		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) && !currentItem.getAudioExt().equals("x")) {
 		        			
@@ -577,7 +577,7 @@ public class DashboardActivity extends Activity {
     	if (intent != null) {
     		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
     		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
-    		intent.putExtra("path", currentItem.getPath());
+    		intent.putExtra("path", currentItem.getAbsolutePath());
     		intent.putExtra("name", currentItem.getFilename());
     		startActivityForResult(intent, 1);
     	}
@@ -588,7 +588,7 @@ public class DashboardActivity extends Activity {
     	if (intent != null) {
     		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
     		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
-    		intent.putExtra("path", currentItem.getPath());
+    		intent.putExtra("path", currentItem.getAbsolutePath());
     		intent.putExtra("name", currentItem.getFilename());
     		startActivityForResult(intent, 2);
     	}
@@ -607,8 +607,8 @@ public class DashboardActivity extends Activity {
 	    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	    	public void onClick(DialogInterface dialog, int which) {
 	    		String input = userFilename.getText().toString();
-	    		File in = new File(currentItem.getPath(), currentItem.getFilename());
-	    		File renamed = new File(currentItem.getPath(), input);
+	    		File in = new File(currentItem.getAbsolutePath(), currentItem.getFilename());
+	    		File renamed = new File(currentItem.getAbsolutePath(), input);
 	    		
 	    		if (!currentItem.getFilename().equals(input)) {
 		    		if (in.renameTo(renamed)) {
@@ -623,7 +623,7 @@ public class DashboardActivity extends Activity {
 								currentItem.getYtId(), 
 								currentItem.getPos(),
 								currentItem.getStatus(), 
-								currentItem.getPath(), 
+								currentItem.getAbsolutePath(), 
 								input, 
 								Utils.getFileNameWithoutExt(input), 
 								currentItem.getAudioExt(), 
@@ -701,7 +701,7 @@ public class DashboardActivity extends Activity {
 		del.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				final File fileToDel = new File(currentItem.getPath(), currentItem.getFilename());
+				final File fileToDel = new File(currentItem.getAbsolutePath(), currentItem.getFilename());
 				new AsyncDelete().execute(fileToDel);
 			}
 		});
@@ -754,7 +754,7 @@ public class DashboardActivity extends Activity {
 					currentItem.getYtId(), 
 					currentItem.getPos(),
 					YTD.JSON_DATA_STATUS_PAUSED,
-					currentItem.getPath(), 
+					currentItem.getAbsolutePath(), 
 					currentItem.getFilename(),
 					currentItem.getBasename(), 
 					currentItem.getAudioExt(),
@@ -783,7 +783,7 @@ public class DashboardActivity extends Activity {
 								currentItem.getYtId(), 
 								currentItem.getPos(),
 								YTD.JSON_DATA_STATUS_IN_PROGRESS,
-								currentItem.getPath(), 
+								currentItem.getAbsolutePath(), 
 								currentItem.getFilename(),
 								currentItem.getBasename(), 
 								currentItem.getAudioExt(),
@@ -808,7 +808,7 @@ public class DashboardActivity extends Activity {
 						Utils.logger("d", "__finishDownload on ID: " + ID, DEBUG_TAG);
 						
 						Utils.scanMedia(getApplicationContext(), 
-								new String[] { currentItem.getPath() + File.separator + currentItem.getFilename() }, 
+								new String[] { currentItem.getAbsolutePath() + File.separator + currentItem.getFilename() }, 
 								new String[] {"video/*"});
 						
 						long downloadTotalSize = task.getTotalSize(); //Maps.mTotalSizeMap.get(ID);
@@ -821,7 +821,7 @@ public class DashboardActivity extends Activity {
 								currentItem.getYtId(), 
 								currentItem.getPos(),
 								YTD.JSON_DATA_STATUS_COMPLETED, 
-								currentItem.getPath(), 
+								currentItem.getAbsolutePath(), 
 								currentItem.getFilename(),
 								currentItem.getBasename(), 
 								currentItem.getAudioExt(), 
@@ -860,10 +860,10 @@ public class DashboardActivity extends Activity {
 								
 							}
 							
-							File audioFile = new File(currentItem.getPath(), audioFileName);
+							File audioFile = new File(currentItem.getAbsolutePath(), audioFileName);
 							
 							if (!audioFile.exists()) { 
-								File videoFileToConvert = new File(currentItem.getPath(), currentItem.getFilename());
+								File videoFileToConvert = new File(currentItem.getAbsolutePath(), currentItem.getFilename());
 								
 								YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
 										sDashboard, 
@@ -896,7 +896,7 @@ public class DashboardActivity extends Activity {
 									currentItem.getYtId(), 
 									currentItem.getPos(),
 									YTD.JSON_DATA_STATUS_PAUSED, 
-									currentItem.getPath(), 
+									currentItem.getAbsolutePath(), 
 									nameOfVideo, 
 									currentItem.getBasename(), 
 									currentItem.getAudioExt(), 
@@ -915,7 +915,7 @@ public class DashboardActivity extends Activity {
 									currentItem.getYtId(), 
 									currentItem.getPos(),
 									YTD.JSON_DATA_STATUS_PAUSED, 
-									currentItem.getPath(), 
+									currentItem.getAbsolutePath(), 
 									nameOfVideo, 
 									currentItem.getBasename(), 
 									currentItem.getAudioExt(), 
@@ -933,7 +933,7 @@ public class DashboardActivity extends Activity {
 				//TODO
 				try {
 					DownloadTask dt = new DownloadTask(this, itemIDlong, link, 
-							currentItem.getFilename(), currentItem.getPath(), 
+							currentItem.getFilename(), currentItem.getAbsolutePath(), 
 							currentItem.getAudioExt(), currentItem.getType(), 
 							dtl, true);
 					Maps.dtMap.put(itemIDlong, dt);
@@ -1312,14 +1312,14 @@ public class DashboardActivity extends Activity {
 	}
 
 	public void notifyDeletionUnsuccessful(final DashboardListItem currentItem, File fileToDel) {
-		Utils.logger("w", fileToDel.getPath() + " NOT deleted.", DEBUG_TAG);
+		Utils.logger("w", fileToDel.getAbsolutePath() + " NOT deleted.", DEBUG_TAG);
 		Toast.makeText(DashboardActivity.this, 
 				getString(R.string.delete_video_failed, currentItem.getFilename()), 
 				Toast.LENGTH_SHORT).show();
 	}
 
 	public void notifyDeletionOk(final DashboardListItem currentItem, File fileToDel) {
-		Utils.logger("d", fileToDel.getPath() + " successfully deleted.", DEBUG_TAG);
+		Utils.logger("d", fileToDel.getAbsolutePath() + " successfully deleted.", DEBUG_TAG);
 		Toast.makeText(DashboardActivity.this, 
 				getString(R.string.delete_video_ok, currentItem.getFilename()), 
 				Toast.LENGTH_SHORT).show();
@@ -1397,8 +1397,8 @@ public class DashboardActivity extends Activity {
             String name = data.getStringExtra("name");
             	
         	final File chooserSelection = files.get(0);
-        	//Utils.logger("d", "file-chooser selection: " + chooserFolder.getPath(), DEBUG_TAG);
-        	//Utils.logger("d", "origin file's folder:   " + currentItem.getPath(), DEBUG_TAG);
+        	//Utils.logger("d", "file-chooser selection: " + chooserFolder.getAbsolutePath(), DEBUG_TAG);
+        	//Utils.logger("d", "origin file's folder:   " + currentItem.getAbsolutePath(), DEBUG_TAG);
 			
 	        switch (requestCode) {
 	        
@@ -1406,7 +1406,7 @@ public class DashboardActivity extends Activity {
 	        	File out1 = new File(chooserSelection, name);
 	        	File in1 = new File(path, name);
 				
-	        	if (chooserSelection.getPath().equals(currentItem.getPath())) {
+	        	if (chooserSelection.getAbsolutePath().equals(currentItem.getAbsolutePath())) {
 	        		out1 = new File(chooserSelection, "copy_" + currentItem.getFilename());
 	        	}
 
@@ -1437,7 +1437,7 @@ public class DashboardActivity extends Activity {
 				File out2 = new File(chooserSelection, name);
 				File in2 = new File(path, name);
 				
-	        	if (!chooserSelection.getPath().equals(currentItem.getPath())) {
+	        	if (!chooserSelection.getAbsolutePath().equals(currentItem.getAbsolutePath())) {
 	        		if (!out2.exists()) {
 			        	switch (Utils.pathCheck(chooserSelection)) {
 			    		case 0:
@@ -1701,7 +1701,7 @@ public class DashboardActivity extends Activity {
 	private void writeThumbToDiskForSelectedFile(final File selectedFile, String pngBasename) {
 		File bmFile = new File(getDir(YTD.THUMBS_FOLDER, 0), pngBasename + ".png");
 		
-		if (!Utils.getExtFromFileName(selectedFile.getPath()).toUpperCase(Locale.ENGLISH).equals("FLV")) {
+		if (!Utils.getExtFromFileName(selectedFile.getAbsolutePath()).toUpperCase(Locale.ENGLISH).equals("FLV")) {
 			try {
 				Utils.logger("d", "trying to write thumbnail for " + selectedFile.getName() + " -> " + pngBasename, DEBUG_TAG);
 				FileOutputStream out = new FileOutputStream(bmFile);
@@ -2284,7 +2284,7 @@ public class DashboardActivity extends Activity {
 				
 				// remove selected video upon successful audio extraction
 				if (removeVideo || removeAudio) {
-					final File fileToDel = new File(currentItem.getPath(), currentItem.getFilename());
+					final File fileToDel = new File(currentItem.getAbsolutePath(), currentItem.getFilename());
 					new AsyncDelete().execute(fileToDel);
 				}
 				
@@ -2297,7 +2297,7 @@ public class DashboardActivity extends Activity {
 							currentItem.getYtId(), 
 							currentItem.getPos(),
 							YTD.JSON_DATA_STATUS_COMPLETED,
-							currentItem.getPath(), 
+							currentItem.getAbsolutePath(), 
 							audioFile.getName(), 
 							currentItem.getBasename(), 
 							"", 
@@ -2313,7 +2313,7 @@ public class DashboardActivity extends Activity {
 						currentItem.getYtId(),
 						currentItem.getPos(),
 						YTD.JSON_DATA_STATUS_FAILED,
-						currentItem.getPath(), 
+						currentItem.getAbsolutePath(), 
 						audioFile.getName(), 
 						currentItem.getBasename(), 
 						"", 
@@ -2352,7 +2352,7 @@ public class DashboardActivity extends Activity {
 				audioFile.exists() && 
 				aSuffix != null) {
 			String newName = basename + aSuffix;
-			File newFile = new File(currentItem.getPath(), newName);
+			File newFile = new File(currentItem.getAbsolutePath(), newName);
 			
 			if (newFile.exists()) {
 				audioFile.delete();
