@@ -5,15 +5,9 @@ import java.io.IOException;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
-import dentex.youtube.downloader.DashboardActivity;
-import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
-import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
-import dentex.youtube.downloader.utils.Json;
-import dentex.youtube.downloader.utils.Utils;
 
 public class FfmpegDownloadAndMuxService extends IntentService {
 	
@@ -21,18 +15,17 @@ public class FfmpegDownloadAndMuxService extends IntentService {
 		super("FfmpegDownloadAndMuxService");
 	}
 
-	private String DEBUG_TAG = "FfmpegDownloadAndMuxService";
-	private File muxedVideo;
-	private String muxedFileName;
+	String DEBUG_TAG = "FfmpegDownloadAndMuxService";
+	File muxedVideo;
+	String muxedFileName;
 	private String muxedPath;
 	
 	private String A_LINK;
 	private String V_LINK;
-	private int pos;
-	private String videoId;
+	int pos;
+	String videoId;
 	
 	ResultReceiver receiver;
-	private int pProgress = 0;
 	public static final int UPDATE_PROGRESS = 1000;
 
 	@Override
@@ -56,7 +49,7 @@ public class FfmpegDownloadAndMuxService extends IntentService {
 			Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
 		}
 
-		ShellDummy shell = new ShellDummy();
+		MuxShellDummy shell = new MuxShellDummy(this);
 
 		try {
 			ffmpeg.downloadAndMuxAoVoStreams(A_LINK, V_LINK, muxedVideo, shell);
@@ -64,90 +57,6 @@ public class FfmpegDownloadAndMuxService extends IntentService {
 			Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
 		} catch (InterruptedException e) {
 			Log.e(DEBUG_TAG, "InterruptedException running ffmpeg" + e.getMessage());
-		}
-	}
-	
-	private class ShellDummy implements ShellCallback {
-
-		@Override
-		public void shellOut(String shellLine) {
-			int[] times = Utils.getAudioJobProgress(shellLine);
-				
-			Bundle resultData = new Bundle();
-			resultData.putInt("p_progress" , pProgress);
-            resultData.putInt("progress" , times[1]);
-            resultData.putInt("total" , times[0]);
-            receiver.send(UPDATE_PROGRESS, resultData);
-            
-            pProgress = times[1];
-			
-			Utils.logger("d", shellLine, DEBUG_TAG);
-		}
-
-		@Override
-		public void processComplete(int exitValue) {
-			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
-
-			if (exitValue == 0) {
-        		
-        		Bundle resultData = new Bundle();
-                resultData.putInt("progress" , -1);
-                resultData.putInt("total" , -1);
-                receiver.send(UPDATE_PROGRESS, resultData);
-        		
-        		Utils.scanMedia(getApplicationContext(), 
-						new String[] {muxedVideo.getAbsolutePath()}, 
-						new String[] {"video/*"});
-        		
-        		Json.addEntryToJsonFile(
-        				FfmpegDownloadAndMuxService.this, 
-        				String.valueOf(System.currentTimeMillis()),
-						YTD.JSON_DATA_TYPE_V, 
-						videoId,
-						pos,
-						YTD.JSON_DATA_STATUS_COMPLETED,
-						muxedVideo.getParent(),
-						muxedFileName, 
-						Utils.getFileNameWithoutExt(muxedFileName), 
-						"", 
-						Utils.MakeSizeHumanReadable((int) muxedVideo.length(), false), 
-						true);
-			} else {
-				setNotificationForAudioJobError();
-				
-				Json.addEntryToJsonFile(
-						FfmpegDownloadAndMuxService.this, 
-						String.valueOf(System.currentTimeMillis()),
-						YTD.JSON_DATA_TYPE_V,  
-						videoId,
-						pos,
-						YTD.JSON_DATA_STATUS_FAILED,
-						muxedVideo.getParent(),
-						muxedFileName, 
-						Utils.getFileNameWithoutExt(muxedFileName), 
-						"", 
-						"-", 
-						true);
-		}
-		
-		if (DashboardActivity.isDashboardRunning)
-			DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
-		}
-
-		@Override
-		public void processNotStartedCheck(boolean started) {
-			if (!started) {
-				Utils.logger("w", "FFmpeg process not started or not completed", DEBUG_TAG);
-				setNotificationForAudioJobError();
-			}
-		}
-		
-		public void setNotificationForAudioJobError() {
-			Log.e(DEBUG_TAG, muxedFileName + " MUX failed");
-			
-			Bundle resultData = new Bundle();
-            resultData.putBoolean("error", true);
-            receiver.send(UPDATE_PROGRESS, resultData);
 		}
 	}
 }

@@ -982,9 +982,9 @@ public class ShareActivity extends Activity {
 				showAgainCb.setText(getString(R.string.show_again_checkbox));
 				adb.setView(showAgain);
 				adb.setTitle("VO entry selected");			//TODO @strings (x2)
-				adb.setMessage("fdam or normal download?"); //     "
+				adb.setMessage("use FFmpeg to download and mux or go with 'normal' download?"); //     "
 				
-				adb.setPositiveButton("fdam", new DialogInterface.OnClickListener() {
+				adb.setPositiveButton("FFmpeg download\nand mux", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						if (!showAgainCb.isChecked()) {
 							YTD.settings.edit().putString("vo_download_method", "fdam").apply();
@@ -994,7 +994,7 @@ public class ShareActivity extends Activity {
 					}
 				});
 				
-				adb.setNegativeButton("dm", new DialogInterface.OnClickListener() {
+				adb.setNegativeButton("Normal\nDownload", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						if (!showAgainCb.isChecked()) {
 							YTD.settings.edit().putString("vo_download_method", "dm").apply();
@@ -1049,6 +1049,12 @@ public class ShareActivity extends Activity {
 					mBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
 					mBuilder.setContentTitle(muxedFileName);
 					
+					Intent dIntent = new Intent(ShareActivity.this, DashboardActivity.class);
+    		    	dIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+    		    		   .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    		    	PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, dIntent, 0);
+    		    	mBuilder.setContentIntent(contentIntent);
+					
 					// launch the service:
 					Intent intent = new Intent(sShare, FfmpegDownloadAndMuxService.class);
 		        	intent.putExtra("A_LINK", links.get(aoIndex));
@@ -1079,10 +1085,9 @@ public class ShareActivity extends Activity {
 	    protected void onReceiveResult(int resultCode, Bundle resultData) {
 	        super.onReceiveResult(resultCode, resultData);
 	        
-	        if (resultCode == 1000) {
+	        if (resultCode == FfmpegDownloadAndMuxService.UPDATE_PROGRESS) {
 	        	boolean error = resultData.getBoolean("error");
 	        	if (!error) {
-	        		int pProgress = resultData.getInt("p_progress");
 	        		int progress = resultData.getInt("progress");
 	        		int total = resultData.getInt("total");
 	        		
@@ -1096,25 +1101,14 @@ public class ShareActivity extends Activity {
 	    				
 	    				/*Intent muxIntent = new Intent(Intent.ACTION_VIEW);
 	    				muxIntent.setDataAndType(Uri.fromFile(new File (path, muxedFileName)), "video/*");
-	    				PendingIntent contentIntent = PendingIntent.getService(ShareActivity.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);*/
-	    				
-	    				Intent dIntent = new Intent(ShareActivity.this, DashboardActivity.class);
-	    		    	dIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-	    		    		   .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-	    		    	PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, dIntent, 0);
-	            		
-	    		    	mBuilder.setContentIntent(contentIntent);
+	    				PendingIntent contentIntent = PendingIntent.getService(ShareActivity.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+	    		    	mBuilder.setContentIntent(contentIntent);*/
 	    		    	
 	    		    	Utils.setNotificationDefaults(mBuilder);
 	    		    	mBuilder.setProgress(0, 0, false);
 	            		mNotificationManager.cancel(4);
 	        		} else { //show progress
-	        			if (pProgress > progress) {
-	        				mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress) + " (2nd stream)");
-	        			} else {
-	        				mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
-	        			}
-	        			
+	        			mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
 	        			mBuilder.setOngoing(true);
 	        			mBuilder.setProgress(total, progress, false);
 	        		}
