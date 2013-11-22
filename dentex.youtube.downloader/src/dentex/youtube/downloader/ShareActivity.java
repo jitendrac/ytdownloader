@@ -46,6 +46,8 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -60,6 +62,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -197,9 +202,9 @@ public class ShareActivity extends Activity {
 	
 	private int aoIndex;
 	//private File muxedVideo;
-	//private String muxedFileName;
-	//private NotificationCompat.Builder mBuilder;
-	//private NotificationManager mNotificationManager;
+	private String muxedFileName;
+	private NotificationCompat.Builder mBuilder;
+	private NotificationManager mNotificationManager;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -1024,10 +1029,10 @@ public class ShareActivity extends Activity {
 				if (aoIndex == -1) {
 					Utils.logger("i", "No AO itag found", DEBUG_TAG);
 				} else {
-					Utils.logger("i", "1st AO itag found: " + itags.get(aoIndex), DEBUG_TAG);
+					Utils.logger("i", "best AO itag found: " + itags.get(aoIndex), DEBUG_TAG);
 					
 					
-					String muxedFileName;
+					//String muxedFileName;
 					if (vFilename.contains("_VO_")) {
 						muxedFileName = vFilename.replace("VO", "MUX");
 					} else {
@@ -1038,6 +1043,12 @@ public class ShareActivity extends Activity {
 					
 					writeThumbToDisk();
 					
+					// setup notification
+					mBuilder =  new NotificationCompat.Builder(ShareActivity.this);
+			        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+					mBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
+					mBuilder.setContentTitle(muxedFileName);
+					
 					// launch the service:
 					Intent intent = new Intent(sShare, FfmpegDownloadAndMuxService.class);
 		        	intent.putExtra("A_LINK", links.get(aoIndex));
@@ -1047,12 +1058,79 @@ public class ShareActivity extends Activity {
 		        	intent.putExtra("FILENAME", muxedFileName);
 		        	intent.putExtra("PATH", path.getAbsolutePath());
 
+		        	intent.putExtra("receiver", new MuxProgressReceiver(new Handler()));
+		        	
 		        	startService(intent);
 					
 				}
 			} else {
 				Utils.notifyFfmpegNotInstalled(sShareActivity, boxCtw);
 			}
+		}
+	}
+	
+	public class MuxProgressReceiver extends ResultReceiver {
+
+		public MuxProgressReceiver(Handler handler) {
+			super(handler);
+		}
+
+		@Override
+	    protected void onReceiveResult(int resultCode, Bundle resultData) {
+	        super.onReceiveResult(resultCode, resultData);
+	        
+	        if (resultCode == 1000) {
+	        	boolean error = resultData.getBoolean("error");
+	        	if (!error) {
+	        		int pProgress = resultData.getInt("p_progress");
+	        		int progress = resultData.getInt("progress");
+	        		int total = resultData.getInt("total");
+	        		
+	        		if (progress == 0) { //connecting... - indeterminate progress
+						mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
+						mBuilder.setOngoing(true);
+						mBuilder.setProgress(0, 0, true);
+	        		} else if (progress == -1 && total == -1) { //completed - cancel pb           		
+	            		mBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
+	    				mBuilder.setOngoing(false);
+	    				
+	    				/*Intent muxIntent = new Intent(Intent.ACTION_VIEW);
+	    				muxIntent.setDataAndType(Uri.fromFile(new File (path, muxedFileName)), "video/*");
+	    				PendingIntent contentIntent = PendingIntent.getService(ShareActivity.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);*/
+	    				
+	    				Intent dIntent = new Intent(ShareActivity.this, DashboardActivity.class);
+	    		    	dIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+	    		    		   .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+	    		    	PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, dIntent, 0);
+	            		
+	    		    	mBuilder.setContentIntent(contentIntent);
+	    		    	
+	    		    	Utils.setNotificationDefaults(mBuilder);
+	    		    	mBuilder.setProgress(0, 0, false);
+	            		mNotificationManager.cancel(4);
+	        		} else { //show progress
+	        			if (pProgress > progress) {
+	        				mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress) + " (2nd stream)");
+	        			} else {
+	        				mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
+	        			}
+	        			
+	        			mBuilder.setOngoing(true);
+	        			mBuilder.setProgress(total, progress, false);
+	        		}
+	        	} else { //failed - cancel pb
+	        		Toast.makeText(ShareActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
+	        		
+	    			mBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
+	    			mBuilder.setOngoing(false);
+	    			
+	    			Utils.setNotificationDefaults(mBuilder);
+	    			mBuilder.setProgress(0, 0, false);
+            		mNotificationManager.cancel(4);
+	        	}
+	        	// always end with 'notify'
+	        	mNotificationManager.notify(4, mBuilder.build());
+	        }
 		}
 	}
 	

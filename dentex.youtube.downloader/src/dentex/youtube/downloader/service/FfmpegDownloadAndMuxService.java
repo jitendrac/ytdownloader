@@ -3,51 +3,42 @@ package dentex.youtube.downloader.service;
 import java.io.File;
 import java.io.IOException;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
+import android.app.IntentService;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.IBinder;
-import android.os.Looper;
-import android.support.v4.app.NotificationCompat;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.bugsense.trace.BugSenseHandler;
-
 import dentex.youtube.downloader.DashboardActivity;
-import dentex.youtube.downloader.R;
 import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.Utils;
 
-public class FfmpegDownloadAndMuxService extends Service {
+public class FfmpegDownloadAndMuxService extends IntentService {
 	
+	public FfmpegDownloadAndMuxService() {
+		super("FfmpegDownloadAndMuxService");
+	}
+
 	private String DEBUG_TAG = "FfmpegDownloadAndMuxService";
 	private File muxedVideo;
 	private String muxedFileName;
 	private String muxedPath;
-	private NotificationCompat.Builder mBuilder;
-	private NotificationManager mNotificationManager;
 	
 	private String A_LINK;
 	private String V_LINK;
 	private int pos;
 	private String videoId;
 	
+	ResultReceiver receiver;
+	private int pProgress = 0;
+	public static final int UPDATE_PROGRESS = 1000;
+
 	@Override
-	public void onCreate() {
-		Utils.logger("d", "service created", DEBUG_TAG);
-		BugSenseHandler.initAndStartSession(this, YTD.BugsenseApiKey);
-		BugSenseHandler.leaveBreadcrumb("FfmpegDownloadAndMuxService_onCreate");
-	}
-	
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
+	protected void onHandleIntent(Intent intent) {
+		receiver = (ResultReceiver) intent.getParcelableExtra("receiver");
+		
 		A_LINK = intent.getStringExtra("A_LINK");
 		V_LINK = intent.getStringExtra("V_LINK");
 		
@@ -58,59 +49,22 @@ public class FfmpegDownloadAndMuxService extends Service {
 		muxedPath = intent.getStringExtra("PATH");
 		muxedVideo = new File(muxedPath, muxedFileName);
 		
-		fdam();
-		
-		super.onStartCommand(intent, flags, startId);
-		return START_NOT_STICKY;
-	}
-	
-	@Override
-	public void onDestroy() {
-		Utils.logger("d", "service destroyed", DEBUG_TAG);
-	}
+		FfmpegController ffmpeg = null;
+		try {
+			ffmpeg = new FfmpegController(FfmpegDownloadAndMuxService.this);			
+		} catch (IOException ioe) {
+			Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
+		}
 
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
+		ShellDummy shell = new ShellDummy();
 
-	private void fdam() {
-		mBuilder =  new NotificationCompat.Builder(FfmpegDownloadAndMuxService.this);
-		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		mBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
-		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Looper.prepare();
-				
-				FfmpegController ffmpeg = null;
-				try {
-					ffmpeg = new FfmpegController(FfmpegDownloadAndMuxService.this);
-					
-					mBuilder.setContentTitle(muxedFileName);
-					mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
-					mBuilder.setOngoing(true);
-					mBuilder.setProgress(100, 0, true);
-					mNotificationManager.notify(4, mBuilder.build());
-					
-				} catch (IOException ioe) {
-					Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
-				}
-		
-				ShellDummy shell = new ShellDummy();
-		
-				try {
-					ffmpeg.downloadAndMuxAoVoStreams(A_LINK, V_LINK, muxedVideo, shell);
-				} catch (IOException e) {
-					Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
-				} catch (InterruptedException e) {
-					Log.e(DEBUG_TAG, "InterruptedException running ffmpeg" + e.getMessage());
-				}
-				
-				Looper.loop();
-			}
-		}).start();
+		try {
+			ffmpeg.downloadAndMuxAoVoStreams(A_LINK, V_LINK, muxedVideo, shell);
+		} catch (IOException e) {
+			Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
+		} catch (InterruptedException e) {
+			Log.e(DEBUG_TAG, "InterruptedException running ffmpeg" + e.getMessage());
+		}
 	}
 	
 	private class ShellDummy implements ShellCallback {
@@ -118,10 +72,14 @@ public class FfmpegDownloadAndMuxService extends Service {
 		@Override
 		public void shellOut(String shellLine) {
 			int[] times = Utils.getAudioJobProgress(shellLine);
-			if (times[0] != 0) {
-				mBuilder.setProgress(times[0], times[1], false);
-				mNotificationManager.notify(4, mBuilder.build());
-			}
+				
+			Bundle resultData = new Bundle();
+			resultData.putInt("p_progress" , pProgress);
+            resultData.putInt("progress" , times[1]);
+            resultData.putInt("total" , times[0]);
+            receiver.send(UPDATE_PROGRESS, resultData);
+            
+            pProgress = times[1];
 			
 			Utils.logger("d", shellLine, DEBUG_TAG);
 		}
@@ -129,15 +87,13 @@ public class FfmpegDownloadAndMuxService extends Service {
 		@Override
 		public void processComplete(int exitValue) {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
-			
-			Intent muxIntent = new Intent(Intent.ACTION_VIEW);
+
 			if (exitValue == 0) {
-				mBuilder.setContentTitle(muxedFileName);
-				mBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
-				mBuilder.setOngoing(false);
-				muxIntent.setDataAndType(Uri.fromFile(muxedVideo), "video/*");
-				PendingIntent contentIntent = PendingIntent.getService(FfmpegDownloadAndMuxService.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        		mBuilder.setContentIntent(contentIntent);
+        		
+        		Bundle resultData = new Bundle();
+                resultData.putInt("progress" , -1);
+                resultData.putInt("total" , -1);
+                receiver.send(UPDATE_PROGRESS, resultData);
         		
         		Utils.scanMedia(getApplicationContext(), 
 						new String[] {muxedVideo.getAbsolutePath()}, 
@@ -156,35 +112,26 @@ public class FfmpegDownloadAndMuxService extends Service {
 						"", 
 						Utils.MakeSizeHumanReadable((int) muxedVideo.length(), false), 
 						true);
-		} else {
-			setNotificationForAudioJobError();
-			
-			Json.addEntryToJsonFile(
-					FfmpegDownloadAndMuxService.this, 
-					String.valueOf(System.currentTimeMillis()),
-					YTD.JSON_DATA_TYPE_V,  
-					videoId,
-					pos,
-					YTD.JSON_DATA_STATUS_FAILED,
-					muxedVideo.getParent(),
-					muxedFileName, 
-					Utils.getFileNameWithoutExt(muxedFileName), 
-					"", 
-					"-", 
-					true);
+			} else {
+				setNotificationForAudioJobError();
+				
+				Json.addEntryToJsonFile(
+						FfmpegDownloadAndMuxService.this, 
+						String.valueOf(System.currentTimeMillis()),
+						YTD.JSON_DATA_TYPE_V,  
+						videoId,
+						pos,
+						YTD.JSON_DATA_STATUS_FAILED,
+						muxedVideo.getParent(),
+						muxedFileName, 
+						Utils.getFileNameWithoutExt(muxedFileName), 
+						"", 
+						"-", 
+						true);
 		}
 		
 		if (DashboardActivity.isDashboardRunning)
 			DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
-		
-		Utils.setNotificationDefaults(mBuilder);
-		
-		mBuilder.setProgress(0, 0, false);
-		mNotificationManager.cancel(4);
-		mNotificationManager.notify(4, mBuilder.build());
-		
-		stopSelf();
-
 		}
 
 		@Override
@@ -193,16 +140,14 @@ public class FfmpegDownloadAndMuxService extends Service {
 				Utils.logger("w", "FFmpeg process not started or not completed", DEBUG_TAG);
 				setNotificationForAudioJobError();
 			}
-			mNotificationManager.notify(4, mBuilder.build());
-			
-			stopSelf();
 		}
 		
 		public void setNotificationForAudioJobError() {
 			Log.e(DEBUG_TAG, muxedFileName + " MUX failed");
-			Toast.makeText(FfmpegDownloadAndMuxService.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
-			mBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
-			mBuilder.setOngoing(false);
+			
+			Bundle resultData = new Bundle();
+            resultData.putBoolean("error", true);
+            receiver.send(UPDATE_PROGRESS, resultData);
 		}
 	}
 }
