@@ -191,6 +191,16 @@
         <item>Encode to mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract and encode audio to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (previously downloaded)</item>
+    </string-array>
+    
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
 	<string name="ffmpeg_not_enabled_msg">Open settings?</string>
 	<string name="remove_video">Delete video after audio extraction (no confirmation!)</string>

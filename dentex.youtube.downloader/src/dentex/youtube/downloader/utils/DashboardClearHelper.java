@@ -149,6 +149,7 @@ public class DashboardClearHelper {
 	    				mediaUriString = Utils.getContentUriFromFile(fileList.get(i), YTD.ctx.getContentResolver());
 	    				Utils.removeFromMediaStore(YTD.ctx, fileList.get(i), mediaUriString);
 	    			} catch (NullPointerException e) {
+	    				result = 1;
 	    				Utils.logger("w", fileList.get(i).getName() + " UriString NOT found", DEBUG_TAG);
 	    			}
 	    		}

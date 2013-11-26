@@ -48,7 +48,8 @@ public class ShareActivityListFilters {
 	private static Integer[] iAo = { 139, 140, 141, 171, 172 };
 	
 	public static List<Integer> iVoList = Arrays.asList(iVo);
-
+	public static List<Integer> iAoList = Arrays.asList(iAo);
+	
 	public static CharSequence getListFilterConstraint(int c) {
 		//0
 		List<Integer> iMp4List = Arrays.asList(iMp4);

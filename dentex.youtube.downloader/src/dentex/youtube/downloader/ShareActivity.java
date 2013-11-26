@@ -1319,8 +1319,10 @@ public class ShareActivity extends Activity {
 		
 		String aExt = findAudioCodec();
 		String jsonDataType;
-		if (codecs.get(pos).equals("m4a") || codecs.get(pos).equals("ogg")) {
-			jsonDataType = YTD.JSON_DATA_TYPE_A_E;
+		if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
+			jsonDataType = YTD.JSON_DATA_TYPE_V_O;
+		} else if (ShareActivityListFilters.iAoList.contains(itags.get(pos))) {
+			jsonDataType = YTD.JSON_DATA_TYPE_A_O;
 		} else {
 			jsonDataType = YTD.JSON_DATA_TYPE_V;
 		}

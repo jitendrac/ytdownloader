@@ -147,7 +147,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		holder.filename.setText(dli.getFilename());
 		
 		int dr;
-		if (dli.getType().equals("VIDEO")) {
+		if (dli.getType().equals(YTD.JSON_DATA_TYPE_V) || dli.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
 			dr = R.drawable.ic_video;
 		} else {
 			dr = R.drawable.ic_audio;
@@ -168,7 +168,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		// ------------------------------------------------------------------------
 		
 		holder.size.setText(dli.getSize());
-		holder.path.setText(dli.getAbsolutePath());
+		holder.path.setText(dli.getPath());
 		
 		if (dli.getSpeed() == 0) {
 			holder.speed.setText("");
