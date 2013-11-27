@@ -745,33 +745,25 @@ public class Utils {
     	} 
     }
     
-    private static int totSeconds = 0;
+    /*private static int totSeconds = 0;
 	private static int currentTime = 0;
-	private static boolean reset = true;
 	
 	public static int[] getAudioJobProgress(String shellLine) {
-		if (reset) {
-			totSeconds = 0;
-			currentTime = 0;
-			reset = false;
-		}
-		
 		Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
 		Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
 		if (totalTimeMatcher.find()) {
 			totSeconds = getTotSeconds(totalTimeMatcher);
 		}
-		
 		Pattern currentTimePattern = Pattern.compile("time=(..):(..):(..)\\.(..)");
 		Matcher currentTimeMatcher = currentTimePattern.matcher(shellLine);
 		if (currentTimeMatcher.find()) {
 			currentTime = getTotSeconds(currentTimeMatcher);
 		}
-		logger("v", "seconds " + currentTime + "/" + totSeconds, DEBUG_TAG);
-		return new int[] { totSeconds, currentTime };
-	}
 
-    private static int getTotSeconds(Matcher timeMatcher) {
+		return new int[] { totSeconds, currentTime };
+	}*/
+
+    public static int getTotSeconds(Matcher timeMatcher) {
 		int h = Integer.parseInt(timeMatcher.group(1));
 		int m = Integer.parseInt(timeMatcher.group(2));
 		int s = Integer.parseInt(timeMatcher.group(3));

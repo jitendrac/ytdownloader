@@ -46,8 +46,6 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -62,9 +60,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.ResultReceiver;
-import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -95,7 +90,6 @@ import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
-import dentex.youtube.downloader.service.FfmpegDownloadAndMuxService;
 import dentex.youtube.downloader.utils.FetchUrl;
 import dentex.youtube.downloader.utils.Json;
 import dentex.youtube.downloader.utils.PopUps;
@@ -200,11 +194,11 @@ public class ShareActivity extends Activity {
 	private SlidingMenu slMenu;
 	private static CharSequence constraint;
 	
-	private int aoIndex;
-	//private File muxedVideo;
-	private String muxedFileName;
-	private NotificationCompat.Builder mBuilder;
-	private NotificationManager mNotificationManager;
+//	private int aoIndex;
+//	private File muxedVideo;
+//	private String muxedFileName;
+//	private NotificationCompat.Builder mBuilder;
+//	private NotificationManager mNotificationManager;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -213,7 +207,7 @@ public class ShareActivity extends Activity {
 		sShare = getBaseContext();
 		sShareActivity = ShareActivity.this;
 		
-		aoIndex = -1;
+//		aoIndex = -1;
 		
 		// Theme init
 		Utils.themeInit(this);
@@ -468,15 +462,20 @@ public class ShareActivity extends Activity {
 			noVideoInfo.setText(getString(R.string.no_net));
 			noVideoInfo.setVisibility(View.VISIBLE);
 			PopUps.showPopUp(getString(R.string.no_net), getString(R.string.no_net_dialog_msg), "alert", this);
-			Button retry = (Button) findViewById(R.id.share_activity_retry_button);
-			retry.setVisibility(View.VISIBLE);
-			retry.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Utils.reload(ShareActivity.this);					
-				}
-			});
+			
+			showRetryButton();
 		}
+	}
+
+	private void showRetryButton() {
+		Button retry = (Button) findViewById(R.id.share_activity_retry_button);
+		retry.setVisibility(View.VISIBLE);
+		retry.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.reload(ShareActivity.this);					
+			}
+		});
 	}
 
 	public void badOrNullLinkAlert() {
@@ -620,6 +619,7 @@ public class ShareActivity extends Activity {
 			if (result == null || result.equals("e") && !autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("invalid_url");
 				noVideosMsgs("alert", getString(R.string.invalid_url));
+				showRetryButton();
 			}
 			
 			if (result != null && result.equals("login_required") && !autoModeEnabled) {
@@ -715,11 +715,11 @@ public class ShareActivity extends Activity {
 										public void onClick(DialogInterface dialog, int which) {
 											mComposedName = userFilename.getText().toString();
 											vFilename = composeVideoFilename(mComposedName);
-											if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
-												offerFdam();
-											} else {
+//											if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
+//												offerFdam();
+//											} else {
 												callDownloadManager();
-											}
+//											}
 										}
 									});
 									
@@ -733,11 +733,11 @@ public class ShareActivity extends Activity {
 										adb.show();
 									}
 								} else {
-									if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
-										offerFdam();
-									} else {
+//									if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
+//										offerFdam();
+//									} else {
 										callDownloadManager();
-									}
+//									}
 								}
 							} catch (IndexOutOfBoundsException e) {
 								Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
@@ -969,164 +969,168 @@ public class ShareActivity extends Activity {
 			}
 		}
 		
-		private void offerFdam() {
-			Utils.logger("i", "VO entry selected", DEBUG_TAG);
-			
-			String choosenVoMethod = YTD.settings.getString("vo_download_method", "");
-			if (choosenVoMethod.isEmpty()) {
-				AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
-				LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-				View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-				final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
-				showAgainCb.setChecked(true);
-				showAgainCb.setText(getString(R.string.show_again_checkbox));
-				adb.setView(showAgain);
-				adb.setTitle("VO entry selected");			//TODO @strings (x2)
-				adb.setMessage("use FFmpeg to download and mux or go with 'normal' download?"); //     "
-				
-				adb.setPositiveButton("FFmpeg download\nand mux", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						if (!showAgainCb.isChecked()) {
-							YTD.settings.edit().putString("vo_download_method", "fdam").apply();
-							Utils.logger("v", "offerFdamCheckboxEnabled: " + false, DEBUG_TAG);
-						}
-						ffmpegDownloadAndMux();
-					}
-				});
-				
-				adb.setNegativeButton("Normal\nDownload", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						if (!showAgainCb.isChecked()) {
-							YTD.settings.edit().putString("vo_download_method", "dm").apply();
-							Utils.logger("v", "offerFdamCheckboxEnabled: " + false, DEBUG_TAG);
-						}
-						callDownloadManager();			
-					}
-					
-				});
-				
-				if (!ShareActivity.this.isFinishing()) {
-					adb.show();
-				}
-			} else if (choosenVoMethod.equals("fdam")) {
-				ffmpegDownloadAndMux();
-			} else if (choosenVoMethod.equals("dm")) {
-				callDownloadManager();
-			}
-		}
+//		private void offerFdam() {
+//			Utils.logger("i", "VO entry selected", DEBUG_TAG);
+//			
+//			String choosenVoMethod = YTD.settings.getString("vo_download_method", "");
+//			if (choosenVoMethod.isEmpty()) {
+//				AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+//				LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+//				View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+//				final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
+//				showAgainCb.setChecked(true);
+//				showAgainCb.setText(getString(R.string.show_again_checkbox));
+//				adb.setView(showAgain);
+//				adb.setTitle("VO entry selected");			//TODO @strings (x2)
+//				adb.setMessage("use FFmpeg to download and mux or go with 'normal' download?"); //     "
+//				
+//				adb.setPositiveButton("FFmpeg download\nand mux", new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int which) {
+//						if (!showAgainCb.isChecked()) {
+//							YTD.settings.edit().putString("vo_download_method", "fdam").apply();
+//							Utils.logger("v", "offerFdamCheckboxEnabled: " + false, DEBUG_TAG);
+//						}
+//						ffmpegDownloadAndMux();
+//					}
+//				});
+//				
+//				adb.setNegativeButton("Normal\nDownload", new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int which) {
+//						if (!showAgainCb.isChecked()) {
+//							YTD.settings.edit().putString("vo_download_method", "dm").apply();
+//							Utils.logger("v", "offerFdamCheckboxEnabled: " + false, DEBUG_TAG);
+//						}
+//						callDownloadManager();			
+//					}
+//					
+//				});
+//				
+//				if (!ShareActivity.this.isFinishing()) {
+//					adb.show();
+//				}
+//			} else if (choosenVoMethod.equals("fdam")) {
+//				ffmpegDownloadAndMux();
+//			} else if (choosenVoMethod.equals("dm")) {
+//				callDownloadManager();
+//			}
+//		}
 
-		private void ffmpegDownloadAndMux() {
-			boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
-			if (ffmpegEnabled) {
-				int i = 0;
-				int[] aoItagsInPreferredOrder = new int[] { 141, 172, 140, 171, 139 };
-				int aoItag;
-				while (aoIndex == -1 && i < 5) {
-					aoItag = aoItagsInPreferredOrder[i];
-					aoIndex = itags.indexOf(aoItag);
-					i++;
-				}
-				if (aoIndex == -1) {
-					Utils.logger("i", "No AO itag found", DEBUG_TAG);
-				} else {
-					Utils.logger("i", "best AO itag found: " + itags.get(aoIndex), DEBUG_TAG);
-					
-					
-					//String muxedFileName;
-					if (vFilename.contains("_VO_")) {
-						muxedFileName = vFilename.replace("VO", "MUX");
-					} else {
-						muxedFileName = vFilename + "_MUX";
-					}
-					
-					//muxedVideo = new File (path, muxedFileName);
-					
-					writeThumbToDisk();
-					
-					// setup notification
-					mBuilder =  new NotificationCompat.Builder(ShareActivity.this);
-			        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-					mBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
-					mBuilder.setContentTitle(muxedFileName);
-					
-					Intent dIntent = new Intent(ShareActivity.this, DashboardActivity.class);
-    		    	dIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-    		    		   .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-    		    	PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, dIntent, 0);
-    		    	mBuilder.setContentIntent(contentIntent);
-					
-					// launch the service:
-					Intent intent = new Intent(sShare, FfmpegDownloadAndMuxService.class);
-		        	intent.putExtra("A_LINK", links.get(aoIndex));
-		        	intent.putExtra("V_LINK", links.get(pos));
-		        	intent.putExtra("POS", pos);
-		        	intent.putExtra("YT_ID", videoId);
-		        	intent.putExtra("FILENAME", muxedFileName);
-		        	intent.putExtra("PATH", path.getAbsolutePath());
-
-		        	intent.putExtra("receiver", new MuxProgressReceiver(new Handler()));
-		        	
-		        	startService(intent);
-					
-				}
-			} else {
-				Utils.notifyFfmpegNotInstalled(sShareActivity, boxCtw);
-			}
-		}
+//		private void ffmpegDownloadAndMux() {
+//			boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
+//			if (ffmpegEnabled) {
+//				int i = 0;
+//				int[] aoItagsInPreferredOrder = new int[] { 141, 172, 140, 171, 139 };
+//				int aoItag;
+//				while (aoIndex == -1 && i < 5) {
+//					aoItag = aoItagsInPreferredOrder[i];
+//					aoIndex = itags.indexOf(aoItag);
+//					i++;
+//				}
+//				if (aoIndex == -1) {
+//					Utils.logger("i", "No AO itag found", DEBUG_TAG);
+//				} else {
+//					Utils.logger("i", "best AO itag found: " + itags.get(aoIndex), DEBUG_TAG);
+//					
+//					
+//					//String muxedFileName;
+//					if (vFilename.contains("_VO_")) {
+//						muxedFileName = vFilename.replace("VO", "MUX");
+//					} else {
+//						muxedFileName = vFilename + "_MUX";
+//					}
+//					
+//					//muxedVideo = new File (path, muxedFileName);
+//					
+//					writeThumbToDisk();
+//					
+//					// setup notification
+//					mBuilder =  new NotificationCompat.Builder(ShareActivity.this);
+//			        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//					mBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
+//					mBuilder.setContentTitle(muxedFileName);
+//					
+//					/*Intent dIntent = new Intent(ShareActivity.this, DashboardActivity.class);
+//    		    	dIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+//    		    		   .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//    		    	PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, dIntent, 0);*/
+//					Intent viewMux = new Intent(Intent.ACTION_VIEW);
+//    				viewMux.setDataAndType(Uri.fromFile(new File (path, muxedFileName)), "video/*");
+//    				viewMux.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//    				PendingIntent contentIntent = PendingIntent.getActivity(ShareActivity.this, 0, viewMux, PendingIntent.FLAG_UPDATE_CURRENT);
+//    		    	mBuilder.setContentIntent(contentIntent);
+//					
+//					// launch the service:
+//					Intent intent = new Intent(sShare, FfmpegDownloadAndMuxService.class);
+//		        	intent.putExtra("A_LINK", links.get(aoIndex));
+//		        	intent.putExtra("V_LINK", links.get(pos));
+//		        	intent.putExtra("POS", pos);
+//		        	intent.putExtra("YT_ID", videoId);
+//		        	intent.putExtra("FILENAME", muxedFileName);
+//		        	intent.putExtra("PATH", path.getAbsolutePath());
+//
+//		        	intent.putExtra("receiver", new MuxProgressReceiver(new Handler()));
+//		        	
+//		        	startService(intent);
+//					
+//				}
+//			} else {
+//				Utils.notifyFfmpegNotInstalled(sShareActivity, boxCtw);
+//			}
+//		}
 	}
 	
-	public class MuxProgressReceiver extends ResultReceiver {
-
-		public MuxProgressReceiver(Handler handler) {
-			super(handler);
-		}
-
-		@Override
-	    protected void onReceiveResult(int resultCode, Bundle resultData) {
-	        super.onReceiveResult(resultCode, resultData);
-	        
-	        if (resultCode == FfmpegDownloadAndMuxService.UPDATE_PROGRESS) {
-	        	boolean error = resultData.getBoolean("error");
-	        	if (!error) {
-	        		int progress = resultData.getInt("progress");
-	        		int total = resultData.getInt("total");
-	        		
-	        		if (progress == 0) { //connecting... - indeterminate progress
-						mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
-						mBuilder.setOngoing(true);
-						mBuilder.setProgress(0, 0, true);
-	        		} else if (progress == -1 && total == -1) { //completed - cancel pb           		
-	            		mBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
-	    				mBuilder.setOngoing(false);
-	    				
-	    				/*Intent muxIntent = new Intent(Intent.ACTION_VIEW);
-	    				muxIntent.setDataAndType(Uri.fromFile(new File (path, muxedFileName)), "video/*");
-	    				PendingIntent contentIntent = PendingIntent.getService(ShareActivity.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-	    		    	mBuilder.setContentIntent(contentIntent);*/
-	    		    	
-	    		    	Utils.setNotificationDefaults(mBuilder);
-	    		    	mBuilder.setProgress(0, 0, false);
-	            		mNotificationManager.cancel(4);
-	        		} else { //show progress
-	        			mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
-	        			mBuilder.setOngoing(true);
-	        			mBuilder.setProgress(total, progress, false);
-	        		}
-	        	} else { //failed - cancel pb
-	        		Toast.makeText(ShareActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
-	        		
-	    			mBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
-	    			mBuilder.setOngoing(false);
-	    			
-	    			Utils.setNotificationDefaults(mBuilder);
-	    			mBuilder.setProgress(0, 0, false);
-            		mNotificationManager.cancel(4);
-	        	}
-	        	// always end with 'notify'
-	        	mNotificationManager.notify(4, mBuilder.build());
-	        }
-		}
-	}
+//	public class MuxProgressReceiver extends ResultReceiver {
+//
+//		public MuxProgressReceiver(Handler handler) {
+//			super(handler);
+//		}
+//
+//		@Override
+//	    protected void onReceiveResult(int resultCode, Bundle resultData) {
+//	        super.onReceiveResult(resultCode, resultData);
+//	        
+//	        if (resultCode == FfmpegDownloadAndMuxService.UPDATE_PROGRESS) {
+//	        	boolean error = resultData.getBoolean("error");
+//	        	if (!error) {
+//	        		int progress = resultData.getInt("progress");
+//	        		int total = resultData.getInt("total");
+//	        		
+//	        		if (progress == 0) { //connecting... - indeterminate progress
+//						mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
+//						mBuilder.setOngoing(true);
+//						mBuilder.setProgress(0, 0, true);
+//	        		} else if (progress == -1 && total == -1) { //completed - cancel pb           		
+//	            		mBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
+//	    				mBuilder.setOngoing(false);
+//	    				
+//	    				/*Intent muxIntent = new Intent(Intent.ACTION_VIEW);
+//	    				muxIntent.setDataAndType(Uri.fromFile(new File (path, muxedFileName)), "video/*");
+//	    				PendingIntent contentIntent = PendingIntent.getService(ShareActivity.this, 0, muxIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//	    		    	mBuilder.setContentIntent(contentIntent);*/
+//	    		    	
+//	    		    	Utils.setNotificationDefaults(mBuilder);
+//	    		    	mBuilder.setProgress(0, 0, false);
+//	            		mNotificationManager.cancel(4);
+//	        		} else { //show progress
+//	        			mBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
+//	        			mBuilder.setOngoing(true);
+//	        			mBuilder.setProgress(total, progress, false);
+//	        		}
+//	        	} else { //failed - cancel pb
+//	        		Toast.makeText(ShareActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
+//	        		
+//	    			mBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
+//	    			mBuilder.setOngoing(false);
+//	    			
+//	    			Utils.setNotificationDefaults(mBuilder);
+//	    			mBuilder.setProgress(0, 0, false);
+//            		mNotificationManager.cancel(4);
+//	        	}
+//	        	// always end with 'notify'
+//	        	mNotificationManager.notify(4, mBuilder.build());
+//	        }
+//		}
+//	}
 	
 	private void callDownloadManager() {
 		BugSenseHandler.leaveBreadcrumb("callDownloadManager");
@@ -1493,8 +1497,22 @@ public class ShareActivity extends Activity {
 				if (!this.isCancelled()) {
 					String size = getVideoFileSize(urls[i]);
 					if (size.equals("-")) {
-						Utils.logger("w", "trying getVideoFileSize 2nd time", DEBUG_TAG);
+						Utils.logger("d", "trying getVideoFileSize 2nd time", DEBUG_TAG);
+						try {
+							Thread.sleep(150);
+						} catch (InterruptedException e) {
+							Log.e(DEBUG_TAG, "InterruptedException: " + e.getMessage());
+						}
 						size = getVideoFileSize(urls[i]);
+						if (size.equals("-")) {
+							Utils.logger("w", "trying getVideoFileSize 3rd (last) time", DEBUG_TAG);
+							try {
+								Thread.sleep(250);
+							} catch (InterruptedException e) {
+								Log.e(DEBUG_TAG, "InterruptedException: " + e.getMessage());
+							}
+							size = getVideoFileSize(urls[i]);
+						}
 					}
 					//Utils.logger("d", "index: " + i + ", size: " + size, DEBUG_TAG);
 					Utils.logger("d", "size: " + size, DEBUG_TAG);
@@ -2063,7 +2081,7 @@ public class ShareActivity extends Activity {
 			is = conn.getInputStream();
 			return BitmapFactory.decodeStream(is);
 		} catch (IOException e) {
-			Log.e(DEBUG_TAG, "IOException:" + e.getMessage());
+			Log.e(DEBUG_TAG, "IOException: " + e.getMessage());
 			return null;
 		}
 	}
@@ -2089,7 +2107,7 @@ public class ShareActivity extends Activity {
 						img = bm3;
 						Utils.logger("d", "assigning bitmap from url[3]: " + url[3], DEBUG_TAG);
 					} else {
-						Log.e(DEBUG_TAG, "\nFalling back on asset's placeholder");
+						Log.e(DEBUG_TAG, "Falling back on asset's placeholder");
 						InputStream assIs = null;
 						AssetManager assMan = getAssets();
 						try {

@@ -2,6 +2,8 @@ package dentex.youtube.downloader.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -25,6 +27,9 @@ public class FfmpegDownloadAndMuxService extends IntentService {
 	File muxedVideo;
 	String muxedFileName;
 	private String muxedPath;
+	
+	private int totSeconds;
+	private int currentTime;
 	
 	private String A_LINK;
 	private String V_LINK;
@@ -67,19 +72,34 @@ public class FfmpegDownloadAndMuxService extends IntentService {
 	}
 	
 	class MuxShellDummy implements ShellCallback {
+		
+		//int total = 0;
+		//int progress = 0;
 
 		@Override
 		public void shellOut(String shellLine) {
-			int[] times = Utils.getAudioJobProgress(shellLine);
-				
+			int[] times = getAudioJobProgress(shellLine);				
 			Bundle resultData = new Bundle();
+			resultData.putInt("total" , times[0]);
 	        resultData.putInt("progress" , times[1]);
-	        resultData.putInt("total" , times[0]);
 	        receiver.send(FfmpegDownloadAndMuxService.UPDATE_PROGRESS, resultData);
-			
 			Utils.logger("d", shellLine, DEBUG_TAG);
 		}
-
+		
+		private int[] getAudioJobProgress(String shellLine) {
+			Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
+			Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
+			if (totalTimeMatcher.find()) {
+				totSeconds = Utils.getTotSeconds(totalTimeMatcher);
+			}
+			Pattern currentTimePattern = Pattern.compile("time=(..):(..):(..)\\.(..)");
+			Matcher currentTimeMatcher = currentTimePattern.matcher(shellLine);
+			if (currentTimeMatcher.find()) {
+				currentTime = Utils.getTotSeconds(currentTimeMatcher);
+			}
+			return new int[] { totSeconds, currentTime };
+		}
+		
 		@Override
 		public void processComplete(int exitValue) {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);

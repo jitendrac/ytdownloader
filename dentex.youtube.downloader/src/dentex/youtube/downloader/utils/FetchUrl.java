@@ -52,14 +52,14 @@ public class FetchUrl {
 	
 	public String doFetch(String url) {
         try {
-        	Utils.logger("d", "doFetch: trying url " + url, DEBUG_TAG);
+        	Utils.logger("d", "Trying url: " + url, DEBUG_TAG);
             return downloadWebPage(url);
         } catch (IOException e) {
-        	Log.e(DEBUG_TAG, "doFetch: IOException" + e.getMessage());
+        	Log.e(DEBUG_TAG, "doFetch IOException: " + e.getMessage());
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> doFetch", e.getMessage(), e);
             return "e";
         } catch (RuntimeException e) {
-        	Log.e(DEBUG_TAG, "doFetch: RuntimeException" + e.getMessage());
+        	Log.e(DEBUG_TAG, "doFetch RuntimeException: " + e.getMessage());
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> doFetch", e.getMessage(), e);
 	    	return "e";
         }
