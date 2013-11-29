@@ -71,6 +71,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.os.ResultReceiver;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
@@ -183,6 +184,8 @@ public class DashboardActivity extends Activity {
 	private int currentTime;
 	private String audioOnlyPath;
 	public String audioOnlyExt = "";
+	
+	ResultReceiver receiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -584,7 +587,7 @@ public class DashboardActivity extends Activity {
 								new String[]{ "video/*" });
 		    			
 		    			// refresh the dashboard
-		    			refreshlist(DashboardActivity.this);
+		    			refreshlist();
 		    			
 		    			Utils.logger("d", "'" + in.getName() + "' renamed to '" + input + "'", DEBUG_TAG);
 		    		} else {
@@ -619,7 +622,7 @@ public class DashboardActivity extends Activity {
 
 			public void onClick(DialogInterface dialog, int which) {
 				Json.removeEntryFromJsonFile(DashboardActivity.this, currentItem.getId());
-				refreshlist(DashboardActivity.this);
+				refreshlist();
 				
 				YTD.videoinfo.edit().remove(currentItem.getId() + "_link").apply();
 			}
@@ -770,8 +773,7 @@ public class DashboardActivity extends Activity {
 								size, 
 								false);
 						
-						if (DashboardActivity.isDashboardRunning)
-							DashboardActivity.refreshlist(sDashboardActivity);
+						refreshlist();
 						
 						YTD.removeIdUpdateNotification(ID);
 						
@@ -799,21 +801,39 @@ public class DashboardActivity extends Activity {
 								brValue = bitrateData[1];
 							} else {
 								audioFileName = currentItem.getBasename() + currentItem.getAudioExt();
-								
 							}
 							
+							String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
 							File audioFile = new File(currentItem.getPath(), audioFileName);
 							
 							if (!audioFile.exists()) { 
 								File videoFileToConvert = new File(currentItem.getPath(), currentItem.getFilename());
 								
+								long newId = System.currentTimeMillis();
+								
 								YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
-										sDashboard, 
+										sDashboard, newId, 
 										videoFileToConvert, audioFile, 
 										brType, brValue, 
 										currentItem.getId(), 
 										currentItem.getYtId(), 
 										currentItem.getPos()), 0);
+								
+								Json.addEntryToJsonFile(
+										sDashboard, 
+										String.valueOf(newId), 
+										type, 
+										currentItem.getYtId(), 
+										currentItem.getPos(),
+										YTD.JSON_DATA_STATUS_QUEUED,
+										currentItem.getPath(), 
+										audioFileName, 
+										Utils.getFileNameWithoutExt(audioFileName), 
+										"", 
+										"-", 
+										false);
+								
+								refreshlist();
 							}
 						}
 					}
@@ -865,7 +885,7 @@ public class DashboardActivity extends Activity {
 									false);
 							
 							if (DashboardActivity.isDashboardRunning)
-								refreshlist(sDashboardActivity);
+								refreshlist();
 							
 							YTD.removeIdUpdateNotification(ID);
 						}
@@ -888,7 +908,7 @@ public class DashboardActivity extends Activity {
 				reDownload(currentItem, "AUTO");
 			}
 		}
-		refreshlist(sDashboardActivity);
+		refreshlist();
 	}
 	
 	private void reDownload(DashboardListItem currentItem, String category) {
@@ -1103,7 +1123,7 @@ public class DashboardActivity extends Activity {
     	Utils.logger("v", "_onResume", DEBUG_TAG);
     	isDashboardRunning = true;
     	
-    	refreshlist(sDashboardActivity);
+    	refreshlist();
     	
     	/*
     	 * Timer() adapted from Stack Overflow:
@@ -1129,7 +1149,7 @@ public class DashboardActivity extends Activity {
         				
         				if (inProgressIndex > 0) {
         					//Utils.logger("v", "refreshing...", DEBUG_TAG);
-        					refreshlist(sDashboardActivity);
+        					refreshlist();
         				}
         			}
         		});
@@ -1216,7 +1236,7 @@ public class DashboardActivity extends Activity {
 			Json.removeEntryFromJsonFile(DashboardActivity.this, currentItem.getId());
 		}
 		
-		refreshlist(DashboardActivity.this);
+		refreshlist();
 		Utils.logger("v", "----------> END delete", DEBUG_TAG);
 		
 		return isResultOk;
@@ -1729,7 +1749,7 @@ public class DashboardActivity extends Activity {
 				Log.e(DEBUG_TAG, currentItem.getFilename() + " --> END move: FAILED");
 			}
 			
-			refreshlist(DashboardActivity.this);
+			refreshlist();
 		
 			if (!delResOk) {
 				Utils.logger("w", currentItem.getFilename() + " --> Copy OK (but not Deletion: original file still in place)", DEBUG_TAG);
@@ -1796,26 +1816,26 @@ public class DashboardActivity extends Activity {
 				Log.e(DEBUG_TAG, currentItem.getFilename() + " --> END copy: FAILED");
 			}
 			
-			refreshlist(DashboardActivity.this);
+			refreshlist();
 			isAnyAsyncInProgress = false;
 		}
 	}
 	
-	public static int refreshlist(final Activity activity) {
+	public static int refreshlist() {
 		entries = 0;
 		if (isDashboardRunning) {
-			activity.runOnUiThread(new Runnable() {
+			sDashboardActivity.runOnUiThread(new Runnable() {
 				public void run() {
 
 					clearAdapterAndLists();
 
 					// refill the Lists and re-populate the adapter
-					entries = parseJson((Context) activity);
+					entries = parseJson(sDashboard);
 					updateProgressBars();
 					buildList();
 
 					if (da.isEmpty()) {
-						showEmptyListInfo(activity);
+						showEmptyListInfo(sDashboardActivity);
 					}
 
 					// refresh the list view
@@ -1933,61 +1953,83 @@ public class DashboardActivity extends Activity {
 					long bytes_total = 0;
 					int progress = 0;
 					long speed = 0;
-					
-					try {
-						if (Maps.mDownloadSizeMap.get(idlong) != null) {
-							bytes_downloaded = Maps.mDownloadSizeMap.get(idlong); //YTD.downloadPartialSizeMap.get(idlong);
-							bytes_total = Maps.mTotalSizeMap.get(idlong);			//YTD.downloadTotalSizeMap.get(idlong);
-							progress = (int) Maps.mDownloadPercentMap.get(idlong);	//YTD.downloadPercentMap.get(idlong);
-							speed = Maps.mNetworkSpeedMap.get(idlong);
-						} else {
-							countdown--;
-							Utils.logger("w", "updateProgressBars: waiting for DM Maps on id " + idstr + " # " + countdown, DEBUG_TAG);
-							progress = -1;
-							bytes_downloaded = 0;
-							bytes_total = 0;
-							speed = 0;
-							
-							DownloadTask dt = Maps.dtMap.get(idlong);
-							
-							if (countdown <= 0 && dt == null) {
-								Utils.logger("w", "countdown == 0 && dt == null; setting STATUS_PAUSED on id " + idstr, DEBUG_TAG);
-								Json.addEntryToJsonFile(
-										sDashboard,
-										idstr, 
-										typeEntries.get(i),
-										ytidEntries.get(i), 
-										posEntries.get(i),
-										YTD.JSON_DATA_STATUS_PAUSED,
-										pathEntries.get(i), 
-										filenameEntries.get(i),
-										basenameEntries.get(i), 
-										audioExtEntries.get(i),
-										sizeEntries.get(i), 
-										false);
-							}
-						}
-					} catch (NullPointerException e) {
-						Log.e(DEBUG_TAG, "NPE @ updateProgressBars");
-					}
-					
-					String readableBytesDownloaded = Utils.MakeSizeHumanReadable(bytes_downloaded, false);
-					String readableBytesTotal = Utils.MakeSizeHumanReadable(bytes_total, false);
-					
-					String progressRatio;
-					if (readableBytesTotal.equals("-")) {
-						progressRatio = "";
-					} else {
-						progressRatio = readableBytesDownloaded + "/" + readableBytesTotal;
-					}
 
-					progressEntries.add(progress);
-					partSizeEntries.add(progressRatio + " (" + String.valueOf(progress) + "%)");
-					speedEntries.add(speed);
+					if (typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_V) || 
+						typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_V_O) ||
+						typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_O)) {
+						try {
+							if (Maps.mDownloadPercentMap.get(idlong) != null) {
+								bytes_downloaded = Maps.mDownloadSizeMap.get(idlong);
+								bytes_total = Maps.mTotalSizeMap.get(idlong);
+								progress = (int) Maps.mDownloadPercentMap.get(idlong);
+								speed = Maps.mNetworkSpeedMap.get(idlong);
+							} else {
+								countdown--;
+								Utils.logger("w", "updateProgressBars: waiting " + idstr + " # " + countdown, DEBUG_TAG);
+								progress = -1;
+								bytes_downloaded = 0;
+								bytes_total = 0;
+								speed = 0;
+								
+								DownloadTask dt = Maps.dtMap.get(idlong);
+								
+								if (countdown <= 0 && dt == null) {
+									Utils.logger("w", "countdown == 0 && dt == null; "
+											+ "\nsetting STATUS_PAUSED on (video) id " + idstr, DEBUG_TAG);
+									Json.addEntryToJsonFile(
+											sDashboard,
+											idstr, 
+											typeEntries.get(i),
+											ytidEntries.get(i), 
+											posEntries.get(i),
+											YTD.JSON_DATA_STATUS_PAUSED,
+											pathEntries.get(i), 
+											filenameEntries.get(i),
+											basenameEntries.get(i), 
+											audioExtEntries.get(i),
+											sizeEntries.get(i), 
+											false);
+								}
+							}
+						} catch (NullPointerException e) {
+							Log.e(DEBUG_TAG, "NPE @ updateProgressBars");
+							//e.printStackTrace();
+						}
+						
+						String readableBytesDownloaded = Utils.MakeSizeHumanReadable(bytes_downloaded, false);
+						String readableBytesTotal = Utils.MakeSizeHumanReadable(bytes_total, false);
+						
+						String progressRatio;
+						if (readableBytesTotal.equals("-")) {
+							progressRatio = "";
+						} else {
+							progressRatio = readableBytesDownloaded + "/" + readableBytesTotal;
+						}
+	
+						progressEntries.add(i, progress);
+						partSizeEntries.add(i, progressRatio + " (" + String.valueOf(progress) + "%)");
+						speedEntries.add(i, speed);
+					} else {
+						try {
+							if (Maps.mDownloadPercentMap.get(idlong) != null) {
+								progress = (int) Maps.mDownloadPercentMap.get(idlong);
+							} else {
+								Utils.logger("w", "updateProgressBars: waiting " + idstr + " # " + countdown, DEBUG_TAG);
+								progress = -1;
+							}
+						} catch (NullPointerException e) {
+							Log.e(DEBUG_TAG, "NPE @ updateProgressBars");
+							//e.printStackTrace();
+						}
+						Log.i(DEBUG_TAG, "Progress: " + progress);
+						progressEntries.add(i, progress);
+						partSizeEntries.add(i, String.valueOf(progress) + "%");
+						speedEntries.add(i, (long) 0);
+					}
 				} else {
-					progressEntries.add(100);
-					partSizeEntries.add("-/-");
-					speedEntries.add((long) 0);
+					progressEntries.add(i, 100);
+					partSizeEntries.add(i, "-/-");
+					speedEntries.add(i, (long) 0);
 				}
 			} catch (IndexOutOfBoundsException e) {
 				Utils.logger("w", "updateProgressBars: " + e.getMessage(), DEBUG_TAG);
@@ -1999,7 +2041,9 @@ public class DashboardActivity extends Activity {
 		for (int i = 0; i < idEntries.size(); i++) {
 			String thisSize;
 			try {
-				if (statusEntries.get(i).equals(YTD.JSON_DATA_STATUS_IN_PROGRESS) && speedEntries.get(i) != 0) {
+				if (statusEntries.get(i).equals(YTD.JSON_DATA_STATUS_IN_PROGRESS) && 
+						(speedEntries.get(i) != 0 || 
+						(typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_E) || typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_M)))) {
 					thisSize = partSizeEntries.get(i);
 				} else {
 					thisSize = sizeEntries.get(i);
@@ -2015,7 +2059,8 @@ public class DashboardActivity extends Activity {
 							.replace(YTD.JSON_DATA_STATUS_IN_PROGRESS, sDashboard.getString(R.string.json_status_in_progress))
 							.replace(YTD.JSON_DATA_STATUS_FAILED, sDashboard.getString(R.string.json_status_failed))
 							.replace(YTD.JSON_DATA_STATUS_IMPORTED, sDashboard.getString(R.string.json_status_imported))
-							.replace(YTD.JSON_DATA_STATUS_PAUSED, sDashboard.getString(R.string.json_status_paused)),
+							.replace(YTD.JSON_DATA_STATUS_PAUSED, sDashboard.getString(R.string.json_status_paused))
+							.replace(YTD.JSON_DATA_STATUS_QUEUED, sDashboard.getString(R.string.json_status_queued)),
 						pathEntries.get(i), 
 						filenameEntries.get(i), 
 						basenameEntries.get(i),
@@ -2263,8 +2308,7 @@ public class DashboardActivity extends Activity {
 						true);
 			}
 			
-			if (DashboardActivity.isDashboardRunning)
-				DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+			refreshlist();
 			
 			Utils.setNotificationDefaults(aBuilder);
 			
@@ -2635,12 +2679,12 @@ public class DashboardActivity extends Activity {
 				}).start();
 	    	} else {
 	    		PopUps.showPopUp(getString(R.string.long_press_warning_title), getString(R.string.long_press_warning_msg2), "info", DashboardActivity.this);
-				isFfmpegRunning = false;
 	    	}
 		} else {
 			Toast.makeText(DashboardActivity.this, "suitable AO not found",
 					Toast.LENGTH_SHORT).show(); // TODO @strings
 		}
+		isFfmpegRunning = false;
 	}
 	
 	private class MuxShellDummy implements ShellCallback {
@@ -2701,8 +2745,7 @@ public class DashboardActivity extends Activity {
 						true);
 			}
 			
-			if (DashboardActivity.isDashboardRunning)
-				DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+			refreshlist();
 			
 			Utils.setNotificationDefaults(aBuilder);
 			

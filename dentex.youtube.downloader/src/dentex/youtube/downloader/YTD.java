@@ -87,6 +87,7 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_STATUS_FAILED = "FAILED";
 	public static final String JSON_DATA_STATUS_PAUSED = "PAUSED";
 	public static final String JSON_DATA_STATUS_IMPORTED = "IMPORTED";
+	public static final String JSON_DATA_STATUS_QUEUED = "QUEUED";
 	public static final String JSON_DATA_PATH = "path";
 	public static final String JSON_DATA_FILENAME = "filename";
 	public static final String JSON_DATA_BASENAME = "basename";

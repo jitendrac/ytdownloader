@@ -28,10 +28,14 @@ import dentex.youtube.downloader.YTD;
 public class DashboardClearHelper {
 	public static final String DEBUG_TAG = "DashboardClearHelper";
 	public static String previousJson;
-	static List<File> fileList = new ArrayList<File>();
+	public static List<File> fileList = new ArrayList<File>();
+	public static boolean sDoReload;
+	public static Activity sAct;
 	
 	public static void confirmClearDashboard(final Activity act, final ContextThemeWrapper tw, final boolean doReload) {
 		previousJson = Json.readJsonDashboardFile(act);
+		sDoReload = doReload;
+		sAct = act;
 		boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
 										 previousJson.contains(YTD.JSON_DATA_STATUS_PAUSED)) ;
 		
@@ -55,17 +59,15 @@ public class DashboardClearHelper {
 		        public void onClick(DialogInterface dialog, int which) {
 		        	if (deleteData.isChecked()) {
 		        		Utils.logger("i", "delete data checkbox checked", DEBUG_TAG);
-		        		
 			            new AsyncDeleteDasboardFiles().execute();
 		        	} else {
 			        	if (YTD.JSON_FILE.delete()) {
 			        		clearThumbsAndVideoinfopref();
+			        		if (doReload) Utils.reload(act);
 			        	} else {
 			        		Toast.makeText(act, act.getString(R.string.clear_dashboard_failed), Toast.LENGTH_SHORT).show();
 			        		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
 			        	}
-			        	
-			        	if (doReload) Utils.reload(act);
 		        	}
 		        }
 		    });
@@ -175,7 +177,7 @@ public class DashboardClearHelper {
 				Toast.makeText(YTD.ctx, YTD.ctx.getString(R.string.clear_dashboard_failed), Toast.LENGTH_SHORT).show();
         		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
 			}
-			
+			if (sDoReload) Utils.reload(sAct);
 			DashboardActivity.isAnyAsyncInProgress = false;
 		}
 	}

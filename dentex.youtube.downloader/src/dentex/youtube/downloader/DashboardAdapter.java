@@ -185,7 +185,8 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 			holder.status.setTextColor(Color.parseColor(BLUE));
 		else if (dli.getStatus().equals(context.getString(R.string.json_status_imported)))
 			holder.status.setTextColor(Color.parseColor(YELLOW));
-		else if (dli.getStatus().equals(context.getString(R.string.json_status_paused)))
+		else if (dli.getStatus().equals(context.getString(R.string.json_status_paused)) ||
+					dli.getStatus().equals(context.getString(R.string.json_status_queued)))
 			holder.status.setTextColor(Color.parseColor(ORANGE));
 		
 		if (dli.getProgress() == 100) {

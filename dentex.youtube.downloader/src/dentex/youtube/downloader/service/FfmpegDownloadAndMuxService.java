@@ -143,10 +143,8 @@ public class FfmpegDownloadAndMuxService extends IntentService {
 						"", 
 						"-", 
 						true);
-		}
-		
-		if (DashboardActivity.isDashboardRunning)
-			DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+			}
+			DashboardActivity.refreshlist();
 		}
 
 		@Override

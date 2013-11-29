@@ -1,6 +1,10 @@
 package dentex.youtube.downloader.queue;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.matsuhiro.android.download.Maps;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -18,16 +22,21 @@ public class FFmpegExtractAudioTask implements Runnable {
 	private Context aContext;
 	private File aFileToConvert;
 	private File aAudioFile;
-	private String aBitrateType;
-	private String aBitrateValue;
-	private String aId;
-	private String aYtId;
-	private int aPos;
+	private String aBitrateType = "";
+	private String aBitrateValue = "";
+	private String aId = "";
+	private String aYtId = "";
+	private int aPos = 0;
+	private String type = "";
+	private long aNewId = 0;
+	int totSeconds = 0;
+	int currentTime = 0;
 	
-	public FFmpegExtractAudioTask(Context context, 
+	public FFmpegExtractAudioTask(Context context, long newId, 
 			File fileToConvert, File audioFile, 
 			String bitrateType, String bitrateValue, 
 			String id, String YtId, int pos) {
+		
 		aContext = context;
 		aFileToConvert = fileToConvert;
 		aAudioFile = audioFile;
@@ -36,12 +45,31 @@ public class FFmpegExtractAudioTask implements Runnable {
 		aId = id;
 		aYtId = YtId;
 		aPos = pos;
+		aNewId = newId;
+		type = (aBitrateValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
 	}
 	
 	@Override
 	public void run() {
 		FfmpegController ffmpeg = null;
 		try {
+			Json.addEntryToJsonFile(
+					aContext, 
+					String.valueOf(aNewId), 
+					type,
+					aYtId, 
+					aPos,
+					YTD.JSON_DATA_STATUS_IN_PROGRESS,
+					aAudioFile.getParent(), 
+					aAudioFile.getName(), 
+					Utils.getFileNameWithoutExt(aAudioFile.getName()), 
+					"", 
+					"-", 
+					false);
+			
+			//DashboardActivity.refreshlist();
+			Utils.reload(DashboardActivity.sDashboardActivity);
+			
 			ffmpeg = new FfmpegController(aContext);
 			ShellDummy shell = new ShellDummy();
 			ffmpeg.extractAudio(aFileToConvert, aAudioFile, aBitrateType, aBitrateValue, shell);
@@ -55,20 +83,12 @@ public class FFmpegExtractAudioTask implements Runnable {
 		@Override
 		public void shellOut(String shellLine) {
 			Utils.logger("d", shellLine, DEBUG_TAG);
+			getAudioJobProgress(shellLine);
 		}
 
 		@Override
 		public void processComplete(int exitValue) {
-			Utils.logger("v", aAudioFile.getName() + "':\nprocessComplete with exit value: " + exitValue, DEBUG_TAG);
-			
-			String newId = String.valueOf(System.currentTimeMillis());
-			
-			String type;
-			if (aBitrateValue == null) {
-				type = YTD.JSON_DATA_TYPE_A_E;
-			} else {
-				type = YTD.JSON_DATA_TYPE_A_M;
-			}
+			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 			
 			if (exitValue == 0) {
 				Utils.scanMedia(aContext, 
@@ -83,7 +103,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 
 				Json.addEntryToJsonFile(
 						aContext, 
-						newId, 
+						String.valueOf(aNewId), 
 						type, 
 						aYtId, 
 						aPos,
@@ -97,7 +117,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 			} else {
 				Json.addEntryToJsonFile(
 						aContext, 
-						newId, 
+						String.valueOf(aNewId), 
 						type, 
 						aYtId, 
 						aPos,
@@ -110,8 +130,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 						false);
 			}
 			
-			if (DashboardActivity.isDashboardRunning)
-				DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+			DashboardActivity.refreshlist();
 		}
 
 		@Override
@@ -120,6 +139,30 @@ public class FFmpegExtractAudioTask implements Runnable {
 				Utils.logger("w", "FFmpegExtractAudioTask process not started or not completed", DEBUG_TAG);
 			}
 		}
+	}
+	
+	private void getAudioJobProgress(String shellLine) {
+		int mDownloadPercent;
+		
+		Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
+		Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
+		if (totalTimeMatcher.find()) {
+			totSeconds = Utils.getTotSeconds(totalTimeMatcher);
+		}
+		
+		Pattern currentTimePattern = Pattern.compile("time=(..):(..):(..)\\.(..)");
+		Matcher currentTimeMatcher = currentTimePattern.matcher(shellLine);
+		if (currentTimeMatcher.find()) {
+			currentTime = Utils.getTotSeconds(currentTimeMatcher);
+		}
+		
+		if (totSeconds == 0) {
+            mDownloadPercent = -1;
+        } else {
+            mDownloadPercent = (int) (currentTime * 100 / totSeconds);
+        }
+		//Utils.logger("i", currentTime + "/" + totSeconds + " -> " + mDownloadPercent, DEBUG_TAG);
+        Maps.mDownloadPercentMap.put(aNewId, mDownloadPercent);
 	}
 	
 	private class AsyncDelete extends AsyncTask<File, Void, Boolean> {
@@ -144,8 +187,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 		protected void onPostExecute(Boolean success) {
 			if (success) {
 				Json.removeEntryFromJsonFile(aContext, aId);
-				if (DashboardActivity.isDashboardRunning)
-					DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+				DashboardActivity.refreshlist();
 			} else {
 				Utils.logger("w", aFileToConvert.getName() + " NOT deleted", DEBUG_TAG);
 			}

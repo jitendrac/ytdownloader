@@ -1209,8 +1209,7 @@ public class ShareActivity extends Activity {
 						size, 
 						false);
 				
-				if (DashboardActivity.isDashboardRunning)
-					DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+				DashboardActivity.refreshlist();
 				
 				YTD.removeIdUpdateNotification(ID);
 				
@@ -1240,18 +1239,37 @@ public class ShareActivity extends Activity {
 						
 					}
 					
+					String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
 					File audioFile = new File(path.getAbsolutePath(), audioFileName);
 					
 					if (!audioFile.exists()) { 
 						File videoFileToConvert = new File(path.getAbsolutePath(), vFilename);
 						
+						long newId = System.currentTimeMillis();
+						
 						YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
-								sShare, 
+								sShare, newId, 
 								videoFileToConvert, audioFile, 
 								brType, brValue, 
 								String.valueOf(ID), 
 								videoId, 
 								pos), 0);
+						
+						Json.addEntryToJsonFile(
+								sShare, 
+								String.valueOf(newId), 
+								type, 
+								videoId, 
+								pos,
+								YTD.JSON_DATA_STATUS_QUEUED,
+								path.getAbsolutePath(), 
+								audioFileName, 
+								Utils.getFileNameWithoutExt(audioFileName), 
+								"", 
+								"-", 
+								false);
+						
+						DashboardActivity.refreshlist();
 					}
 				} else {
 					Utils.logger("v", "Auto FFmpeg task for ID " + ID
@@ -1310,8 +1328,7 @@ public class ShareActivity extends Activity {
 						size, 
 						false);
 				
-				if (DashboardActivity.isDashboardRunning)
-					DashboardActivity.refreshlist(DashboardActivity.sDashboardActivity);
+				DashboardActivity.refreshlist();
 				
 				YTD.removeIdUpdateNotification(ID);
 			}
@@ -1466,7 +1483,7 @@ public class ShareActivity extends Activity {
 					Log.e(DEBUG_TAG, "UnsupportedEncodingException @ splitStreamsGroups: " + e.getMessage());
 				}
 				
-				asyncDownload.doProgress((int) ((i / count) * 100));
+				asyncDownload.doProgress((int) (i * 100 / count));
 				
 				Utils.logger("v", "index " + i + ", block: " + blocks[i], DEBUG_TAG);
 				

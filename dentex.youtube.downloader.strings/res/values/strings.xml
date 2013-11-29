@@ -159,6 +159,7 @@
 	<string name="json_status_in_progress">In Progress</string>
 	<string name="json_status_paused">Paused</string>
 	<string name="json_status_imported">Imported</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">search&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
