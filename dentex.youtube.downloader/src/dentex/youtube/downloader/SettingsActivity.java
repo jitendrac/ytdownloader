@@ -118,6 +118,11 @@ public class SettingsActivity extends Activity {
         	case R.id.menu_tutorials:
         		startActivity(new Intent(this, TutorialsActivity.class));
         		return true;
+        	case R.id.menu_dashboard:
+        		Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        		startActivity(dashboardIntent);
+        		return true;
         	default:
         		return super.onOptionsItemSelected(item);
         }
@@ -125,7 +130,7 @@ public class SettingsActivity extends Activity {
 
 	public static class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
     	
-		private Preference dashboard;
+		//private Preference dashboard;
 		private Preference filechooser;
 		private Preference up;
 		private Preference th;
@@ -169,16 +174,16 @@ public class SettingsActivity extends Activity {
                 initSummary(getPreferenceScreen().getPreference(i));
             }
 
-            dashboard = (Preference) findPreference("dashboard");
-            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            	
-                public boolean onPreferenceClick(Preference preference) {
-                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
-            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            		startActivity(dashboardIntent);
-                    return true;
-                }
-            });
+//            dashboard = (Preference) findPreference("dashboard");
+//            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+//            	
+//                public boolean onPreferenceClick(Preference preference) {
+//                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
+//            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//            		startActivity(dashboardIntent);
+//                  return true;
+//                }
+//            });
             
             clear = (Preference) findPreference("clear_dashboard");
             clear.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -306,7 +311,7 @@ public class SettingsActivity extends Activity {
 	                            		}
 	                            	} else {
 	                            		Utils.logger("w", getString(R.string.unable_save_dialog_msg), DEBUG_TAG);
-	                            		PopUps.showPopUp(getString(R.string.error), getString(R.string.unable_save_dialog_msg), "alert", getActivity());
+	                            		PopUps.showPopUp(getString(R.string.error), getString(R.string.unable_save_dialog_msg), "error", getActivity());
 	                            	}
                             	}
 	                        });
@@ -360,7 +365,7 @@ public class SettingsActivity extends Activity {
     			@Override
     			public void preDownload(DownloadTask task) {
     				aBuilder =  new NotificationCompat.Builder(sSettings);
-    				aNotificationManager = (NotificationManager) sSettings.getSystemService(Context.NOTIFICATION_SERVICE);
+    				aNotificationManager = (NotificationManager) sSettings.getSystemService(Context.NOTIFICATION_SERVICE)
     				aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
     				aBuilder.setContentTitle(YTD.ffmpegBinName);
     				aBuilder.setContentText(getString(R.string.ffmpeg_download_notification));
@@ -563,7 +568,7 @@ public class SettingsActivity extends Activity {
                 			// Path not writable
                 			chooserSummary = YTD.dir_Downloads.getAbsolutePath();
                 			setChooserPrefAndSummary();
-                			PopUps.showPopUp(getString(R.string.system_warning_title), getString(R.string.system_warning_msg), "alert", getActivity());
+                			PopUps.showPopUp(getString(R.string.system_warning_title), getString(R.string.system_warning_msg), "error", getActivity());
                 			//Toast.makeText(getActivity(), getString(R.string.system_warning_title), Toast.LENGTH_SHORT).show();
                 			break;
                 		case 2:

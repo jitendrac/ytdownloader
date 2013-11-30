@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n vTEST (codename: fdam)
+        \n v3.5 - Dic XX 2013
         \n-----------------------------------
-        \n[x] FFmpeg download and mux of video-only and audio-only streams
+        \n[x] Dashboard option to mux video-only and audio-only streams
+        \n[x] option to choose between Settings and Dashboard as launcher activity
+        \n[x] Android 4.4 target
         \n
         \n v3.4.1 - Nov 19 2013
         \n-----------------------------------
@@ -76,7 +78,7 @@
         \n v2.7 - Aug 20 2013
         \n-----------------------------------
         \n[x] auto-patch experimental signature changes
-        \n[x] JB 4.3 target
+        \n[x] Android 4.3 target
         \n
         \n v2.6.2 - Aug 08 2013
         \n-----------------------------------
@@ -240,7 +242,7 @@
 		\n
 		\n v1.5.1 - Feb 24 2013
 		\n-----------------------------------
-		\n[x] fixed crash if no net is avail.
+		\n[x] fixed crash if no net is available
 		\n[x] fixed crash on bad video list
 		\n
 		\n v1.5 - Feb 22 2013
@@ -289,13 +291,13 @@
 		\n-----------------------------------
 		\n[x] FIRST PUBLIC RELEASE
 		\n[x] send download via SSH
-		\n[x] JB compatibility
 		\n[x] SSH send how-to dialog
 		\n[x] standard download locations
 		\n[x] file-chooser for download dest.
 		\n[x] add quality suffix options
 		\n[x] file renaming options
-		\n-----------------------------------</string>
+		\n-----------------------------------
+	</string>
 		
     <string name="gpl_title">GPL-3.0</string>
     <string name="gpl_summary">YouTubeDownloader\nFFmpeg</string>
@@ -696,12 +698,24 @@
     <string name="filter_hd">HD</string>
     <string name="filter_3d">3D</string>
     
-    <string-array name="vo_download_method_entry_values">
-        <item>fdam</item>
-        <item>dm</item>
-        <item></item>
-    </string-array>
+<!--     <string-array name="vo_download_method_entry_values"> -->
+<!--         <item>fdam</item> -->
+<!--         <item>dm</item> -->
+<!--         <item></item> -->
+<!--     </string-array> -->
     
-    <string name="vo_download_method_default"></string>
+<!--     <string name="vo_download_method_default"></string> -->
+    
+    <string-array name="launcher_entry_values">
+        <item>settings</item>
+        <item>dashboard</item>
+	</string-array>
+	
+    <string-array name="launcher_entries">
+        <item>@string/title_activity_settings</item>
+        <item>@string/title_activity_dashboard</item>
+	</string-array>
+	
+    <string name="launcher_default">settings</string>
 
 </resources>

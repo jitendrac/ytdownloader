@@ -1,8 +1,11 @@
 package dentex.youtube.downloader.queue;
 
+import dentex.youtube.downloader.DashboardActivity;
 import dentex.youtube.downloader.R;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
@@ -126,10 +129,9 @@ public final class QueueThread extends Thread {
 		return type;
 	}*/
 	
-	// Please note! This method will normally be called from the queue thread.
-	// Thus, it is up for the listener to deal with that (in case it is a UI component,
-	// it has to execute the signal handling code in the UI thread using Handler - see
-	// QueueActivity for example).
+	// In case the listener it's a UI component,
+	// it has to execute the signal handling code
+	// in the UI thread using 'Handler'
 	private void signalUpdate() {
 		if (listener != null) {
 			listener.handleQueueThreadUpdate();
@@ -140,10 +142,16 @@ public final class QueueThread extends Thread {
 		aBuilder =  new NotificationCompat.Builder(ctx);
 		aNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 		
+		Intent notificationIntent = new Intent(ctx, DashboardActivity.class);
+    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    	
+    	PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
+		
 		aBuilder.setSmallIcon(R.drawable.ic_stat_ytd)
 			.setContentTitle(ctx.getString(R.string.app_name))
 			.setContentText(text)
-			.setOngoing(isOngoing);
+			.setOngoing(isOngoing)
+			.setContentIntent(contentIntent);
 		
 		aNotificationManager.notify(3, aBuilder.build());
 	}

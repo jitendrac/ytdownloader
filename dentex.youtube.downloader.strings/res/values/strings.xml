@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Cancel</string>
     <string name="wait">Please wait&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" system App not found.</string>
-    <string name="ytd_useless">YTD cannot download files on this device.</string>
     <string name="invalid_url">Unable to retrieve web page. URL may be invalid.</string>
     <string name="invalid_url_short">Unable to retrieve web page.</string>
     <string name="invalid_response">Invalid HTTP server response.</string>
@@ -199,8 +198,10 @@
     
 	<string-array name="dashboard_click_entries_vo">
 	    <item>Open</item>
-        <item>Add audio stream (previously downloaded)</item>
+        <item>Add audio stream (already downloaded)</item>
     </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
     
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
 	<string name="ffmpeg_not_enabled_msg">Open settings?</string>
@@ -309,12 +310,12 @@
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
     
-    <string name="vo_download_method_title">Choose download method for video-only streams</string>
-    <string-array name="vo_download_method_entries">
-        <item>FFmpeg download and mux</item>
-        <item>Normal download into Dashboard for later (manual) mux</item>
-        <item>Asks every time</item>
-    </string-array>
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Notifications</string>
@@ -330,7 +331,9 @@
         <item>Vibration</item>
         <item>Lights</item>
         <item>Nothing</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Activity started from launcher</string>
     
     <!-- -->
     <string name="settings_cat_updates">Updates</string>

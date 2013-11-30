@@ -237,7 +237,7 @@ public class AboutActivity extends Activity {
 	                	startActivity(Intent.createChooser(shareIntent, getString(R.string.share_message)));
 	                } catch (final ActivityNotFoundException e) {
 	                	Utils.logger("d", "No suitable Apps found.", DEBUG_TAG);
-	                	PopUps.showPopUp(getString(R.string.attention), getString(R.string.share_warning), "alert", AboutFragment.this.getActivity());
+	                	PopUps.showPopUp(getString(R.string.attention), getString(R.string.share_warning), "error", AboutFragment.this.getActivity());
 	                }
 	            	return true;
 	            }

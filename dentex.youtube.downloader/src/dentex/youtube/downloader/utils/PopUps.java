@@ -42,7 +42,7 @@ public class PopUps {
 	    helpBuilder.setTitle(title);
 	    helpBuilder.setMessage(message);
 	
-	    if ( type == "alert" ) {
+	    if ( type == "error" ) {
 	        icon = android.R.drawable.ic_dialog_alert;
 	    } else if ( type == "info" ) {
 	        icon = android.R.drawable.ic_dialog_info;

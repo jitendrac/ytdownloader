@@ -207,7 +207,7 @@ public class YTD extends Application implements QueueThreadListener{
 	}
 
 	public static void NoDownProvPopUp(Activity act) {
-		PopUps.showPopUp(act.getString(R.string.no_downloads_sys_app), act.getString(R.string.ytd_useless), "alert", act);
+		PopUps.showPopUp(act.getString(R.string.error), act.getString(R.string.no_downloads_sys_app), "error", act);
 	}
 	
     public static void NotificationHelper(Context ctx) {
@@ -217,8 +217,7 @@ public class YTD extends Application implements QueueThreadListener{
     	pt2 = ctx.getString(R.string.notification_downloading_pt2);
     	
     	Intent notificationIntent = new Intent(ctx, DashboardActivity.class);
-    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-    					  .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     	
     	PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
     	

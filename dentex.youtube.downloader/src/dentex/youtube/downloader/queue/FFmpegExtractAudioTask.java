@@ -66,9 +66,9 @@ public class FFmpegExtractAudioTask implements Runnable {
 					"", 
 					"-", 
 					false);
+			Log.i(DEBUG_TAG, "FFmpegExtractAudioTask -> run(): setting STATUS_IN_PROGRESS");
 			
-			//DashboardActivity.refreshlist();
-			Utils.reload(DashboardActivity.sDashboardActivity);
+			DashboardActivity.refreshlist();
 			
 			ffmpeg = new FfmpegController(aContext);
 			ShellDummy shell = new ShellDummy();

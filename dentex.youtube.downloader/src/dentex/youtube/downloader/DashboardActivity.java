@@ -500,7 +500,7 @@ public class DashboardActivity extends Activity {
 	
 	private void notifyOpsNotSupported() {
 		Utils.logger("d", "notifyOpsNotSupported()", DEBUG_TAG);
-		PopUps.showPopUp(getString(R.string.information), getString(R.string.unsupported_operation), "alert", sDashboardActivity);
+		PopUps.showPopUp(getString(R.string.information), getString(R.string.unsupported_operation), "error", sDashboardActivity);
 	}
 	
 	private void notifyAnotherOperationIsInProgress() {
@@ -639,7 +639,6 @@ public class DashboardActivity extends Activity {
 
 	public void delete(final DashboardListItem currentItem) {
 		AlertDialog.Builder del = new AlertDialog.Builder(boxCtw);
-		//del.setTitle(getString(R.string.attention));
 		del.setTitle(currentItem.getFilename());
 		del.setMessage(getString(R.string.delete_video_confirm));
 		del.setIcon(android.R.drawable.ic_dialog_alert);
@@ -783,8 +782,7 @@ public class DashboardActivity extends Activity {
 						
 						//TODO Auto FFmpeg task
 						if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && 
-								//don't start audio jobs for VO videos
-								currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O)) { 
+								!currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
 							Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 							
 							String[] bitrateData = null;
@@ -835,6 +833,8 @@ public class DashboardActivity extends Activity {
 								
 								refreshlist();
 							}
+						} else {
+							Utils.logger("v", "Auto FFmpeg task for ID " + ID + " not enabled", DEBUG_TAG);
 						}
 					}
 					
@@ -892,7 +892,7 @@ public class DashboardActivity extends Activity {
 					}
 				};
 				
-				//TODO
+				//TODO DM
 				try {
 					DownloadTask dt = new DownloadTask(this, itemIDlong, link, 
 							currentItem.getFilename(), currentItem.getPath(), 
@@ -904,7 +904,6 @@ public class DashboardActivity extends Activity {
 					Log.e(DEBUG_TAG, "unable to start Download Manager -> " + e.getMessage());
 				}
 			} else {
-				//notifyOpsNotSupported();
 				reDownload(currentItem, "AUTO");
 			}
 		}
@@ -1383,7 +1382,7 @@ public class DashboardActivity extends Activity {
 		    		case 1:
 		    			// Path not writable
 		    			PopUps.showPopUp(getString(R.string.system_warning_title), 
-		    					getString(R.string.system_warning_msg), "alert", DashboardActivity.this);
+		    					getString(R.string.system_warning_msg), "error", DashboardActivity.this);
 		    			break;
 		    		case 2:
 		    			// Path not mounted
@@ -1411,7 +1410,7 @@ public class DashboardActivity extends Activity {
 			    		case 1:
 			    			// Path not writable
 			    			PopUps.showPopUp(getString(R.string.system_warning_title), 
-			    					getString(R.string.system_warning_msg), "alert", DashboardActivity.this);
+			    					getString(R.string.system_warning_msg), "error", DashboardActivity.this);
 			    			break;
 			    		case 2:
 			    			// Path not mounted
@@ -1458,7 +1457,6 @@ public class DashboardActivity extends Activity {
 	        case 4: // ------------- > MENU_RESTORE
 				AsyncRestore ar = new AsyncRestore();
 				ar.execute(chooserSelection);
-
 	        	break;
 	        	
 	        case 5: // ------------- > MENU_IMPORT
@@ -1941,6 +1939,7 @@ public class DashboardActivity extends Activity {
 		return idEntries.size();
 	}
 	
+	//TODO updateProgressBars
 	private static void updateProgressBars() {
 		for (int i = 0; i < idEntries.size(); i++ ) {
 			
@@ -2021,9 +2020,13 @@ public class DashboardActivity extends Activity {
 							Log.e(DEBUG_TAG, "NPE @ updateProgressBars");
 							//e.printStackTrace();
 						}
-						Log.i(DEBUG_TAG, "Progress: " + progress);
+
 						progressEntries.add(i, progress);
-						partSizeEntries.add(i, String.valueOf(progress) + "%");
+						if (progress != -1) {
+							partSizeEntries.add(i, String.valueOf(progress) + "%");
+						} else {
+							partSizeEntries.add(i, "");
+						}
 						speedEntries.add(i, (long) 0);
 					}
 				} else {
@@ -2183,11 +2186,11 @@ public class DashboardActivity extends Activity {
 						Toast.makeText(DashboardActivity.this, "YTD: " + text,
 								Toast.LENGTH_SHORT).show();
 
-						aBuilder.setContentTitle(audioFileName);
-						aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
-						aBuilder.setContentText(text);
-						aBuilder.setOngoing(true);
-						aBuilder.setProgress(0, 0, true);
+						aBuilder.setContentTitle(audioFileName)
+							.setSmallIcon(R.drawable.ic_stat_ytd)
+							.setContentText(text)
+							.setOngoing(true)
+							.setProgress(0, 0, true);
 						aNotificationManager.notify(2, aBuilder.build());
 						Utils.logger("i", vfilename + " " + text, DEBUG_TAG);
 					} catch (IOException ioe) {
@@ -2243,9 +2246,9 @@ public class DashboardActivity extends Activity {
 				boolean addItToDb = addSuffixToAudioFileName();
 				Toast.makeText(DashboardActivity.this,  audioFile.getName() + ": " + text, Toast.LENGTH_SHORT).show();
 				
-				aBuilder.setContentTitle(audioFile.getName());
-				aBuilder.setContentText(text);
-				aBuilder.setOngoing(false);
+				aBuilder.setContentTitle(audioFile.getName())
+					.setContentText(text)
+					.setOngoing(false);
 				
 				Intent audioIntent = new Intent(Intent.ACTION_VIEW);
 				audioIntent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
@@ -2681,8 +2684,7 @@ public class DashboardActivity extends Activity {
 	    		PopUps.showPopUp(getString(R.string.long_press_warning_title), getString(R.string.long_press_warning_msg2), "info", DashboardActivity.this);
 	    	}
 		} else {
-			Toast.makeText(DashboardActivity.this, "suitable AO not found",
-					Toast.LENGTH_SHORT).show(); // TODO @strings
+			Toast.makeText(DashboardActivity.this, getString(R.string.ao_not_found), Toast.LENGTH_SHORT).show();
 		}
 		isFfmpegRunning = false;
 	}
@@ -2770,11 +2772,10 @@ public class DashboardActivity extends Activity {
 			Log.e(DEBUG_TAG, muxedFileName + " MUX failed");
 			Toast.makeText(DashboardActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
     		
-			aBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
-			aBuilder.setOngoing(false);
-			
 			Utils.setNotificationDefaults(aBuilder);
-			aBuilder.setProgress(0, 0, false);
+			aBuilder.setContentText("MUX " + getString(R.string.json_status_failed))
+				.setOngoing(false)
+				.setProgress(0, 0, false);
     		aNotificationManager.cancel(4);
 		}
 	}

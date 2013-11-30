@@ -362,7 +362,7 @@ public class ShareActivity extends Activity {
 				return true;
 			case R.id.menu_settings:
 				Intent sIntent = new Intent(this, SettingsActivity.class);
-				sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				//sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				startActivity(sIntent);
 				return true;
 			case R.id.menu_about:
@@ -461,7 +461,7 @@ public class ShareActivity extends Activity {
 			tv.setVisibility(View.GONE);
 			noVideoInfo.setText(getString(R.string.no_net));
 			noVideoInfo.setVisibility(View.VISIBLE);
-			PopUps.showPopUp(getString(R.string.no_net), getString(R.string.no_net_dialog_msg), "alert", this);
+			PopUps.showPopUp(getString(R.string.no_net), getString(R.string.no_net_dialog_msg), "error", this);
 			
 			showRetryButton();
 		}
@@ -481,7 +481,7 @@ public class ShareActivity extends Activity {
 	public void badOrNullLinkAlert() {
 		BugSenseHandler.leaveBreadcrumb("badOrNullLinkAlert");
 		progressBar1.setVisibility(View.GONE);
-		PopUps.showPopUp(getString(R.string.error), getString(R.string.bad_link_dialog_msg), "alert", this);
+		PopUps.showPopUp(getString(R.string.error), getString(R.string.bad_link_dialog_msg), "error", this);
 		tv.setVisibility(View.GONE);
 		noVideoInfo.setText(getString(R.string.bad_link));
 		noVideoInfo.setVisibility(View.VISIBLE);
@@ -618,7 +618,7 @@ public class ShareActivity extends Activity {
 			
 			if (result == null || result.equals("e") && !autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("invalid_url");
-				noVideosMsgs("alert", getString(R.string.invalid_url));
+				noVideosMsgs("error", getString(R.string.invalid_url));
 				showRetryButton();
 			}
 			
@@ -894,7 +894,7 @@ public class ShareActivity extends Activity {
 						try {
 							startActivity(intent);
 						} catch (ActivityNotFoundException exception){
-							PopUps.showPopUp(getString(R.string.no_market), getString(R.string.no_net_dialog_msg), "alert", ShareActivity.this);
+							PopUps.showPopUp(getString(R.string.no_market), getString(R.string.no_net_dialog_msg), "error", ShareActivity.this);
 						}
 					}
 				});
@@ -1217,7 +1217,9 @@ public class ShareActivity extends Activity {
 				
 				Maps.removeFromAllMaps(ID);
 				
-				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !autoFFmpegTaskAlreadySent) {
+				//TODO Auto FFmpeg task
+				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !autoFFmpegTaskAlreadySent && 
+						!jsonDataType.equals(YTD.JSON_DATA_TYPE_V_O)) {
 					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 					
 					autoFFmpegTaskAlreadySent = true;
@@ -1334,6 +1336,7 @@ public class ShareActivity extends Activity {
 			}
 		};
 		
+		//TODO DM
 		File dest = new File(path, vFilename);
 		File destTemp = new File(path, vFilename + DownloadTask.TEMP_SUFFIX);
 		String previousJson = Json.readJsonDashboardFile(sShare);

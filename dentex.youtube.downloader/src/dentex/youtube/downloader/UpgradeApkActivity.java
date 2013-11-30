@@ -156,7 +156,7 @@ public class UpgradeApkActivity extends Activity {
 				    upgradeButton.setEnabled(false);
 				}
 			} catch (NullPointerException e) {
-				PopUps.showPopUp(getString(R.string.error), getString(R.string.upgrade_network_error), "alert", UpgradeApkActivity.this);
+				PopUps.showPopUp(getString(R.string.error), getString(R.string.upgrade_network_error), "error", UpgradeApkActivity.this);
 				Log.e(DEBUG_TAG, "unable to retrieve update data.");
 				
 			}
@@ -164,7 +164,7 @@ public class UpgradeApkActivity extends Activity {
 			progressBar2.setVisibility(View.GONE);
 			tv.setText(getString(R.string.no_net));
 			upgradeButton.setEnabled(false);
-			PopUps.showPopUp(getString(R.string.no_net), getString(R.string.no_net_dialog_msg), "alert", this);
+			PopUps.showPopUp(getString(R.string.no_net), getString(R.string.no_net_dialog_msg), "error", this);
 		}
 	}
 	
@@ -302,10 +302,10 @@ public class UpgradeApkActivity extends Activity {
                     	if (Utils.checkMD5(matchedMd5, new File(dir, apkFilename))) {
                     	
 	                        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(boxCtw);
-	                        helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
-	                        helpBuilder.setTitle(getString(R.string.information));
-	                        helpBuilder.setMessage(getString(R.string.upgraded_dialog_msg));
-	                        helpBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	                        helpBuilder.setIcon(android.R.drawable.ic_dialog_info)
+	                        	.setTitle(getString(R.string.information))
+	                        	.setMessage(getString(R.string.upgraded_dialog_msg))
+	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	
 	                            public void onClick(DialogInterface dialog, int which) {
 	
@@ -330,10 +330,10 @@ public class UpgradeApkActivity extends Activity {
                         
                     	} else {
                     		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(boxCtw);
-	                        helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
-	                        helpBuilder.setTitle(getString(R.string.information));
-	                        helpBuilder.setMessage(getString(R.string.upgrade_bad_md5_dialog_msg));
-	                        helpBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	                        helpBuilder.setIcon(android.R.drawable.ic_dialog_info)
+	                        	.setTitle(getString(R.string.information))
+	                        	.setMessage(getString(R.string.upgrade_bad_md5_dialog_msg))
+	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	                        	
 	                            public void onClick(DialogInterface dialog, int which) {
 	                            	deleteBadDownload(id);
