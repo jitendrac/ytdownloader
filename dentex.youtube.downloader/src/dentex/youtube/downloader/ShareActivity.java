@@ -161,7 +161,7 @@ public class ShareActivity extends Activity {
 	private int pos;
 	private File path;
 	private String validatedLink;
-	private String vFilename = "";
+	private String filenameComplete = "";
 	public static Uri videoUri;
 	private int icon;
 	private TextView userFilename;
@@ -188,7 +188,7 @@ public class ShareActivity extends Activity {
 	private boolean restartModeEnabled = false;
 	private String extraId;
 	private boolean autoFFmpegTaskAlreadySent = false;
-	private String mComposedName;
+	private String basenameTagged;
 	//private String dashUrl = "";
 	//private String dashStartUrl;
 	private SlidingMenu slMenu;
@@ -300,13 +300,13 @@ public class ShareActivity extends Activity {
 				autoModeEnabled = true;
 				extraId = intent.getStringExtra("id");
 				pos = intent.getIntExtra("position", 0);
-				vFilename = intent.getStringExtra("filename");
-				mComposedName = Utils.getFileNameWithoutExt(vFilename);
+				filenameComplete = intent.getStringExtra("filename");
+				basenameTagged = Utils.getFileNameWithoutExt(filenameComplete);
 				
 				Utils.logger("i", "Auto Mode Enabled:"
 						+ "\n -> id: " + extraId
 						+ "\n -> position: " + pos
-						+ "\n -> filename: " + vFilename, DEBUG_TAG);
+						+ "\n -> filename: " + filenameComplete, DEBUG_TAG);
 			} else if (intent.hasCategory("RESTART")) {
 				restartModeEnabled = true; 
 				extraId = intent.getStringExtra("id");
@@ -675,8 +675,8 @@ public class ShareActivity extends Activity {
 
 					//pos = 45;		// to test IndexOutOfBound Exception...
 					
-					mComposedName = composeVideoFilenameNoExt();
-					vFilename = composeVideoFilename(mComposedName);
+					basenameTagged = composeFilenameWithOutExt();
+					filenameComplete = composeFilenameWithExt();
 					
 					helpBuilder = new AlertDialog.Builder(boxCtw);
 					helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
@@ -706,15 +706,15 @@ public class ShareActivity extends Activity {
 									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
-									userFilename.setText(mComposedName);
+									userFilename.setText(basenameTagged);
 									adb.setView(inputFilename);
 									adb.setTitle(getString(R.string.rename_dialog_title));
 									adb.setMessage(getString(R.string.rename_dialog_msg));
 									
 									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 										public void onClick(DialogInterface dialog, int which) {
-											mComposedName = userFilename.getText().toString();
-											vFilename = composeVideoFilename(mComposedName);
+											basenameTagged = userFilename.getText().toString();
+											filenameComplete = composeFilenameWithExt();
 //											if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
 //												offerFdam();
 //											} else {
@@ -778,8 +778,8 @@ public class ShareActivity extends Activity {
 					BugSenseHandler.leaveBreadcrumb("ShareActivity_onItemLongClick");
 					pos = position;
 					
-					String base = composeVideoFilenameNoExt();
-					vFilename = composeVideoFilename(base);
+					basenameTagged = composeFilenameWithOutExt();
+					filenameComplete = composeFilenameWithExt();
 					
 					AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
@@ -787,10 +787,10 @@ public class ShareActivity extends Activity {
 							public void onClick(DialogInterface dialog, int which) {
 								switch (which) {
 									case 0: // copy
-										copy(position);
+										copy();
 										break;
 									case 1: // share
-										share(position, vFilename);
+										share();
 								}
 							}
 						});
@@ -799,10 +799,10 @@ public class ShareActivity extends Activity {
 							public void onClick(DialogInterface dialog, int which) {
 								switch (which) {
 									case 0: // copy
-										copy(position);
+										copy();
 										break;
 									case 1: // share
-										share(position, vFilename);
+										share();
 										break;
 									case 2: // SSH
 										sendViaSsh();
@@ -824,24 +824,24 @@ public class ShareActivity extends Activity {
 			noVideoInfo.setVisibility(View.VISIBLE);
 		}
 
-		private void share(final int position, String filename) {
+		private void share() {
 			BugSenseHandler.leaveBreadcrumb("ShareActivity_share");
 			Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 			sharingIntent.setType("text/plain");
-			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, filename);
-			sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, links.get(position));
+			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, filenameComplete);
+			sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, links.get(pos));
 			startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_link_via)));
 		}
 
-		private void copy(final int position) {
+		private void copy() {
 			BugSenseHandler.leaveBreadcrumb("ShareActivity_copy");
-			ClipData cmd = ClipData.newPlainText("simple text", links.get(position));
+			ClipData cmd = ClipData.newPlainText("simple text", links.get(pos));
 			ClipboardManager cb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 			cb.setPrimaryClip(cmd);
 			Toast.makeText(ShareActivity.this, getString(R.string.link_copied), Toast.LENGTH_SHORT).show();
 		}
 		
-		private String composeVideoFilenameNoExt() {
+		private String composeFilenameWithOutExt() {
 			String suffix = itagsText.get(pos)
 					.replace("MP4 - ", "")
 					.replace("WebM - ", "")
@@ -852,18 +852,18 @@ public class ShareActivity extends Activity {
 					.replace("/", "-")
 					.replace(" - ", "_");
 			
-			String composedName = basename + "_" + suffix;
+			String comp = basename + "_" + suffix;
 			
-			Utils.logger("d", "videoFilename with no EXT: " + composedName, DEBUG_TAG);
-			return composedName;
+			Utils.logger("d", "videoFilename with no EXT: " + comp, DEBUG_TAG);
+			return comp;
 		}
 		
-		private String composeVideoFilename(String base) {
+		private String composeFilenameWithExt() {
 			
-			String composedName = base + "." + codecs.get(pos);
+			String comp = basenameTagged + "." + codecs.get(pos);
 			
-			Utils.logger("d", "COMPLETE videoFilename: " + composedName, DEBUG_TAG);
-			return composedName;
+			Utils.logger("d", "COMPLETE videoFilename: " + comp, DEBUG_TAG);
+			return comp;
 		}
 
 		private void callConnectBot() {
@@ -918,7 +918,7 @@ public class ShareActivity extends Activity {
 				Boolean shortSshCmdEnabled = YTD.settings.getBoolean("enable_connectbot_short_cmd", false);
 				if (shortSshCmdEnabled) {
 					wgetCmd = "wget -e \"convert-links=off\" --keep-session-cookies --save-cookies /dev/null --no-check-certificate \'" + 
-							links.get(pos) + "\' -O " + vFilename;
+							links.get(pos) + "\' -O " + filenameComplete;
 				} else {
 					wgetCmd = "REQ=`wget -q -e \"convert-links=off\" --keep-session-cookies --save-cookies /dev/null --no-check-certificate \'" + 
 							validatedLink + "\' -O-` && urlblock=`echo $REQ | grep -oE \'url_encoded_fmt_stream_map\": \".*\' | sed -e \'s/\", \".*//\'" + 
@@ -929,7 +929,7 @@ public class ShareActivity extends Activity {
 							" -e \'s/&signature=.*//\' -e \'s/&quality=.*//\' -e \'s/&fallback_host=.*//\'` && sig=`echo $block | " +
 							"grep -oE \'signature=.{81}\'` && downloadurl=`echo $url\\&$sig | sed \'s/&itag=[0-9][0-9]&signature/\\&signature/\'` && " +
 							"wget -e \"convert-links=off\" --keep-session-cookies --save-cookies /dev/null --tries=5 --timeout=45 --no-check-certificate " +
-							"\"$downloadurl\" -O " + vFilename;
+							"\"$downloadurl\" -O " + filenameComplete;
 				}
 				
 				Utils.logger("d", "wgetCmd: " + wgetCmd, DEBUG_TAG);
@@ -1155,8 +1155,8 @@ public class ShareActivity extends Activity {
 						pos, 
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
 						pathOfVideo, 
-						vFilename, 
-						mComposedName, 
+						filenameComplete, 
+						basename, 
 						aExt, 
 						"-", 
 						false);
@@ -1204,7 +1204,7 @@ public class ShareActivity extends Activity {
 						YTD.JSON_DATA_STATUS_COMPLETED, 
 						pathOfVideo, 
 						nameOfVideo, 
-						mComposedName, 
+						basename, 
 						aExt, 
 						size, 
 						false);
@@ -1233,11 +1233,11 @@ public class ShareActivity extends Activity {
 					String extrType = YTD.settings.getString("audio_extraction_type", "conv");
 					if (extrType.equals("conv")) {
 						bitrateData = Utils.retrieveBitrateValuesFromPref(sShare);
-						audioFileName = mComposedName + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
+						audioFileName = basename/*Tagged*/ + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
 						brType = bitrateData[0];
 						brValue = bitrateData[1];
 					} else {
-						audioFileName = mComposedName + aExt;
+						audioFileName = basename/*Tagged*/ + aExt;
 						
 					}
 					
@@ -1245,7 +1245,7 @@ public class ShareActivity extends Activity {
 					File audioFile = new File(path.getAbsolutePath(), audioFileName);
 					
 					if (!audioFile.exists()) { 
-						File videoFileToConvert = new File(path.getAbsolutePath(), vFilename);
+						File videoFileToConvert = new File(path.getAbsolutePath(), filenameComplete);
 						
 						long newId = System.currentTimeMillis();
 						
@@ -1325,7 +1325,7 @@ public class ShareActivity extends Activity {
 						status, 
 						pathOfVideo, 
 						nameOfVideo, 
-						mComposedName, 
+						basename, 
 						aExt, 
 						size, 
 						false);
@@ -1337,8 +1337,8 @@ public class ShareActivity extends Activity {
 		};
 		
 		//TODO DM
-		File dest = new File(path, vFilename);
-		File destTemp = new File(path, vFilename + DownloadTask.TEMP_SUFFIX);
+		File dest = new File(path, filenameComplete);
+		File destTemp = new File(path, filenameComplete + DownloadTask.TEMP_SUFFIX);
 		String previousJson = Json.readJsonDashboardFile(sShare);
 		
 		String aExt = findAudioCodec();
@@ -1367,7 +1367,7 @@ public class ShareActivity extends Activity {
 			
 			try {
 				DownloadTask dt = new DownloadTask(this, id, links.get(pos), 
-						vFilename, path.getAbsolutePath(), 
+						filenameComplete, path.getAbsolutePath(), 
 						aExt, jsonDataType, 
 						dtl, false);
 				

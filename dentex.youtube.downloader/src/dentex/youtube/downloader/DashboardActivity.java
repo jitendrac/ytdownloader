@@ -400,35 +400,38 @@ public class DashboardActivity extends Activity {
 	        		int MOVE = 1;
 	        		int RENAME = 2;
 	        		int REDOWNLOAD = 3;
-	        		int REMOVE = 4;
-	        		int DELETE = 5;
-	        		int PAUSERESUME = 6;
+	        		int SEND = 4;
+	        		int REMOVE = 5;
+	        		int DELETE = 6;
+	        		int PAUSERESUME = 7;
 	        		
 	        		int[] disabledItems = null;
 	
 	        		if (currentItem.getStatus().equals(getString(R.string.json_status_in_progress)) ||
 	        				currentItem.getStatus().equals(getString(R.string.json_status_paused))) {
 	        			// show: DELETE and  PAUSERESUME
-	        			disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, REMOVE };
+	        			disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, SEND, REMOVE };
 	        		} else if (currentItem.getStatus().equals(getString(R.string.json_status_failed))) {
 	        			// check if the item has a real YouTube ID, otherwise it's an imported video.
 	        			if (currentItem.getYtId().length() == 11) {
 	        				// show: REMOVE and REDOWNLOAD
-	        				disabledItems = new int[] { COPY, MOVE, RENAME, DELETE, PAUSERESUME};
+	        				disabledItems = new int[] { COPY, MOVE, RENAME, SEND, DELETE, PAUSERESUME};
 	        			} else {
 	        				// show: REMOVE only
-	        				disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, DELETE, PAUSERESUME };
+	        				disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, SEND, DELETE, PAUSERESUME };
 	        			}
-	        			
 	        		} else if (currentItem.getStatus().equals(getString(R.string.json_status_imported)) ||
 	        					//case for audio entries _completed but from _imported
 	        					(currentItem.getStatus().equals(getString(R.string.json_status_completed)) &&
 	    	        			!(currentItem.getYtId().length() == 11))) {
-	        			// show: COPY, MOVE, RENAME, REMOVE and DELETE
+	        			// show: COPY, MOVE, RENAME, SEND, REMOVE and DELETE
 	        			disabledItems = new int[] { REDOWNLOAD, PAUSERESUME };
-	        		}  else if (currentItem.getStatus().equals(getString(R.string.json_status_completed))) {
+	        		} else if (currentItem.getStatus().equals(getString(R.string.json_status_completed))) {
 	        			// show: all items except PAUSERESUME
 	        			disabledItems = new int[] { PAUSERESUME };
+	        		} else if (currentItem.getStatus().equals(getString(R.string.json_status_queued))) {
+	        			// show no items
+	        			disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, SEND, REMOVE, DELETE, PAUSERESUME };
 	        		}
 	
 	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
@@ -466,14 +469,18 @@ public class DashboardActivity extends Activity {
 				    				}
 				    				break;
 				    			case 4:
+				    				BugSenseHandler.leaveBreadcrumb("send");
+				    				send(currentItem);
+				    				break;
+				    			case 5:
 				    				BugSenseHandler.leaveBreadcrumb("removeFromDashboard");
 				    				removeFromDashboard(currentItem);
 				    				break;
-				    			case 5:
+				    			case 6:
 				    				BugSenseHandler.leaveBreadcrumb("delete");
 				    				delete(currentItem);
 				    				break;
-				    			case 6:
+				    			case 7:
 				    				BugSenseHandler.leaveBreadcrumb("pauseresume");
 				    				pauseresume(currentItem);
 				    		}
@@ -610,6 +617,23 @@ public class DashboardActivity extends Activity {
         });
 	    
 	    secureShowDialog(adb);
+	}
+	
+	public void  send(final DashboardListItem currentItem) {
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		
+		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) || 
+				currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O))
+					sharingIntent.setType("video/*");
+		
+		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_E) || 
+				currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_M) || 
+					currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_O))
+						sharingIntent.setType("audio/*");
+		
+		File fileToSend = new File(currentItem.getPath(), currentItem.getFilename());
+		sharingIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse(fileToSend.getAbsolutePath()));
+		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_file_via)));
 	}
 	
 	public void  removeFromDashboard(final DashboardListItem currentItem) {

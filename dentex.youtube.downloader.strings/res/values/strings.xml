@@ -202,7 +202,7 @@
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
-    
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
 	<string name="ffmpeg_not_enabled_msg">Open settings?</string>
 	<string name="remove_video">Delete video after audio extraction (no confirmation!)</string>
@@ -213,7 +213,6 @@
 	<string name="id3_title">Title</string>
 	<string name="id3_year">Year</string>
 	<string name="id3_genre">Genre</string>
-	
 	<string name="audio_extr_info">Contained audio stream:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -221,6 +220,7 @@
 	    <item>Move</item>
         <item>Rename</item>
         <item>Re-download the video</item>
+        <item>Send</item>
         <item>Remove from Dashboard</item>
         <item>Remove and delete file</item>
         <item>Pause/Resume</item>
@@ -333,7 +333,7 @@
         <item>Nothing</item>
     </string-array>
     
-    <string name="launcher_title">Activity started from launcher</string>
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Updates</string>

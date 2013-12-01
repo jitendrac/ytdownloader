@@ -365,7 +365,7 @@ public class SettingsActivity extends Activity {
     			@Override
     			public void preDownload(DownloadTask task) {
     				aBuilder =  new NotificationCompat.Builder(sSettings);
-    				aNotificationManager = (NotificationManager) sSettings.getSystemService(Context.NOTIFICATION_SERVICE)
+    				aNotificationManager = (NotificationManager) sSettings.getSystemService(Context.NOTIFICATION_SERVICE);
     				aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
     				aBuilder.setContentTitle(YTD.ffmpegBinName);
     				aBuilder.setContentText(getString(R.string.ffmpeg_download_notification));
