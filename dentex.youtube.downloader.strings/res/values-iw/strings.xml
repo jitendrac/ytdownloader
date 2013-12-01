@@ -21,7 +21,6 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="dialogs_negative">בטל</string>
     <string name="wait">אנא המתן&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" system App not found.</string>
-    <string name="ytd_useless">YTD לא יכול להוריד קבצים במכשיר הזה</string>
     <string name="invalid_url">לא מצליח לאחזר דף אינטרנט. כתובת האתר עלולה להיות לא חוקית.</string>
     <string name="invalid_url_short">לא מצליח לאחזר דף אינטרנט.</string>
     <string name="invalid_response">תגובת שרת HTTP לא חוקית.</string>
@@ -158,6 +157,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	<string name="json_status_in_progress">In Progress</string>
 	<string name="json_status_paused">Paused</string>
 	<string name="json_status_imported">Imported</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">search&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
@@ -181,8 +181,8 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Open</item>
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -190,6 +190,18 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
         <item>Encode to mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
 	<string name="ffmpeg_not_enabled_msg">Open settings?</string>
 	<string name="remove_video">Delete video after audio extraction (no confirmation!)</string>
@@ -200,7 +212,6 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	<string name="id3_title">Title</string>
 	<string name="id3_year">Year</string>
 	<string name="id3_genre">Genre</string>
-	
 	<string name="audio_extr_info">Contained audio stream:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -208,6 +219,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	    <item>Move</item>
         <item>Rename</item>
         <item>Re-download the video</item>
+        <item>Send</item>
         <item>Remove from Dashboard</item>
         <item>Remove and delete file</item>
         <item>Pause/Resume</item>
@@ -297,7 +309,14 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">התראות</string>
     
@@ -312,7 +331,9 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
         <item>רטט</item>
         <item>תאורה</item>
         <item>כלום</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">עדכונים</string>

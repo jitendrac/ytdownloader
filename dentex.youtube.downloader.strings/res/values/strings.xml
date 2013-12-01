@@ -182,8 +182,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Open</item>
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -193,7 +193,7 @@
     
 	<string-array name="dashboard_click_entries_flv">
 	    <item>Open</item>
-        <item>Extract and encode audio to mp3</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">

@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Abbrechen</string>
     <string name="wait">Bitte warten&#8230;</string>
     <string name="no_downloads_sys_app">\'Download\'-System-App nicht gefunden!</string>
-    <string name="ytd_useless">YTD kann auf diesem Gerät keine Dateien herunterladen!</string>
     <string name="invalid_url">Kann die Webseite nicht laden. Möglicherweise ist der Link falsch!</string>
     <string name="invalid_url_short">Kann Webseite nicht laden!</string>
     <string name="invalid_response">Ungültige HTTP-Serverantwort!</string>
@@ -159,6 +158,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="json_status_in_progress">In Bearbeitung</string>
 	<string name="json_status_paused">Angehalten</string>
 	<string name="json_status_imported">Importiert</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">Suche&#8230;</string>
 	<string name="menu_backup">Sicherung</string>
 	<string name="menu_restore">Wiederherstellen</string>
@@ -182,8 +182,8 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Öffnen</item>
-	    <item>Nur Ton extrahieren</item>
-        <item>Ton extrahieren und in MP3 umwandeln</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
         <item>In Mp3 umwandeln</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nicht installiert oder aktiviert!</string>
 	<string name="ffmpeg_not_enabled_msg">Einstellungen offnen?</string>
 	<string name="remove_video">Videodatei-Löschung nach Tonspur-Extraktion (Ohne Bestätigung!)</string>
@@ -201,7 +213,6 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="id3_title">Titel</string>
 	<string name="id3_year">Jahr</string>
 	<string name="id3_genre">Genre</string>
-	
 	<string name="audio_extr_info">Beinhaltender Audiostream:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,9 +220,10 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	    <item>Verschieben</item>
         <item>Umbenennen</item>
         <item>Video erneut herunterladen</item>
-        <item>Vom Dashboard entfernen</item>
-        <item>Datei entfernen und löschen</item>
-        <item>Pause/Wiedergeben</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Bitte warten. Anderer Prozess wird gerade ausgeführt!</string>
@@ -297,7 +309,14 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     
     <string name="enable_adaptive_title">2ten Stream empfangen</string>
     <string name="enable_adaptive_summary">Nur-Video- und/oder Nur-Ton-Streams (falls verfügbar) der Videoliste hinzufügen</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Benachrichtigungen</string>
     
@@ -312,7 +331,9 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
         <item>Vibration</item>
         <item>LED</item>
         <item>Nichts</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Aktualisierungen</string>

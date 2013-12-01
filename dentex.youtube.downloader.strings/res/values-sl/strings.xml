@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Prekliči</string>
     <string name="wait">Prosim počakajte&#8230;</string>
     <string name="no_downloads_sys_app">Sistemska aplikacija \"Downloads\" ni bila najdena.</string>
-    <string name="ytd_useless">YTD ne more prenašati datotek na to napravo.</string>
     <string name="invalid_url">Neuspelo pridobivanje spletne strani. Najbrž je URL neveljaven.</string>
     <string name="invalid_url_short">Neuspelo pridobivanje spletne strani.</string>
     <string name="invalid_response">Neveljaven odziv HTTP strežnika.</string>
@@ -158,6 +157,7 @@
 	<string name="json_status_in_progress">V poteku</string>
 	<string name="json_status_paused">Pauzirano</string>
 	<string name="json_status_imported">Uvoženo</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">išči&#8230;</string>
 	<string name="menu_backup">Varnostno kopiraj</string>
 	<string name="menu_restore">Obnovi</string>
@@ -181,8 +181,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Odpri</item>
-	    <item>Izlušči le audio</item>
-        <item>Izlušči in kodiraj audio v mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -190,6 +190,18 @@
         <item>Kodiraj v mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg ni nameščen ali omogočen</string>
 	<string name="ffmpeg_not_enabled_msg">Odprem nastavitve?</string>
 	<string name="remove_video">Izbriši video po audio izluščevanju (brez potrditve!)</string>
@@ -200,7 +212,6 @@
 	<string name="id3_title">Naslov</string>
 	<string name="id3_year">Leto</string>
 	<string name="id3_genre">Žanr</string>
-	
 	<string name="audio_extr_info">Zajet audio stream</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -208,9 +219,10 @@
 	    <item>Premakni</item>
         <item>Preimenuj</item>
         <item>Še enkrat prenesi ta video</item>
-        <item>Odstrani z upravljalne plošče</item>
-        <item>Odstrani in izbriši datoteko</item>
-        <item>Pavziraj/Nadaljuj</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
@@ -296,7 +308,14 @@
     
     <string name="enable_adaptive_title">Pridobi sekundarne pretoke</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Obvestila</string>
     
@@ -311,7 +330,9 @@
         <item>Vibriranje</item>
         <item>Lučke</item>
         <item>Nič</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Posodobitve</string>

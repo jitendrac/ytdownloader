@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Annullér</string>
     <string name="wait">Vent venligst&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\"-app er ikke fundet.</string>
-    <string name="ytd_useless">YTD kan ikke downloade filer på denne enhed.</string>
     <string name="invalid_url">Ikke muligt at hente websiden. URL\'en kan være ugyldig.</string>
     <string name="invalid_url_short">Ikke muligt at hente websiden.</string>
     <string name="invalid_response">Ugyldigt HTTP server-svar</string>
@@ -159,6 +158,7 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
 	<string name="json_status_in_progress">I gang</string>
 	<string name="json_status_paused">Paused</string>
 	<string name="json_status_imported">Imported</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">søg&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
@@ -182,8 +182,8 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Open</item>
-	    <item>Extract audio only</item>
-        <item>Udtræk og kod lyd til mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
         <item>Encode to mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg er ikke installeret eller aktiveret:</string>
 	<string name="ffmpeg_not_enabled_msg">Åbn indstillinger?</string>
 	<string name="remove_video">Slet video efter lydekstration (ingen bekræftelse!)</string>
@@ -201,7 +213,6 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
 	<string name="id3_title">Title</string>
 	<string name="id3_year">Year</string>
 	<string name="id3_genre">Genre</string>
-	
 	<string name="audio_extr_info">Contained audio stream:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,6 +220,7 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
 	    <item>Flyt</item>
         <item>Omdøb</item>
         <item>Re-download the video</item>
+        <item>Send</item>
         <item>Remove from Dashboard</item>
         <item>Remove and delete file</item>
         <item>Pause/Resume</item>
@@ -297,7 +309,14 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Notifikationer</string>
     
@@ -312,7 +331,9 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
         <item>Vibration</item>
         <item>Lyde</item>
         <item>Ingenting</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Opdateringer</string>

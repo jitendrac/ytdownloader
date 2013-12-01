@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Annuleren</string>
     <string name="wait">Een moment geduld a.u.b. &#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" systeem App niet gevonden.</string>
-    <string name="ytd_useless">YTD kan geen bestanden downloaden op dit toestel</string>
     <string name="invalid_url">Niet in staat om de pagina te laden. URL wellicht ongeldig.</string>
     <string name="invalid_url_short">Niet in staat om de pagina te laden.</string>
     <string name="invalid_response">Ongeldige HTTP server terugkoppeling.</string>
@@ -159,6 +158,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="json_status_in_progress">In Uitvoering</string>
 	<string name="json_status_paused">Gepauzeerd.</string>
 	<string name="json_status_imported">Geimporteerd</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">Zoeken&#8230;</string>
 	<string name="menu_backup">Back-up </string>
 	<string name="menu_restore">Herstellen</string>
@@ -182,8 +182,8 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Openen</item>
-	    <item>Enkel audio extracten</item>
-        <item>Audio extracten en coderen naar mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
         <item>Coderen naar mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg niet geïnstalleerd of ingeschakeld:</string>
 	<string name="ffmpeg_not_enabled_msg">Instellingen openen?</string>
 	<string name="remove_video">Video verwijderen na audio extractie (geen bevestiging)</string>
@@ -201,7 +213,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="id3_title">Titel</string>
 	<string name="id3_year">Jaar</string>
 	<string name="id3_genre">Genre</string>
-	
 	<string name="audio_extr_info">Ingesloten audio stream:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,9 +220,10 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	    <item>Verplaats</item>
         <item>Hernoem</item>
         <item>Her download de video</item>
-        <item>Verwijder van dashboard</item>
-        <item>Verwijder en delete bestand</item>
-        <item>Pauze/Hervatten</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Even wachten: er is al een andere operatie bezig</string>
@@ -297,7 +309,14 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     
     <string name="enable_adaptive_title">Krijg secundaire streams</string>
     <string name="enable_adaptive_summary">Voeg enkel-video en/of enkel-audio streams (als beschikbaar) toe aan de video lijst</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Meldingen</string>
     
@@ -312,7 +331,9 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
         <item>Vibratie</item>
         <item>Lichten</item>
         <item>Niets</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Bijwerken</string>

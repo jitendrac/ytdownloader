@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Iptal</string>
     <string name="wait">Lütfen bekleyiniz&#8230;</string>
     <string name="no_downloads_sys_app">\"İndirme\" işlemi için sistem uygulaması bulunamadı.</string>
-    <string name="ytd_useless">YTD bu cihaza dosya indiremez.</string>
     <string name="invalid_url">Web sayfası alınamadı. URL geçersiz olabilir.</string>
     <string name="invalid_url_short">Web sayfası alınamadı.</string>
     <string name="invalid_response">Geçersiz HTTP sunucusu yanıtı.</string>
@@ -159,6 +158,7 @@
 	<string name="json_status_in_progress">Devam ediyor</string>
 	<string name="json_status_paused">Durduruldu</string>
 	<string name="json_status_imported">İçe aktarıldı</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">ara&#8230;</string>
 	<string name="menu_backup">Yedekle</string>
 	<string name="menu_restore">Geri Yükle</string>
@@ -182,8 +182,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Aç</item>
-	    <item>Sadece sesi ayıkla</item>
-        <item>Sesi ayıkla ve MP3 olarak kaydet</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@
         <item>Mp3\'e çevir</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg yüklü ya da aktif değil:</string>
 	<string name="ffmpeg_not_enabled_msg">Ayarlar açılsın mı?</string>
 	<string name="remove_video">Başarılı ses ayıklama işleminden sonra video dosyasını sil (dikkat: onay istemeden video silinir)</string>
@@ -201,7 +213,6 @@
 	<string name="id3_title">Başlık</string>
 	<string name="id3_year">Yıl</string>
 	<string name="id3_genre">Tür</string>
-	
 	<string name="audio_extr_info">Ses akışı içerir:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,9 +220,10 @@
 	    <item>Taşı</item>
         <item>Yeniden Adlandır</item>
         <item>Videoyu yeniden indir</item>
-        <item>Panelden Kaldır</item>
-        <item>Dosyayı sil</item>
-        <item>Durdur/Devam Et</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Lütfen bekleyin: şu anda başka bir işlem yapılıyor.</string>
@@ -297,7 +309,14 @@
     
     <string name="enable_adaptive_title">İkinci akışı al</string>
     <string name="enable_adaptive_summary">Sadece görüntü ve/veya sadece ses akışını görüntü listesine ekle</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Bildirimler</string>
     
@@ -312,7 +331,9 @@
         <item>Titreşim</item>
         <item>Işıklar</item>
         <item>Hiçbiri</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Güncelle</string>

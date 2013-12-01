@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Annulla</string>
     <string name="wait">Attendi&#8230;</string>
     <string name="no_downloads_sys_app">App di sistema per i download non trovata.</string>
-    <string name="ytd_useless">YTD non può scaricare file su questo dispositivo.</string>
     <string name="invalid_url">Impossibile ottenere la pagina web. L\'URL potrebbe essere non valido.</string>
     <string name="invalid_url_short">Impossibile ottenere la pagina web.</string>
     <string name="invalid_response">Risposta non valida dal server HTTP.</string>
@@ -159,6 +158,7 @@
 	<string name="json_status_in_progress">In corso</string>
 	<string name="json_status_paused">In pausa</string>
 	<string name="json_status_imported">Importato</string>
+	<string name="json_status_queued">In coda</string>
 	<string name="menu_search">cerca&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Ripristino</string>
@@ -182,8 +182,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Apri</item>
-	    <item>Solo estrazione audio</item>
-        <item>Estrazione e codifica audio in mp3</item>
+	    <item>Estrai l\'audio</item>
+        <item>Estrai l\'audio e codifica in mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@
         <item>Codifica in mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Apri</item>
+        <item>Estrai l\'audio e codifica in mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Apri</item>
+        <item>Aggiungi flusso audio (già scaricato)</item>
+    </string-array>
+    
+	<string name="ao_not_found">Nessun flusso solo-audio adatto trovato</string>
+    <string name="share_file_via">Condividi questo file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg non installallato o abilitato:</string>
 	<string name="ffmpeg_not_enabled_msg">Aprire le preferenze?</string>
 	<string name="remove_video">Cancella il video dopo aver estratto l\'audio (nessuna conferma!)</string>
@@ -201,7 +213,6 @@
 	<string name="id3_title">Titolo</string>
 	<string name="id3_year">Anno</string>
 	<string name="id3_genre">Genere</string>
-	
 	<string name="audio_extr_info">Flusso audio contenuto:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,6 +220,7 @@
 	    <item>Sposta</item>
         <item>Rinomina</item>
         <item>Scarica di nuovo il video</item>
+        <item>Invia</item>
         <item>Rimuovi dalla Dashboard</item>
         <item>Rimuovi e cancella il file</item>
         <item>Pausa/Riprendi</item>
@@ -297,7 +309,14 @@
     
     <string name="enable_adaptive_title">Ottieni flussi secondari</string>
     <string name="enable_adaptive_summary">Aggiungi flussi solo-video e/o solo-audio (se disponibili) alla lista dei video</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Notifiche</string>
     
@@ -312,7 +331,9 @@
         <item>Vibrazione</item>
         <item>Luci</item>
         <item>Niente</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Attività di ingresso</string>
     
     <!-- -->
     <string name="settings_cat_updates">Aggiornamenti</string>

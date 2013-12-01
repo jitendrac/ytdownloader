@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Cancelar</string>
     <string name="wait">Por favor aguarde&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" aplicativo do sistema não encontrado.</string>
-    <string name="ytd_useless">YTD não pode fazer o download de arquivos neste aparelho.</string>
     <string name="invalid_url">Não é possível acessar a página. O endereço URL pode ser inválido.</string>
     <string name="invalid_url_short">Não é possível acessar a página.</string>
     <string name="invalid_response">Resposta inválida do servidor HTTP.</string>
@@ -159,6 +158,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="json_status_in_progress">Em progresso</string>
 	<string name="json_status_paused">Em pausa</string>
 	<string name="json_status_imported">Importado</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">pesquisar&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restaurar</string>
@@ -182,8 +182,8 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Abrir</item>
-	    <item>Extrair áudio apenas</item>
-        <item>Extrair e codificar áudio para mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
         <item>Codificar para mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg não instalado ou ativado:</string>
 	<string name="ffmpeg_not_enabled_msg">Abrir definições?</string>
 	<string name="remove_video">Deletar o vídeo após a extração do áudio (sem confirmação!)</string>
@@ -201,7 +213,6 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="id3_title">Título</string>
 	<string name="id3_year">Ano</string>
 	<string name="id3_genre">Gênero</string>
-	
 	<string name="audio_extr_info">Stream de áudio contida.</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,9 +220,10 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	    <item>Mover</item>
         <item>Renomear</item>
         <item>Fazer o download do vídeo novamente</item>
-        <item>Remover do painel</item>
-        <item>Remover e deletar o arquivo</item>
-        <item>Pausar/Resumir</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Espere: outra operação já está em progresso.</string>
@@ -297,7 +309,14 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     
     <string name="enable_adaptive_title">Obter streams secundárias</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Notificações</string>
     
@@ -312,7 +331,9 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
         <item>Vibração</item>
         <item>Luzes</item>
         <item>Nenhum</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Atualizações</string>

@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Cancelar</string>
     <string name="wait">Por favor espere&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" App del sistema no fue encontrada.</string>
-    <string name="ytd_useless">YTD no puede descargar archivos en este dispositivo</string>
     <string name="invalid_url">La página de web no se puede accesar. El URL puede ser inválido.</string>
     <string name="invalid_url_short">No se puede acceder a la página web</string>
     <string name="invalid_response">Respuesta inválida del servidor HTTP.</string>
@@ -159,6 +158,7 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	<string name="json_status_in_progress">En Progreso</string>
 	<string name="json_status_paused">Pausado</string>
 	<string name="json_status_imported">Importado</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">buscar&#8230;</string>
 	<string name="menu_backup">Copia de seguridad </string>
 	<string name="menu_restore">Restaurar</string>
@@ -182,8 +182,8 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Abrir</item>
-	    <item>Extraer audio solamente</item>
-        <item>Extraer y códificar audio a mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
         <item>Códificar a mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg no installado o habilitado:</string>
 	<string name="ffmpeg_not_enabled_msg">¿Abrir preferencias?</string>
 	<string name="remove_video">¿Borrar el video después de extración de audio? (¡sin confirmación!)</string>
@@ -201,7 +213,6 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	<string name="id3_title">Título</string>
 	<string name="id3_year">Año</string>
 	<string name="id3_genre">Género</string>
-	
 	<string name="audio_extr_info">Audio stream contenido:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,9 +220,10 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	    <item>Transferir</item>
         <item>Renombrar</item>
         <item>Vuelva a descargar el video</item>
-        <item>Eliminar del panel</item>
-        <item>Quitar y eliminar archivo</item>
-        <item> Pausar/Resumir</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
@@ -297,7 +309,14 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Notificaciones</string>
     
@@ -312,7 +331,9 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
         <item>Vibración</item>
         <item>Luces</item>
         <item>Nada</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Actualizaciones</string>

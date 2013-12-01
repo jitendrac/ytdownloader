@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Mégse</string>
     <string name="wait">Kérlek várj&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" rendszer app nem található.</string>
-    <string name="ytd_useless">YTD nem töltött le fájlokat erre az eszközre</string>
     <string name="invalid_url">Weboldal nem elérhető. Hibás URL?</string>
     <string name="invalid_url_short">Weboldal nem elérhető.</string>
     <string name="invalid_response">Érvénytelen HTTP szerver válasz.</string>
@@ -159,6 +158,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="json_status_in_progress">Folyamatban</string>
 	<string name="json_status_paused">Szüneteltetve</string>
 	<string name="json_status_imported">Imported</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">keresés&#8230;</string>
 	<string name="menu_backup">Biztonsági mentés</string>
 	<string name="menu_restore">Visszaállítás</string>
@@ -182,8 +182,8 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Megnyitás</item>
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,18 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
         <item>Encode to mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nincs telepítve vagy nincs engedélyezve.</string>
 	<string name="ffmpeg_not_enabled_msg">Beállítások megnyitása?</string>
 	<string name="remove_video">Videó törlésének engedélyezése sikeres hang kicsomagoláskor (figyelem: nincs megerősítés)</string>
@@ -201,7 +213,6 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="id3_title">Cím</string>
 	<string name="id3_year">Év</string>
 	<string name="id3_genre">Stílus</string>
-	
 	<string name="audio_extr_info">Contained audio stream:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -209,9 +220,10 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	    <item>Áthelyezés</item>
         <item>Átnevezés</item>
         <item>Video újra letöltése</item>
-        <item>Törlés az irányítópultból</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
         <item>Remove and delete file</item>
-        <item>Szünet/Folytatás</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
@@ -297,7 +309,14 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Értesítések</string>
     
@@ -312,7 +331,9 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
         <item>Rezgés</item>
         <item>Fények</item>
         <item>Semmi</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Frissítések</string>

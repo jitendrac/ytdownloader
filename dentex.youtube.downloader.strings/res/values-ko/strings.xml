@@ -23,7 +23,6 @@
     <string name="dialogs_negative">취소</string>
     <string name="wait">잠시 기다려주세요&#8230;</string>
     <string name="no_downloads_sys_app">\"다운로드\" 시스템 앱이 없습니다.</string>
-    <string name="ytd_useless">유튜브 다운로더가 이 기기에 파일을 다운로드 할 수 없습니다.</string>
     <string name="invalid_url">웹페이지를 얻어올 수 없습니다. 올바르지 않은 주소입니다.</string>
     <string name="invalid_url_short">웹페이지를 얻어올 수 없습니다.</string>
     <string name="invalid_response">HTTP 서버 응답 오류.</string>
@@ -78,10 +77,10 @@
     </string-array>
     
     <string name="link_copied">링크를 클립보드에 복사하였습니다</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="share_link_via">링크 공유하기</string>
     
     <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
+    <string name="filter_view_all">전체 보기</string>
     <string name="filter_header_format">Filter by format</string>
     <string name="filter_header_quality">Filter by quality</string>
     <string name="filter_header_others">Other filters</string>
@@ -158,13 +157,14 @@
 	<string name="json_status_in_progress">진행 중</string>
 	<string name="json_status_paused">일시정지</string>
 	<string name="json_status_imported">가져오기 완료</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">검색&#8230;</string>
 	<string name="menu_backup">백업</string>
 	<string name="menu_restore">복구</string>
 	<string name="menu_import">비디오 가져오기</string>
-	<string name="menu_import_file">Import a file</string>
+	<string name="menu_import_file">파일 불러오기</string>
 	<string name="menu_import_double">비디오가 이미 추가되어 있습니다.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file_double">파일이 이미 추가되어 있습니다</string>
 	<string name="menu_backup_info">대시보드 데이터를 백업할 폴더를 선택하세요</string>
 	<string name="menu_restore_info">대시보드의 내용을 파일로부터 복구합니다</string>
 	<string name="menu_restore_info_msg">현재의 데이터가 사라지고 복원 데이터로 변경됩니다.</string>
@@ -181,8 +181,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>열기</item>
-	    <item>오디오만 추출하기</item>
-        <item>오디오 추출 후 mp3로 인코드</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -190,6 +190,18 @@
         <item>mp3로 인코드</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg 이 설치되지 않았거나 활성화되지 않았습니다:</string>
 	<string name="ffmpeg_not_enabled_msg">설정화면으로 가시겠습니까?</string>
 	<string name="remove_video">오디오 추출이 끝난 후 비디오 파일을 삭제합니다 (별도의 확인 메세지 없음)</string>
@@ -200,7 +212,6 @@
 	<string name="id3_title">제목</string>
 	<string name="id3_year">연도</string>
 	<string name="id3_genre">장르</string>
-	
 	<string name="audio_extr_info">포함된 오디오 스트림:</string>
 
 	<string-array name="dashboard_long_click_entries">
@@ -208,13 +219,14 @@
 	    <item>이동</item>
         <item>이름 변경</item>
         <item>비디오 다시 다운로드</item>
-        <item>대시보드에서 삭제</item>
-        <item>파일도 함께 삭제</item>
-        <item>일시정지/재생</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
-	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
+	<string name="dashboard_delete_data_cb">리스트에 있는 모든 비디오/오디오 파일 지우기</string>
     
 	<string name="move_error">이동 중 에러가 발생하였습니다.</string>
     <string name="move_progress">파일 이동 진행 중&#8230;</string>
@@ -296,7 +308,14 @@
     
     <string name="enable_adaptive_title">보조 스트림 받기</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">알림</string>
     
@@ -311,7 +330,9 @@
         <item>진동</item>
         <item>불빛</item>
         <item>아무것도 안함</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">업데이트</string>
