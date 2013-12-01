@@ -8,6 +8,7 @@ package dentex.youtube.downloader.ffmpeg;
 public class ShellUtils {
 
 	public interface ShellCallback {
+		public void preProcess();
 		public void shellOut (String shellLine);
 		public void processComplete (int exitValue);
 		public void processNotStartedCheck (boolean started);

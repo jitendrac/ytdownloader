@@ -2355,6 +2355,12 @@ public class DashboardActivity extends Activity {
 			aNotificationManager.notify(2, aBuilder.build());
 			isFfmpegRunning = false;
 		}
+
+		@Override
+		public void preProcess() {
+			// TODO Auto-generated method stub
+			
+		}
     }
     
 	public boolean addSuffixToAudioFileName() {
@@ -2801,6 +2807,12 @@ public class DashboardActivity extends Activity {
 				.setOngoing(false)
 				.setProgress(0, 0, false);
     		aNotificationManager.cancel(4);
+		}
+
+		@Override
+		public void preProcess() {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 	

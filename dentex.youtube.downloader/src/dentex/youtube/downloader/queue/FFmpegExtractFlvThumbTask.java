@@ -55,5 +55,11 @@ public class FFmpegExtractFlvThumbTask implements Runnable {
 				Utils.logger("w", "FFmpegExtractFlvThumbTask process not started or not completed", DEBUG_TAG);
 			}
 		}
+
+		@Override
+		public void preProcess() {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 }

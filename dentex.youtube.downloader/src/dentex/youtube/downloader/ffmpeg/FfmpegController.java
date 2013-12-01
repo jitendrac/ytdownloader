@@ -61,6 +61,8 @@ public class FfmpegController {
 		
 		ProcessBuilder pb = new ProcessBuilder(/*"liblame.so"*/);
 		
+		sc.preProcess();
+		
 		Map<String, String> envMap = pb.environment();
 		envMap.put("LD_LIBRARY_PATH", mContext.getApplicationInfo().nativeLibraryDir);
 

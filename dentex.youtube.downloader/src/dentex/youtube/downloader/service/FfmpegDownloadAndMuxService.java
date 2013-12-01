@@ -162,5 +162,11 @@ public class FfmpegDownloadAndMuxService extends IntentService {
 	        resultData.putBoolean("error", true);
 	        receiver.send(FfmpegDownloadAndMuxService.UPDATE_PROGRESS, resultData);
 		}
+
+		@Override
+		public void preProcess() {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 }

@@ -53,23 +53,6 @@ public class FFmpegExtractAudioTask implements Runnable {
 	public void run() {
 		FfmpegController ffmpeg = null;
 		try {
-			Json.addEntryToJsonFile(
-					aContext, 
-					String.valueOf(aNewId), 
-					type,
-					aYtId, 
-					aPos,
-					YTD.JSON_DATA_STATUS_IN_PROGRESS,
-					aAudioFile.getParent(), 
-					aAudioFile.getName(), 
-					Utils.getFileNameWithoutExt(aAudioFile.getName()), 
-					"", 
-					"-", 
-					false);
-			Log.i(DEBUG_TAG, "FFmpegExtractAudioTask -> run(): setting STATUS_IN_PROGRESS");
-			
-			DashboardActivity.refreshlist();
-			
 			ffmpeg = new FfmpegController(aContext);
 			ShellDummy shell = new ShellDummy();
 			ffmpeg.extractAudio(aFileToConvert, aAudioFile, aBitrateType, aBitrateValue, shell);
@@ -138,6 +121,25 @@ public class FFmpegExtractAudioTask implements Runnable {
 			if (!started) {
 				Utils.logger("w", "FFmpegExtractAudioTask process not started or not completed", DEBUG_TAG);
 			}
+		}
+
+		@Override
+		public void preProcess() {
+			Json.addEntryToJsonFile(
+					aContext, 
+					String.valueOf(aNewId), 
+					type,
+					aYtId, 
+					aPos,
+					YTD.JSON_DATA_STATUS_IN_PROGRESS,
+					aAudioFile.getParent(), 
+					aAudioFile.getName(), 
+					Utils.getFileNameWithoutExt(aAudioFile.getName()), 
+					"", 
+					"-", 
+					false);
+			
+			DashboardActivity.refreshlist();
 		}
 	}
 	
