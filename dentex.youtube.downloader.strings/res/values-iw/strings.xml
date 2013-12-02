@@ -201,6 +201,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
 	<string name="ffmpeg_not_enabled_msg">Open settings?</string>
@@ -213,7 +214,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	<string name="id3_year">Year</string>
 	<string name="id3_genre">Genre</string>
 	<string name="audio_extr_info">Contained audio stream:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copy</item>
 	    <item>Move</item>

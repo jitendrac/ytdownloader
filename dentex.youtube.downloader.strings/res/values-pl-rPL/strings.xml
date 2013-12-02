@@ -203,6 +203,7 @@ Pobrać je teraz?</string>
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nie zainstalowany bądź nie włączony:</string>
 	<string name="ffmpeg_not_enabled_msg">Otworzyć Ustawienia?</string>
@@ -215,7 +216,7 @@ Pobrać je teraz?</string>
 	<string name="id3_year">Rok</string>
 	<string name="id3_genre">Gatunek</string>
 	<string name="audio_extr_info">Zawiera ścieżkę dźwiękową:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiuj</item>
 	    <item>Przenieś</item>

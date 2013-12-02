@@ -51,7 +51,9 @@ public class FfmpegController {
 		}
 	}
 	
-	public  int execProcess(List<String> cmds, ShellUtils.ShellCallback sc) {		
+	public  int execProcess(List<String> cmds, ShellUtils.ShellCallback sc) {
+		sc.preProcess();
+		
 		StringBuilder cmdlog = new StringBuilder();
 		for (String cmd : cmds) {
 			cmdlog.append(cmd);
@@ -60,8 +62,6 @@ public class FfmpegController {
 		Utils.logger("v", cmdlog.toString(), DEBUG_TAG);
 		
 		ProcessBuilder pb = new ProcessBuilder(/*"liblame.so"*/);
-		
-		sc.preProcess();
 		
 		Map<String, String> envMap = pb.environment();
 		envMap.put("LD_LIBRARY_PATH", mContext.getApplicationInfo().nativeLibraryDir);
@@ -72,8 +72,7 @@ public class FfmpegController {
     	Process process = null;
     	int exitVal = 1; // Default error
     	boolean started = true;
-    	try {
-    		
+    	try {	
     		process = pb.start();
     	
     		// any error message?

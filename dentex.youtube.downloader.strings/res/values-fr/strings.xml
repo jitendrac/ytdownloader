@@ -202,6 +202,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg n\'est pas installé ou activé :</string>
 	<string name="ffmpeg_not_enabled_msg">Ouvrir les paramètres ?</string>
@@ -214,7 +215,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
 	<string name="id3_year">Année</string>
 	<string name="id3_genre">Genre</string>
 	<string name="audio_extr_info">Contained audio stream:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copier</item>
 	    <item>Déplacer</item>

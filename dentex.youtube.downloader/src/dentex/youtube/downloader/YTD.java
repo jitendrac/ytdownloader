@@ -28,8 +28,10 @@ package dentex.youtube.downloader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.Application;
@@ -114,7 +116,8 @@ public class YTD extends Application implements QueueThreadListener{
 	public static File dir_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 	public static File dir_Movies = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
 	
-	public static int uid;
+	//public static int uid;
+	public static Map<Long, Integer> mFFmpegPercentMap = new HashMap<Long, Integer>();
 
 	public static final String THUMBS_FOLDER = "thumbs";
 	public static double reduceFactor;

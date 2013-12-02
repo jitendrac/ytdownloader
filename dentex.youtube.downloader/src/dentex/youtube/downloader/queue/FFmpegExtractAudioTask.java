@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.matsuhiro.android.download.Maps;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -146,17 +144,22 @@ public class FFmpegExtractAudioTask implements Runnable {
 	private void getAudioJobProgress(String shellLine) {
 		int mDownloadPercent;
 		
+		Pattern initPattern = Pattern.compile("ffmpeg version 2.1");
+		Matcher initMatcher = initPattern.matcher(shellLine);
+		if (initMatcher.find()) {
+			totSeconds = 0;
+			currentTime = 0;
+		}
+		
 		Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
 		Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
-		if (totalTimeMatcher.find()) {
+		if (totalTimeMatcher.find())
 			totSeconds = Utils.getTotSeconds(totalTimeMatcher);
-		}
 		
 		Pattern currentTimePattern = Pattern.compile("time=(..):(..):(..)\\.(..)");
 		Matcher currentTimeMatcher = currentTimePattern.matcher(shellLine);
-		if (currentTimeMatcher.find()) {
+		if (currentTimeMatcher.find())
 			currentTime = Utils.getTotSeconds(currentTimeMatcher);
-		}
 		
 		if (totSeconds == 0) {
             mDownloadPercent = -1;
@@ -165,7 +168,7 @@ public class FFmpegExtractAudioTask implements Runnable {
         }
 		
 		//Utils.logger("i", currentTime + "/" + totSeconds + " -> " + mDownloadPercent, DEBUG_TAG);
-        Maps.mDownloadPercentMap.put(aNewId, mDownloadPercent);
+        YTD.mFFmpegPercentMap.put(aNewId, mDownloadPercent);
 	}
 	
 	private class AsyncDelete extends AsyncTask<File, Void, Boolean> {

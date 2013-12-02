@@ -663,22 +663,22 @@ public class Utils {
         String[] vprojection = {MediaStore.Video.VideoColumns._ID};
         String[] aprojection = {MediaStore.Audio.AudioColumns._ID};
         
-        String ext = getExtFromFileName(filePath);
+        String ext = getExtFromFileName(filePath).toLowerCase(Locale.ENGLISH);
         //logger("d","ext: " + ext, DEBUG_TAG);
         
         Uri videosUri = null;
         String[] projection = null;
         String dataType = null;
-        if (file.getName().contains("_AO_")) {
+        /*if (file.getName().contains("_AO_")) {
         	videosUri = MediaStore.Audio.Media.getContentUri("external");
         	projection = aprojection;
         	dataType = MediaStore.Audio.AudioColumns.DATA;
         	logger("d", " -> contentUri on Audio-Only file", DEBUG_TAG);
-        } else if (ext.equals("mp4") || ext.equals("3gp") || ext.equals("webm")) {
+        } else */if (ext.equals("mp4") || ext.equals("3gp") || ext.equals("webm")) {
         	videosUri = MediaStore.Video.Media.getContentUri("external");
         	projection = vprojection;
         	dataType = MediaStore.Video.VideoColumns.DATA;
-        } else if (ext.equals("mp3") || ext.equals("ogg") || ext.equals("aac")){
+        } else if (ext.equals("mp3") || ext.equals("ogg") || ext.equals("aac") || ext.equals("m4a")){
         	videosUri = MediaStore.Audio.Media.getContentUri("external");
         	projection = aprojection;
         	dataType = MediaStore.Audio.AudioColumns.DATA;

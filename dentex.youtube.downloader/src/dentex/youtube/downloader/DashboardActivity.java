@@ -69,7 +69,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
 import android.os.Parcelable;
-import android.os.ResultReceiver;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.text.Editable;
 import android.text.InputType;
@@ -125,6 +124,7 @@ public class DashboardActivity extends Activity {
 	private String vfilename;
 	private boolean removeVideo;
 	private boolean removeAudio;
+	private boolean removeAoVo;
 	private ListView lv;
 	private Editable searchText;
 	public static ProgressBar progressBar;
@@ -180,10 +180,9 @@ public class DashboardActivity extends Activity {
 	private long aNewId;
 	private int totSeconds;
 	private int currentTime;
-	private String audioOnlyPath;
+	private File audioOnlyFile;
 	public String audioOnlyExt = "";
-	
-	ResultReceiver receiver;
+	DashboardListItem aoItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +223,7 @@ public class DashboardActivity extends Activity {
     		lv.setAdapter(da);
     	}
     	
-    	/*Log.i(DEBUG_TAG, "ADML Maps:" +
+    	/*Log.i(DEBUG_TAG, "DM Maps:" +
     			"\ndtMap:                 " + Maps.dtMap +
     			"\nmDownloadPercentMap:   " + Maps.mDownloadPercentMap +
     			"\nmDownloadSizeMap:      " + Maps.mDownloadSizeMap + 
@@ -366,7 +365,7 @@ public class DashboardActivity extends Activity {
 					    			case 1: // mux
 					    				if (!isFfmpegRunning) {
 					    					if (ffmpegEnabled) {
-							    				mux(in);
+					    						addAudioStream(in);
 					    					} else {
 						    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
 						    				}
@@ -667,8 +666,7 @@ public class DashboardActivity extends Activity {
 		del.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				final File fileToDel = new File(currentItem.getPath(), currentItem.getFilename());
-				new AsyncDelete().execute(fileToDel);
+				new AsyncDelete().execute(currentItem);
 			}
 		});
 		
@@ -1193,37 +1191,57 @@ public class DashboardActivity extends Activity {
 		//Utils.logger("v", "__dashboard is empty__", DEBUG_TAG);
 	}
 	
-	private class AsyncDelete extends AsyncTask<File, Void, Boolean> {
+	public class DelBundle {
+		
+		File mFile;
+		DashboardListItem mItem;
+		
+		public DelBundle(File file, DashboardListItem item) {
+			mFile = file;
+			mItem = item;
+		}
+		public File getFile() {
+			return mFile;
+		}
+		public DashboardListItem getItem() {
+			return mItem;
+		}
+	}
+	
+	private class AsyncDelete extends AsyncTask<DashboardListItem, Void, Boolean> {
 
-		File fileToDelete;
+		File mFile;
+		DashboardListItem mItem;
 
 		@Override
 		protected void onPreExecute() {
 			isAnyAsyncInProgress = true;
 		}
 		
-		protected Boolean doInBackground(File... fileToDel) {
-			fileToDelete = fileToDel[0];
-			return doDelete(currentItem, fileToDel[0], true);
+		@Override
+		protected Boolean doInBackground(DashboardListItem... item) {
+			mItem = item[0];
+			mFile = new File(mItem.getPath(), mItem.getFilename());
+			return doDelete(mItem, mFile, true);
 		}
 		
 		@Override
 		protected void onPostExecute(Boolean success) {
 			if (success) {
-				notifyDeletionOk(currentItem, fileToDelete);
+				notifyDeletionOk(mItem, mFile);
 			} else {
-				notifyDeletionUnsuccessful(currentItem, fileToDelete);
+				notifyDeletionUnsuccessful(mItem, mFile);
 			}
 			isAnyAsyncInProgress = false;
 		}
 	}
 	
-	private boolean doDelete(final DashboardListItem currentItem, File fileToDel, boolean removeFromJsonAlso) {
+	private boolean doDelete(final DashboardListItem item, File fileToDel, boolean removeFromJsonAlso) {
 		Utils.logger("v", "----------> BEGIN delete", DEBUG_TAG);
 		boolean isResultOk = false;
-		long id = Long.parseLong(currentItem.getId());
+		long id = Long.parseLong(item.getId());
 
-		if (currentItem.getStatus().equals(getString(R.string.json_status_in_progress))) {
+		if (item.getStatus().equals(getString(R.string.json_status_in_progress))) {
 			// stop download, remove temp file and update notification
 			try {
 				if (Maps.dtMap.containsKey(id)) {
@@ -1245,7 +1263,7 @@ public class DashboardActivity extends Activity {
 				Log.e(DEBUG_TAG, "dt.cancel(): " + e.getMessage());
 		    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> dt.cancel() @ doDelete: ", e.getMessage(), e);
 			}
-		} else if (currentItem.getStatus().equals(getString(R.string.json_status_paused))) {
+		} else if (item.getStatus().equals(getString(R.string.json_status_paused))) {
 			isResultOk = removeTemp(fileToDel, id);
 		} else {
 			// remove file and library reference
@@ -1254,7 +1272,7 @@ public class DashboardActivity extends Activity {
 		
 		if (removeFromJsonAlso/* && isResultOk*/) {
 			// remove entry from JSON and reload Dashboard
-			Json.removeEntryFromJsonFile(DashboardActivity.this, currentItem.getId());
+			Json.removeEntryFromJsonFile(DashboardActivity.this, item.getId());
 		}
 		
 		refreshlist();
@@ -1988,9 +2006,6 @@ public class DashboardActivity extends Activity {
 								countdown--;
 								Utils.logger("w", "updateProgressBars: waiting " + idstr + " # " + countdown, DEBUG_TAG);
 								progress = -1;
-								bytes_downloaded = 0;
-								bytes_total = 0;
-								speed = 0;
 								
 								DownloadTask dt = Maps.dtMap.get(idlong);
 								
@@ -2013,7 +2028,7 @@ public class DashboardActivity extends Activity {
 								}
 							}
 						} catch (NullPointerException e) {
-							Log.e(DEBUG_TAG, "NPE @ updateProgressBars");
+							Log.e(DEBUG_TAG, "NPE @ updateProgressBars (DM)");
 							//e.printStackTrace();
 						}
 						
@@ -2032,14 +2047,14 @@ public class DashboardActivity extends Activity {
 						speedEntries.add(i, speed);
 					} else {
 						try {
-							if (Maps.mDownloadPercentMap.get(idlong) != null) {
-								progress = (int) Maps.mDownloadPercentMap.get(idlong);
+							if (YTD.mFFmpegPercentMap.get(idlong) != null) {
+								progress = (int) YTD.mFFmpegPercentMap.get(idlong);
 							} else {
 								Utils.logger("w", "updateProgressBars: waiting " + idstr + " # " + countdown, DEBUG_TAG);
 								progress = -1;
 							}
 						} catch (NullPointerException e) {
-							Log.e(DEBUG_TAG, "NPE @ updateProgressBars");
+							Log.e(DEBUG_TAG, "NPE @ updateProgressBars (FFmpeg)");
 							//e.printStackTrace();
 						}
 
@@ -2067,8 +2082,7 @@ public class DashboardActivity extends Activity {
 			String thisSize;
 			try {
 				if (statusEntries.get(i).equals(YTD.JSON_DATA_STATUS_IN_PROGRESS) && 
-						(speedEntries.get(i) != 0 || 
-						(typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_E) || typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_M)))) {
+						(speedEntries.get(i) != 0 || progressEntries.get(i) != -1)) {
 					thisSize = partSizeEntries.get(i);
 				} else {
 					thisSize = sizeEntries.get(i);
@@ -2197,26 +2211,6 @@ public class DashboardActivity extends Activity {
 					FfmpegController ffmpeg = null;
 					try {
 						ffmpeg = new FfmpegController(DashboardActivity.this);
-
-						// Toast + Notification + Log ::: Audio job in progress...
-						String text = null;
-						if (!extrTypeIsMp3Conv) {
-							text = getString(R.string.audio_extr_progress);
-							type = YTD.JSON_DATA_TYPE_A_E;
-						} else {
-							text = getString(R.string.audio_conv_progress);
-							type = YTD.JSON_DATA_TYPE_A_M;
-						}
-						Toast.makeText(DashboardActivity.this, "YTD: " + text,
-								Toast.LENGTH_SHORT).show();
-
-//						aBuilder.setContentTitle(audioFileName)
-//							.setSmallIcon(R.drawable.ic_stat_ytd)
-//							.setContentText(text)
-//							.setOngoing(true)
-//							.setProgress(0, 0, true);
-//						aNotificationManager.notify(2, aBuilder.build());
-						Utils.logger("i", vfilename + " " + text, DEBUG_TAG);
 					} catch (IOException ioe) {
 						Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
 					}
@@ -2245,6 +2239,26 @@ public class DashboardActivity extends Activity {
 		
 		@Override
 		public void preProcess() {
+			String text = null;
+			if (!extrTypeIsMp3Conv) {
+				text = getString(R.string.audio_extr_progress);
+				type = YTD.JSON_DATA_TYPE_A_E;
+			} else {
+				text = getString(R.string.audio_conv_progress);
+				type = YTD.JSON_DATA_TYPE_A_M;
+			}
+			Toast.makeText(DashboardActivity.this, vfilename + ": " + text,
+					Toast.LENGTH_SHORT).show();
+			
+			Utils.logger("i", vfilename + ": " + text, DEBUG_TAG);
+			
+//			aBuilder.setContentTitle(audioFileName)
+//				.setSmallIcon(R.drawable.ic_stat_ytd)
+//				.setContentText(text)
+//				.setOngoing(true)
+//				.setProgress(0, 0, true);
+//			aNotificationManager.notify(2, aBuilder.build());
+			
 			Json.addEntryToJsonFile(
 					DashboardActivity.this, 
 					String.valueOf(aNewId),
@@ -2285,10 +2299,10 @@ public class DashboardActivity extends Activity {
 				} else {
 					text = getString(R.string.audio_conv_completed);
 				}
-				Utils.logger("d", vfilename + " " + text, DEBUG_TAG);
+				Utils.logger("d", vfilename + ": " + text, DEBUG_TAG);
 				
 				boolean addItToDb = addSuffixToAudioFileName();
-				Toast.makeText(DashboardActivity.this,  audioFile.getName() + ": " + text, Toast.LENGTH_SHORT).show();
+				Toast.makeText(DashboardActivity.this,  vfilename + ": " + text, Toast.LENGTH_SHORT).show();
 				
 //				aBuilder.setContentTitle(audioFile.getName())
 //					.setContentText(text)
@@ -2318,8 +2332,7 @@ public class DashboardActivity extends Activity {
 				
 				// remove selected video upon successful audio extraction
 				if (removeVideo || removeAudio) {
-					final File fileToDel = new File(currentItem.getPath(), currentItem.getFilename());
-					new AsyncDelete().execute(fileToDel);
+					new AsyncDelete().execute(currentItem);
 				}
 				
 				// add audio file to the JSON file entry
@@ -2396,6 +2409,7 @@ public class DashboardActivity extends Activity {
 				audioFile = newFile;
 			} else {
 				Log.e(DEBUG_TAG, "Unable to rename '" + audioFile.getName() + "' to: '" + aSuffix + "'");
+				return false;
 			}
 		}
 		return true;
@@ -2473,6 +2487,13 @@ public class DashboardActivity extends Activity {
 	private void getAudioJobProgress(String shellLine, int notNum) {
 		int mDownloadPercent;
 		
+		Pattern initPattern = Pattern.compile("ffmpeg version 2.1");
+		Matcher initMatcher = initPattern.matcher(shellLine);
+		if (initMatcher.find()) {
+			totSeconds = 0;
+			currentTime = 0;
+		}
+		
 		Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
 		Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
 		if (totalTimeMatcher.find()) {
@@ -2497,7 +2518,7 @@ public class DashboardActivity extends Activity {
         }
 		
 		//Utils.logger("i", currentTime + "/" + totSeconds + " -> " + mDownloadPercent, DEBUG_TAG);
-        Maps.mDownloadPercentMap.put(aNewId, mDownloadPercent);
+        YTD.mFFmpegPercentMap.put(aNewId, mDownloadPercent);
 	}
 
 	public void setNotificationForAudioJobError() {
@@ -2508,8 +2529,8 @@ public class DashboardActivity extends Activity {
 		} else {
 			text = getString(R.string.audio_conv_error);
 		}
-		Log.e(DEBUG_TAG, vfilename + " " + text);
-		Toast.makeText(DashboardActivity.this,  "YTD: " + text, Toast.LENGTH_SHORT).show();
+		Log.e(DEBUG_TAG, vfilename + ": " + text);
+		Toast.makeText(DashboardActivity.this,  vfilename + ": " + text, Toast.LENGTH_SHORT).show();
 //		aBuilder.setContentText(text);
 //		aBuilder.setOngoing(false);
 	}
@@ -2574,6 +2595,10 @@ public class DashboardActivity extends Activity {
 	public void extractAudioOnly(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioOnly");
 		AlertDialog.Builder builder0 = new AlertDialog.Builder(boxCtw);
+		
+		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
+		builder0.setTitle(title[1]);
+		
 		LayoutInflater inflater0 = getLayoutInflater();
 		final View view0 = inflater0.inflate(R.layout.dialog_audio_extr_only, null);
 		
@@ -2612,12 +2637,16 @@ public class DashboardActivity extends Activity {
 
 	public void extractAudioAndConvertToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioAndConvertToMp3");
-		AlertDialog.Builder builder1 = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+		
+		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
+		builder.setTitle(title[2]);
+		
 		LayoutInflater inflater1 = getLayoutInflater();
 		
 		final View view1 = inflater1.inflate(R.layout.dialog_audio_extr_mp3_conv, null);
 
-		builder1.setView(view1)
+		builder.setView(view1)
 		       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		           @Override
 		           public void onClick(DialogInterface dialog, int id) {
@@ -2641,16 +2670,20 @@ public class DashboardActivity extends Activity {
 		           }
 		       });      
 		
-		secureShowDialog(builder1);
+		secureShowDialog(builder);
 	}
 
 	public void convertAudioToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("convertAudioToMp3");
-		AlertDialog.Builder builder0 = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+		
+		String[] title = getResources().getStringArray(R.array.dashboard_click_entries_audio);
+		builder.setTitle(title[1]);
+		
 		LayoutInflater inflater0 = getLayoutInflater();
 		final View view2 = inflater0.inflate(R.layout.dialog_audio_mp3_conv, null);
 
-		builder0.setView(view2)
+		builder.setView(view2)
 		       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		           @Override
 		           public void onClick(DialogInterface dialog, int id) {
@@ -2674,82 +2707,138 @@ public class DashboardActivity extends Activity {
 		           }
 		       });      
 		
-		secureShowDialog(builder0);
+		secureShowDialog(builder);
 	}
 	
-	public void mux(final File in) {
-		BugSenseHandler.leaveBreadcrumb("mux");
+	public void addAudioStream(final File in) {
+		BugSenseHandler.leaveBreadcrumb("addAudioStream");
+		
 		isFfmpegRunning = true;
 
-		// find a dashboard entry with same id and AO type
+		// find a dashboard **AO** entry with same ytid and status completed
 		for (int i = 0; i < idEntries.size(); i++ ) {
-			if (currentItem.getYtId().equals(ytidEntries.get(i)) && typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_O)) {
-				audioOnlyPath = pathEntries.get(i) + File.separator + filenameEntries.get(i);
+			if (currentItem.getYtId().equals(ytidEntries.get(i)) && 
+					typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_O) &&
+					statusEntries.get(i).equals(YTD.JSON_DATA_STATUS_COMPLETED)	) {
+				audioOnlyFile = new File(pathEntries.get(i), filenameEntries.get(i));
 				audioOnlyExt = audioExtEntries.get(i);
+				
+				aoItem = new DashboardListItem(
+						idEntries.get(i),
+						typeEntries.get(i),
+						ytidEntries.get(i), 
+						posEntries.get(i), 
+						statusEntries.get(i),
+						pathEntries.get(i), 
+						filenameEntries.get(i), 
+						basenameEntries.get(i),
+						audioExtEntries.get(i), 
+						sizeEntries.get(i), 
+						progressEntries.get(i),
+						speedEntries.get(i));
 			}
 		}
 		
-		if (audioOnlyPath != null) {
-			String vFilename = in.getName();
-			muxedFileName = vFilename.replace("VO", "MUX");
+		if (audioOnlyFile.exists()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
 			
-//			aBuilder =  new NotificationCompat.Builder(DashboardActivity.this);
-//	        aNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			String[] title = getResources().getStringArray(R.array.dashboard_click_entries_vo);
+			builder.setTitle(title[1]);
 			
-	    	muxedVideo = new File(currentItem.getPath(), muxedFileName);
-	    	
-	    	aNewId = System.currentTimeMillis();
-	    	
-	    	if (!muxedVideo.exists() || muxedVideo.length() == 0) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						Looper.prepare();
-						
-				    	FfmpegController ffmpeg = null;
-						try {
-							ffmpeg = new FfmpegController(DashboardActivity.this);
-							
-							String text = "MUX " + getString(R.string.json_status_in_progress);
-							Toast.makeText(DashboardActivity.this, "YTD: " + text,
-									Toast.LENGTH_SHORT).show();
-							
-//							aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
-//							aBuilder.setContentTitle(muxedFileName);
-//							aBuilder.setContentText(text);
-//							aBuilder.setOngoing(true);
-//							aBuilder.setProgress(0, 0, true);
-//							aNotificationManager.notify(4, aBuilder.build());
-							Utils.logger("i", in.getAbsolutePath() + " " + text, DEBUG_TAG);
-						} catch (IOException ioe) {
-							Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
-						}
+			LayoutInflater inflater = getLayoutInflater();
+			final View view = inflater.inflate(R.layout.dialog_add_audio_stream, null);
 			
-						MuxShellDummy shell = new MuxShellDummy();
+			TextView info = (TextView) view.findViewById(R.id.ao_info);
+			info.setText(currentItem.getFilename() + "\n\t\t+\n" + audioOnlyFile.getName());
 			
-						try {
-							ffmpeg.downloadAndMuxAoVoStreams(in.getAbsolutePath(), audioOnlyPath, muxedVideo, shell);
-						} catch (IOException e) {
-							Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
-						} catch (InterruptedException e) {
-							Log.e(DEBUG_TAG, "InterruptedException running ffmpeg" + e.getMessage());
-						}
-						Looper.loop();
-					}
-				}).start();
-	    	} else {
-	    		PopUps.showPopUp(getString(R.string.long_press_warning_title), getString(R.string.long_press_warning_msg2), "info", DashboardActivity.this);
-	    	}
+			builder.setView(view)
+			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			           @Override
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   
+			        	   CheckBox cb = (CheckBox) view.findViewById(R.id.ao_info);
+			        	   removeAoVo = cb.isChecked();
+			        	   
+			        	   Utils.logger("v", "Launching FFmpeg MUX on: " + in + 
+			        			   "\n + " + audioOnlyFile +
+			        			   "\n-> remove ao & vo: " + removeAoVo, DEBUG_TAG);
+			        	   
+			        	   mux(in);
+			           }
+			       })
+			       .setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               //
+			           }
+			       });      
+			
+				secureShowDialog(builder);
 		} else {
 			Toast.makeText(DashboardActivity.this, getString(R.string.ao_not_found), Toast.LENGTH_SHORT).show();
 		}
 		isFfmpegRunning = false;
 	}
 	
+	public void mux(final File in) {
+		BugSenseHandler.leaveBreadcrumb("mux");
+		
+		String ext = Utils.getExtFromFileName(in.getName());
+		String basename = currentItem.getBasename();
+		muxedFileName = basename + "_MUX." + ext;
+		
+//		aBuilder =  new NotificationCompat.Builder(DashboardActivity.this);
+//	    aNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		
+    	muxedVideo = new File(currentItem.getPath(), muxedFileName);
+    	
+    	aNewId = System.currentTimeMillis();
+    	
+    	if (!muxedVideo.exists() || muxedVideo.length() == 0) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					Looper.prepare();
+					
+			    	FfmpegController ffmpeg = null;
+					try {
+						ffmpeg = new FfmpegController(DashboardActivity.this);
+					} catch (IOException ioe) {
+						Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
+					}
+		
+					MuxShellDummy shell = new MuxShellDummy();
+		
+					try {
+						ffmpeg.downloadAndMuxAoVoStreams(in.getAbsolutePath(), audioOnlyFile.getAbsolutePath(), muxedVideo, shell);
+					} catch (IOException e) {
+						Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
+					} catch (InterruptedException e) {
+						Log.e(DEBUG_TAG, "InterruptedException running ffmpeg" + e.getMessage());
+					}
+					Looper.loop();
+				}
+			}).start();
+    	} else {
+    		PopUps.showPopUp(getString(R.string.long_press_warning_title), getString(R.string.long_press_warning_msg2), "info", DashboardActivity.this);
+    	}
+	}
+	
 	private class MuxShellDummy implements ShellCallback {
 
 		@Override
 		public void preProcess() {
+			String text = "MUX " + getString(R.string.json_status_in_progress);
+			Toast.makeText(DashboardActivity.this, muxedFileName + ": " + text,
+					Toast.LENGTH_SHORT).show();
+			Utils.logger("i", muxedFileName + ": " + text, DEBUG_TAG);
+			
+//			aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
+//			aBuilder.setContentTitle(muxedFileName);
+//			aBuilder.setContentText(text);
+//			aBuilder.setOngoing(true);
+//			aBuilder.setProgress(0, 0, true);
+//			aNotificationManager.notify(4, aBuilder.build());
+			
 			Json.addEntryToJsonFile(
 					DashboardActivity.this,
 					String.valueOf(aNewId),
@@ -2762,7 +2851,7 @@ public class DashboardActivity extends Activity {
 					Utils.getFileNameWithoutExt(muxedFileName), 
 					audioOnlyExt, 
 					"-", 
-					true);
+					false);
 		
 			refreshlist();
 			
@@ -2779,7 +2868,7 @@ public class DashboardActivity extends Activity {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 
 			if (exitValue == 0) {
-				
+				//TODO
 //				aBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
 //				aBuilder.setOngoing(false);
 //	    		
@@ -2788,10 +2877,18 @@ public class DashboardActivity extends Activity {
 //				viewMux.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //				PendingIntent contentIntent = PendingIntent.getActivity(DashboardActivity.this, 0, viewMux, PendingIntent.FLAG_UPDATE_CURRENT);
 //		    	aBuilder.setContentIntent(contentIntent);
+				
+				Toast.makeText(DashboardActivity.this,  muxedFileName + ": MUX " + 
+						getString(R.string.json_status_completed), Toast.LENGTH_SHORT).show();
 		    	
 	    		Utils.scanMedia(getApplicationContext(), 
 						new String[] {muxedVideo.getAbsolutePath()}, 
 						new String[] {"video/*"});
+	    		
+	    		if (removeAoVo) {
+					new AsyncDelete().execute(currentItem);
+					new AsyncDelete().execute(aoItem);
+				}
 	    		
 	    		Json.addEntryToJsonFile(
 	    				DashboardActivity.this,
@@ -2805,7 +2902,7 @@ public class DashboardActivity extends Activity {
 						Utils.getFileNameWithoutExt(muxedFileName), 
 						audioOnlyExt, 
 						Utils.MakeSizeHumanReadable((int) muxedVideo.length(), false), 
-						true);
+						false);
 			} else {
 				setNotificationForAudioJobError();
 				
@@ -2821,7 +2918,7 @@ public class DashboardActivity extends Activity {
 						Utils.getFileNameWithoutExt(muxedFileName), 
 						audioOnlyExt, 
 						"-", 
-						true);
+						false);
 			}
 			
 			refreshlist();
@@ -2847,7 +2944,8 @@ public class DashboardActivity extends Activity {
 		
 		public void setNotificationForAudioJobError() {
 			Log.e(DEBUG_TAG, muxedFileName + " MUX failed");
-			Toast.makeText(DashboardActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
+			Toast.makeText(DashboardActivity.this,  muxedFileName + ": MUX " + 
+					getString(R.string.json_status_failed), Toast.LENGTH_SHORT).show();
     		
 //			Utils.setNotificationDefaults(aBuilder);
 //			aBuilder.setContentText("MUX " + getString(R.string.json_status_failed))
@@ -2856,53 +2954,4 @@ public class DashboardActivity extends Activity {
 //    		aNotificationManager.cancel(4);
 		}
 	}
-	
-	/*public class MuxProgressReceiver extends ResultReceiver {
-
-		public MuxProgressReceiver(Handler handler) {
-			super(handler);
-		}
-
-		@Override
-	    protected void onReceiveResult(int resultCode, Bundle resultData) {
-	        super.onReceiveResult(resultCode, resultData);
-	        
-	        if (resultCode == FfmpegDownloadAndMuxService.UPDATE_PROGRESS) {
-	        	boolean error = resultData.getBoolean("error");
-	        	if (!error) {
-	        		int progress = resultData.getInt("progress");
-	        		int total = resultData.getInt("total");
-	        		Utils.logger("v", "seconds " + progress + "/" + total, DEBUG_TAG);
-	        		
-	        		if (progress == 0) { //connecting... - indeterminate progress
-						aBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
-						aBuilder.setOngoing(true);
-						aBuilder.setProgress(0, 0, true);
-	        		} else if (progress == -1 && total == -1) { //completed - cancel pb           		
-	            		aBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
-	    				aBuilder.setOngoing(false);
-	    		    	
-	    		    	Utils.setNotificationDefaults(aBuilder);
-	    		    	aBuilder.setProgress(0, 0, false);
-	            		aNotificationManager.cancel(4);
-	        		} else { //show progress
-	        			aBuilder.setContentText("MUX " + getString(R.string.json_status_in_progress));
-	        			aBuilder.setOngoing(true);
-	        			aBuilder.setProgress(total, progress, false);
-	        		}
-	        	} else { //failed - cancel pb
-	        		Toast.makeText(DashboardActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
-	        		
-	    			aBuilder.setContentText("MUX " + getString(R.string.json_status_failed));
-	    			aBuilder.setOngoing(false);
-	    			
-	    			Utils.setNotificationDefaults(aBuilder);
-	    			aBuilder.setProgress(0, 0, false);
-            		aNotificationManager.cancel(4);
-	        	}
-	        	// always end with 'notify'
-	        	aNotificationManager.notify(4, aBuilder.build());
-	        }
-		}
-	}*/
 }

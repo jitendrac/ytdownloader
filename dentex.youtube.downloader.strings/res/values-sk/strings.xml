@@ -158,7 +158,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="json_status_in_progress">Prebieha</string>
 	<string name="json_status_paused">Pozastavené</string>
 	<string name="json_status_imported">Naimportované</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_queued">Vo fronte</string>
 	<string name="menu_search">hľadať&#8230;</string>
 	<string name="menu_backup">Zálohovať</string>
 	<string name="menu_restore">Obnoviť</string>
@@ -182,8 +182,8 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Otvoriť</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Extrahovať audio</item>
+        <item>Extrahovať audio a konvertovať do mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -192,17 +192,18 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Otvoriť</item>
+        <item>Extrahovať audio a konvertovať do mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
-        <item>Add audio stream (already downloaded)</item>
+	    <item>Otvoriť</item>
+        <item>Pridať audio stream (už stiahnuté)</item>
     </string-array>
     
-	<string name="ao_not_found">No suitable audio-only stream found</string>
-    <string name="share_file_via">Share this file via:</string>
+	<string name="ao_not_found">Neašli sa žiadne vhodné audio streamy</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+    <string name="share_file_via">Zdiaľať cez:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nie je nainštalovaný, alebo povolený:</string>
 	<string name="ffmpeg_not_enabled_msg">Otvoriť nastavenia?</string>
 	<string name="remove_video">Vymazať video po extrahovaní audia (bez potvrdenia!)</string>
@@ -214,16 +215,16 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="id3_year">Rok</string>
 	<string name="id3_genre">Žáner</string>
 	<string name="audio_extr_info">Obsiahnuté audio streamy:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopírovať</item>
 	    <item>Presunúť</item>
         <item>Premenovať</item>
         <item>Stiahnuť znovu video</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>Odoslať</item>
+        <item>Odstrániť z Dashboard</item>
+        <item>Odstrániť a vymazať súbor</item>
+        <item>Pozastaviť/Spustiť</item>
     </string-array>
     
 	<string name="operation_standby">Počkajte: prebieha iná operácia.</string>
@@ -333,7 +334,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
         <item>Nič</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">Zobraziť po štarte</string>
     
     <!-- -->
     <string name="settings_cat_updates">Aktualizácie</string>

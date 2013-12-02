@@ -158,7 +158,7 @@
 	<string name="json_status_in_progress">Devam ediyor</string>
 	<string name="json_status_paused">Durduruldu</string>
 	<string name="json_status_imported">İçe aktarıldı</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_queued">Sıraya alındı</string>
 	<string name="menu_search">ara&#8230;</string>
 	<string name="menu_backup">Yedekle</string>
 	<string name="menu_restore">Geri Yükle</string>
@@ -182,8 +182,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Aç</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Sesi dışa aktar</item>
+        <item>Sesi dışa aktar ve Mp3\'e çevir</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -192,17 +192,18 @@
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Aç</item>
+        <item>Sesi dışa aktar ve Mp3\'e çevir</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
-        <item>Add audio stream (already downloaded)</item>
+	    <item>Aç</item>
+        <item>Ses akışı ekle (indirilen)</item>
     </string-array>
     
-	<string name="ao_not_found">No suitable audio-only stream found</string>
-    <string name="share_file_via">Share this file via:</string>
+	<string name="ao_not_found">Uygun ses akışı bulunamadı</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+    <string name="share_file_via">Bu dosyayı şununla paylaş:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg yüklü ya da aktif değil:</string>
 	<string name="ffmpeg_not_enabled_msg">Ayarlar açılsın mı?</string>
 	<string name="remove_video">Başarılı ses ayıklama işleminden sonra video dosyasını sil (dikkat: onay istemeden video silinir)</string>
@@ -214,16 +215,16 @@
 	<string name="id3_year">Yıl</string>
 	<string name="id3_genre">Tür</string>
 	<string name="audio_extr_info">Ses akışı içerir:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopyala</item>
 	    <item>Taşı</item>
         <item>Yeniden Adlandır</item>
         <item>Videoyu yeniden indir</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>Gönder</item>
+        <item>Panelden Kaldır</item>
+        <item>Dosyayı çıkar ve sil</item>
+        <item>Durdur/Devam et</item>
     </string-array>
     
 	<string name="operation_standby">Lütfen bekleyin: şu anda başka bir işlem yapılıyor.</string>
@@ -333,7 +334,7 @@
         <item>Hiçbiri</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">Giriş noktası etkinliği</string>
     
     <!-- -->
     <string name="settings_cat_updates">Güncelle</string>

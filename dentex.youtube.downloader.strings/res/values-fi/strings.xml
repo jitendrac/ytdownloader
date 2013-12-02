@@ -202,6 +202,7 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpegia ei ole asennettu tai sallittu:</string>
 	<string name="ffmpeg_not_enabled_msg">Avaa asetukset?</string>
@@ -214,7 +215,7 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	<string name="id3_year">Vuosi</string>
 	<string name="id3_genre">Tyyli</string>
 	<string name="audio_extr_info">Sisältyvä audiovirta:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopioi</item>
 	    <item>Siirrä</item>

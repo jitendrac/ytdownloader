@@ -80,17 +80,17 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="link_copied">Link copiado para a área de transferência</string>
     <string name="share_link_via">Compartilhe este link via:</string>
     
-    <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
-    <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_reset">Zerar filtros</string>
+    <string name="filter_view_all">Ver todos</string>
+    <string name="filter_header_format">Filtrar por formato</string>
+    <string name="filter_header_quality">Filtrar por qualidade</string>
+    <string name="filter_header_others">Outros filtros</string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">Grande</string>
+    <string name="filter_md">Médio</string>
+    <string name="filter_sd">Pequeno</string>
+    <string name="filter_vo">Vídeo apenas</string>
+    <string name="filter_ao">Áudio apenas</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -182,8 +182,8 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Abrir</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Extrair áudio</item>
+        <item>Extrair áudio e codificar para mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -192,17 +192,18 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Abrir</item>
+        <item>Extrair áudio e  codificar para mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
+	    <item>Abrir</item>
         <item>Add audio stream (already downloaded)</item>
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
-    <string name="share_file_via">Share this file via:</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+    <string name="share_file_via">Compartilhe este arquivo via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg não instalado ou ativado:</string>
 	<string name="ffmpeg_not_enabled_msg">Abrir definições?</string>
 	<string name="remove_video">Deletar o vídeo após a extração do áudio (sem confirmação!)</string>
@@ -214,20 +215,20 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="id3_year">Ano</string>
 	<string name="id3_genre">Gênero</string>
 	<string name="audio_extr_info">Stream de áudio contida.</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Copiar</item>
 	    <item>Mover</item>
         <item>Renomear</item>
         <item>Fazer o download do vídeo novamente</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>Enviar</item>
+        <item>Remover do painel</item>
+        <item>Remover e deletar arquivo</item>
+        <item>Pausar/Resumir</item>
     </string-array>
     
 	<string name="operation_standby">Espere: outra operação já está em progresso.</string>
-	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
+	<string name="dashboard_delete_data_cb">Delete também todos os vídeos/áudio listados</string>
     
 	<string name="move_error">Erro enquanto movia.</string>
     <string name="move_progress">Movimento do arquivo em progresso&#8230;</string>

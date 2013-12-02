@@ -202,6 +202,7 @@
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg غير مثبته أو معطل:</string>
 	<string name="ffmpeg_not_enabled_msg">فتح الإعدادات؟</string>
@@ -214,7 +215,7 @@
 	<string name="id3_year">السنة</string>
 	<string name="id3_genre">النوع</string>
 	<string name="audio_extr_info">يحتوي على صوت:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>نسخ</item>
 	    <item>نقل</item>

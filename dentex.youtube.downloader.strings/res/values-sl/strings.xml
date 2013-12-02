@@ -201,6 +201,7 @@
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg ni nameščen ali omogočen</string>
 	<string name="ffmpeg_not_enabled_msg">Odprem nastavitve?</string>
@@ -213,7 +214,7 @@
 	<string name="id3_year">Leto</string>
 	<string name="id3_genre">Žanr</string>
 	<string name="audio_extr_info">Zajet audio stream</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopiraj</item>
 	    <item>Premakni</item>

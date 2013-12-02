@@ -158,7 +158,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="json_status_in_progress">In Bearbeitung</string>
 	<string name="json_status_paused">Angehalten</string>
 	<string name="json_status_imported">Importiert</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_queued">In Warteschlange</string>
 	<string name="menu_search">Suche&#8230;</string>
 	<string name="menu_backup">Sicherung</string>
 	<string name="menu_restore">Wiederherstellen</string>
@@ -182,8 +182,8 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Öffnen</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Ton extrahieren</item>
+        <item>Ton extrahieren und in MP3 umwandeln</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -192,17 +192,18 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Öffnen</item>
+        <item>Ton extrahieren und in MP3 umwandeln</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
-        <item>Add audio stream (already downloaded)</item>
+	    <item>Öffnen</item>
+        <item>Ton-Stream hinzufugen (bereits heruntergeladen)</item>
     </string-array>
     
-	<string name="ao_not_found">No suitable audio-only stream found</string>
-    <string name="share_file_via">Share this file via:</string>
+	<string name="ao_not_found">Kein passender Ton-Stream gefunden!</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+    <string name="share_file_via">Datei teilen mit:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nicht installiert oder aktiviert!</string>
 	<string name="ffmpeg_not_enabled_msg">Einstellungen offnen?</string>
 	<string name="remove_video">Videodatei-Löschung nach Tonspur-Extraktion (Ohne Bestätigung!)</string>
@@ -214,16 +215,16 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="id3_year">Jahr</string>
 	<string name="id3_genre">Genre</string>
 	<string name="audio_extr_info">Beinhaltender Audiostream:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopieren</item>
 	    <item>Verschieben</item>
         <item>Umbenennen</item>
         <item>Video erneut herunterladen</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>Absenden</item>
+        <item>Vom Dashboard entfernen</item>
+        <item>Datei entfernen und löschen</item>
+        <item>Pause/Wiedergeben</item>
     </string-array>
     
 	<string name="operation_standby">Bitte warten. Anderer Prozess wird gerade ausgeführt!</string>
@@ -333,7 +334,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
         <item>Nichts</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">Startaktivität</string>
     
     <!-- -->
     <string name="settings_cat_updates">Aktualisierungen</string>

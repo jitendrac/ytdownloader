@@ -158,7 +158,7 @@
 	<string name="json_status_in_progress">В процессе</string>
 	<string name="json_status_paused">Пауза</string>
 	<string name="json_status_imported">Импортировано</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_queued">В очереди</string>
 	<string name="menu_search">поиск&#8230;</string>
 	<string name="menu_backup">Резервное копирование</string>
 	<string name="menu_restore">Восстановление</string>
@@ -182,8 +182,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Oткрыть</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Извлечь аудио</item>
+        <item>Извлечь и кодировать аудио в mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -192,17 +192,18 @@
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Открыть</item>
+        <item>Извлечь и кодировать аудио в mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
-        <item>Add audio stream (already downloaded)</item>
+	    <item>Открыть</item>
+        <item>Добавить поток аудио (уже загруженный)</item>
     </string-array>
     
-	<string name="ao_not_found">No suitable audio-only stream found</string>
-    <string name="share_file_via">Share this file via:</string>
+	<string name="ao_not_found">Подходящих аудиопотоков не найдено</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+    <string name="share_file_via">Поделиться файлом с помощью:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg не установлен или не включён:</string>
 	<string name="ffmpeg_not_enabled_msg">Открыть настройки?</string>
 	<string name="remove_video">Удалить видео после извлечения аудио (без подтверждения)</string>
@@ -214,16 +215,16 @@
 	<string name="id3_year">Год</string>
 	<string name="id3_genre">Жанр</string>
 	<string name="audio_extr_info">Включённый поток аудио:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Копировать</item>
 	    <item>Переместить</item>
         <item>Переименовать</item>
         <item>Повторная загрузка видео</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>Отправить</item>
+        <item>Убрать с панели</item>
+        <item>Убрать и удалить файл</item>
+        <item>Пауза/возобновить</item>
     </string-array>
     
 	<string name="operation_standby">Ожидание: запущена другая операция.</string>
@@ -333,7 +334,7 @@
         <item>Ничего</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">Начальное действие</string>
     
     <!-- -->
     <string name="settings_cat_updates">Обновления</string>
