@@ -706,14 +706,15 @@ public class ShareActivity extends Activity {
 									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
-									userFilename.setText(basenameTagged);
+									userFilename.setText(basename/*Tagged*/);
 									adb.setView(inputFilename);
 									adb.setTitle(getString(R.string.rename_dialog_title));
 									adb.setMessage(getString(R.string.rename_dialog_msg));
 									
 									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 										public void onClick(DialogInterface dialog, int which) {
-											basenameTagged = userFilename.getText().toString();
+											basename/*Tagged*/ = userFilename.getText().toString();
+											basenameTagged = composeFilenameWithOutExt();
 											filenameComplete = composeFilenameWithExt();
 //											if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
 //												offerFdam();

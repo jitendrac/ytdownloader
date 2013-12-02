@@ -39,6 +39,8 @@ import dentex.youtube.downloader.YTD;
 public class Json {
 	
 	static String DEBUG_TAG = "Json";
+	
+	
 
 	public static void addEntryToJsonFile(Context context, String id, String type, String ytId, int pos, String status, 
 			String path, String filename, String basename, String audioExt, String size, boolean forceCopy) {

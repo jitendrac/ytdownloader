@@ -62,6 +62,25 @@ public class FFmpegExtractAudioTask implements Runnable {
 	}
 	
 	private class ShellDummy implements ShellCallback {
+		
+		@Override
+		public void preProcess() {
+			Json.addEntryToJsonFile(
+					aContext, 
+					String.valueOf(aNewId), 
+					type,
+					aYtId, 
+					aPos,
+					YTD.JSON_DATA_STATUS_IN_PROGRESS,
+					aAudioFile.getParent(), 
+					aAudioFile.getName(), 
+					Utils.getFileNameWithoutExt(aAudioFile.getName()), 
+					"", 
+					"-", 
+					false);
+			
+			DashboardActivity.refreshlist();
+		}
 
 		@Override
 		public void shellOut(String shellLine) {
@@ -122,25 +141,6 @@ public class FFmpegExtractAudioTask implements Runnable {
 				Utils.logger("w", "FFmpegExtractAudioTask process not started or not completed", DEBUG_TAG);
 			}
 		}
-
-		@Override
-		public void preProcess() {
-			Json.addEntryToJsonFile(
-					aContext, 
-					String.valueOf(aNewId), 
-					type,
-					aYtId, 
-					aPos,
-					YTD.JSON_DATA_STATUS_IN_PROGRESS,
-					aAudioFile.getParent(), 
-					aAudioFile.getName(), 
-					Utils.getFileNameWithoutExt(aAudioFile.getName()), 
-					"", 
-					"-", 
-					false);
-			
-			DashboardActivity.refreshlist();
-		}
 	}
 	
 	private void getAudioJobProgress(String shellLine) {
@@ -163,6 +163,7 @@ public class FFmpegExtractAudioTask implements Runnable {
         } else {
             mDownloadPercent = (int) (currentTime * 100 / totSeconds);
         }
+		
 		//Utils.logger("i", currentTime + "/" + totSeconds + " -> " + mDownloadPercent, DEBUG_TAG);
         Maps.mDownloadPercentMap.put(aNewId, mDownloadPercent);
 	}

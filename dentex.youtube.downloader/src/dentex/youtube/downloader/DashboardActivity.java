@@ -57,8 +57,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -73,7 +71,6 @@ import android.os.Looper;
 import android.os.Parcelable;
 import android.os.ResultReceiver;
 import android.provider.MediaStore.Video.Thumbnails;
-import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -120,8 +117,8 @@ public class DashboardActivity extends Activity {
 	private final static String DEBUG_TAG = "DashboardActivity";
 	public static boolean isDashboardRunning;
 	private ContextThemeWrapper boxCtw = new ContextThemeWrapper(this, R.style.BoxTheme);
-	private NotificationCompat.Builder aBuilder;
-	private NotificationManager aNotificationManager;
+//	private NotificationCompat.Builder aBuilder;
+//	private NotificationManager aNotificationManager;
 	protected File audioFile;
 	protected String basename;
 	private String aSuffix;
@@ -180,6 +177,7 @@ public class DashboardActivity extends Activity {
 	
 	private String muxedFileName;
 	private File muxedVideo;
+	private long aNewId;
 	private int totSeconds;
 	private int currentTime;
 	private String audioOnlyPath;
@@ -2169,8 +2167,8 @@ public class DashboardActivity extends Activity {
 		vfilename = currentItem.getFilename();
 		
 		// audio job notification init
-		aBuilder =  new NotificationCompat.Builder(this);
-		aNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//		aBuilder =  new NotificationCompat.Builder(this);
+//		aNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		
 		String aExt = currentItem.getAudioExt();
 		basename = currentItem.getBasename();
@@ -2187,6 +2185,8 @@ public class DashboardActivity extends Activity {
 		}
 		
 		audioFile = new File(fileToConvert.getParent(), audioFileName);
+		
+		aNewId = System.currentTimeMillis();
 
 		if (!audioFile.exists() || audioFile.length() == 0) {
 			new Thread(new Runnable() {
@@ -2210,12 +2210,12 @@ public class DashboardActivity extends Activity {
 						Toast.makeText(DashboardActivity.this, "YTD: " + text,
 								Toast.LENGTH_SHORT).show();
 
-						aBuilder.setContentTitle(audioFileName)
-							.setSmallIcon(R.drawable.ic_stat_ytd)
-							.setContentText(text)
-							.setOngoing(true)
-							.setProgress(0, 0, true);
-						aNotificationManager.notify(2, aBuilder.build());
+//						aBuilder.setContentTitle(audioFileName)
+//							.setSmallIcon(R.drawable.ic_stat_ytd)
+//							.setContentText(text)
+//							.setOngoing(true)
+//							.setProgress(0, 0, true);
+//						aNotificationManager.notify(2, aBuilder.build());
 						Utils.logger("i", vfilename + " " + text, DEBUG_TAG);
 					} catch (IOException ioe) {
 						Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
@@ -2242,6 +2242,26 @@ public class DashboardActivity extends Activity {
 	}
 	
 	private class ShellDummy implements ShellCallback {
+		
+		@Override
+		public void preProcess() {
+			Json.addEntryToJsonFile(
+					DashboardActivity.this, 
+					String.valueOf(aNewId),
+					type, 
+					currentItem.getYtId(),
+					currentItem.getPos(),
+					YTD.JSON_DATA_STATUS_IN_PROGRESS,
+					currentItem.getPath(), 
+					audioFile.getName(), 
+					currentItem.getBasename(), 
+					"", 
+					"-", 
+					true);
+			
+			refreshlist();
+			
+		}
 
 		@Override
 		public void shellOut(String shellLine) {
@@ -2270,15 +2290,15 @@ public class DashboardActivity extends Activity {
 				boolean addItToDb = addSuffixToAudioFileName();
 				Toast.makeText(DashboardActivity.this,  audioFile.getName() + ": " + text, Toast.LENGTH_SHORT).show();
 				
-				aBuilder.setContentTitle(audioFile.getName())
-					.setContentText(text)
-					.setOngoing(false);
-				
-				Intent audioIntent = new Intent(Intent.ACTION_VIEW);
-				audioIntent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
-				audioIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				PendingIntent contentIntent = PendingIntent.getActivity(DashboardActivity.this, 0, audioIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        		aBuilder.setContentIntent(contentIntent);
+//				aBuilder.setContentTitle(audioFile.getName())
+//					.setContentText(text)
+//					.setOngoing(false);
+//				
+//				Intent audioIntent = new Intent(Intent.ACTION_VIEW);
+//				audioIntent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
+//				audioIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//				PendingIntent contentIntent = PendingIntent.getActivity(DashboardActivity.this, 0, audioIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        		aBuilder.setContentIntent(contentIntent);
         		
         		// write id3 tags
 				if (extrTypeIsMp3Conv) {
@@ -2306,7 +2326,7 @@ public class DashboardActivity extends Activity {
 				if (addItToDb)
 					Json.addEntryToJsonFile(
 							DashboardActivity.this, 
-							currentItem.getId(), 
+							String.valueOf(aNewId), 
 							type, 
 							currentItem.getYtId(), 
 							currentItem.getPos(),
@@ -2316,13 +2336,13 @@ public class DashboardActivity extends Activity {
 							currentItem.getBasename(), 
 							"", 
 							Utils.MakeSizeHumanReadable((int) audioFile.length(), false), 
-							true);
+							false);
 			} else {
 				setNotificationForAudioJobError();
 				
 				Json.addEntryToJsonFile(
 						DashboardActivity.this, 
-						currentItem.getId(), 
+						String.valueOf(aNewId),
 						type, 
 						currentItem.getYtId(),
 						currentItem.getPos(),
@@ -2332,16 +2352,16 @@ public class DashboardActivity extends Activity {
 						currentItem.getBasename(), 
 						"", 
 						"-", 
-						true);
+						false);
 			}
 			
 			refreshlist();
 			
-			Utils.setNotificationDefaults(aBuilder);
-			
-			aBuilder.setProgress(0, 0, false);
-			aNotificationManager.cancel(2);
-			aNotificationManager.notify(2, aBuilder.build());
+//			Utils.setNotificationDefaults(aBuilder);
+//			
+//			aBuilder.setProgress(0, 0, false);
+//			aNotificationManager.cancel(2);
+//			aNotificationManager.notify(2, aBuilder.build());
 			
 			isFfmpegRunning = false;
 		}
@@ -2352,14 +2372,8 @@ public class DashboardActivity extends Activity {
 				Utils.logger("w", "FFmpeg process not started or not completed", DEBUG_TAG);
 				setNotificationForAudioJobError();
 			}
-			aNotificationManager.notify(2, aBuilder.build());
+//			aNotificationManager.notify(2, aBuilder.build());
 			isFfmpegRunning = false;
-		}
-
-		@Override
-		public void preProcess() {
-			// TODO Auto-generated method stub
-			
 		}
     }
     
@@ -2457,6 +2471,8 @@ public class DashboardActivity extends Activity {
 	}
 	
 	private void getAudioJobProgress(String shellLine, int notNum) {
+		int mDownloadPercent;
+		
 		Pattern totalTimePattern = Pattern.compile("Duration: (..):(..):(..)\\.(..)");
 		Matcher totalTimeMatcher = totalTimePattern.matcher(shellLine);
 		if (totalTimeMatcher.find()) {
@@ -2469,10 +2485,19 @@ public class DashboardActivity extends Activity {
 			currentTime = Utils.getTotSeconds(currentTimeMatcher);
 		}
 		
-		if (totSeconds != 0) {
+		/*if (totSeconds != 0) {
 			aBuilder.setProgress(totSeconds, currentTime, false);
 			aNotificationManager.notify(notNum, aBuilder.build());
-		}
+		}*/
+		
+		if (totSeconds == 0) {
+            mDownloadPercent = -1;
+        } else {
+            mDownloadPercent = (int) (currentTime * 100 / totSeconds);
+        }
+		
+		//Utils.logger("i", currentTime + "/" + totSeconds + " -> " + mDownloadPercent, DEBUG_TAG);
+        Maps.mDownloadPercentMap.put(aNewId, mDownloadPercent);
 	}
 
 	public void setNotificationForAudioJobError() {
@@ -2485,8 +2510,8 @@ public class DashboardActivity extends Activity {
 		}
 		Log.e(DEBUG_TAG, vfilename + " " + text);
 		Toast.makeText(DashboardActivity.this,  "YTD: " + text, Toast.LENGTH_SHORT).show();
-		aBuilder.setContentText(text);
-		aBuilder.setOngoing(false);
+//		aBuilder.setContentText(text);
+//		aBuilder.setOngoing(false);
 	}
 
 	public void secureShowDialog(AlertDialog.Builder adb) {
@@ -2668,10 +2693,12 @@ public class DashboardActivity extends Activity {
 			String vFilename = in.getName();
 			muxedFileName = vFilename.replace("VO", "MUX");
 			
-			aBuilder =  new NotificationCompat.Builder(DashboardActivity.this);
-	        aNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//			aBuilder =  new NotificationCompat.Builder(DashboardActivity.this);
+//	        aNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			
 	    	muxedVideo = new File(currentItem.getPath(), muxedFileName);
+	    	
+	    	aNewId = System.currentTimeMillis();
 	    	
 	    	if (!muxedVideo.exists() || muxedVideo.length() == 0) {
 				new Thread(new Runnable() {
@@ -2687,12 +2714,12 @@ public class DashboardActivity extends Activity {
 							Toast.makeText(DashboardActivity.this, "YTD: " + text,
 									Toast.LENGTH_SHORT).show();
 							
-							aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
-							aBuilder.setContentTitle(muxedFileName);
-							aBuilder.setContentText(text);
-							aBuilder.setOngoing(true);
-							aBuilder.setProgress(0, 0, true);
-							aNotificationManager.notify(4, aBuilder.build());
+//							aBuilder.setSmallIcon(R.drawable.ic_stat_ytd);
+//							aBuilder.setContentTitle(muxedFileName);
+//							aBuilder.setContentText(text);
+//							aBuilder.setOngoing(true);
+//							aBuilder.setProgress(0, 0, true);
+//							aNotificationManager.notify(4, aBuilder.build());
 							Utils.logger("i", in.getAbsolutePath() + " " + text, DEBUG_TAG);
 						} catch (IOException ioe) {
 							Log.e(DEBUG_TAG, "Error loading ffmpeg. " + ioe.getMessage());
@@ -2722,6 +2749,26 @@ public class DashboardActivity extends Activity {
 	private class MuxShellDummy implements ShellCallback {
 
 		@Override
+		public void preProcess() {
+			Json.addEntryToJsonFile(
+					DashboardActivity.this,
+					String.valueOf(aNewId),
+					YTD.JSON_DATA_TYPE_V,  
+					currentItem.getYtId(),
+					currentItem.getPos(),
+					YTD.JSON_DATA_STATUS_IN_PROGRESS,
+					currentItem.getPath(),
+					muxedFileName, 
+					Utils.getFileNameWithoutExt(muxedFileName), 
+					audioOnlyExt, 
+					"-", 
+					true);
+		
+			refreshlist();
+			
+		}
+		
+		@Override
 		public void shellOut(String shellLine) {
 			getAudioJobProgress(shellLine, 4);
 			Utils.logger("d", shellLine, DEBUG_TAG);
@@ -2733,14 +2780,14 @@ public class DashboardActivity extends Activity {
 
 			if (exitValue == 0) {
 				
-				aBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
-				aBuilder.setOngoing(false);
-	    		
-				Intent viewMux = new Intent(Intent.ACTION_VIEW);
-				viewMux.setDataAndType(Uri.fromFile(new File (currentItem.getPath(), muxedFileName)), "video/*");
-				viewMux.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				PendingIntent contentIntent = PendingIntent.getActivity(DashboardActivity.this, 0, viewMux, PendingIntent.FLAG_UPDATE_CURRENT);
-		    	aBuilder.setContentIntent(contentIntent);
+//				aBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
+//				aBuilder.setOngoing(false);
+//	    		
+//				Intent viewMux = new Intent(Intent.ACTION_VIEW);
+//				viewMux.setDataAndType(Uri.fromFile(new File (currentItem.getPath(), muxedFileName)), "video/*");
+//				viewMux.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//				PendingIntent contentIntent = PendingIntent.getActivity(DashboardActivity.this, 0, viewMux, PendingIntent.FLAG_UPDATE_CURRENT);
+//		    	aBuilder.setContentIntent(contentIntent);
 		    	
 	    		Utils.scanMedia(getApplicationContext(), 
 						new String[] {muxedVideo.getAbsolutePath()}, 
@@ -2748,7 +2795,7 @@ public class DashboardActivity extends Activity {
 	    		
 	    		Json.addEntryToJsonFile(
 	    				DashboardActivity.this,
-	    				String.valueOf(System.currentTimeMillis()),
+	    				String.valueOf(aNewId),
 						YTD.JSON_DATA_TYPE_V, 
 						currentItem.getYtId(),
 						currentItem.getPos(),
@@ -2764,7 +2811,7 @@ public class DashboardActivity extends Activity {
 				
 				Json.addEntryToJsonFile(
 						DashboardActivity.this,
-						String.valueOf(System.currentTimeMillis()),
+						String.valueOf(aNewId),
 						YTD.JSON_DATA_TYPE_V,  
 						currentItem.getYtId(),
 						currentItem.getPos(),
@@ -2779,11 +2826,11 @@ public class DashboardActivity extends Activity {
 			
 			refreshlist();
 			
-			Utils.setNotificationDefaults(aBuilder);
+//			Utils.setNotificationDefaults(aBuilder);
 			
-			aBuilder.setProgress(0, 0, false);
-			aNotificationManager.cancel(4);
-			aNotificationManager.notify(4, aBuilder.build());
+//			aBuilder.setProgress(0, 0, false);
+//			aNotificationManager.cancel(4);
+//			aNotificationManager.notify(4, aBuilder.build());
 			
 			isFfmpegRunning = false;
 		}
@@ -2794,7 +2841,7 @@ public class DashboardActivity extends Activity {
 				Utils.logger("w", "FFmpeg process not started or not completed", DEBUG_TAG);
 				setNotificationForAudioJobError();
 			}
-			aNotificationManager.notify(4, aBuilder.build());
+//			aNotificationManager.notify(4, aBuilder.build());
 			isFfmpegRunning = false;
 		}
 		
@@ -2802,17 +2849,11 @@ public class DashboardActivity extends Activity {
 			Log.e(DEBUG_TAG, muxedFileName + " MUX failed");
 			Toast.makeText(DashboardActivity.this,  "YTD: " + muxedFileName + " MUX failed", Toast.LENGTH_SHORT).show();
     		
-			Utils.setNotificationDefaults(aBuilder);
-			aBuilder.setContentText("MUX " + getString(R.string.json_status_failed))
-				.setOngoing(false)
-				.setProgress(0, 0, false);
-    		aNotificationManager.cancel(4);
-		}
-
-		@Override
-		public void preProcess() {
-			// TODO Auto-generated method stub
-			
+//			Utils.setNotificationDefaults(aBuilder);
+//			aBuilder.setContentText("MUX " + getString(R.string.json_status_failed))
+//				.setOngoing(false)
+//				.setProgress(0, 0, false);
+//    		aNotificationManager.cancel(4);
 		}
 	}
 	
