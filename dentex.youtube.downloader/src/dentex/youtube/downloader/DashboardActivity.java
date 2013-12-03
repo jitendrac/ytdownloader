@@ -2778,7 +2778,7 @@ public class DashboardActivity extends Activity {
 			}
 		}
 		
-		if (audioOnlyFile.exists()) {
+		if (audioOnlyFile != null && audioOnlyFile.exists()) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
 			
 			String[] title = getResources().getStringArray(R.array.dashboard_click_entries_vo);
