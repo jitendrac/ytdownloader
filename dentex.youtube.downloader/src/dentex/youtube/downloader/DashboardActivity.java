@@ -365,7 +365,11 @@ public class DashboardActivity extends Activity {
 					    			case 1: // mux
 					    				if (!isFfmpegRunning) {
 					    					if (ffmpegEnabled) {
-					    						addAudioStream(in);
+					    						if (isFFmpegLatest()) {
+					    							addAudioStream(in);
+					    						} else {
+					    							downloadLatestFFmpeg();
+					    						}
 					    					} else {
 						    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
 						    				}
@@ -374,6 +378,47 @@ public class DashboardActivity extends Activity {
 			    						}
 			    					}
 								}
+
+								private void downloadLatestFFmpeg() {
+									BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
+									AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+									adb.setTitle(getString(R.string.information));
+									adb.setMessage(getString(R.string.ffmpeg_new_v_required));
+									adb.setIcon(android.R.drawable.ic_dialog_info);
+									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+										public void onClick(DialogInterface dialog, int which) {
+											File oldPrivateFile = new File(getDir("bin", 0), YTD.ffmpegBinName);
+											oldPrivateFile.delete();
+											
+											File oldExtFile = new File(getExternalFilesDir(null), YTD.ffmpegBinName);
+											oldExtFile.delete();
+											
+											Intent sIntent = new Intent(sDashboard, SettingsActivity.class);
+							        		sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+							        		sIntent.putExtra("reset_adv_pref", true);
+							        		startActivity(sIntent);
+										}
+									});
+									
+									adb.setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int which) {
+											// cancel
+										}
+									});
+									
+									secureShowDialog(adb);
+								}
+
+								private boolean isFFmpegLatest() {
+									File extFile = new File(getExternalFilesDir(null), YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V);
+									if (extFile.exists()) {
+										return true;
+									} else {
+										return false;
+									}
+								}
+								
 							});
 							secureShowDialog(builder);
 						}
@@ -1584,7 +1629,7 @@ public class DashboardActivity extends Activity {
 		@Override
 		protected void onPostExecute(String res) {
 			progressBar.setVisibility(View.GONE);
-			restartDashboard();
+			Utils.reload(sDashboardActivity);
 			
 			if (res.equals("e1")) {
 				Toast.makeText(DashboardActivity.this, 
@@ -1673,7 +1718,7 @@ public class DashboardActivity extends Activity {
 		@Override
 		protected void onPostExecute(String res) {
 			progressBar.setVisibility(View.GONE);
-			restartDashboard();
+			Utils.reload(sDashboardActivity);
 			
 			if (res.equals("e1")) {
 				//JSONException e1
@@ -1720,12 +1765,6 @@ public class DashboardActivity extends Activity {
 					YTD.queueThread.enqueueTask(new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile), 1);
 			}
 		}
-	}
-
-	private void restartDashboard() {
-		Intent intent = DashboardActivity.this.getIntent();
-		DashboardActivity.this.finish();
-		DashboardActivity.this.startActivity(intent);
 	}
 	
 	private class AsyncMove extends AsyncTask<File, Void, Integer> {
@@ -2219,7 +2258,7 @@ public class DashboardActivity extends Activity {
 
 					try {
 						ffmpeg.extractAudio(fileToConvert, audioFile,
-								bitrateType, bitrateValue, shell);
+								bitrateType, bitrateValue, currentItem, shell);
 					} catch (IOException e) {
 						Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
 					} catch (InterruptedException e) {
@@ -2287,7 +2326,7 @@ public class DashboardActivity extends Activity {
 		}
 
 		@Override
-		public void processComplete(int exitValue) {
+		public void processComplete(DashboardListItem item, int exitValue) {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 			String text = null;
 			
@@ -2301,7 +2340,7 @@ public class DashboardActivity extends Activity {
 				}
 				Utils.logger("d", vfilename + ": " + text, DEBUG_TAG);
 				
-				boolean addItToDb = addSuffixToAudioFileName();
+				boolean addItToDb = addSuffixToAudioFileName(item);
 				Toast.makeText(DashboardActivity.this,  vfilename + ": " + text, Toast.LENGTH_SHORT).show();
 				
 //				aBuilder.setContentTitle(audioFile.getName())
@@ -2332,7 +2371,7 @@ public class DashboardActivity extends Activity {
 				
 				// remove selected video upon successful audio extraction
 				if (removeVideo || removeAudio) {
-					new AsyncDelete().execute(currentItem);
+					new AsyncDelete().execute(item);
 				}
 				
 				// add audio file to the JSON file entry
@@ -2341,12 +2380,12 @@ public class DashboardActivity extends Activity {
 							DashboardActivity.this, 
 							String.valueOf(aNewId), 
 							type, 
-							currentItem.getYtId(), 
-							currentItem.getPos(),
+							item.getYtId(), 
+							item.getPos(),
 							YTD.JSON_DATA_STATUS_COMPLETED,
-							currentItem.getPath(), 
+							item.getPath(), 
 							audioFile.getName(), 
-							currentItem.getBasename(), 
+							item.getBasename(), 
 							"", 
 							Utils.MakeSizeHumanReadable((int) audioFile.length(), false), 
 							false);
@@ -2357,12 +2396,12 @@ public class DashboardActivity extends Activity {
 						DashboardActivity.this, 
 						String.valueOf(aNewId),
 						type, 
-						currentItem.getYtId(),
-						currentItem.getPos(),
+						item.getYtId(),
+						item.getPos(),
 						YTD.JSON_DATA_STATUS_FAILED,
-						currentItem.getPath(), 
+						item.getPath(), 
 						audioFile.getName(), 
-						currentItem.getBasename(), 
+						item.getBasename(), 
 						"", 
 						"-", 
 						false);
@@ -2390,14 +2429,14 @@ public class DashboardActivity extends Activity {
 		}
     }
     
-	public boolean addSuffixToAudioFileName() {
+	public boolean addSuffixToAudioFileName(DashboardListItem item) {
 		// Rename audio file to add a more detailed suffix, 
 		// but only if it has been matched from the FFmpeg console output
 		if (!extrTypeIsMp3Conv &&
 				audioFile.exists() && 
 				aSuffix != null) {
 			String newName = basename + aSuffix;
-			File newFile = new File(currentItem.getPath(), newName);
+			File newFile = new File(item.getPath(), newName);
 			
 			if (newFile.exists()) {
 				audioFile.delete();
@@ -2487,7 +2526,7 @@ public class DashboardActivity extends Activity {
 	private void getAudioJobProgress(String shellLine, int notNum) {
 		int mDownloadPercent;
 		
-		Pattern initPattern = Pattern.compile("ffmpeg version 2.1");
+		Pattern initPattern = Pattern.compile("ffmpeg version (\\d\\.\\d)");
 		Matcher initMatcher = initPattern.matcher(shellLine);
 		if (initMatcher.find()) {
 			totSeconds = 0;
@@ -2749,14 +2788,14 @@ public class DashboardActivity extends Activity {
 			final View view = inflater.inflate(R.layout.dialog_add_audio_stream, null);
 			
 			TextView info = (TextView) view.findViewById(R.id.ao_info);
-			info.setText(currentItem.getFilename() + "\n\t\t+\n" + audioOnlyFile.getName());
+			info.setText(currentItem.getFilename() + "\n\t+\n" + audioOnlyFile.getName());
 			
 			builder.setView(view)
 			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			           @Override
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   
-			        	   CheckBox cb = (CheckBox) view.findViewById(R.id.ao_info);
+			        	   CheckBox cb = (CheckBox) view.findViewById(R.id.rem_ao_vo);
 			        	   removeAoVo = cb.isChecked();
 			        	   
 			        	   Utils.logger("v", "Launching FFmpeg MUX on: " + in + 
@@ -2809,7 +2848,7 @@ public class DashboardActivity extends Activity {
 					MuxShellDummy shell = new MuxShellDummy();
 		
 					try {
-						ffmpeg.downloadAndMuxAoVoStreams(in.getAbsolutePath(), audioOnlyFile.getAbsolutePath(), muxedVideo, shell);
+						ffmpeg.downloadAndMuxAoVoStreams(in.getAbsolutePath(), audioOnlyFile.getAbsolutePath(), muxedVideo, currentItem, shell);
 					} catch (IOException e) {
 						Log.e(DEBUG_TAG, "IOException running ffmpeg" + e.getMessage());
 					} catch (InterruptedException e) {
@@ -2864,11 +2903,10 @@ public class DashboardActivity extends Activity {
 		}
 		
 		@Override
-		public void processComplete(int exitValue) {
+		public void processComplete(DashboardListItem item, int exitValue) {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 
 			if (exitValue == 0) {
-				//TODO
 //				aBuilder.setContentText("MUX " + getString(R.string.json_status_completed));
 //				aBuilder.setOngoing(false);
 //	    		

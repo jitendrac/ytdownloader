@@ -506,7 +506,7 @@ public class ShareActivity extends Activity {
 					}
 				}
 			});
-			if (! ((Activity) this).isFinishing()) {
+			if (!ShareActivity.this.isFinishing()) {
 				adb.show();
 			}
 		}
@@ -708,13 +708,13 @@ public class ShareActivity extends Activity {
 									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
 									
 									// ====================================
-									userFilename.setText(basenameTagged);
+									//userFilename.setText(basenameTagged);
 									//                        ^
 									// edit "tagged" basename |  (A)
-									//    ***  OR  ***
+									//    ###  OR  ###
 									// edit "clean"  basename |  (B)
 									//                        v
-									//userFilename.setText(basename);
+									userFilename.setText(basename);
 									// ====================================
 									
 									adb.setView(inputFilename);
@@ -724,9 +724,9 @@ public class ShareActivity extends Activity {
 									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 										public void onClick(DialogInterface dialog, int which) {
 											
-											basenameTagged = userFilename.getText().toString(); // (A)
-											/*basename = userFilename.getText().toString();
-											basenameTagged = composeFilenameWithOutExt();*/		// (B)
+											//basenameTagged = userFilename.getText().toString();	// (A)
+											basename = userFilename.getText().toString();
+											basenameTagged = composeFilenameWithOutExt();			// (B)
 											
 											filenameComplete = composeFilenameWithExt();
 											
@@ -740,7 +740,7 @@ public class ShareActivity extends Activity {
 										}
 									});
 									
-									if (! ((Activity) ShareActivity.this).isFinishing()) {
+									if (!ShareActivity.this.isFinishing()) {
 										adb.show();
 									}
 								} else {
@@ -817,7 +817,7 @@ public class ShareActivity extends Activity {
 							}
 						});
 					}
-					if (! ((Activity) ShareActivity.this).isFinishing()) {
+					if (!ShareActivity.this.isFinishing()) {
 						builder.show();
 					}
 					return true;
@@ -1001,7 +1001,8 @@ public class ShareActivity extends Activity {
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
 						pathOfVideo, 
 						filenameComplete, 
-						basename, 
+						//basenameTagged, //(A)
+						basename,  //(B) 
 						aExt, 
 						"-", 
 						false);
@@ -1049,7 +1050,8 @@ public class ShareActivity extends Activity {
 						YTD.JSON_DATA_STATUS_COMPLETED, 
 						pathOfVideo, 
 						nameOfVideo, 
-						basename, 
+						//basenameTagged, //(A)
+						basename,  //(B) 
 						aExt, 
 						size, 
 						false);
@@ -1078,11 +1080,11 @@ public class ShareActivity extends Activity {
 					String extrType = YTD.settings.getString("audio_extraction_type", "conv");
 					if (extrType.equals("conv")) {
 						bitrateData = Utils.retrieveBitrateValuesFromPref(sShare);
-						audioFileName = basename/*Tagged*/ + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
+						audioFileName = basename + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
 						brType = bitrateData[0];
 						brValue = bitrateData[1];
 					} else {
-						audioFileName = basename/*Tagged*/ + aExt;
+						audioFileName = basename + aExt;
 						
 					}
 					
@@ -1170,7 +1172,8 @@ public class ShareActivity extends Activity {
 						status, 
 						pathOfVideo, 
 						nameOfVideo, 
-						basename, 
+						//basenameTagged, //(A)
+						basename,  //(B) 
 						aExt, 
 						size, 
 						false);
@@ -1389,16 +1392,22 @@ public class ShareActivity extends Activity {
 		}
 		
 		protected void onProgressUpdate(String... i) {
-			Integer index = Integer.valueOf(i[0]);
-			String newValue = i[1];
-			
-			sizes.remove(index);
-			sizes.add(index, " - " + newValue);
-			
-			listEntries.clear();
-			listEntriesBuilder();
+			try {
+				Integer index = Integer.valueOf(i[0]);
+				String newValue = i[1];
+				
+				sizes.remove(index);
+				sizes.add(index, " - " + newValue);
+				
+				listEntries.clear();
+				listEntriesBuilder();
 
-			aA.notifyDataSetChanged();
+				aA.notifyDataSetChanged();
+			} catch (IndexOutOfBoundsException e) {
+				Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
+				Log.e(DEBUG_TAG, "IndexOutOfBoundsException@AsyncSizesFiller#onProgressUpdate:\n" + e.getMessage());
+				this.cancel(true);
+			}
 		}
 
 		@Override

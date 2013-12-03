@@ -70,7 +70,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Parcelable;
-import android.preference.CheckBoxPreference;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.NotificationCompat;
@@ -259,23 +258,26 @@ public class Utils {
 		}
 	}
 	
-	public static int armCpuVersion() {
+	public static String cpuVersion() {
     	String cpuAbi = Build.CPU_ABI;
 		Utils.logger("d", "CPU_ABI: " + cpuAbi, DEBUG_TAG);
 		if (cpuAbi.equals("armeabi-v7a")) {
-			return 7;
+			if (neonCpu()) {
+				Utils.logger("d", " -> v7a NEON", DEBUG_TAG);
+				return YTD.ARMv7a_NEON;
+			} else {
+				Utils.logger("d", " -> v7a NORMAL", DEBUG_TAG);
+				return YTD.ARMv7a_NORMAL;
+			}
 		} else if (cpuAbi.equals("armeabi")) {
-			return 5;
+			Utils.logger("d", " -> v5te", DEBUG_TAG);
+			return YTD.ARMv5te;
 		} else {
-			return 0;
+			return YTD.UNSUPPORTED_CPU;
 		}
 	}
 	
-	public static void offerDevMail(final Context ctx, CheckBoxPreference advanced, ContextThemeWrapper tw) {
-		advanced.setEnabled(false);
-		advanced.setChecked(false);
-		YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", false).commit();
-
+	public static void offerDevMail(final Context ctx, ContextThemeWrapper tw) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(tw);
 		adb.setIcon(android.R.drawable.ic_dialog_alert);
 		adb.setTitle(ctx.getString(R.string.ffmpeg_device_not_supported));
@@ -605,6 +607,33 @@ public class Utils {
         }
     	return sb.toString();
     }
+    
+    // ------------
+    
+    public static boolean neonCpu() {
+    	if (new File("/proc/cpuinfo").exists()) {
+        	try {
+        		BufferedReader br = new BufferedReader(new FileReader(new File("/proc/cpuinfo")));
+	        	String aLine;
+				while ((aLine = br.readLine()) != null) {
+					Pattern p = Pattern.compile("[F|f]eatures.*neon.*");
+					Matcher m = p.matcher(aLine);
+					if (m.find()) {
+						br.close();
+						return true;
+					}
+				}
+				if (br != null) {
+		    		br.close();
+		    	}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+        }
+    	return false;
+    }
+    
+    // -----------
     
     /*
      * scanMedia method adapted from Wolfram Rittmeyer's blog:

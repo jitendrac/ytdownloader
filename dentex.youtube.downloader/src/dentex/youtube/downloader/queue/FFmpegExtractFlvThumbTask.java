@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.Context;
 import android.util.Log;
 import dentex.youtube.downloader.DashboardActivity;
+import dentex.youtube.downloader.DashboardListItem;
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.utils.Utils;
@@ -29,7 +30,7 @@ public class FFmpegExtractFlvThumbTask implements Runnable {
 		try {
 			ffmpeg = new FfmpegController(aContext);
 			ShellDummy shell = new ShellDummy();
-			ffmpeg.extractFlvThumb(aFileToConvert, aPngFile, shell);
+			ffmpeg.extractFlvThumb(aFileToConvert, aPngFile, null, shell);
 		} catch (Throwable t) {
 			Log.e(DEBUG_TAG, "Error in FFmpegExtractFlvThumbTask", t);
 		}
@@ -43,7 +44,7 @@ public class FFmpegExtractFlvThumbTask implements Runnable {
 		}
 
 		@Override
-		public void processComplete(int exitValue) {
+		public void processComplete(DashboardListItem item, int exitValue) {
 			Utils.logger("v", aPngFile.getName() + ": processComplete with exit value: " + exitValue, DEBUG_TAG);
 
 			DashboardActivity.refreshlist();

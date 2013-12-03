@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import dentex.youtube.downloader.DashboardActivity;
+import dentex.youtube.downloader.DashboardListItem;
 import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
@@ -53,7 +54,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 		try {
 			ffmpeg = new FfmpegController(aContext);
 			ShellDummy shell = new ShellDummy();
-			ffmpeg.extractAudio(aFileToConvert, aAudioFile, aBitrateType, aBitrateValue, shell);
+			ffmpeg.extractAudio(aFileToConvert, aAudioFile, aBitrateType, aBitrateValue, null, shell);
 		} catch (Throwable t) {
 			Log.e(DEBUG_TAG, "Error in FFmpegExtractAudioTask", t);
 		}
@@ -87,7 +88,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 		}
 
 		@Override
-		public void processComplete(int exitValue) {
+		public void processComplete(DashboardListItem item, int exitValue) {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 			
 			if (exitValue == 0) {

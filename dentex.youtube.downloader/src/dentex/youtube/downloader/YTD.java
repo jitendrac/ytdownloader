@@ -97,6 +97,12 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_SIZE = "size";
 	
 	public static final String ffmpegBinName = "ffmpeg";
+	public static String FFMPEG_CURRENT_V = "_v2.1";
+	
+	public static String ARMv7a_NEON = "armv7a-neon";
+	public static String ARMv7a_NORMAL = "armv7-normal";
+	public static String ARMv5te = "armv5te";
+	public static String UNSUPPORTED_CPU;
 	
 	public static SharedPreferences settings;
 	public static SharedPreferences videoinfo;
@@ -154,7 +160,14 @@ public class YTD extends Application implements QueueThreadListener{
 		
 		mBuilder =  new NotificationCompat.Builder(ctx);
 		mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-
+		
+		/*Log.i(DEBUG_TAG, 
+				"\n --------------- " +
+				Utils.getCpuInfo() + 
+				"\n --------------- "
+				+ "\nNeon support: " + Utils.neonCpu() + 
+				"\n --------------- ");*/
+		
 		super.onCreate();
 	}
 

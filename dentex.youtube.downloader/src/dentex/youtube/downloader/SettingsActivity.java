@@ -83,6 +83,9 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         BugSenseHandler.leaveBreadcrumb("SettingsActivity_onCreate");
         this.setTitle(R.string.title_activity_settings);
+        
+        boolean resetAdvPref = getIntent().getBooleanExtra("reset_adv_pref", false);
+        if (resetAdvPref) SettingsActivity.SettingsFragment.touchAdvPref(true, false);
 
     	// Theme init
     	Utils.themeInit(this);
@@ -136,7 +139,7 @@ public class SettingsActivity extends Activity {
 		private Preference th;
 		private Preference lang;
 		private static CheckBoxPreference advanced;
-		private int cpuVers;
+		private String cpuVers;
 		private String link;
 		private Preference clear;
 		
@@ -249,7 +252,7 @@ public class SettingsActivity extends Activity {
 			});
 			
             extDir = getActivity().getExternalFilesDir(null);
-            extFile = new File(extDir, YTD.ffmpegBinName);
+            extFile = new File(extDir, YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V);
             privateAppDir = getActivity().getDir("bin", 0);
     		privateFile = new File(privateAppDir, YTD.ffmpegBinName);
 
@@ -257,17 +260,19 @@ public class SettingsActivity extends Activity {
 			advanced.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
-					boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
 					boolean ffmpegInstalled = privateFile.exists();
-					if (!advancedFeatures) {
-						cpuVers = Utils.armCpuVersion();
-						boolean isCpuSupported = (cpuVers > 0) ? true : false;
+					if (!advanced.isChecked()) {
+						cpuVers = Utils.cpuVersion();
+						boolean isCpuSupported = (!cpuVers.equals(YTD.UNSUPPORTED_CPU)) ? true : false;
 						Utils.logger("d", "isCpuSupported: " + isCpuSupported, DEBUG_TAG);
 						
 						if (isCpuSupported) {
-							YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", true).commit();
+							//YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", true).commit();
 						} else {
-							Utils.offerDevMail(sSettings, advanced, boxCtw);
+							advanced.setEnabled(false);
+							advanced.setChecked(false);
+							//YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", false).commit();
+							Utils.offerDevMail(sSettings, boxCtw);
 						}
 						
 						Utils.logger("d", "ffmpegInstalled: " + ffmpegInstalled, DEBUG_TAG);
@@ -280,14 +285,11 @@ public class SettingsActivity extends Activity {
 	                        link = getString(R.string.ffmpeg_download_dialog_msg_link, cpuVers);
 	                        String msg = getString(R.string.ffmpeg_download_dialog_msg);
 	                        
-	                        String ffmpegSize;
-	                        if (cpuVers == 5) {
-	                        	ffmpegSize = getString(R.string.ffmpeg_size_arm5);
-	                        } else if (cpuVers == 7) {
-	                        	ffmpegSize = getString(R.string.ffmpeg_size_arm7);
-	                        } else {
-	                        	ffmpegSize = "n.a.";
-	                        }
+	                        String ffmpegSize = "n.a.";
+	                        if (cpuVers.equals(YTD.ARMv7a_NEON))	ffmpegSize = getString(R.string.ffmpeg_size_armv7);
+	                        if (cpuVers.equals(YTD.ARMv7a_NORMAL))	ffmpegSize = getString(R.string.ffmpeg_size_armv7);
+	                        if (cpuVers.equals(YTD.ARMv5te))		ffmpegSize = getString(R.string.ffmpeg_size_armv5);
+		                    
 	                        String size = getString(R.string.size) + " " + ffmpegSize;
 	                        adb.setMessage(msg + " " + link + "\n" + size);                      
 
@@ -302,6 +304,7 @@ public class SettingsActivity extends Activity {
 			                            	Intent intent = new Intent(getActivity(), FfmpegDownloadService.class);
 			                            	intent.putExtra("CPU", cpuVers);
 			                            	intent.putExtra("DIR", sdcardAppDir.getAbsolutePath());
+			                            	intent.putExtra("LINK", link);
 			                            	getActivity().startService(intent);
 	                            			//=============
 	                            			//downloadFfmpeg();
@@ -398,7 +401,7 @@ public class SettingsActivity extends Activity {
             id = System.currentTimeMillis();
             try {
             	DownloadTask dt = new DownloadTask(sSettings, id, link, 
-            			YTD.ffmpegBinName, extDir.getAbsolutePath(), 
+            			YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V, extDir.getAbsolutePath(), 
             			null, null, 
             			dtl, false);
     			Maps.dtMap.put(id, dt);

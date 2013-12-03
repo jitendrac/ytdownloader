@@ -4,6 +4,7 @@
         \n v3.5 - Dic XX 2013
         \n-----------------------------------
         \n[x] Dashboard option to mux video-only and audio-only streams
+        \n[x] new FFmpeg builds from latest v2.1 (with NEON support) available for download
         \n[x] option to choose between Settings or Dashboard as app entry-point activity
         \n[x] "Send" option into Dashboard items long-click menu
         \n[x] Android 4.4 target and many optimizations
@@ -612,12 +613,13 @@
     <string name="apk_download_sourceforge_link">http://sourceforge.net/projects/ytdownloader/files/dentex.youtube.downloader_v%1$s.apk/download</string>
 	<string name="apk_filename">dentex.youtube.downloader_v%1$s.apk</string>
     
-    <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s/download</string>
-    <string name="ffmpeg_download_dialog_msg_link_test">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_armv7a_v2.1/download</string>
-    <string name="ffmpeg_download_dialog_msg_link_no_red">http://optimate.dl.sourceforge.net/project/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s</string>
+    <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/2.1/ffmpeg_%1$s/download</string>
     
-    <string name="ffmpeg_size_arm7">6.0 MB</string>
-    <string name="ffmpeg_size_arm5">6.4 MB</string>
+<!--     <string name="ffmpeg_download_dialog_msg_link_test">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_armv7a_v2.1/download</string> -->
+<!--     <string name="ffmpeg_download_dialog_msg_link_no_red">http://optimate.dl.sourceforge.net/project/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s</string> -->
+    
+    <string name="ffmpeg_size_armv7">7.0 MB</string>
+    <string name="ffmpeg_size_armv5">6.6 MB</string>
     
     <string-array name="notification_defaults_entry_values">
         <item>0</item>
