@@ -36,6 +36,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,6 +50,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -58,6 +60,8 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -71,7 +75,7 @@ import dentex.youtube.downloader.utils.DashboardClearHelper;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends PreferenceActivity {
 	
 	public static final String DEBUG_TAG = "SettingsActivity";
 	public static String chooserSummary;
@@ -83,9 +87,6 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         BugSenseHandler.leaveBreadcrumb("SettingsActivity_onCreate");
         this.setTitle(R.string.title_activity_settings);
-        
-        boolean resetAdvPref = getIntent().getBooleanExtra("reset_adv_pref", false);
-        if (resetAdvPref) SettingsActivity.SettingsFragment.touchAdvPref(true, false);
 
     	// Theme init
     	Utils.themeInit(this);
@@ -97,8 +98,15 @@ public class SettingsActivity extends Activity {
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
         
         // Display the fragment as the main content.
+        SettingsFragment sf = new SettingsFragment();
+        
+        //boolean resetAdvPref = getIntent().getBooleanExtra("reset_adv_pref", false);
+        Bundle args = new Bundle();
+        args.putBoolean("reset_adv_pref", true);  //resetAdvPref); 
+        sf.setArguments(args);
+        
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SettingsFragment())
+                .replace(android.R.id.content, sf)
                 .commit();
     }
     
@@ -233,7 +241,10 @@ public class SettingsActivity extends Activity {
 			    		getActivity().setTheme(R.style.AppThemeLight);
 			    	}
 			    	
+			    	// TODO test to get the adapter with the list already on screen
 			    	if (!theme.equals(newValue)) Utils.reload(getActivity());
+                	ListView lv = (ListView) ((ListActivity) getActivity()).getListView();
+            		Log.i(DEBUG_TAG, "adapter: " + lv.getAdapter()); //null
 					return true;
 				}
 			});
@@ -339,6 +350,25 @@ public class SettingsActivity extends Activity {
 					}
 				}
 			});
+			
+			//TODO @pskink ;)
+			Bundle args = getArguments();
+            if (args.getBoolean("reset_adv_pref")) {
+            	Log.i(DEBUG_TAG, "resetting FFmpeg option");
+            	touchAdvPref(true, false);
+            	
+            	final ListView lv = (ListView) getActivity().findViewById(android.R.id.list);
+
+        		Log.i(DEBUG_TAG, "SCROLLING!!!");
+        		Log.i(DEBUG_TAG, "adapter: " + lv.getAdapter());  //null
+        		/*lv.post(new Runnable() {            
+        	        @Override
+        	        public void run() {
+        	        	lv.setSelection(12);
+        	        }
+        	    });*/
+        		lv.setSelection(12);
+            }
 		}
         
         /*private void downloadFfmpeg() {
