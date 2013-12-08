@@ -203,6 +203,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
 	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nincs telepítve vagy nincs engedélyezve.</string>
 	<string name="ffmpeg_not_enabled_msg">Beállítások megnyitása?</string>

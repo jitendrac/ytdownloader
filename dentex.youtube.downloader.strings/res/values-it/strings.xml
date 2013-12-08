@@ -203,6 +203,7 @@
     
 	<string name="ao_not_found">Nessun flusso solo-audio adatto trovato</string>
 	<string name="remove_ao_vo">Successivamente cancella i file solo-video e solo-audio\n(nessuna conferma!)</string>
+	<string name="ffmpeg_new_v_required">E\' richiesta una nuova versione di FFmpeg. Scaricarla adesso?</string>
     <string name="share_file_via">Condividi questo file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg non installallato o abilitato:</string>
 	<string name="ffmpeg_not_enabled_msg">Aprire le preferenze?</string>

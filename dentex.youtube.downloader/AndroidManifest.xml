@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dentex.youtube.downloader"
     android:installLocation="auto"
-    android:versionCode="70"
-    android:versionName="3.4.1.004-v3.5-Beta" >
+    android:versionCode="71"
+    android:versionName="3.5" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -189,7 +189,6 @@
 
         <service android:name="dentex.youtube.downloader.service.AutoUpgradeApkService" />
         <service android:name="dentex.youtube.downloader.service.FfmpegDownloadService" />
-        <service android:name="dentex.youtube.downloader.service.FfmpegDownloadAndMuxService" />
 
         <activity
             android:name="dentex.youtube.downloader.docs.TranslatorsListActivity"

@@ -202,7 +202,8 @@
     </string-array>
     
 	<string name="ao_not_found">Подходящих аудиопотоков не найдено</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="remove_ao_vo">Удалить потом только видео и только аудио файлыn(без подтверждения!)</string>
+	<string name="ffmpeg_new_v_required">Необходима новая версия FFmpeg. Загрузить сейчас?</string>
     <string name="share_file_via">Поделиться файлом с помощью:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg не установлен или не включён:</string>
 	<string name="ffmpeg_not_enabled_msg">Открыть настройки?</string>

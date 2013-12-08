@@ -6,27 +6,26 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-        <TextView
-            android:id="@+id/mp3_info_a"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="10dp"
-            android:text="@string/mp3_bitrate_title" 
-            android:textAppearance="@android:style/TextAppearance.Widget.TextView"/>
+    <TextView
+        android:id="@+id/mp3_info_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="@string/mp3_bitrate_title"/>
 
-        <Spinner
-            android:id="@+id/mp3_spinner_a"
-            android:padding="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:entries="@array/mp3_bitrate_entries"
-            android:saveEnabled="true"/>
+    <Spinner
+        android:id="@+id/mp3_spinner_a"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/mp3_bitrate_entries"
+        android:saveEnabled="true"/>
 
     <Button
         android:id="@+id/id3_button_a"
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

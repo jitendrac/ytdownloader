@@ -202,7 +202,8 @@
     </string-array>
     
 	<string name="ao_not_found">Uygun ses akışı bulunamadı</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="remove_ao_vo">Daha sonra sadece-video ve sadece-ses dosyalarını sil (onay istenmez!)</string>
+	<string name="ffmpeg_new_v_required">Yeni FFmpeg sürümü gerekiyor. Şimdi indirmek ister misiniz?</string>
     <string name="share_file_via">Bu dosyayı şununla paylaş:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg yüklü ya da aktif değil:</string>
 	<string name="ffmpeg_not_enabled_msg">Ayarlar açılsın mı?</string>

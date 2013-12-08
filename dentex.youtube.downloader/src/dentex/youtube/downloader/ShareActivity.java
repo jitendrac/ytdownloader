@@ -62,7 +62,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,6 +73,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -163,7 +163,6 @@ public class ShareActivity extends Activity {
 	private String validatedLink;
 	private String filenameComplete = "";
 	public static Uri videoUri;
-	private int icon;
 	private TextView userFilename;
 	private boolean sshInfoCheckboxEnabled;
 	private boolean generalInfoCheckboxEnabled;
@@ -177,9 +176,7 @@ public class ShareActivity extends Activity {
 	private Bitmap img;
 	private ImageView imgView;
 	private String videoId;
-	public static Context sShare;
-	public static Activity sShareActivity;
-	private ContextThemeWrapper boxCtw = new ContextThemeWrapper(this, R.style.BoxTheme);
+	public static Activity sShare;
 	private String[] decryptionArray = null;
 	private String jslink;
 	private String decryptionFunction;
@@ -204,8 +201,7 @@ public class ShareActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
-		sShare = getBaseContext();
-		sShareActivity = ShareActivity.this;
+		sShare = ShareActivity.this;
 		
 //		aoIndex = -1;
 		
@@ -490,7 +486,7 @@ public class ShareActivity extends Activity {
 	private void showGeneralInfoTutorial() {
 		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
 		if (generalInfoCheckboxEnabled == true) {
-			AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
 			final CheckBox showAgainCb = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
@@ -648,7 +644,7 @@ public class ShareActivity extends Activity {
 					launchDashboardActivity();
 				}
 			} else {				
-				ShareActivityListFilters.setupStoredFilters(ShareActivity.this, aA);
+				setupStoredFilters();
 				//listEntriesBuilder();
 				lv.setAdapter(aA);
 
@@ -678,8 +674,8 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-					helpBuilder = new AlertDialog.Builder(boxCtw);
-					helpBuilder.setIcon(android.R.drawable.ic_dialog_info);
+					helpBuilder = new AlertDialog.Builder(ShareActivity.this);
+					helpBuilder.setIcon(Utils.selectThemedInfoIcon());
 					helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
 
 					boolean showSize = false;
@@ -702,7 +698,7 @@ public class ShareActivity extends Activity {
 							try {
 								fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
 								if (fileRenameEnabled == true) {
-									AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
@@ -788,7 +784,7 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-					AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
 						builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
@@ -889,11 +885,10 @@ public class ShareActivity extends Activity {
 				Utils.logger("d", "appStartIntent: " + appStartIntent, DEBUG_TAG);
 				context.startActivity(appStartIntent);
 			} else {
-				AlertDialog.Builder cb = new AlertDialog.Builder(boxCtw);
+				AlertDialog.Builder cb = new AlertDialog.Builder(ShareActivity.this);
 				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
 				cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
-				icon = android.R.drawable.ic_dialog_alert;
-				cb.setIcon(icon);
+				cb.setIcon(Utils.selectThemedAlertIcon());
 				cb.setPositiveButton(getString(R.string.callConnectBot_dialog_positive), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						Intent intent = new Intent(Intent.ACTION_VIEW); 
@@ -947,7 +942,7 @@ public class ShareActivity extends Activity {
 				
 				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
 				if (sshInfoCheckboxEnabled == true) {
-					AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 					View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
 					final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
@@ -974,6 +969,158 @@ public class ShareActivity extends Activity {
 			} catch (IndexOutOfBoundsException e) {
 				Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 			}
+		}
+	}
+	
+	private void setupStoredFilters() {
+		final int storedFilterInt = YTD.settings.getInt("list_filter", YTD.VIEW_ALL);
+		assignConstraint(YTD.getListFilterConstraint(storedFilterInt));
+		
+		final int storedView = YTD.settings.getInt("view_filter", R.id.ALL);
+		resetAllBkg();
+		if (storedView != R.id.ALL) {
+			View sv = findViewById(storedView);
+			sv.setBackgroundResource(R.drawable.grad_bg_sel);
+		}
+		
+		setupFilters();
+	}
+
+	private void setupFilters() {
+		
+		final View mp4 = findViewById(R.id.MP4);
+		final View webm = findViewById(R.id.WEBM);
+		final View flv = findViewById(R.id.FLV);
+		final View _3gp = findViewById(R.id._3GP);
+		final View hd = findViewById(R.id.HD);
+		final View ld = findViewById(R.id.LD);
+		final View md = findViewById(R.id.MD);
+		final View sd = findViewById(R.id.SD);
+		final View _3d = findViewById(R.id._3D);
+		final View vo = findViewById(R.id.VO);
+		final View ao = findViewById(R.id.AO);
+		final View all = findViewById(R.id.ALL);
+		
+		YTD.slMenuOrigBkg = findViewById(R.id.list).getBackground();
+		
+		mp4.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "MP4 filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.MP4_FILTER);
+			}
+		});
+		
+		webm.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "WEBM filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.WEBM_FILTER);
+			}
+		});
+		
+		flv.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "FLV filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.FLV_FILTER);
+			}
+		});
+		
+		
+		_3gp.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "3GP filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD._3GP_FILTER);
+			}
+		});
+		
+		hd.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "HD filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.HD_FILTER);
+			}
+		});
+		
+		ld.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "LD filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.LD_FILTER);
+			}
+		});
+		
+		md.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "MD filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.MD_FILTER);
+			}
+		});
+		
+		sd.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "SD filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.SD_FILTER);
+			}
+		});
+		
+		_3d.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "3D filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD._3D_FILTER);
+			}
+		});
+		
+		vo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "VO filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.VO_FILTER);
+			}
+		});
+		
+		ao.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "AO filter clicked", DEBUG_TAG);
+				reactToViewClick(v, YTD.AO_FILTER);
+			}
+		});
+		
+		all.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "ALL filter clicked", DEBUG_TAG);
+				resetAllBkg();
+				YTD.settings.edit().putInt("list_filter", YTD.VIEW_ALL).apply();
+				YTD.settings.edit().putInt("view_filter", R.id.ALL).apply();
+				assignConstraint(YTD.getListFilterConstraint(YTD.VIEW_ALL));
+			}
+		});
+	}
+	
+	private void reactToViewClick(View v, int filterInt) {
+		resetAllBkg();
+		v.setBackgroundResource(R.drawable.grad_bg_sel);
+		assignConstraint(YTD.getListFilterConstraint(filterInt));
+		YTD.settings.edit().putInt("list_filter", filterInt).commit();
+		YTD.settings.edit().putInt("view_filter", v.getId()).commit();
+	}
+
+	@SuppressWarnings("deprecation")
+	private void resetAllBkg() {
+		LinearLayout ll = (LinearLayout) findViewById(R.id.all_filters);
+		int childCount = ll.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			
+			final View childAt = ll.getChildAt(i);
+			if (childAt instanceof TextView)
+				childAt.setBackgroundDrawable(YTD.slMenuOrigBkg);
 		}
 	}
 	
@@ -1191,9 +1338,9 @@ public class ShareActivity extends Activity {
 		
 		String aExt = findAudioCodec();
 		String jsonDataType;
-		if (ShareActivityListFilters.iVoList.contains(itags.get(pos))) {
+		if (YTD.iVoList.contains(itags.get(pos))) {
 			jsonDataType = YTD.JSON_DATA_TYPE_V_O;
-		} else if (ShareActivityListFilters.iAoList.contains(itags.get(pos))) {
+		} else if (YTD.iAoList.contains(itags.get(pos))) {
 			jsonDataType = YTD.JSON_DATA_TYPE_A_O;
 		} else {
 			jsonDataType = YTD.JSON_DATA_TYPE_V;

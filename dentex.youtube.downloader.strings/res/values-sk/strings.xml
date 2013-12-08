@@ -202,7 +202,8 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     </string-array>
     
 	<string name="ao_not_found">Neašli sa žiadne vhodné audio streamy</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="remove_ao_vo">Vymazať iba video a iba audio súbory\n(bez potvrdenia!)</string>
+	<string name="ffmpeg_new_v_required">Je potrebná nová verzia FFmpeg. Stiahnuť teraz?</string>
     <string name="share_file_via">Zdiaľať cez:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nie je nainštalovaný, alebo povolený:</string>
 	<string name="ffmpeg_not_enabled_msg">Otvoriť nastavenia?</string>

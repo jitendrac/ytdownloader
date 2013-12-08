@@ -13,7 +13,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -32,7 +31,7 @@ public class DashboardClearHelper {
 	public static boolean sDoReload;
 	public static Activity sAct;
 	
-	public static void confirmClearDashboard(final Activity act, final ContextThemeWrapper tw, final boolean doReload) {
+	public static void confirmClearDashboard(final Activity act, final boolean doReload) {
 		previousJson = Json.readJsonDashboardFile(act);
 		sDoReload = doReload;
 		sAct = act;
@@ -41,7 +40,7 @@ public class DashboardClearHelper {
 		
 		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
 			
-			AlertDialog.Builder adb = new AlertDialog.Builder(tw);
+			AlertDialog.Builder adb = new AlertDialog.Builder(act);
 			
 			LayoutInflater adbInflater = LayoutInflater.from(act);
 		    View deleteDataView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
@@ -50,7 +49,7 @@ public class DashboardClearHelper {
 		    deleteData.setText(act.getString(R.string.dashboard_delete_data_cb));
 		    adb.setView(deleteDataView);
 		    
-		    adb.setIcon(android.R.drawable.ic_dialog_info);
+		    adb.setIcon(Utils.selectThemedInfoIcon());
 		    adb.setTitle(act.getString(R.string.information));
 		    adb.setMessage(act.getString(R.string.clear_dashboard_msg));
 		    
@@ -110,13 +109,13 @@ public class DashboardClearHelper {
 		protected void onPreExecute() {
 			if (DashboardActivity.isDashboardRunning) {
 				DashboardActivity.isAnyAsyncInProgress = true;
-				TextView info = (TextView) DashboardActivity.sDashboardActivity.findViewById(R.id.dashboard_activity_info);
+				TextView info = (TextView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_activity_info);
 				info.setVisibility(View.GONE);
 				
-				ListView list = (ListView) DashboardActivity.sDashboardActivity.findViewById(R.id.dashboard_list);
+				ListView list = (ListView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_list);
 				list.setVisibility(View.GONE);
 				
-				DashboardActivity.progressBar = (ProgressBar) DashboardActivity.sDashboardActivity.findViewById(R.id.dashboard_progressbar);
+				DashboardActivity.progressBar = (ProgressBar) DashboardActivity.sDashboard.findViewById(R.id.dashboard_progressbar);
 				DashboardActivity.progressBar.setVisibility(View.VISIBLE);
 			} else {
 				DashboardActivity.isAnyAsyncInProgress = true;

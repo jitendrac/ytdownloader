@@ -48,7 +48,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -83,7 +82,6 @@ public class UpgradeApkActivity extends Activity {
 	private String matchedChangeLog;
 	private String matchedMd5;
 	private boolean isAsyncTaskRunning = false;
-	private ContextThemeWrapper boxCtw = new ContextThemeWrapper(this, R.style.BoxTheme);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -301,8 +299,8 @@ public class UpgradeApkActivity extends Activity {
                     	
                     	if (Utils.checkMD5(matchedMd5, new File(dir, apkFilename))) {
                     	
-	                        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(boxCtw);
-	                        helpBuilder.setIcon(android.R.drawable.ic_dialog_info)
+	                        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
+	                        helpBuilder.setIcon(Utils.selectThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgraded_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -329,8 +327,8 @@ public class UpgradeApkActivity extends Activity {
 	                        }
                         
                     	} else {
-                    		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(boxCtw);
-	                        helpBuilder.setIcon(android.R.drawable.ic_dialog_info)
+                    		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
+	                        helpBuilder.setIcon(Utils.selectThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgrade_bad_md5_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {

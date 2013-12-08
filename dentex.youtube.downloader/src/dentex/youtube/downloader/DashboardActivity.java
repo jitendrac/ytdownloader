@@ -75,7 +75,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -92,6 +91,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,7 +115,6 @@ public class DashboardActivity extends Activity {
 	
 	private final static String DEBUG_TAG = "DashboardActivity";
 	public static boolean isDashboardRunning;
-	private ContextThemeWrapper boxCtw = new ContextThemeWrapper(this, R.style.BoxTheme);
 //	private NotificationCompat.Builder aBuilder;
 //	private NotificationManager aNotificationManager;
 	protected File audioFile;
@@ -169,8 +168,7 @@ public class DashboardActivity extends Activity {
 	private boolean newClick;
 	public static long countdown;
 	
-	public static Activity sDashboardActivity;
-	public static Context sDashboard;
+	public static Activity sDashboard;
 	
 	private Timer autoUpdate;
 	public static boolean isLandscape;
@@ -188,8 +186,7 @@ public class DashboardActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("DashboardActivity_onCreate");
-		sDashboard = getBaseContext();
-		sDashboardActivity = DashboardActivity.this;
+		sDashboard = DashboardActivity.this;
 
 		// Theme init
     	Utils.themeInit(this);
@@ -242,7 +239,7 @@ public class DashboardActivity extends Activity {
         		
 	        		final boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
 	        		
-	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 	        		builder.setTitle(currentItem.getFilename());
 	        		
 	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) || 
@@ -267,7 +264,7 @@ public class DashboardActivity extends Activity {
 							    				if (ffmpegEnabled) {
 								    				extractAudioOnly(in);
 							    				} else {
-							    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
+							    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 							    				}
 						    				} else {
 						    					notifyOpsNotSupported();
@@ -282,7 +279,7 @@ public class DashboardActivity extends Activity {
 							    				if (ffmpegEnabled) {
 								    				extractAudioAndConvertToMp3(in);
 							    				} else {
-							    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
+							    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 							    				}
 						    				} else {
 						    					notifyOpsNotSupported();
@@ -312,7 +309,7 @@ public class DashboardActivity extends Activity {
 							    				if (ffmpegEnabled) {
 								    				extractAudioAndConvertToMp3(in);
 							    				} else {
-							    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
+							    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 							    				}
 						    				} else {
 						    					notifyOpsNotSupported();
@@ -342,7 +339,7 @@ public class DashboardActivity extends Activity {
 					    					if (ffmpegEnabled) {
 							    				convertAudioToMp3(in);
 					    					} else {
-						    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
+						    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 						    				}
 					    				} else {
 			    							notifyFfmpegIsAlreadyRunning();
@@ -371,7 +368,7 @@ public class DashboardActivity extends Activity {
 					    							downloadLatestFFmpeg();
 					    						}
 					    					} else {
-						    					Utils.notifyFfmpegNotInstalled(sDashboardActivity, boxCtw);
+						    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 						    				}
 					    				} else {
 			    							notifyFfmpegIsAlreadyRunning();
@@ -381,10 +378,10 @@ public class DashboardActivity extends Activity {
 
 								private void downloadLatestFFmpeg() {
 									BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
-									AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+									AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
 									adb.setTitle(getString(R.string.information));
 									adb.setMessage(getString(R.string.ffmpeg_new_v_required));
-									adb.setIcon(android.R.drawable.ic_dialog_info);
+									adb.setIcon(Utils.selectThemedInfoIcon());
 									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 										public void onClick(DialogInterface dialog, int which) {
@@ -476,11 +473,11 @@ public class DashboardActivity extends Activity {
 	        			disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, SEND, REMOVE, DELETE, PAUSERESUME };
 	        		}
 	
-	        		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
 	
 	    			final ArrayAdapter<CharSequence> cla = DashboardLongClickAdapter.createFromResource(
-	    					boxCtw,
+	    					sDashboard,
 	    					R.array.dashboard_long_click_entries,
 	    		            android.R.layout.simple_list_item_1, 
 	    		            disabledItems);
@@ -549,7 +546,7 @@ public class DashboardActivity extends Activity {
 	
 	private void notifyOpsNotSupported() {
 		Utils.logger("d", "notifyOpsNotSupported()", DEBUG_TAG);
-		PopUps.showPopUp(getString(R.string.information), getString(R.string.unsupported_operation), "error", sDashboardActivity);
+		PopUps.showPopUp(getString(R.string.information), getString(R.string.unsupported_operation), "error", DashboardActivity.this);
 	}
 	
 	private void notifyAnotherOperationIsInProgress() {
@@ -589,7 +586,7 @@ public class DashboardActivity extends Activity {
 	}
 	
 	private void rename(final DashboardListItem currentItem) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
 		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 	    userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
@@ -679,11 +676,11 @@ public class DashboardActivity extends Activity {
 	}
 	
 	public void  removeFromDashboard(final DashboardListItem currentItem) {
-		AlertDialog.Builder rem = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder rem = new AlertDialog.Builder(sDashboard);
 		//rem.setTitle(getString(R.string.attention));
 		rem.setTitle(currentItem.getFilename());
 		rem.setMessage(getString(R.string.remove_video_confirm));
-		rem.setIcon(android.R.drawable.ic_dialog_alert);
+		rem.setIcon(Utils.selectThemedAlertIcon());
 		rem.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
@@ -704,10 +701,10 @@ public class DashboardActivity extends Activity {
 	}
 
 	public void delete(final DashboardListItem currentItem) {
-		AlertDialog.Builder del = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder del = new AlertDialog.Builder(sDashboard);
 		del.setTitle(currentItem.getFilename());
 		del.setMessage(getString(R.string.delete_video_confirm));
-		del.setIcon(android.R.drawable.ic_dialog_alert);
+		del.setIcon(Utils.selectThemedAlertIcon());
 		del.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
@@ -1021,7 +1018,7 @@ public class DashboardActivity extends Activity {
 	        		boolean backupCheckboxEnabled = YTD.settings.getBoolean("dashboard_backup_info", true);
 				    if (backupCheckboxEnabled == true) {
 				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+			        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
 			        	
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
@@ -1032,7 +1029,7 @@ public class DashboardActivity extends Activity {
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_backup_info));
-			    		adb.setIcon(android.R.drawable.ic_dialog_info);
+			    		adb.setIcon(Utils.selectThemedInfoIcon());
 			    		
 			    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -1068,7 +1065,7 @@ public class DashboardActivity extends Activity {
 	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
 				    if (restoreCheckboxEnabled == true) {
 				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+			        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
 			        	
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
@@ -1079,7 +1076,7 @@ public class DashboardActivity extends Activity {
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_restore_info) + ".\n" + getString(R.string.menu_restore_info_msg));
-			    		adb.setIcon(android.R.drawable.ic_dialog_info);
+			    		adb.setIcon(Utils.selectThemedInfoIcon());
 			    		
 			    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	
@@ -1111,7 +1108,7 @@ public class DashboardActivity extends Activity {
         		boolean importCheckboxEnabled1 = YTD.settings.getBoolean("dashboard_import_info", true);
 			    if (importCheckboxEnabled1 == true) {
 			    	
-		        	AlertDialog.Builder adb = new AlertDialog.Builder(boxCtw);
+		        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
 		        	
 		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 				    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
@@ -1122,7 +1119,7 @@ public class DashboardActivity extends Activity {
 				    
 		    		adb.setTitle(getString(R.string.information));
 		    		adb.setMessage(getString(R.string.menu_import_info));
-		    		adb.setIcon(android.R.drawable.ic_dialog_info);
+		    		adb.setIcon(Utils.selectThemedInfoIcon());
 		    		
 		    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -1147,7 +1144,7 @@ public class DashboardActivity extends Activity {
 			    }
         		return true;
         	case R.id.menu_clear_dashboard:
-        		DashboardClearHelper.confirmClearDashboard(sDashboardActivity, boxCtw, true);
+        		DashboardClearHelper.confirmClearDashboard(DashboardActivity.this, true);
         		return true;
         	default:
         		return super.onOptionsItemSelected(item);
@@ -1556,13 +1553,13 @@ public class DashboardActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			isAnyAsyncInProgress = true;
-			TextView info = (TextView) sDashboardActivity.findViewById(R.id.dashboard_activity_info);
+			TextView info = (TextView) DashboardActivity.this.findViewById(R.id.dashboard_activity_info);
 			info.setVisibility(View.GONE);
 			
-			ListView list = (ListView) sDashboardActivity.findViewById(R.id.dashboard_list);
+			ListView list = (ListView) DashboardActivity.this.findViewById(R.id.dashboard_list);
 			list.setVisibility(View.GONE);
 			
-			progressBar = (ProgressBar) sDashboardActivity.findViewById(R.id.dashboard_progressbar);
+			progressBar = (ProgressBar) DashboardActivity.this.findViewById(R.id.dashboard_progressbar);
 			progressBar.setVisibility(View.VISIBLE);
 		}
 
@@ -1629,7 +1626,7 @@ public class DashboardActivity extends Activity {
 		@Override
 		protected void onPostExecute(String res) {
 			progressBar.setVisibility(View.GONE);
-			Utils.reload(sDashboardActivity);
+			Utils.reload(DashboardActivity.this);
 			
 			if (res.equals("e1")) {
 				Toast.makeText(DashboardActivity.this, 
@@ -1653,13 +1650,13 @@ public class DashboardActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			isAnyAsyncInProgress = true;
-			TextView info = (TextView) sDashboardActivity.findViewById(R.id.dashboard_activity_info);
+			TextView info = (TextView) DashboardActivity.this.findViewById(R.id.dashboard_activity_info);
 			info.setVisibility(View.GONE);
 			
-			ListView list = (ListView) sDashboardActivity.findViewById(R.id.dashboard_list);
+			ListView list = (ListView) DashboardActivity.this.findViewById(R.id.dashboard_list);
 			list.setVisibility(View.GONE);
 			
-			progressBar = (ProgressBar) sDashboardActivity.findViewById(R.id.dashboard_progressbar);
+			progressBar = (ProgressBar) DashboardActivity.this.findViewById(R.id.dashboard_progressbar);
 			progressBar.setVisibility(View.VISIBLE);
 		}
 
@@ -1718,7 +1715,7 @@ public class DashboardActivity extends Activity {
 		@Override
 		protected void onPostExecute(String res) {
 			progressBar.setVisibility(View.GONE);
-			Utils.reload(sDashboardActivity);
+			Utils.reload(DashboardActivity.this);
 			
 			if (res.equals("e1")) {
 				//JSONException e1
@@ -1901,7 +1898,7 @@ public class DashboardActivity extends Activity {
 	public static int refreshlist() {
 		entries = 0;
 		if (isDashboardRunning) {
-			sDashboardActivity.runOnUiThread(new Runnable() {
+			sDashboard.runOnUiThread(new Runnable() {
 				public void run() {
 
 					clearAdapterAndLists();
@@ -1912,7 +1909,7 @@ public class DashboardActivity extends Activity {
 					buildList();
 
 					if (da.isEmpty()) {
-						showEmptyListInfo(sDashboardActivity);
+						showEmptyListInfo(sDashboard);
 					}
 
 					// refresh the list view
@@ -2164,7 +2161,7 @@ public class DashboardActivity extends Activity {
 			tagYear = "";
 		}
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	    LayoutInflater inflater0 = getLayoutInflater();
 	    final View id3s = inflater0.inflate(R.layout.dialog_edit_id3, null);
 	    
@@ -2633,7 +2630,7 @@ public class DashboardActivity extends Activity {
 
 	public void extractAudioOnly(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioOnly");
-		AlertDialog.Builder builder0 = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder builder0 = new AlertDialog.Builder(sDashboard);
 		
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
 		builder0.setTitle(title[1]);
@@ -2676,7 +2673,7 @@ public class DashboardActivity extends Activity {
 
 	public void extractAudioAndConvertToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioAndConvertToMp3");
-		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 		
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
 		builder.setTitle(title[2]);
@@ -2684,8 +2681,14 @@ public class DashboardActivity extends Activity {
 		LayoutInflater inflater1 = getLayoutInflater();
 		
 		final View view1 = inflater1.inflate(R.layout.dialog_audio_extr_mp3_conv, null);
+		
+		ScrollView sv = new ScrollView(sDashboard);
+		sv.setLayoutParams(new LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT, 
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+		sv.addView(view1);
 
-		builder.setView(view1)
+		builder.setView(sv)
 		       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		           @Override
 		           public void onClick(DialogInterface dialog, int id) {
@@ -2714,15 +2717,21 @@ public class DashboardActivity extends Activity {
 
 	public void convertAudioToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("convertAudioToMp3");
-		AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 		
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries_audio);
 		builder.setTitle(title[1]);
 		
 		LayoutInflater inflater0 = getLayoutInflater();
 		final View view2 = inflater0.inflate(R.layout.dialog_audio_mp3_conv, null);
+		
+		ScrollView sv = new ScrollView(sDashboard);
+		sv.setLayoutParams(new LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT, 
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+		sv.addView(view2);
 
-		builder.setView(view2)
+		builder.setView(sv)
 		       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		           @Override
 		           public void onClick(DialogInterface dialog, int id) {
@@ -2779,7 +2788,7 @@ public class DashboardActivity extends Activity {
 		}
 		
 		if (audioOnlyFile != null && audioOnlyFile.exists()) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(boxCtw);
+			AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 			
 			String[] title = getResources().getStringArray(R.array.dashboard_click_entries_vo);
 			builder.setTitle(title[1]);

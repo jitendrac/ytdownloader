@@ -202,6 +202,7 @@
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
 	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
     <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg 이 설치되지 않았거나 활성화되지 않았습니다:</string>
 	<string name="ffmpeg_not_enabled_msg">설정화면으로 가시겠습니까?</string>

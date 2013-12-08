@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.5 - Dic XX 2013
+        \n v3.5 - Dic 08 2013
         \n-----------------------------------
         \n[x] Dashboard option to mux video-only and audio-only streams
         \n[x] new FFmpeg builds from latest v2.1 (with NEON support) available for download
         \n[x] option to choose between Settings or Dashboard as app entry-point activity
         \n[x] "Send" option into Dashboard items long-click menu
+        \n[x] all "in-progress" operations visible from Dashboard
         \n[x] Android 4.4 target and many optimizations
         \n
         \n v3.4.1 - Nov 19 2013

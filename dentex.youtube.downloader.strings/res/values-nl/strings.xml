@@ -203,6 +203,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     
 	<string name="ao_not_found">Geen gepaste enkel-audio stream gevonden</string>
 	<string name="remove_ao_vo">Verwijder enkel-video en enkel-audio bestanden nadien\(geen bevestiging!)</string>
+	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
     <string name="share_file_via">Deel dit bestand via</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg niet geïnstalleerd of ingeschakeld:</string>
 	<string name="ffmpeg_not_enabled_msg">Instellingen openen?</string>

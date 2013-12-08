@@ -202,7 +202,8 @@
     </string-array>
     
 	<string name="ao_not_found">Δε βρέθηκε κατάλληλη ροή ήχου</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="remove_ao_vo">Διαγραφή μόνο-βίντεο και μόνο-ήχου αρχείων μετά\n(χωρίς επιβεβαίωση!)</string>
+	<string name="ffmpeg_new_v_required">Χρειάζεται νέα έκδοση του FFmpeg. Κατέβασμα τώρα;</string>
     <string name="share_file_via">Κοινή χρήση αρχείου με:</string>
 	<string name="ffmpeg_not_enabled_title">Το FFmpeg δεν είναι εγκατεστημένο ή ενεργοποιημένο:</string>
 	<string name="ffmpeg_not_enabled_msg">Άνοιγμα ρυθμίσεων;</string>

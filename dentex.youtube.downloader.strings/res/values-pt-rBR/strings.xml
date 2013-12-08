@@ -203,6 +203,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
 	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ffmpeg_new_v_required">Uma nova versão do FFmpeg é necessária. Deseja baixar agora?</string>
     <string name="share_file_via">Compartilhe este arquivo via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg não instalado ou ativado:</string>
 	<string name="ffmpeg_not_enabled_msg">Abrir definições?</string>

@@ -78,7 +78,7 @@ Verzeichnis, fügen den Befehl (über die Menü-Taste) ein und drücken ENTER.</
     </string-array>
     
     <string name="link_copied">Link in Zwischenablage kopiert</string>
-    <string name="share_link_via">Link teilen</string>
+    <string name="share_link_via">Link teilen mit</string>
     
     <string name="filter_header_reset">Filter zurücksetzen</string>
     <string name="filter_view_all">Alles anzeigen</string>
@@ -202,8 +202,9 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     </string-array>
     
 	<string name="ao_not_found">Kein passender Ton-Stream gefunden!</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
-    <string name="share_file_via">Datei teilen mit:</string>
+	<string name="remove_ao_vo">Nur-Video- und Nur-Ton-Dateien anschließend löschen (Ohne Bestätigung!)</string>
+	<string name="ffmpeg_new_v_required">Neue FFmpeg-Version wird benötigt. Jetzt herunterladen?</string>
+    <string name="share_file_via">Datei teilen mit</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nicht installiert oder aktiviert!</string>
 	<string name="ffmpeg_not_enabled_msg">Einstellungen offnen?</string>
 	<string name="remove_video">Videodatei-Löschung nach Tonspur-Extraktion (Ohne Bestätigung!)</string>
@@ -221,7 +222,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	    <item>Verschieben</item>
         <item>Umbenennen</item>
         <item>Video erneut herunterladen</item>
-        <item>Absenden</item>
+        <item>Teilen</item>
         <item>Vom Dashboard entfernen</item>
         <item>Datei entfernen und löschen</item>
         <item>Pause/Wiedergeben</item>

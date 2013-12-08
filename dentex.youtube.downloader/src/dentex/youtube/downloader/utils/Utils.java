@@ -74,7 +74,6 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -106,6 +105,24 @@ public class Utils {
     	}
 	}
     
+	public static int selectThemedInfoIcon() {
+		String theme = YTD.settings.getString("choose_theme", "D");
+    	if (theme.equals("D")) {
+    		return R.drawable.ic_dialog_info_holo_dark;
+    	} else {
+    		return R.drawable.ic_dialog_info_holo_light;
+    	}
+	}
+	
+	public static int selectThemedAlertIcon() {
+		String theme = YTD.settings.getString("choose_theme", "D");
+    	if (theme.equals("D")) {
+    		return R.drawable.ic_dialog_alert_holo_dark;
+    	} else {
+    		return R.drawable.ic_dialog_alert_holo_light;
+    	}
+	}
+	
     public static void langInit(Context context) {
     	String lang  = YTD.settings.getString("lang", "default");
         Locale locale;
@@ -267,7 +284,7 @@ public class Utils {
 				return YTD.ARMv7a_NEON;
 			} else {
 				Utils.logger("d", " -> v7a NORMAL", DEBUG_TAG);
-				return YTD.ARMv7a_NORMAL;
+				return YTD.ARMv7a;
 			}
 		} else if (cpuAbi.equals("armeabi")) {
 			Utils.logger("d", " -> v5te", DEBUG_TAG);
@@ -277,9 +294,9 @@ public class Utils {
 		}
 	}
 	
-	public static void offerDevMail(final Context ctx, ContextThemeWrapper tw) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(tw);
-		adb.setIcon(android.R.drawable.ic_dialog_alert);
+	public static void offerDevMail(final Context ctx) {
+		AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
+		adb.setIcon(Utils.selectThemedAlertIcon());
 		adb.setTitle(ctx.getString(R.string.ffmpeg_device_not_supported));
 		adb.setMessage(ctx.getString(R.string.ffmpeg_support_mail));
 		
@@ -355,10 +372,10 @@ public class Utils {
         }
 	}
 	
-	public static void notifyFfmpegNotInstalled(final Activity act, ContextThemeWrapper tw) {
+	public static void notifyFfmpegNotInstalled(final Activity act) {
 		Utils.logger("w", "FFmpeg not installed/enabled", DEBUG_TAG);
 		BugSenseHandler.leaveBreadcrumb("notifyFfmpegNotInstalled");
-		AlertDialog.Builder adb = new AlertDialog.Builder(tw);
+		AlertDialog.Builder adb = new AlertDialog.Builder(act);
 		adb.setTitle(act.getString(R.string.ffmpeg_not_enabled_title));
 		adb.setMessage(act.getString(R.string.ffmpeg_not_enabled_msg));
 		
