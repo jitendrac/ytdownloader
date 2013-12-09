@@ -1,33 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
     <title>Ytdownloader by dentex</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/dentex/ytdownloader">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/dentex/ytdownloader/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/dentex/ytdownloader/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <header>
-      <div class="container">
-        <h1>Ytdownloader</h1>
-        <h2>YouTube Downloader for Android</h2>
+    <div class="wrapper">
 
-        <section id="downloads">
-          <a href="https://github.com/dentex/ytdownloader/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/dentex/ytdownloader/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/dentex/ytdownloader" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+      <section>
+        <div id="title">
+          <h1>Ytdownloader</h1>
+          <p>YouTube Downloader for Android</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/dentex">dentex</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-    <div class="container">
-      <section id="main_content">
         <h1>
 <a name="youtube-downloader-for-android-_-by-dentex" class="anchor" href="#youtube-downloader-for-android-_-by-dentex"><span class="octicon octicon-link"></span></a>YouTube Downloader for Android _ by dentex</h1>
 
@@ -36,11 +46,11 @@ For Android 4+ </p>
 
 <p><em>Free and without Ads</em></p>
 
-<p><code>versionCode="70"</code></p>
+<p><code>versionCode="71"</code></p>
 
-<p><code>versionName="3.4.1"</code></p>
+<p><code>versionName="3.5"</code></p>
 
-<p>MD5 checksum: <code>8bf223b29b43fde7070aa90ccda5d829</code> dentex.youtube.downloader_v3.4.1.apk</p>
+<p>MD5 checksum: <code>47b79f83d384fb25a4e094fd760655a4</code> dentex.youtube.downloader_v3.5.apk</p>
 
 <h1>
 <a name="disclaimer" class="anchor" href="#disclaimer"><span class="octicon octicon-link"></span></a>DISCLAIMER</h1>
@@ -180,7 +190,19 @@ Attribution 3.0 Unported" license (CC BY).
 <h1>
 <a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>CHANGELOG</h1>
 
-<pre><code> v3.4.1 - Nov 19 2013 
+<pre><code> v3.5 - Dic 09 2013 
+----------------------------------- 
+[x] Dashboard option to mux video-only and audio-only streams 
+[x] new FFmpeg builds from latest v2.1 (with NEON support) available for download 
+[x] option to choose between Settings or Dashboard as app entry-point-activity 
+[x] "Send" option into Dashboard items long-click menu 
+[x] all "in-progress" operations visible from Dashboard 
+[x] fixed Dark and Light themes appearance 
+[x] Android 4.4 target and many other optimizations 
+[x] Czech translation 
+
+ v3.4.1 - Nov 19 2013 
+----------------------------------- 
 [x] encrypted signature patch (7) 
 [x] layout fix for Samsung GT-P5110 and GT-N8000 devices 
 
@@ -250,7 +272,7 @@ Attribution 3.0 Unported" license (CC BY).
  v2.7 - Aug 20 2013 
 ----------------------------------- 
 [x] auto-patch experimental signature changes 
-[x] JB 4.3 target 
+[x] Android 4.3 target 
 
  v2.6.2 - Aug 08 2013 
 ----------------------------------- 
@@ -414,7 +436,7 @@ Attribution 3.0 Unported" license (CC BY).
 
  v1.5.1 - Feb 24 2013 
 ----------------------------------- 
-[x] fixed crash if no net is avail. 
+[x] fixed crash if no net is available 
 [x] fixed crash on bad video list 
 
  v1.5 - Feb 22 2013 
@@ -463,12 +485,12 @@ Attribution 3.0 Unported" license (CC BY).
 ----------------------------------- 
 [x] FIRST PUBLIC RELEASE 
 [x] send download via SSH 
-[x] JB compatibility 
 [x] SSH send how-to dialog 
 [x] standard download locations 
 [x] file-chooser for download dest. 
 [x] add quality suffix options 
-[x] file renaming options
+[x] file renaming options 
+-----------------------------------
 </code></pre>
 
 <h1>
@@ -494,11 +516,12 @@ Attribution 3.0 Unported" license (CC BY).
     - for a long time (around 20 or 30 minutes)
     AND 
     - without having the Dashboard Activity to the front
-    may be forced to PAUSE. In this case a manual resume is needed
+    may be forced to PAUSE. In this case a manual resume is needed.
 </code></pre>
       </section>
-    </div>
 
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
