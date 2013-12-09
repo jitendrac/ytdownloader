@@ -8,13 +8,10 @@
 export NDK=${HOME}/Scaricati/android-ndk-r9b
 
 SYSROOT=$NDK/platforms/android-19/arch-arm
-#SYSROOTx86=$NDK/platforms/android-19/arch-x86
 
 TOOLCHAIN=`echo $NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64`
-#TOOLCHAINx86=`echo $NDK/toolchains/x86-4.8/prebuilt/linux-x86_64`
 
 export PATH=$TOOLCHAIN/bin:$PATH
-#export PATH=$TOOLCHAINx86/bin:$PATH
 
 #=======================================================================
 # build lame based on content from 
@@ -26,9 +23,7 @@ $NDK/ndk-build
 
 # copy libmp3lame files into android-ndk appropriate folders, to let the ffmpeg configure script find them
 cp -rn jni/lame $SYSROOT/usr/include
-#cp -rn jni/lame $SYSROOTx86/usr/include
 cp -n libs/armeabi-v7a/liblame.so $SYSROOT/usr/lib/libmp3lame.so
-#cp -n libs/x86/libmp3lame.so $SYSROOTx86/usr/lib/libmp3lame.so
 
 cd ..
 

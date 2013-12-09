@@ -158,7 +158,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="json_status_in_progress">Em progresso</string>
 	<string name="json_status_paused">Em pausa</string>
 	<string name="json_status_imported">Importado</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_queued">Enfileirado</string>
 	<string name="menu_search">pesquisar&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restaurar</string>
@@ -198,11 +198,11 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     
 	<string-array name="dashboard_click_entries_vo">
 	    <item>Abrir</item>
-        <item>Add audio stream (already downloaded)</item>
+        <item>Adicionar stream de áudio (já baixado)</item>
     </string-array>
     
-	<string name="ao_not_found">No suitable audio-only stream found</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ao_not_found">Nenhum app adequado foi encontrado para stream de áudio apenas</string>
+	<string name="remove_ao_vo">Deletar arquivos apenas vídeo e apenas de áudio após\n(sem confirmação!)</string>
 	<string name="ffmpeg_new_v_required">Uma nova versão do FFmpeg é necessária. Deseja baixar agora?</string>
     <string name="share_file_via">Compartilhe este arquivo via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg não instalado ou ativado:</string>
@@ -310,7 +310,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="remove_video_title">Remover o vídeo</string>
     
     <string name="enable_adaptive_title">Obter streams secundárias</string>
-    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_summary">Adicionar stream de apenas vídeo ou apenas áudio (se disponível) para a lista de vídeo</string>
     
 <!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
 <!--     <string-array name="vo_download_method_entries"> -->
@@ -335,7 +335,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
         <item>Nenhum</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">Atividade de ponto de entrada</string>
     
     <!-- -->
     <string name="settings_cat_updates">Atualizações</string>

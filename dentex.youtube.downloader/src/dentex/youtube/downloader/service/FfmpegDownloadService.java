@@ -159,7 +159,7 @@ public class FfmpegDownloadService extends Service {
 						
 						String md5 = null;
 						if (cpuVers.equals(YTD.ARMv7a_NEON)) 	md5 = "ed3ac5269496b2625d26471cf57f15d0";
-						if (cpuVers.equals(YTD.ARMv7a)) 	md5 = "deadfb4746e4cdf47aa2bcf7b55d718b";
+						if (cpuVers.equals(YTD.ARMv7a)) 		md5 = "deadfb4746e4cdf47aa2bcf7b55d718b";
 						if (cpuVers.equals(YTD.ARMv5te)) 		md5 = "ecd4372e667feb2b2971dbe361a3fe40";
 						
 						if (Utils.checkMD5(md5, src)) {

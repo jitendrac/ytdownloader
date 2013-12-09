@@ -151,6 +151,7 @@ public class Utils {
 			lang.equals("pt_BR") || 
 			lang.equals("pt_PT") || 
 			lang.equals("tr_TR") || 
+			lang.equals("cs_CZ") || 
 			lang.equals("zh_CN") ||
 			lang.equals("zh_HK") ||
 			lang.equals("zh_TW")) 
@@ -283,7 +284,7 @@ public class Utils {
 				Utils.logger("d", " -> v7a NEON", DEBUG_TAG);
 				return YTD.ARMv7a_NEON;
 			} else {
-				Utils.logger("d", " -> v7a NORMAL", DEBUG_TAG);
+				Utils.logger("d", " -> v7a", DEBUG_TAG);
 				return YTD.ARMv7a;
 			}
 		} else if (cpuAbi.equals("armeabi")) {

@@ -67,9 +67,9 @@ public class YTD extends Application implements QueueThreadListener{
 	public static String BugsenseApiKey = "00000000";				// actual api key
 	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false;	// false
 	
-	public static int SIG_HASH = -1892118308; // final string
-	//public static int SIG_HASH = -118685648;  // dev test: desktop
-	//public static int SIG_HASH = 1922021506;  // dev test: laptop
+	public static int SIG_HASH = -1892118308;   					// final string
+	//public static int SIG_HASH = -118685648;  					// dev test: desktop
+	//public static int SIG_HASH = 1922021506;  					// dev test: laptop
 	// **********************************
 	
 	public static final String JSON_FILENAME = "dashboard.json";
@@ -102,7 +102,7 @@ public class YTD extends Application implements QueueThreadListener{
 	public static String FFMPEG_CURRENT_V = "_v2.1";
 	
 	public static String ARMv7a_NEON = "armv7a-neon";
-	public static String ARMv7a = "armv7";
+	public static String ARMv7a = "armv7a";
 	public static String ARMv5te = "armv5te";
 	public static String UNSUPPORTED_CPU;
 	

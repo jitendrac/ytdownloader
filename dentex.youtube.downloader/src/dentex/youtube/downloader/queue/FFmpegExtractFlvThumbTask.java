@@ -59,8 +59,7 @@ public class FFmpegExtractFlvThumbTask implements Runnable {
 
 		@Override
 		public void preProcess() {
-			// TODO Auto-generated method stub
-			
+			// unused
 		}
 	}
 }
