@@ -7,7 +7,7 @@
     <string name="title_activity_donate">Пожертвования</string>
     <string name="title_activity_tutorials">Руководства</string>
     <string name="title_activity_translators_show">Переводчики</string>
-    <string name="title_activity_dashboard">Инструм. панель</string>
+    <string name="title_activity_dashboard">Инструментальная панель</string>
 
     <!-- ### ShareActivity ### -->
 
@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Отмена</string>
     <string name="wait">Пожалуйста, подождите&#8230;</string>
     <string name="no_downloads_sys_app">Системное приложение \"Загрузки\" не найдено.</string>
-    <string name="ytd_useless">YTD не может загрузить файлы на это устройство.</string>
     <string name="invalid_url">Невозможно открыть веб-страницу. Возможно, неверный адрес.</string>
     <string name="invalid_url_short">Невозможно открыть веб-страницу. </string>
     <string name="invalid_response">Неверный ответ HTTP-сервера.</string>
@@ -159,6 +158,7 @@
 	<string name="json_status_in_progress">В процессе</string>
 	<string name="json_status_paused">Пауза</string>
 	<string name="json_status_imported">Импортировано</string>
+	<string name="json_status_queued">В очереди</string>
 	<string name="menu_search">поиск&#8230;</string>
 	<string name="menu_backup">Резервное копирование</string>
 	<string name="menu_restore">Восстановление</string>
@@ -182,7 +182,7 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Oткрыть</item>
-	    <item>Только извлечь аудио</item>
+	    <item>Извлечь аудио</item>
         <item>Извлечь и кодировать аудио в mp3</item>
     </string-array>
     
@@ -191,6 +191,20 @@
         <item>Извлечь и кодировать аудио в mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Открыть</item>
+        <item>Извлечь и кодировать аудио в mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Открыть</item>
+        <item>Добавить поток аудио (уже загруженный)</item>
+    </string-array>
+    
+	<string name="ao_not_found">Подходящих аудиопотоков не найдено</string>
+	<string name="remove_ao_vo">Удалить потом только видео и только аудио файлыn(без подтверждения!)</string>
+	<string name="ffmpeg_new_v_required">Необходима новая версия FFmpeg. Загрузить сейчас?</string>
+    <string name="share_file_via">Поделиться файлом с помощью:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg не установлен или не включён:</string>
 	<string name="ffmpeg_not_enabled_msg">Открыть настройки?</string>
 	<string name="remove_video">Удалить видео после извлечения аудио (без подтверждения)</string>
@@ -201,14 +215,14 @@
 	<string name="id3_title">Название</string>
 	<string name="id3_year">Год</string>
 	<string name="id3_genre">Жанр</string>
-	
 	<string name="audio_extr_info">Включённый поток аудио:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Копировать</item>
 	    <item>Переместить</item>
         <item>Переименовать</item>
         <item>Повторная загрузка видео</item>
+        <item>Отправить</item>
         <item>Убрать с панели</item>
         <item>Убрать и удалить файл</item>
         <item>Пауза/возобновить</item>
@@ -254,10 +268,10 @@
 \n\nЗапуск приложения осуществляется кнопкой  \'поделиться\' в приложении YouTube, при просмотре видео.
 \n\nПосле этого выберите \'YouTube Downloader\' и получите информацию по дальнейшему использованию.
 \n\nМожете также использовать текстовую ссылку YouTube в любом другом приложении, например, в браузере.</string>
-    <string name="general_info_title">Включить общее руководство</string>
+    <string name="general_info_title">Общее руководство</string>
     <string name="general_info_summary">Показывать общее руководство при запуске</string>
     <string name="show_again_checkbox">Показать в следующий раз</string>
-    <string name="ssh_info_title">Включить руководство по SSH</string>
+    <string name="ssh_info_title">Руководство по SSH</string>
     <string name="ssh_info_summary">Показывать быстрый совет об удалённой загрузке через SSH</string>
     <string name="audio_tutorial_title">Руководство по извлечению аудио</string>
     <string name="audio_tutorial_summary">Открыть краткое руководство по извлечению аудио</string>
@@ -265,8 +279,8 @@
     <!-- -->
     <string name="settings_cat_folder">Папка загрузок</string>
     <string name="standard_location_title">Выбрать стандартную папку</string>
-    <string name="chooser_swap_title">Переключить выбор</string>
-    <string name="chooser_location_title">Открыть выбор файла</string>
+    <string name="chooser_swap_title">Проводник</string>
+    <string name="chooser_location_title">Открыть файл-менеджер</string>
     <string name="chooser_location_summary">Длительное нажатие для выбора папки</string>
 	
     <!-- -->
@@ -278,7 +292,7 @@
 
     <!-- -->
     <string name="settings_cat_advanced">Дополнительно</string>
-    <string name="enable_advanced_features_title">Включить дополнительные функции</string>
+    <string name="enable_advanced_features_title">Дополнительные функции</string>
     <string name="enable_advanced_features_summary">Скачать \"плагин\" FFmpeg</string>
     <string name="mp3_bitrate_title">Битрейт кодирования mp3:</string>
     
@@ -297,7 +311,14 @@
     
     <string name="enable_adaptive_title">Дополнительные потоки</string>
     <string name="enable_adaptive_summary">Добавить только видео и/или только аудио потоки (если доступно) к списку видео</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Уведомления</string>
     
@@ -312,7 +333,9 @@
         <item>Вибрация</item>
         <item>Свет</item>
         <item>Ничего</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Начальное действие</string>
     
     <!-- -->
     <string name="settings_cat_updates">Обновления</string>
@@ -342,18 +365,18 @@
     <string name="share_message">#YouTubeDownloader
 \nБесплатное приложение Андроид с открытым исходным кодом зля загрузки видео с You Tube!
 \nhttps://sourceforge.net/projects/ytdownloader/files/</string>
-	<string name="help_translate_title">Помогите с переводом приложения</string>
+	<string name="help_translate_title">Помогите с переводом</string>
     <string name="xda_title">Тема на XDA</string>
     
     <!-- -->
     <string name="settings_cat_ssh">SSH</string>
-    <string name="connectbot_flavour_title">Версия ConnectBot version для использования</string>
+    <string name="connectbot_flavour_title">Версия ConnectBot</string>
 	<string name="connectbot_flavour_dialog_title">Выбрать адрес ConnectBot для отправки видео через SSH</string>
-	<string name="enable_connectbot_short_cmd_title">Включить короткие команды SSH</string>
+	<string name="enable_connectbot_short_cmd_title">Короткие команды SSH</string>
 	<string name="enable_connectbot_short_cmd_summary">Использовать более короткие, но быстрые команды для
 вставки в удалённую оболочку (работает ТОЛЬКО если компьютер получателя пользуется той же LAN)</string>
-	<string name="ssh_to_longpress_menu_title">Отправка через SSH в меню длительного нажатия</string>
-	<string name="ssh_to_longpress_menu_summary">Поместить действие \"Послать через SSH\" в меню длительного нажатия в списке видео</string>
+	<string name="ssh_to_longpress_menu_title">Отправка через SSH в меню</string>
+	<string name="ssh_to_longpress_menu_summary">Поместить действие \"Отправить через SSH\" в меню длительного нажатия в списке видео</string>
 	
     <!-- -->
 	<string name="settings_cat_system">Система</string>

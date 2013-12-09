@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dentex.youtube.downloader"
     android:installLocation="auto"
-    android:versionCode="70"
-    android:versionName="3.4.1" >
+    android:versionCode="71"
+    android:versionName="3.5" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -78,15 +78,17 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name="dentex.youtube.downloader.Launcher" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="dentex.youtube.downloader.SettingsActivity"
             android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/title_activity_share" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="dentex.youtube.downloader.menu.AboutActivity"

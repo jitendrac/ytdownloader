@@ -28,8 +28,11 @@ package dentex.youtube.downloader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.Application;
@@ -44,6 +47,7 @@ import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.WindowManager;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -60,12 +64,12 @@ public class YTD extends Application implements QueueThreadListener{
 
 	// *** development configurations *** // TODO					// for release set to:
 	// ================================== // ===========			// ==================
-	public static String BugsenseApiKey = "00000000"; 				// actual api key
-	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false; // false
+	public static String BugsenseApiKey = "00000000";				// actual api key
+	public static boolean SHOW_ITAGS_AND_NO_SIZE_FOR_DUBUG = false;	// false
 	
-	public static int SIG_HASH = -1892118308; // final string
-	//public static int SIG_HASH = -118685648;  // dev test: desktop
-	//public static int SIG_HASH = 1922021506;  // dev test: laptop
+	public static int SIG_HASH = -1892118308;   					// final string
+	//public static int SIG_HASH = -118685648;  					// dev test: desktop
+	//public static int SIG_HASH = 1922021506;  					// dev test: laptop
 	// **********************************
 	
 	public static final String JSON_FILENAME = "dashboard.json";
@@ -77,14 +81,17 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_POS = "pos";
 	public static final String JSON_DATA_TYPE = "type";
 	public static final String JSON_DATA_TYPE_V = "VIDEO";
+	public static final String JSON_DATA_TYPE_V_O = "VIDEO-ONLY";
 	public static final String JSON_DATA_TYPE_A_E = "AUDIO-EXTR";
 	public static final String JSON_DATA_TYPE_A_M = "AUDIO-MP3";
+	public static final String JSON_DATA_TYPE_A_O = "AUDIO-ONLY";
 	public static final String JSON_DATA_STATUS = "status";
 	public static final String JSON_DATA_STATUS_COMPLETED = "COMPLETED";
 	public static final String JSON_DATA_STATUS_IN_PROGRESS = "IN_PROGRESS";
 	public static final String JSON_DATA_STATUS_FAILED = "FAILED";
 	public static final String JSON_DATA_STATUS_PAUSED = "PAUSED";
 	public static final String JSON_DATA_STATUS_IMPORTED = "IMPORTED";
+	public static final String JSON_DATA_STATUS_QUEUED = "QUEUED";
 	public static final String JSON_DATA_PATH = "path";
 	public static final String JSON_DATA_FILENAME = "filename";
 	public static final String JSON_DATA_BASENAME = "basename";
@@ -92,6 +99,12 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_SIZE = "size";
 	
 	public static final String ffmpegBinName = "ffmpeg";
+	public static String FFMPEG_CURRENT_V = "_v2.1";
+	
+	public static String ARMv7a_NEON = "armv7a-neon";
+	public static String ARMv7a = "armv7a";
+	public static String ARMv5te = "armv5te";
+	public static String UNSUPPORTED_CPU;
 	
 	public static SharedPreferences settings;
 	public static SharedPreferences videoinfo;
@@ -111,7 +124,8 @@ public class YTD extends Application implements QueueThreadListener{
 	public static File dir_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 	public static File dir_Movies = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
 	
-	public static int uid;
+	//public static int uid;
+	public static Map<Long, Integer> mFFmpegPercentMap = new HashMap<Long, Integer>();
 
 	public static final String THUMBS_FOLDER = "thumbs";
 	public static double reduceFactor;
@@ -120,6 +134,41 @@ public class YTD extends Application implements QueueThreadListener{
 	public static Handler handler;
 	
 	public static Drawable slMenuOrigBkg;
+	
+	public static final String VIEW_ALL_STRING = "";
+	public static final int VIEW_ALL = -1;
+	
+	public static final int AO_FILTER = 10;
+	public static final int VO_FILTER = 9;
+	public static final int _3D_FILTER = 8;
+	
+	public static final int SD_FILTER = 7;
+	public static final int MD_FILTER = 6;
+	public static final int LD_FILTER = 5;
+	public static final int HD_FILTER = 4;
+
+	public static final int _3GP_FILTER = 3;
+	public static final int FLV_FILTER = 2;
+	public static final int WEBM_FILTER = 1;
+	public static final int MP4_FILTER = 0;
+	
+	public static Integer[] iMp4 = { 18, 22, 37, 38, 59, 78, 82, 83, 84, 133, 134, 135, 136, 137, 138, 160, 264 };
+	public static Integer[] iWebm = { 43, 44, 45, 46, 100, 101, 102, 242, 243, 244, 245, 246, 247, 248 };
+	public static Integer[] iFlv = { 5, 6, 34, 35 };
+	public static Integer[] i3gp = { 17, 36 };
+	
+	public static Integer[] iHd = { 22, 37, 38, 45, 46, 84, 102, 136, 137, 138, 247, 248, 264 };
+	public static Integer[] iLd = { 35, 44, 59, 85, 135, 244, 245, 246 };
+	public static Integer[] iMd = { 18, 34, 43, 78, 82, 100, 101, 134, 243 };
+	public static Integer[] iSd = { 5, 6, 17, 36, 83, 133 };
+	
+	public static Integer[] i3d = { 82, 83, 84, 85, 100, 101, 102 };
+	
+	public static Integer[] iVo = { 133, 134, 135, 136, 137, 138, 160, 242, 243, 244, 245, 246, 247, 248, 264 };
+	public static Integer[] iAo = { 139, 140, 141, 171, 172 };
+	
+	public static List<Integer> iVoList = Arrays.asList(iVo);
+	public static List<Integer> iAoList = Arrays.asList(iAo);
 	
 	@Override
 	public void onCreate() {
@@ -148,7 +197,14 @@ public class YTD extends Application implements QueueThreadListener{
 		
 		mBuilder =  new NotificationCompat.Builder(ctx);
 		mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-
+		
+		/*Log.i(DEBUG_TAG, 
+				"\n --------------- " +
+				Utils.getCpuInfo() + 
+				"\n --------------- "
+				+ "\nNeon support: " + Utils.neonCpu() + 
+				"\n --------------- ");*/
+		
 		super.onCreate();
 	}
 
@@ -204,7 +260,7 @@ public class YTD extends Application implements QueueThreadListener{
 	}
 
 	public static void NoDownProvPopUp(Activity act) {
-		PopUps.showPopUp(act.getString(R.string.no_downloads_sys_app), act.getString(R.string.ytd_useless), "alert", act);
+		PopUps.showPopUp(act.getString(R.string.error), act.getString(R.string.no_downloads_sys_app), "error", act);
 	}
 	
     public static void NotificationHelper(Context ctx) {
@@ -214,8 +270,7 @@ public class YTD extends Application implements QueueThreadListener{
     	pt2 = ctx.getString(R.string.notification_downloading_pt2);
     	
     	Intent notificationIntent = new Intent(ctx, DashboardActivity.class);
-    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-    					  .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     	
     	PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
     	
@@ -260,6 +315,7 @@ public class YTD extends Application implements QueueThreadListener{
 
     @Override
 	public void handleQueueThreadUpdate() {
+    	
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
@@ -277,5 +333,74 @@ public class YTD extends Application implements QueueThreadListener{
 				}
 			}
 		});
+	}
+    
+    public static CharSequence getListFilterConstraint(int c) {
+		//0
+		List<Integer> iMp4List = Arrays.asList(iMp4);
+		//1
+		List<Integer> iWebmList = Arrays.asList(iWebm);
+		//2
+		List<Integer> iFlvList = Arrays.asList(iFlv);
+		//3
+		List<Integer> i3gpList = Arrays.asList(i3gp);
+		
+		//4
+		List<Integer> iHdList = Arrays.asList(iHd);
+		//5
+		List<Integer> iLdList = Arrays.asList(iLd);
+		//6
+		List<Integer> iMdList = Arrays.asList(iMd);
+		//7
+		List<Integer> iSdList = Arrays.asList(iSd);
+		
+		//8
+		List<Integer> i3dList = Arrays.asList(i3d);
+		
+		//9
+		List<Integer> iVoList = Arrays.asList(iVo);
+		//10
+		List<Integer> iAoList = Arrays.asList(iAo);
+		
+		SparseArray<List<Integer>> filtersMap = new SparseArray<List<Integer>>();
+		
+		filtersMap.put(MP4_FILTER, iMp4List);
+		filtersMap.put(WEBM_FILTER, iWebmList);
+		filtersMap.put(FLV_FILTER, iFlvList);
+		filtersMap.put(_3GP_FILTER, i3gpList);
+		filtersMap.put(HD_FILTER, iHdList);
+		filtersMap.put(LD_FILTER, iLdList);
+		filtersMap.put(MD_FILTER, iMdList);
+		filtersMap.put(SD_FILTER, iSdList);
+		filtersMap.put(_3D_FILTER, i3dList);
+		filtersMap.put(VO_FILTER, iVoList);
+		filtersMap.put(AO_FILTER, iAoList);
+		
+		if (c == -1) return VIEW_ALL_STRING;
+		
+		CharSequence constraint = null;
+		List<Integer> selectedMap = filtersMap.get(c);
+		
+		for (int i = 0; i < selectedMap.size(); i++) {
+			if (constraint == null) { 
+				constraint = String.valueOf(selectedMap.get(i));
+			} else {
+				constraint = constraint + "/" + selectedMap.get(i);
+			}
+		}
+		//Utils.logger("i", "ListFilterConstraint: " + constraint, DEBUG_TAG);
+		return constraint;
+	}
+	
+	public static CharSequence getMultipleListFilterConstraints(int[] c) {
+		CharSequence constraint = null;
+		for (int i = 0 ; i < c.length; i++) {
+			if (constraint == null) { 
+				constraint = getListFilterConstraint(c[i]);
+			} else {
+				constraint = constraint + "/" + getListFilterConstraint(c[i]);
+			}
+		}
+		return constraint;
 	}
 }

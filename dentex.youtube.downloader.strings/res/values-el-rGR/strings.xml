@@ -23,7 +23,6 @@
     <string name="dialogs_negative">&#913;&#954;&#973;&#961;&#969;&#963;&#951;</string>
     <string name="wait">Παρακαλώ περιμένετε&#8230;</string>
     <string name="no_downloads_sys_app">Δε βρέθηκε η εφαρμογή συστήματος \"Λήψεις\".</string>
-    <string name="ytd_useless">Το YTD δεν μπορεί να κατεβάσει αρχεία σε αυτή τη συσκευή.</string>
     <string name="invalid_url">Αδυναμία ανάκτησης ιστοσελίδας. Η URL μπορεί να μην είναι έγκυρη.</string>
     <string name="invalid_url_short">Αδυναμία ανάκτησης ιστοσελίδας.</string>
     <string name="invalid_response">Μη έγκυρη απόκριση διακομιστή HTTP.</string>
@@ -159,6 +158,7 @@
 	<string name="json_status_in_progress">Σε εξέλιξη</string>
 	<string name="json_status_paused">Παύση</string>
 	<string name="json_status_imported">Εισήχθη</string>
+	<string name="json_status_queued">Στην ουρά</string>
 	<string name="menu_search">αναζήτηση&#8230;</string>
 	<string name="menu_backup">Λήψη αντιγράφου ασφαλείας</string>
 	<string name="menu_restore">Επαναφορά</string>
@@ -182,7 +182,7 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Άνοιγμα</item>
-	    <item>Μόνο εξαγωγή ήχου</item>
+	    <item>Εξαγωγή ήχου</item>
         <item>Εξαγωγή και κωδικοποίηση ήχου σε mp3</item>
     </string-array>
     
@@ -191,6 +191,20 @@
         <item>Κωδικοποίηση σε mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Άνοιγμα</item>
+        <item>Εξαγωγή και κωδικοποίηση ήχου σε mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Άνοιγμα</item>
+        <item>Προσθήκη ροής ήχου (ήδη κατεβασμένης)</item>
+    </string-array>
+    
+	<string name="ao_not_found">Δε βρέθηκε κατάλληλη ροή ήχου</string>
+	<string name="remove_ao_vo">Διαγραφή μόνο-βίντεο και μόνο-ήχου αρχείων μετά\n(χωρίς επιβεβαίωση!)</string>
+	<string name="ffmpeg_new_v_required">Χρειάζεται νέα έκδοση του FFmpeg. Κατέβασμα τώρα;</string>
+    <string name="share_file_via">Κοινή χρήση αρχείου με:</string>
 	<string name="ffmpeg_not_enabled_title">Το FFmpeg δεν είναι εγκατεστημένο ή ενεργοποιημένο:</string>
 	<string name="ffmpeg_not_enabled_msg">Άνοιγμα ρυθμίσεων;</string>
 	<string name="remove_video">Διαγραφή βίντεο μετά την εξαγωγή ήχου (χωρίς επιβεβαίωση!)</string>
@@ -201,14 +215,14 @@
 	<string name="id3_title">Τίτλος</string>
 	<string name="id3_year">Έτος</string>
 	<string name="id3_genre">Είδος</string>
-	
 	<string name="audio_extr_info">Περιεχόμενη ροή ήχου:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Αντιγραφή</item>
 	    <item>Μετακίνηση</item>
         <item>Μετονομασία</item>
         <item>Εκ νέου λήψη του βίντεο</item>
+        <item>Αποστολή</item>
         <item>Απομάκρυνση από τον Πίνακα Ελέγχου</item>
         <item>Απομάκρυνση και διαγραφή αρχείου</item>
         <item>Παύση/Συνέχιση</item>
@@ -297,7 +311,14 @@
     
     <string name="enable_adaptive_title">Ανάκτηση δευτερευόντων ροών</string>
     <string name="enable_adaptive_summary">Προσθήκη μόνο-βίντεο και/ή μόνο-ήχου ροών (αν υπάρχουν) στη λίστα βίντεο</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Ειδοποιήσεις</string>
     
@@ -312,7 +333,9 @@
         <item>Δόνηση</item>
         <item>Φως</item>
         <item>Τίποτα</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Δραστηριότητα σημείου-εισόδου</string>
     
     <!-- -->
     <string name="settings_cat_updates">Ενημερώσεις</string>

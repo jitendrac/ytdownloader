@@ -56,10 +56,12 @@ public class FfmpegDownloadService extends Service {
 	
 	private static final String DEBUG_TAG = "FfmpegDownloadService";
 	public static Context nContext;
-	private int cpuVers;
+	private String cpuVers;
 	private String sdCardAppDir;
+	private String link;
 	public static String DIR;
 	private DownloadManager dm;
+	private long enqueue;
 	private Observer.YtdFileObserver ffmpegBinObserver;
 
 	@Override
@@ -82,8 +84,11 @@ public class FfmpegDownloadService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		cpuVers = intent.getIntExtra("CPU", 7);
-		Utils.logger("d", "arm CPU version: " + cpuVers, DEBUG_TAG);
+		cpuVers = intent.getStringExtra("CPU");
+		Utils.logger("d", "CPU version: " + cpuVers, DEBUG_TAG);
+		
+		link = intent.getStringExtra("LINK");
+		Utils.logger("d", "FFmpeg download link: " + link, DEBUG_TAG);
 		
 		sdCardAppDir = intent.getStringExtra("DIR");
 		DIR = sdCardAppDir;
@@ -101,24 +106,20 @@ public class FfmpegDownloadService extends Service {
 	}
 	
 	private void downloadFfmpeg() {
-		String link = getString(R.string.ffmpeg_download_dialog_msg_link, cpuVers);
-
-		Utils.logger("d", "FFmpeg download link: " + link, DEBUG_TAG);
-		
         Request request = new Request(Uri.parse(link));
-        request.setDestinationInExternalFilesDir(nContext, null, YTD.ffmpegBinName);
+        request.setDestinationInExternalFilesDir(nContext, null, YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
         request.setTitle(getString(R.string.ffmpeg_download_notification));
         dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         try {
-        	dm.enqueue(request);
+        	enqueue = dm.enqueue(request);
         } catch (IllegalArgumentException e) {
 	    	Log.e(DEBUG_TAG, "downloadFfmpeg: " + e.getMessage());
 	    	Toast.makeText(this,  this.getString(R.string.no_downloads_sys_app), Toast.LENGTH_SHORT).show();
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> downloadFfmpeg", e.getMessage(), e);
 	    } catch (SecurityException se) {
 	    	request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, YTD.ffmpegBinName);
-	    	dm.enqueue(request);
+	    	enqueue = dm.enqueue(request);
 	    	DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 	    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> downloadFfmpeg", se.getMessage(), se);
 	    } catch (NullPointerException ne) {
@@ -138,7 +139,7 @@ public class FfmpegDownloadService extends Service {
 			Utils.logger("d", "ffmpegReceiver: onReceive CALLED", DEBUG_TAG);
     		long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
     		
-    		//if (enqueue != -1 && id != -2 && id == enqueue) {
+    		if (enqueue != -1 && id != -2 && id == enqueue) {
 	    		Query query = new Query();
 				query.setFilterById(id);
 				Cursor c = dm.query(query);
@@ -153,12 +154,13 @@ public class FfmpegDownloadService extends Service {
 					
 					case DownloadManager.STATUS_SUCCESSFUL:
 	    		
-						File src = new File(DIR, YTD.ffmpegBinName);
+						File src = new File(DIR, YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V);
 						File dst = new File(nContext.getDir("bin", 0), YTD.ffmpegBinName);
 						
 						String md5 = null;
-						if (cpuVers == 7) md5 = "33fcf4d5a3b2e5193bd42c2c1fc2abc7";
-						if (cpuVers == 5) md5 = "0606931cfbaca351a47e59ab198bc81e";
+						if (cpuVers.equals(YTD.ARMv7a_NEON)) 	md5 = "ed3ac5269496b2625d26471cf57f15d0";
+						if (cpuVers.equals(YTD.ARMv7a)) 		md5 = "deadfb4746e4cdf47aa2bcf7b55d718b";
+						if (cpuVers.equals(YTD.ARMv5te)) 		md5 = "ecd4372e667feb2b2971dbe361a3fe40";
 						
 						if (Utils.checkMD5(md5, src)) {
 							SettingsActivity.SettingsFragment.copyFfmpegToAppDataDir(context, src, dst);
@@ -169,8 +171,7 @@ public class FfmpegDownloadService extends Service {
 						break;
 						
 					case DownloadManager.STATUS_FAILED:
-						Log.e(DEBUG_TAG, YTD.ffmpegBinName + ", _ID " + id + " FAILED (status " + status + ")");
-						Log.e(DEBUG_TAG, " Reason: " + reason);
+						Log.e(DEBUG_TAG, YTD.ffmpegBinName + " download FAILED (status " + status + ") Reason: " + reason);
 						Toast.makeText(nContext,  YTD.ffmpegBinName + ": " + getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
 						
 						SettingsActivity.SettingsFragment.touchAdvPref(true, false);
@@ -178,10 +179,10 @@ public class FfmpegDownloadService extends Service {
 						break;
 						
 					default:
-						Utils.logger("w", YTD.ffmpegBinName + ", _ID " + id + " completed with status " + status, DEBUG_TAG);
+						Utils.logger("w", YTD.ffmpegBinName + " download completed with status " + status, DEBUG_TAG);
 					}
 				}
-    		//}
+    		}
     		ffmpegBinObserver.stopWatching();
     		stopSelf();
 		}
@@ -190,7 +191,5 @@ public class FfmpegDownloadService extends Service {
 	private void deleteBadDownload (long id) {
 		dm.remove(id);
 		Toast.makeText(this, getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
-		
 	}
-	
 }

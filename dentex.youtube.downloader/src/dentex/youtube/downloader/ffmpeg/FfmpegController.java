@@ -18,6 +18,7 @@ import java.util.Map;
 import android.content.Context;
 import android.os.SystemClock;
 import android.util.Log;
+import dentex.youtube.downloader.DashboardListItem;
 import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -36,9 +37,9 @@ public class FfmpegController {
 		mFfmpegBinPath = new File(mBinFileDir, YTD.ffmpegBinName).getAbsolutePath();
 	}
 	
-	public void execFFMPEG (List<String> cmd, ShellUtils.ShellCallback sc) {
+	public void execFFMPEG (List<String> cmd, DashboardListItem item, ShellUtils.ShellCallback sc) {
 		execChmod(mFfmpegBinPath, "755");
-		execProcess(cmd, sc);
+		execProcess(cmd, item, sc);
 	}
 	
 	public  void execChmod(String filepath, String code) {
@@ -51,7 +52,9 @@ public class FfmpegController {
 		}
 	}
 	
-	public  int execProcess(List<String> cmds, ShellUtils.ShellCallback sc) {		
+	public  int execProcess(List<String> cmds, DashboardListItem item, ShellUtils.ShellCallback sc) {
+		sc.preProcess();
+		
 		StringBuilder cmdlog = new StringBuilder();
 		for (String cmd : cmds) {
 			cmdlog.append(cmd);
@@ -70,8 +73,7 @@ public class FfmpegController {
     	Process process = null;
     	int exitVal = 1; // Default error
     	boolean started = true;
-    	try {
-    		
+    	try {	
     		process = pb.start();
     	
     		// any error message?
@@ -88,7 +90,7 @@ public class FfmpegController {
      
     		exitVal = process.waitFor();
         
-    		sc.processComplete(exitVal);
+    		sc.processComplete(item, exitVal);
     		
     	} catch (Exception e) {
     		Log.e(DEBUG_TAG, "Error executing ffmpeg command", e);
@@ -104,7 +106,7 @@ public class FfmpegController {
 	}
 	
 	public void extractAudio(File videoIn, File audioOut, String bitrateType, String bitrateValue, 
-			ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
+			DashboardListItem item, ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
 		
 		List<String> cmd = new ArrayList<String>();
 
@@ -129,11 +131,11 @@ public class FfmpegController {
 		
 		cmd.add(audioOut.getAbsolutePath());
 
-		execFFMPEG(cmd, sc);
+		execFFMPEG(cmd, item, sc);
 	}
 	
 	public void extractFlvThumb(File videoIn, File pngOut, 
-			ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
+			DashboardListItem item, ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
 		
 		List<String> cmd = new ArrayList<String>();
 
@@ -150,8 +152,28 @@ public class FfmpegController {
 		cmd.add("320x180");
 		cmd.add(pngOut.getAbsolutePath());
 
-		execFFMPEG(cmd, sc);
+		execFFMPEG(cmd, item, sc);
 		
+	}
+	
+	public void downloadAndMuxAoVoStreams(String aoLink, String voLink, File out, 
+			DashboardListItem item, ShellUtils.ShellCallback sc) throws IOException, InterruptedException {
+		
+		List<String> cmd = new ArrayList<String>();
+		
+		cmd.add(mFfmpegBinPath);
+		cmd.add("-y");
+		cmd.add("-i");
+		cmd.add(aoLink);
+		cmd.add("-i");
+		cmd.add(voLink);
+		cmd.add("-acodec");
+		cmd.add("copy");
+		cmd.add("-vcodec");
+		cmd.add("copy");
+		cmd.add(out.getAbsolutePath());
+		
+		execFFMPEG(cmd, item, sc);
 	}
 	
 	class StreamGobbler extends Thread {

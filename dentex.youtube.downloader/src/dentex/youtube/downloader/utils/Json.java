@@ -39,6 +39,8 @@ import dentex.youtube.downloader.YTD;
 public class Json {
 	
 	static String DEBUG_TAG = "Json";
+	
+	
 
 	public static void addEntryToJsonFile(Context context, String id, String type, String ytId, int pos, String status, 
 			String path, String filename, String basename, String audioExt, String size, boolean forceCopy) {
@@ -76,6 +78,8 @@ public class Json {
 				status = YTD.JSON_DATA_STATUS_PAUSED;
 			if (status.equals(YTD.ctx.getResources().getString(R.string.json_status_imported))) 
 				status = YTD.JSON_DATA_STATUS_IMPORTED;
+			if (status.equals(YTD.ctx.getResources().getString(R.string.json_status_queued))) 
+				status = YTD.JSON_DATA_STATUS_QUEUED;
 			
 			jO.put(YTD.JSON_DATA_TYPE, type);
 			jO.put(YTD.JSON_DATA_YTID, ytId);

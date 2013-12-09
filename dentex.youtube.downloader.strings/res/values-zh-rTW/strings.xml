@@ -23,7 +23,6 @@
     <string name="dialogs_negative">取消</string>
     <string name="wait">請稍後&#8230;</string>
     <string name="no_downloads_sys_app">找不到\"下載\"系統程式。</string>
-    <string name="ytd_useless">YTD 無法在此裝置下載檔案。</string>
     <string name="invalid_url">無法取得網站頁面。連結可能無效。</string>
     <string name="invalid_url_short">無法取得網站頁面。</string>
     <string name="invalid_response">無效的 HTTP 伺服器回應。</string>
@@ -157,6 +156,7 @@
 	<string name="json_status_in_progress">執行中</string>
 	<string name="json_status_paused">Paused</string>
 	<string name="json_status_imported">Imported</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">搜尋&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
@@ -180,8 +180,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>開啟</item>
-	    <item>只提取音效</item>
-        <item>提取音效並編碼至 MP3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -189,6 +189,20 @@
         <item>編碼至 MP3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg 未安裝或開啟。</string>
 	<string name="ffmpeg_not_enabled_msg">開啟設定？</string>
 	<string name="remove_video">音效提取後刪除影片（沒有確認！）</string>
@@ -199,16 +213,16 @@
 	<string name="id3_title">標題</string>
 	<string name="id3_year">年份</string>
 	<string name="id3_genre">類型</string>
-	
 	<string name="audio_extr_info">裝載的音頻流：</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>複製</item>
 	    <item>移動</item>
         <item>重新命名</item>
         <item>Re-download the video</item>
+        <item>Send</item>
         <item>Remove from Dashboard</item>
-        <item>移除並刪除檔案</item>
+        <item>Remove and delete file</item>
         <item>Pause/Resume</item>
     </string-array>
     
@@ -295,7 +309,14 @@
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">通知</string>
     
@@ -310,7 +331,9 @@
         <item>震動</item>
         <item>燈光</item>
         <item>無</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">更新</string>

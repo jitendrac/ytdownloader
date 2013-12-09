@@ -9,7 +9,6 @@
         android:id="@+id/input_map_num"
         android:singleLine="true"
         android:inputType="number"
-        android:textColor="@android:color/white"
         android:textCursorDrawable="@drawable/cursor"
         android:longClickable="true"
         android:layout_width="fill_parent" 

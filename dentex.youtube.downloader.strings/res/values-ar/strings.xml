@@ -25,7 +25,6 @@
     <string name="dialogs_negative">إلغاء</string>
     <string name="wait">الرجاء الانتظار&#8230;</string>
     <string name="no_downloads_sys_app">\"التنزيلات\" تطبيق النظام غير موجود.</string>
-    <string name="ytd_useless">YTD لايمكنه تنزيل ملفات على هذا الجهاز.</string>
     <string name="invalid_url">غير قادر على جلب صفحة الويب. قد يكون العنوان غير صالح.</string>
     <string name="invalid_url_short">غير قادر على جلب صفحة الويب.</string>
     <string name="invalid_response">رد ملقم HTTP غير صالح</string>
@@ -159,6 +158,7 @@
 	<string name="json_status_in_progress">جاري العمل</string>
 	<string name="json_status_paused">Paused</string>
 	<string name="json_status_imported">Imported</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">بحث&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
@@ -182,8 +182,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>فتح</item>
-	    <item>استخراج الصوت فقط</item>
-        <item>استخراج وترميز الصوت إلى mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,20 @@
         <item>ترميز إلى mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg غير مثبته أو معطل:</string>
 	<string name="ffmpeg_not_enabled_msg">فتح الإعدادات؟</string>
 	<string name="remove_video">حذف الفيديو بعد استخراج الصوت بنجاح (بدون تأكيد!)</string>
@@ -201,16 +215,16 @@
 	<string name="id3_title">العنوان</string>
 	<string name="id3_year">السنة</string>
 	<string name="id3_genre">النوع</string>
-	
 	<string name="audio_extr_info">يحتوي على صوت:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>نسخ</item>
 	    <item>نقل</item>
         <item>إعادة تسمية</item>
         <item>إعادة تنزيل هذا الفيديو</item>
-        <item>إزالة من لوحة القياس</item>
-        <item>إزالة وحذف ملف</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
         <item>Pause/Resume</item>
     </string-array>
     
@@ -298,7 +312,14 @@
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">إشعارات</string>
     
@@ -313,7 +334,9 @@
         <item>الاهتزاز</item>
         <item>الإضاءة</item>
         <item>لاشيء</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">التحديثات</string>

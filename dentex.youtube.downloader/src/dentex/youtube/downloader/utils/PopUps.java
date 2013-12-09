@@ -26,11 +26,11 @@
 
 package dentex.youtube.downloader.utils;
 
+import dentex.youtube.downloader.R;
+import dentex.youtube.downloader.YTD;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.view.ContextThemeWrapper;
-import dentex.youtube.downloader.R;
 
 public class PopUps {
 	
@@ -38,15 +38,24 @@ public class PopUps {
 
 	public static void showPopUp(String title, String message, String type, Activity activity) {
         
-	    AlertDialog.Builder helpBuilder = new AlertDialog.Builder(new ContextThemeWrapper(activity, R.style.BoxTheme));
+		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(activity);
 	    helpBuilder.setTitle(title);
 	    helpBuilder.setMessage(message);
 	
-	    if ( type == "alert" ) {
-	        icon = android.R.drawable.ic_dialog_alert;
-	    } else if ( type == "info" ) {
-	        icon = android.R.drawable.ic_dialog_info;
-	    }
+	    String theme = YTD.settings.getString("choose_theme", "D");
+    	if (theme.equals("D")) {
+		    if ( type == "error" ) {
+		        icon = R.drawable.ic_dialog_alert_holo_dark;
+		    } else if ( type == "info" ) {
+		        icon = R.drawable.ic_dialog_info_holo_dark;
+		    }
+    	} else {
+    		if ( type == "error" ) {
+		        icon = R.drawable.ic_dialog_alert_holo_light;
+		    } else if ( type == "info" ) {
+		        icon = R.drawable.ic_dialog_info_holo_light;
+		    }
+    	}
 	
 	    helpBuilder.setIcon(icon);
 	    helpBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

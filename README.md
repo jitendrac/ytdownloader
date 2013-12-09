@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="70"`
+`versionCode="71"`
 
-`versionName="3.4.1"`
+`versionName="3.5"`
 
-MD5 checksum: `8bf223b29b43fde7070aa90ccda5d829` dentex.youtube.downloader_v3.4.1.apk
+MD5 checksum: `47b79f83d384fb25a4e094fd760655a4` dentex.youtube.downloader_v3.5.apk
 
 DISCLAIMER
 ================================================================
@@ -146,7 +146,19 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.5 - Dic 09 2013 
+    ----------------------------------- 
+    [x] Dashboard option to mux video-only and audio-only streams 
+    [x] new FFmpeg builds from latest v2.1 (with NEON support) available for download 
+    [x] option to choose between Settings or Dashboard as app entry-point-activity 
+    [x] "Send" option into Dashboard items long-click menu 
+    [x] all "in-progress" operations visible from Dashboard 
+    [x] fixed Dark and Light themes appearance 
+    [x] Android 4.4 target and many other optimizations 
+    [x] Czech translation 
+     
      v3.4.1 - Nov 19 2013 
+    ----------------------------------- 
     [x] encrypted signature patch (7) 
     [x] layout fix for Samsung GT-P5110 and GT-N8000 devices 
      
@@ -216,7 +228,7 @@ CHANGELOG
      v2.7 - Aug 20 2013 
     ----------------------------------- 
     [x] auto-patch experimental signature changes 
-    [x] JB 4.3 target 
+    [x] Android 4.3 target 
      
      v2.6.2 - Aug 08 2013 
     ----------------------------------- 
@@ -380,7 +392,7 @@ CHANGELOG
      
      v1.5.1 - Feb 24 2013 
     ----------------------------------- 
-    [x] fixed crash if no net is avail. 
+    [x] fixed crash if no net is available 
     [x] fixed crash on bad video list 
      
      v1.5 - Feb 22 2013 
@@ -429,12 +441,12 @@ CHANGELOG
     ----------------------------------- 
     [x] FIRST PUBLIC RELEASE 
     [x] send download via SSH 
-    [x] JB compatibility 
     [x] SSH send how-to dialog 
     [x] standard download locations 
     [x] file-chooser for download dest. 
     [x] add quality suffix options 
-    [x] file renaming options
+    [x] file renaming options 
+    -----------------------------------
 
 TO-DO LIST
 ================================================================
@@ -456,4 +468,4 @@ KNOWN ISSUES
 		- for a long time (around 20 or 30 minutes)
 		AND 
 		- without having the Dashboard Activity to the front
-		may be forced to PAUSE. In this case a manual resume is needed
+		may be forced to PAUSE. In this case a manual resume is needed.

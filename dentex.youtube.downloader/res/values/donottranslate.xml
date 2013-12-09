@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.5 - Dic 09 2013
+        \n-----------------------------------
+        \n[x] Dashboard option to mux video-only and audio-only streams
+        \n[x] new FFmpeg builds from latest v2.1 (with NEON support) available for download
+        \n[x] option to choose between Settings or Dashboard as app entry-point-activity
+        \n[x] "Send" option into Dashboard items long-click menu
+        \n[x] all "in-progress" operations visible from Dashboard
+        \n[x] fixed Dark and Light themes appearance
+        \n[x] Android 4.4 target and many other optimizations
+        \n[x] Czech translation
+        \n
         \n v3.4.1 - Nov 19 2013
+        \n-----------------------------------
         \n[x] encrypted signature patch (7)
         \n[x] layout fix for Samsung GT-P5110 and GT-N8000 devices
         \n
@@ -71,7 +83,7 @@
         \n v2.7 - Aug 20 2013
         \n-----------------------------------
         \n[x] auto-patch experimental signature changes
-        \n[x] JB 4.3 target
+        \n[x] Android 4.3 target
         \n
         \n v2.6.2 - Aug 08 2013
         \n-----------------------------------
@@ -235,7 +247,7 @@
 		\n
 		\n v1.5.1 - Feb 24 2013
 		\n-----------------------------------
-		\n[x] fixed crash if no net is avail.
+		\n[x] fixed crash if no net is available
 		\n[x] fixed crash on bad video list
 		\n
 		\n v1.5 - Feb 22 2013
@@ -284,13 +296,13 @@
 		\n-----------------------------------
 		\n[x] FIRST PUBLIC RELEASE
 		\n[x] send download via SSH
-		\n[x] JB compatibility
 		\n[x] SSH send how-to dialog
 		\n[x] standard download locations
 		\n[x] file-chooser for download dest.
 		\n[x] add quality suffix options
 		\n[x] file renaming options
-		\n-----------------------------------</string>
+		\n-----------------------------------
+	</string>
 		
     <string name="gpl_title">GPL-3.0</string>
     <string name="gpl_summary">YouTubeDownloader\nFFmpeg</string>
@@ -604,11 +616,13 @@
     <string name="apk_download_sourceforge_link">http://sourceforge.net/projects/ytdownloader/files/dentex.youtube.downloader_v%1$s.apk/download</string>
 	<string name="apk_filename">dentex.youtube.downloader_v%1$s.apk</string>
     
-    <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s/download</string>
-    <string name="ffmpeg_download_dialog_msg_link_no_red">http://optimate.dl.sourceforge.net/project/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s</string>
+    <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/2.1/ffmpeg_%1$s/download</string>
     
-    <string name="ffmpeg_size_arm7">6.0 MB</string>
-    <string name="ffmpeg_size_arm5">6.4 MB</string>
+<!--     <string name="ffmpeg_download_dialog_msg_link_test">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_armv7a_v2.1/download</string> -->
+<!--     <string name="ffmpeg_download_dialog_msg_link_no_red">http://optimate.dl.sourceforge.net/project/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s</string> -->
+    
+    <string name="ffmpeg_size_armv7">7.0 MB</string>
+    <string name="ffmpeg_size_armv5">6.6 MB</string>
     
     <string-array name="notification_defaults_entry_values">
         <item>0</item>
@@ -630,6 +644,7 @@
         <item>Chinese (China)</item>
         <item>Chinese (Hong Kong)</item>
         <item>Chinese (Taiwan)</item>
+        <item>Czech (Czech Republic)</item>
         <item>Danish</item>
         <item>Dutch</item>
         <item>Finnish</item>
@@ -659,6 +674,7 @@
         <item>zh_CN</item>
         <item>zh_HK</item>
         <item>zh_TW</item>
+        <item>cs_CZ</item>
         <item>da</item>
         <item>nl</item>
         <item>fi</item>
@@ -689,5 +705,25 @@
     <string name="filter_3gp">3GP</string>
     <string name="filter_hd">HD</string>
     <string name="filter_3d">3D</string>
+    
+<!--     <string-array name="vo_download_method_entry_values"> -->
+<!--         <item>fdam</item> -->
+<!--         <item>dm</item> -->
+<!--         <item></item> -->
+<!--     </string-array> -->
+    
+<!--     <string name="vo_download_method_default"></string> -->
+    
+    <string-array name="launcher_entry_values">
+        <item>settings</item>
+        <item>dashboard</item>
+	</string-array>
+	
+    <string-array name="launcher_entries">
+        <item>@string/title_activity_settings</item>
+        <item>@string/title_activity_dashboard</item>
+	</string-array>
+	
+    <string name="launcher_default">settings</string>
 
 </resources>

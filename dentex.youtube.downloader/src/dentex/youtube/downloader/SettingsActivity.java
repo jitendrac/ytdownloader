@@ -33,7 +33,6 @@ import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Stack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -42,9 +41,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
@@ -59,7 +55,6 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -80,7 +75,6 @@ public class SettingsActivity extends Activity {
 	public static final String DEBUG_TAG = "SettingsActivity";
 	public static String chooserSummary;
 	public static Activity sSettings;
-	private static ContextThemeWrapper boxThemeContextWrapper;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +92,15 @@ public class SettingsActivity extends Activity {
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
         
         // Display the fragment as the main content.
+        SettingsFragment sf = new SettingsFragment();
+        
+        boolean resetAdvPref = getIntent().getBooleanExtra("reset_adv_pref", false);
+        Bundle args = new Bundle();
+        args.putBoolean("reset_adv_pref", resetAdvPref); 
+        sf.setArguments(args);
+        
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SettingsFragment())
+                .replace(android.R.id.content, sf)
                 .commit();
     }
     
@@ -122,6 +123,11 @@ public class SettingsActivity extends Activity {
         	case R.id.menu_tutorials:
         		startActivity(new Intent(this, TutorialsActivity.class));
         		return true;
+        	case R.id.menu_dashboard:
+        		Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        		startActivity(dashboardIntent);
+        		return true;
         	default:
         		return super.onOptionsItemSelected(item);
         }
@@ -129,13 +135,13 @@ public class SettingsActivity extends Activity {
 
 	public static class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
     	
-		private Preference dashboard;
+		//private Preference dashboard;
 		private Preference filechooser;
 		private Preference up;
 		private Preference th;
 		private Preference lang;
 		private static CheckBoxPreference advanced;
-		private int cpuVers;
+		private String cpuVers;
 		private String link;
 		private Preference clear;
 		
@@ -154,8 +160,7 @@ public class SettingsActivity extends Activity {
             super.onCreate(savedInstanceState);
 
             addPreferencesFromResource(R.xml.settings);
-            
-            boxThemeContextWrapper = new ContextThemeWrapper(getActivity(), R.style.BoxTheme);
+
             sSettings = getActivity();
 
             String cf = YTD.settings.getString("CHOOSER_FOLDER", "");
@@ -173,22 +178,22 @@ public class SettingsActivity extends Activity {
                 initSummary(getPreferenceScreen().getPreference(i));
             }
 
-            dashboard = (Preference) findPreference("dashboard");
-            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            	
-                public boolean onPreferenceClick(Preference preference) {
-                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
-            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            		startActivity(dashboardIntent);
-                    return true;
-                }
-            });
+//            dashboard = (Preference) findPreference("dashboard");
+//            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+//            	
+//                public boolean onPreferenceClick(Preference preference) {
+//                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
+//            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//            		startActivity(dashboardIntent);
+//                  return true;
+//                }
+//            });
             
             clear = (Preference) findPreference("clear_dashboard");
             clear.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             	
             	public boolean onPreferenceClick(Preference preference) {
-            		DashboardClearHelper.confirmClearDashboard(sSettings, boxThemeContextWrapper, false);
+            		DashboardClearHelper.confirmClearDashboard(sSettings, false);
                     return true;
             	}
             });
@@ -248,7 +253,7 @@ public class SettingsActivity extends Activity {
 			});
 			
             extDir = getActivity().getExternalFilesDir(null);
-            extFile = new File(extDir, YTD.ffmpegBinName);
+            extFile = new File(extDir, YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V);
             privateAppDir = getActivity().getDir("bin", 0);
     		privateFile = new File(privateAppDir, YTD.ffmpegBinName);
 
@@ -256,82 +261,36 @@ public class SettingsActivity extends Activity {
 			advanced.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
-					boolean advancedFeatures = YTD.settings.getBoolean("enable_advanced_features", false);
 					boolean ffmpegInstalled = privateFile.exists();
-					if (!advancedFeatures) {
-						cpuVers = armCpuVersion();
-						boolean isCpuSupported = (cpuVers > 0) ? true : false;
+					if (!advanced.isChecked()) {
+						cpuVers = Utils.cpuVersion();
+						boolean isCpuSupported = (!cpuVers.equals(YTD.UNSUPPORTED_CPU)) ? true : false;
 						Utils.logger("d", "isCpuSupported: " + isCpuSupported, DEBUG_TAG);
 						
-						if (!isCpuSupported) {
+						if (isCpuSupported) {
+							//YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", true).commit();
+						} else {
 							advanced.setEnabled(false);
 							advanced.setChecked(false);
-							YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", false).commit();
-
-							AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-	                        adb.setIcon(android.R.drawable.ic_dialog_alert);
-	                        adb.setTitle(getString(R.string.ffmpeg_device_not_supported));
-	                        adb.setMessage(getString(R.string.ffmpeg_support_mail));
-	                        
-	                        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-	                        	
-	                            public void onClick(DialogInterface dialog, int which) {
-	                            	/*
-	                            	 * adapted form same source as createEmailOnlyChooserIntent below
-	                            	 */
-	                            	Intent i = new Intent(Intent.ACTION_SEND);
-	                                i.setType("*/*");
-	                                
-	                                String content = Utils.getCpuInfo();
-	                                /*File destDir = getActivity().getExternalFilesDir(null); 
-	                                String filename = "cpuInfo.txt";
-	                                try {
-										Utils.createLogFile(destDir, filename, content);
-										i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(destDir, filename)));*/
-		                                i.putExtra(Intent.EXTRA_EMAIL, new String[] { "samuele.rini76@gmail.com" });
-		                                i.putExtra(Intent.EXTRA_SUBJECT, "YTD: device info report");
-		                                i.putExtra(Intent.EXTRA_TEXT, content);
-
-		                                startActivity(createEmailOnlyChooserIntent(i, getString(R.string.email_via)));
-									/*} catch (IOException e) {
-										Log.e(DEBUG_TAG, "IOException on creating cpuInfo Log file ", e);
-									}*/
-	                            }
-	                        });
-	                        
-	                        adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
-	                        	
-	                        	public void onClick(DialogInterface dialog, int which) {
-	                            	// cancel
-	                            }
-	                        });
-	
-	                        AlertDialog helpDialog = adb.create();
-	                        if (! (getActivity()).isFinishing()) {
-	                        	helpDialog.show();
-	                        }	                            
-						} else {
-							YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", true).commit();
+							//YTD.settings.edit().putBoolean("FFMPEG_SUPPORTED", false).commit();
+							Utils.offerDevMail(sSettings);
 						}
 						
 						Utils.logger("d", "ffmpegInstalled: " + ffmpegInstalled, DEBUG_TAG);
 					
 						if (!ffmpegInstalled && isCpuSupported) {	
-							AlertDialog.Builder adb = new AlertDialog.Builder(boxThemeContextWrapper);
-	                        adb.setIcon(android.R.drawable.ic_dialog_info);
+							AlertDialog.Builder adb = new AlertDialog.Builder(sSettings);
+	                        adb.setIcon(Utils.selectThemedInfoIcon());
 	                        adb.setTitle(getString(R.string.ffmpeg_download_dialog_title));
 	                        
 	                        link = getString(R.string.ffmpeg_download_dialog_msg_link, cpuVers);
 	                        String msg = getString(R.string.ffmpeg_download_dialog_msg);
 	                        
-	                        String ffmpegSize;
-	                        if (cpuVers == 5) {
-	                        	ffmpegSize = getString(R.string.ffmpeg_size_arm5);
-	                        } else if (cpuVers == 7) {
-	                        	ffmpegSize = getString(R.string.ffmpeg_size_arm7);
-	                        } else {
-	                        	ffmpegSize = "n.a.";
-	                        }
+	                        String ffmpegSize = "n.a.";
+	                        if (cpuVers.equals(YTD.ARMv7a_NEON))	ffmpegSize = getString(R.string.ffmpeg_size_armv7);
+	                        if (cpuVers.equals(YTD.ARMv7a))			ffmpegSize = getString(R.string.ffmpeg_size_armv7);
+	                        if (cpuVers.equals(YTD.ARMv5te))		ffmpegSize = getString(R.string.ffmpeg_size_armv5);
+		                    
 	                        String size = getString(R.string.size) + " " + ffmpegSize;
 	                        adb.setMessage(msg + " " + link + "\n" + size);                      
 
@@ -346,6 +305,7 @@ public class SettingsActivity extends Activity {
 			                            	Intent intent = new Intent(getActivity(), FfmpegDownloadService.class);
 			                            	intent.putExtra("CPU", cpuVers);
 			                            	intent.putExtra("DIR", sdcardAppDir.getAbsolutePath());
+			                            	intent.putExtra("LINK", link);
 			                            	getActivity().startService(intent);
 	                            			//=============
 	                            			//downloadFfmpeg();
@@ -355,7 +315,7 @@ public class SettingsActivity extends Activity {
 	                            		}
 	                            	} else {
 	                            		Utils.logger("w", getString(R.string.unable_save_dialog_msg), DEBUG_TAG);
-	                            		PopUps.showPopUp(getString(R.string.error), getString(R.string.unable_save_dialog_msg), "alert", getActivity());
+	                            		PopUps.showPopUp(getString(R.string.error), getString(R.string.unable_save_dialog_msg), "error", getActivity());
 	                            	}
                             	}
 	                        });
@@ -380,6 +340,13 @@ public class SettingsActivity extends Activity {
 					}
 				}
 			});
+			
+			//TODO
+			Bundle args = getArguments();
+            if (args.getBoolean("reset_adv_pref")) {
+            	Log.i(DEBUG_TAG, "resetting FFmpeg option");
+            	touchAdvPref(true, false);
+            }
 		}
         
         /*private void downloadFfmpeg() {
@@ -442,7 +409,7 @@ public class SettingsActivity extends Activity {
             id = System.currentTimeMillis();
             try {
             	DownloadTask dt = new DownloadTask(sSettings, id, link, 
-            			YTD.ffmpegBinName, extDir.getPath(), 
+            			YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V, extDir.getAbsolutePath(), 
             			null, null, 
             			dtl, false);
     			Maps.dtMap.put(id, dt);
@@ -466,18 +433,6 @@ public class SettingsActivity extends Activity {
     			touchAdvPref(true, false);
     		}
     	}
-        
-        private int armCpuVersion() {
-        	String cpuAbi = Build.CPU_ABI;
-			Utils.logger("d", "CPU_ABI: " + cpuAbi, DEBUG_TAG);
-			if (cpuAbi.equals("armeabi-v7a")) {
-				return 7;
-			} else if (cpuAbi.equals("armeabi")) {
-				return 5;
-			} else {
-				return 0;
-			}
-		}
 
 		public void settingsUpdateInit() {
 			int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
@@ -624,7 +579,7 @@ public class SettingsActivity extends Activity {
                 			// Path not writable
                 			chooserSummary = YTD.dir_Downloads.getAbsolutePath();
                 			setChooserPrefAndSummary();
-                			PopUps.showPopUp(getString(R.string.system_warning_title), getString(R.string.system_warning_msg), "alert", getActivity());
+                			PopUps.showPopUp(getString(R.string.system_warning_title), getString(R.string.system_warning_msg), "error", getActivity());
                 			//Toast.makeText(getActivity(), getString(R.string.system_warning_title), Toast.LENGTH_SHORT).show();
                 			break;
                 		case 2:
@@ -641,8 +596,8 @@ public class SettingsActivity extends Activity {
 			}
 			YTD.settings.edit().putString("CHOOSER_FOLDER", chooserSummary).apply();
 		}
-        
-        public static void autoUpdate(Context context) {
+
+		public static void autoUpdate(Context context) {
 	        long storedTime = YTD.settings.getLong("time", 0); // final string
 	        //long storedTime = 10000; // dev test: forces auto update
 	        
@@ -668,40 +623,5 @@ public class SettingsActivity extends Activity {
 			    }
 			});
 		}
-		
-		/* Intent createEmailOnlyChooserIntent from Stack Overflow:
-		 * 
-		 * http://stackoverflow.com/questions/2197741/how-to-send-email-from-my-android-application/12804063#12804063
-		 * 
-		 * Q: http://stackoverflow.com/users/138030/rakesh
-		 * A: http://stackoverflow.com/users/1473663/nobu-games
-		 */
-		public Intent createEmailOnlyChooserIntent(Intent source, CharSequence chooserTitle) {
-			BugSenseHandler.leaveBreadcrumb("createEmailOnlyChooserIntent");
-			Stack<Intent> intents = new Stack<Intent>();
-	        Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
-	        		"info@domain.com", null));
-	        List<ResolveInfo> activities = getActivity().getPackageManager()
-	                .queryIntentActivities(i, 0);
-
-	        for(ResolveInfo ri : activities) {
-	            Intent target = new Intent(source);
-	            target.setPackage(ri.activityInfo.packageName);
-	            intents.add(target);
-	        }
-
-	        if(!intents.isEmpty()) {
-	            Intent chooserIntent = Intent.createChooser(intents.remove(0),
-	                    chooserTitle);
-	            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
-	                    intents.toArray(new Parcelable[intents.size()]));
-
-	            return chooserIntent;
-	        } else {
-	        	return Intent.createChooser(source, chooserTitle);
-	        }
-		}
-
-		
 	}
 }

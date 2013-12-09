@@ -9,7 +9,7 @@
     <item android:id="@+id/menu_settings"
         android:title="@string/title_activity_settings"
         android:titleCondensed="@string/title_activity_settings"
-        android:orderInCategory="30"
+        android:orderInCategory="10"
         android:icon="@android:drawable/ic_menu_preferences"
         android:showAsAction="collapseActionView" />
     
@@ -28,7 +28,7 @@
     <item android:id="@+id/menu_dashboard"
         android:title="@string/title_activity_dashboard"
         android:titleCondensed="@string/title_activity_dashboard"
-        android:orderInCategory="10"
+        android:orderInCategory="5"
         android:showAsAction="collapseActionView" />
     
 </menu>

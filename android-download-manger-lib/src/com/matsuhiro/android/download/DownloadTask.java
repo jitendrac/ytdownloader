@@ -173,7 +173,7 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
         return this.mListener;
     }*/
     
-    public String getPath() {
+    public String getAbsolutePath() {
     	return this.mFile.getParent();
     }
     

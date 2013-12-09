@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Hủy bỏ</string>
     <string name="wait">Vui lòng chờ&#8230;</string>
     <string name="no_downloads_sys_app">\"Tải về\" ứng dụng hệ thống không tìm thấy.</string>
-    <string name="ytd_useless">YTD không thể tải file trên thiết bị này.</string>
     <string name="invalid_url">Không kết nối được. URL không hợp lệ</string>
     <string name="invalid_url_short">Không kết nối được</string>
     <string name="invalid_response">Phản hồi HTTP không hợp lệ</string>
@@ -158,6 +157,7 @@
 	<string name="json_status_in_progress">Đang hoạt động</string>
 	<string name="json_status_paused">Dừng</string>
 	<string name="json_status_imported">Đã nhập</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">tìm &#8230;</string>
 	<string name="menu_backup">Sao lưu</string>
 	<string name="menu_restore">Khôi phục</string>
@@ -181,8 +181,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Mở</item>
-	    <item>Xuất ra chỉ âm thanh</item>
-        <item>Xuất ra và mã hóa âm thanh thành mp3</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -190,6 +190,20 @@
         <item>Mã hóa âm thanh thành mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg chưa được cài hoặc cho phép:</string>
 	<string name="ffmpeg_not_enabled_msg">Mở Cài đặt?</string>
 	<string name="remove_video">Delete video after audio extraction (no confirmation!)</string>
@@ -200,14 +214,14 @@
 	<string name="id3_title">Tiêu đề</string>
 	<string name="id3_year">Năm</string>
 	<string name="id3_genre">Thể loại</string>
-	
 	<string name="audio_extr_info">Có chứa âm thanh</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Sao chép</item>
 	    <item>Di chuyển</item>
         <item>Đổi tên</item>
         <item>Re-download the video</item>
+        <item>Send</item>
         <item>Remove from Dashboard</item>
         <item>Remove and delete file</item>
         <item>Pause/Resume</item>
@@ -296,7 +310,14 @@
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Thông báo</string>
     
@@ -311,7 +332,9 @@
         <item>Rung</item>
         <item>Ánh sáng</item>
         <item>Không</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Cập nhật</string>

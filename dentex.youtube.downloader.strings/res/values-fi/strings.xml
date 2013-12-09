@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Peruuta</string>
     <string name="wait">Odota&#8230;</string>
     <string name="no_downloads_sys_app">\"Downloads\" järjestelmäsovellusta ei löytynyt.</string>
-    <string name="ytd_useless">YTD ei voi ladata tiedostoja tällä laitteella.</string>
     <string name="invalid_url">Ei voitu hakea sivua. URL-osoite voi olla virheellinen.</string>
     <string name="invalid_url_short">Ei voitu hakea sivua.</string>
     <string name="invalid_response">Virheellinen HTTP-palvelimen vastaus.</string>
@@ -159,6 +158,7 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	<string name="json_status_in_progress">Käynnissä</string>
 	<string name="json_status_paused">Pysäytetty</string>
 	<string name="json_status_imported">Tuotu</string>
+	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">etsi&#8230;</string>
 	<string name="menu_backup">Varmennus</string>
 	<string name="menu_restore">Palauta</string>
@@ -182,8 +182,8 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Avaa</item>
-	    <item>Irroita audio ainoastaan</item>
-        <item>Irroita ja enkoodaa audio mp3:ksi</item>
+	    <item>Extract audio</item>
+        <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,20 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
         <item>Enkoodaa mp3:ksi</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Open</item>
+        <item>Extract audio and encode to mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Open</item>
+        <item>Add audio stream (already downloaded)</item>
+    </string-array>
+    
+	<string name="ao_not_found">No suitable audio-only stream found</string>
+	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
+	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
+    <string name="share_file_via">Share this file via:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpegia ei ole asennettu tai sallittu:</string>
 	<string name="ffmpeg_not_enabled_msg">Avaa asetukset?</string>
 	<string name="remove_video">Tuhoa video audion irroituksen jälkeen (ei vahvistusta!)</string>
@@ -201,17 +215,17 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	<string name="id3_title">Nimi</string>
 	<string name="id3_year">Vuosi</string>
 	<string name="id3_genre">Tyyli</string>
-	
 	<string name="audio_extr_info">Sisältyvä audiovirta:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopioi</item>
 	    <item>Siirrä</item>
         <item>Nimeä uudelleen</item>
         <item>Lataa video uudelleen</item>
-        <item>Poista Dashboardista</item>
-        <item>Poista ja tuhoa tiedosto</item>
-        <item>Pysäytä/Jatka</item>
+        <item>Send</item>
+        <item>Remove from Dashboard</item>
+        <item>Remove and delete file</item>
+        <item>Pause/Resume</item>
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
@@ -297,7 +311,14 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Ilmoitukset</string>
     
@@ -312,7 +333,9 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
         <item>Värinä</item>
         <item>Valot</item>
         <item>Ei mitään</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Entry-point activity</string>
     
     <!-- -->
     <string name="settings_cat_updates">Päivitykset</string>

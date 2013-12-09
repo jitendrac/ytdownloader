@@ -23,7 +23,6 @@
     <string name="dialogs_negative">Zrušiť</string>
     <string name="wait">Čakajte prosím&#8230;</string>
     <string name="no_downloads_sys_app">Systémová aplikácia \"Prevzatia\" nenájdená.</string>
-    <string name="ytd_useless">YTD nemôže stiahnuť súbory na tomto zariadení.</string>
     <string name="invalid_url">Nemožno načítať webovú stránku. URL môže byť neplatná.</string>
     <string name="invalid_url_short">Nemožno načítať webovú stránku.</string>
     <string name="invalid_response">Neplatná odpoveď z HTTP servera.</string>
@@ -159,6 +158,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="json_status_in_progress">Prebieha</string>
 	<string name="json_status_paused">Pozastavené</string>
 	<string name="json_status_imported">Naimportované</string>
+	<string name="json_status_queued">Vo fronte</string>
 	<string name="menu_search">hľadať&#8230;</string>
 	<string name="menu_backup">Zálohovať</string>
 	<string name="menu_restore">Obnoviť</string>
@@ -182,8 +182,8 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Otvoriť</item>
-	    <item>Iba extrahovať audio</item>
-        <item>Extrahovať a konvertovať audio do mp3</item>
+	    <item>Extrahovať audio</item>
+        <item>Extrahovať audio a konvertovať do mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,6 +191,20 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
         <item>Konvertovať do mp3</item>
     </string-array>
     
+	<string-array name="dashboard_click_entries_flv">
+	    <item>Otvoriť</item>
+        <item>Extrahovať audio a konvertovať do mp3</item>
+    </string-array>
+    
+	<string-array name="dashboard_click_entries_vo">
+	    <item>Otvoriť</item>
+        <item>Pridať audio stream (už stiahnuté)</item>
+    </string-array>
+    
+	<string name="ao_not_found">Neašli sa žiadne vhodné audio streamy</string>
+	<string name="remove_ao_vo">Vymazať iba video a iba audio súbory\n(bez potvrdenia!)</string>
+	<string name="ffmpeg_new_v_required">Je potrebná nová verzia FFmpeg. Stiahnuť teraz?</string>
+    <string name="share_file_via">Zdiaľať cez:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg nie je nainštalovaný, alebo povolený:</string>
 	<string name="ffmpeg_not_enabled_msg">Otvoriť nastavenia?</string>
 	<string name="remove_video">Vymazať video po extrahovaní audia (bez potvrdenia!)</string>
@@ -201,14 +215,14 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="id3_title">Názov</string>
 	<string name="id3_year">Rok</string>
 	<string name="id3_genre">Žáner</string>
-	
 	<string name="audio_extr_info">Obsiahnuté audio streamy:</string>
-
+	
 	<string-array name="dashboard_long_click_entries">
 	    <item>Kopírovať</item>
 	    <item>Presunúť</item>
         <item>Premenovať</item>
         <item>Stiahnuť znovu video</item>
+        <item>Odoslať</item>
         <item>Odstrániť z Dashboard</item>
         <item>Odstrániť a vymazať súbor</item>
         <item>Pozastaviť/Spustiť</item>
@@ -297,7 +311,14 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     
     <string name="enable_adaptive_title">Získať sekundárne streamy</string>
     <string name="enable_adaptive_summary">Pridať iba video a/alebo iba audio streamy (ak sú dostupné) do zoznamu</string>
-        
+    
+<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
+<!--     <string-array name="vo_download_method_entries"> -->
+<!--         <item>FFmpeg download and mux</item> -->
+<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
+<!--         <item>Asks every time</item> -->
+<!--     </string-array> -->
+    
     <!-- -->
     <string name="settings_cat_notifications">Oznámenia</string>
     
@@ -312,7 +333,9 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
         <item>Vibrácie</item>
         <item>Svetlá</item>
         <item>Nič</item>
-    </string-array>   
+    </string-array>
+    
+    <string name="launcher_title">Zobraziť po štarte</string>
     
     <!-- -->
     <string name="settings_cat_updates">Aktualizácie</string>
