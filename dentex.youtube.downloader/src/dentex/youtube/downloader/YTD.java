@@ -104,7 +104,7 @@ public class YTD extends Application implements QueueThreadListener{
 	public static String ARMv7a_NEON = "armv7a-neon";
 	public static String ARMv7a = "armv7a";
 	public static String ARMv5te = "armv5te";
-	public static String UNSUPPORTED_CPU;
+	public static String UNSUPPORTED_CPU = "UNSUPPORTED";
 	
 	public static SharedPreferences settings;
 	public static SharedPreferences videoinfo;

@@ -327,10 +327,7 @@ public class SettingsActivity extends Activity {
 	                            }
 	                        });
 	
-	                        AlertDialog helpDialog = adb.create();
-	                        if (! (getActivity()).isFinishing()) {
-	                        	helpDialog.show();
-	                        }
+	                        Utils.secureShowDialog(sSettings, adb);
 						}
 					}
 					if (ffmpegInstalled) {

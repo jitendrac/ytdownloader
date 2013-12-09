@@ -973,14 +973,14 @@ public class ShareActivity extends Activity {
 	}
 	
 	private void setupStoredFilters() {
-		final int storedFilterInt = YTD.settings.getInt("list_filter", YTD.VIEW_ALL);
+		int storedFilterInt = YTD.settings.getInt("list_filter", YTD.VIEW_ALL);
 		assignConstraint(YTD.getListFilterConstraint(storedFilterInt));
 		
-		final int storedView = YTD.settings.getInt("view_filter", R.id.ALL);
+		int storedView = YTD.settings.getInt("view_filter", R.id.ALL);
 		resetAllBkg();
 		if (storedView != R.id.ALL) {
 			View sv = findViewById(storedView);
-			sv.setBackgroundResource(R.drawable.grad_bg_sel);
+			if (sv != null) sv.setBackgroundResource(R.drawable.grad_bg_sel);
 		}
 		
 		setupFilters();

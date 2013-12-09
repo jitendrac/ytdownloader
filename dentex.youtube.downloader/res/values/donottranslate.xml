@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.5.1 - Dic 09 2013
+        \n-----------------------------------
+        \n[x] fixed two small bugs
+        \n
         \n v3.5 - Dic 09 2013
         \n-----------------------------------
         \n[x] Dashboard option to mux video-only and audio-only streams

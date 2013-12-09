@@ -288,7 +288,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-			        		secureShowDialog(builder);
+			        		Utils.secureShowDialog(sDashboard, builder);
 			        		
 		        		} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) && 
 								currentItem.getAudioExt().equals("x")) {
@@ -318,7 +318,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-		        			secureShowDialog(builder);
+		        			Utils.secureShowDialog(sDashboard, builder);
 				    		
 						} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_E) ||
 								currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_M) ||
@@ -345,7 +345,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-			        		secureShowDialog(builder);
+			        		Utils.secureShowDialog(sDashboard, builder);
 			        		
 						} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
 							
@@ -402,7 +402,7 @@ public class DashboardActivity extends Activity {
 										}
 									});
 									
-									secureShowDialog(adb);
+									Utils.secureShowDialog(sDashboard, adb);
 								}
 
 								private boolean isFFmpegLatest() {
@@ -415,7 +415,7 @@ public class DashboardActivity extends Activity {
 								}
 								
 							});
-							secureShowDialog(builder);
+							Utils.secureShowDialog(sDashboard, builder);
 						}
 	        		}
 				} else {
@@ -525,7 +525,7 @@ public class DashboardActivity extends Activity {
 						}	
 	        		});
 	        		
-		        	secureShowDialog(builder);
+		        	Utils.secureShowDialog(sDashboard, builder);
         		}
         		
         		return true;
@@ -653,7 +653,7 @@ public class DashboardActivity extends Activity {
             }
         });
 	    
-	    secureShowDialog(adb);
+	    Utils.secureShowDialog(sDashboard, adb);
 	}
 	
 	public void  send(final DashboardListItem currentItem) {
@@ -695,7 +695,7 @@ public class DashboardActivity extends Activity {
 			}
 		});
 		
-		secureShowDialog(rem);
+		Utils.secureShowDialog(sDashboard, rem);
 	}
 
 	public void delete(final DashboardListItem currentItem) {
@@ -716,7 +716,7 @@ public class DashboardActivity extends Activity {
 			}
 		});
 		
-		secureShowDialog(del);
+		Utils.secureShowDialog(sDashboard, del);
 	}
 	
 	private void pauseresume(final DashboardListItem currentItem) {
@@ -1046,7 +1046,7 @@ public class DashboardActivity extends Activity {
 			    			}
 			    		});
 			    		
-			    		secureShowDialog(adb);
+			    		Utils.secureShowDialog(sDashboard, adb);
 				    } else {
 				    	launchFcForBackup();
 				    }
@@ -1093,7 +1093,7 @@ public class DashboardActivity extends Activity {
 			    			}
 			    		});
 			    		
-			    		secureShowDialog(adb);
+			    		Utils.secureShowDialog(sDashboard, adb);
 				    } else {
 				    	launchFcForRestore();
 				    }
@@ -1136,7 +1136,7 @@ public class DashboardActivity extends Activity {
 		    			}
 		    		});
 		    		
-		    		secureShowDialog(adb);
+		    		Utils.secureShowDialog(sDashboard, adb);
 			    } else {
 			    	launchFcForImport();
 			    }
@@ -2202,7 +2202,7 @@ public class DashboardActivity extends Activity {
 	               }
 	           });      
 	    
-	    secureShowDialog(builder);
+	    Utils.secureShowDialog(sDashboard, builder);
 	    newClick = false;
 	}
 
@@ -2528,12 +2528,6 @@ public class DashboardActivity extends Activity {
 		Log.e(DEBUG_TAG, vfilename + ": " + text);
 		Toast.makeText(DashboardActivity.this,  vfilename + ": " + text, Toast.LENGTH_SHORT).show();
 	}
-
-	public void secureShowDialog(AlertDialog.Builder adb) {
-		if (!DashboardActivity.this.isFinishing()) {
-			adb.show();
-		}
-	}
 	
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -2626,7 +2620,7 @@ public class DashboardActivity extends Activity {
 		           }
 		       });      
 		
-		secureShowDialog(builder0);
+		Utils.secureShowDialog(sDashboard, builder0);
 	}
 
 	public void extractAudioAndConvertToMp3(final File in) {
@@ -2670,7 +2664,7 @@ public class DashboardActivity extends Activity {
 		           }
 		       });      
 		
-		secureShowDialog(builder);
+		Utils.secureShowDialog(sDashboard, builder);
 	}
 
 	public void convertAudioToMp3(final File in) {
@@ -2713,7 +2707,7 @@ public class DashboardActivity extends Activity {
 		           }
 		       });      
 		
-		secureShowDialog(builder);
+		Utils.secureShowDialog(sDashboard, builder);
 	}
 	
 	public void addAudioStream(final File in) {
@@ -2778,7 +2772,7 @@ public class DashboardActivity extends Activity {
 			           }
 			       });      
 			
-				secureShowDialog(builder);
+				Utils.secureShowDialog(sDashboard, builder);
 		} else {
 			Toast.makeText(DashboardActivity.this, getString(R.string.ao_not_found), Toast.LENGTH_SHORT).show();
 		}

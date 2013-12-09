@@ -295,6 +295,17 @@ public class Utils {
 		}
 	}
 	
+	public static void secureShowDialog(final Activity act, final AlertDialog.Builder adb) {
+		act.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if(!act.isFinishing()){
+					adb.show();
+				}
+			}
+		});
+	}
+	
 	public static void offerDevMail(final Context ctx) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
 		adb.setIcon(Utils.selectThemedAlertIcon());
