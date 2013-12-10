@@ -1,5 +1,5 @@
 /***
- 	Copyright (c) 2012-2013 Samuele Rini
+AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this, R.style.TextViewGreen); 	Copyright (c) 2012-2013 Samuele Rini
  	
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -141,8 +141,10 @@ public class ShareActivity extends Activity {
 	private static final String _UNKNOWN = "Unknown";
 	
 	private ProgressBar progressBar1;
-	private ProgressBar progressBarD;
-	private ProgressBar progressBarL;
+	private ProgressBar progressBarDB;
+	private ProgressBar progressBarLB;
+	private ProgressBar progressBarDG;
+	private ProgressBar progressBarLR;
 	private static final String DEBUG_TAG = "ShareActivity";
 	
 	private TextView tv;
@@ -172,7 +174,6 @@ public class ShareActivity extends Activity {
 	private AsyncSizesFiller asyncSizesFiller;
 	private boolean isAsyncDownloadRunning = false;
 	private boolean isAsyncSizesFillerRunning = false;
-	private AlertDialog.Builder  helpBuilder;
 	private Bitmap img;
 	private ImageView imgView;
 	private String videoId;
@@ -220,8 +221,6 @@ public class ShareActivity extends Activity {
 		itags.clear();
 		listEntries.clear();
 		
-		String theme = YTD.settings.getString("choose_theme", "D");
-		
 		int or = this.getResources().getConfiguration().orientation;
     	boolean isLandscape = (or == 2) ? true : false;
 		
@@ -255,15 +254,32 @@ public class ShareActivity extends Activity {
 		tv = (TextView) findViewById(R.id.textView1);
 		noVideoInfo = (TextView) findViewById(R.id.share_activity_info);
 		
-		progressBarD = (ProgressBar) findViewById(R.id.progressBarD);
-		progressBarL = (ProgressBar) findViewById(R.id.progressBarL);
+		progressBarDB = (ProgressBar) findViewById(R.id.progressBarDB);
+		progressBarLB = (ProgressBar) findViewById(R.id.progressBarLB);
+		progressBarDG = (ProgressBar) findViewById(R.id.progressBarDG);
+		progressBarLR = (ProgressBar) findViewById(R.id.progressBarLR);
 		
-		if (theme.equals("D")) {
-			progressBar1 = progressBarD;
-			progressBarL.setVisibility(View.GONE);
-		} else {
-			progressBar1 = progressBarL;
-			progressBarD.setVisibility(View.GONE);
+		String theme = YTD.settings.getString("choose_theme", "DB");
+		if (theme.equals("DB")) {
+			progressBar1 = progressBarDB;
+			progressBarLB.setVisibility(View.GONE);
+			progressBarDG.setVisibility(View.GONE);
+			progressBarLR.setVisibility(View.GONE);
+		} else if (theme.equals("LB")) {
+			progressBar1 = progressBarLB;
+			progressBarDB.setVisibility(View.GONE);
+			progressBarDG.setVisibility(View.GONE);
+			progressBarLR.setVisibility(View.GONE);
+		} else if (theme.equals("DG")) {
+			progressBar1 = progressBarDG;
+			progressBarDB.setVisibility(View.GONE);
+			progressBarLB.setVisibility(View.GONE);
+			progressBarLR.setVisibility(View.GONE);
+		} else if (theme.equals("LR")) {
+			progressBar1 = progressBarLR;
+			progressBarDB.setVisibility(View.GONE);
+			progressBarLB.setVisibility(View.GONE);
+			progressBarDG.setVisibility(View.GONE);
 		}
 
 		imgView = (ImageView)findViewById(R.id.imgview);
@@ -486,6 +502,10 @@ public class ShareActivity extends Activity {
 	private void showGeneralInfoTutorial() {
 		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
 		if (generalInfoCheckboxEnabled == true) {
+			/*QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
+			adb.setDividerColor(Utils.selectThemeColor());
+			adb.setTitleColor(Utils.selectThemeColor());*/
+			
 			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
@@ -674,7 +694,12 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-					helpBuilder = new AlertDialog.Builder(ShareActivity.this);
+					/*QustomDialogBuilder helpBuilder = new QustomDialogBuilder(ShareActivity.this);
+					helpBuilder.setDividerColor(Utils.selectThemeColor());
+					helpBuilder.setTitleColor(Utils.selectThemeColor());*/
+					
+					AlertDialog.Builder helpBuilder = new AlertDialog.Builder(ShareActivity.this);
+					
 					helpBuilder.setIcon(Utils.selectThemedInfoIcon());
 					helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
 
@@ -698,6 +723,10 @@ public class ShareActivity extends Activity {
 							try {
 								fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
 								if (fileRenameEnabled == true) {
+									/*QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
+									adb.setDividerColor(Utils.selectThemeColor());
+									adb.setTitleColor(Utils.selectThemeColor());*/
+									
 									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
@@ -783,6 +812,10 @@ public class ShareActivity extends Activity {
 					
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
+					
+					/*QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
+					builder.setDividerColor(Utils.selectThemeColor());
+					builder.setTitleColor(Utils.selectThemeColor());*/
 					
 					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
@@ -885,6 +918,10 @@ public class ShareActivity extends Activity {
 				Utils.logger("d", "appStartIntent: " + appStartIntent, DEBUG_TAG);
 				context.startActivity(appStartIntent);
 			} else {
+				/*QustomDialogBuilder cb = new QustomDialogBuilder(ShareActivity.this);
+				cb.setDividerColor(Utils.selectThemeColor());
+				cb.setTitleColor(Utils.selectThemeColor());*/
+				
 				AlertDialog.Builder cb = new AlertDialog.Builder(ShareActivity.this);
 				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
 				cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
@@ -942,6 +979,10 @@ public class ShareActivity extends Activity {
 				
 				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
 				if (sshInfoCheckboxEnabled == true) {
+					/*QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
+					adb.setDividerColor(Utils.selectThemeColor());
+					adb.setTitleColor(Utils.selectThemeColor());*/
+					
 					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 					View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);

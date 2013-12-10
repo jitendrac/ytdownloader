@@ -144,6 +144,7 @@ public class SettingsActivity extends Activity {
 		private String cpuVers;
 		private String link;
 		private Preference clear;
+		//private SwitchPreference sw;
 		
 		private File extDir;
 		private File extFile;
@@ -170,7 +171,7 @@ public class SettingsActivity extends Activity {
             	chooserSummary = YTD.settings.getString("CHOOSER_FOLDER", "");
             }
             
-            initSwapPreference();
+            initSwitchPreference();
             initMp3BitratePreference();
             initFFmpegAutoCb();
             
@@ -188,6 +189,8 @@ public class SettingsActivity extends Activity {
 //                  return true;
 //                }
 //            });
+            
+            //sw = (SwitchPreference) findPreference("swap_location");
             
             clear = (Preference) findPreference("clear_dashboard");
             clear.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -227,11 +230,16 @@ public class SettingsActivity extends Activity {
 			th.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
-					String theme = YTD.settings.getString("choose_theme", "D");
-			    	if (theme.equals("D")) {
-			    		getActivity().setTheme(R.style.AppThemeDark);
-			    	} else {
-			    		getActivity().setTheme(R.style.AppThemeLight);
+					String theme = YTD.settings.getString("choose_theme", "DB");
+
+			    	if (theme.equals("DB")) {
+			    		getActivity().setTheme(R.style.Dark_Blue);
+			    	} else if (theme.equals("LB")) {
+			    		getActivity().setTheme(R.style.Light_Blue);
+			    	} else if (theme.equals("DG")) {
+			    		getActivity().setTheme(R.style.Dark_Green);
+			    	} else if (theme.equals("LR")) {
+			    		getActivity().setTheme(R.style.Light_Red);
 			    	}
 			    	
 			    	if (!theme.equals(newValue)) Utils.reload(getActivity());
@@ -468,7 +476,7 @@ public class SettingsActivity extends Activity {
 			}
 		}
 
-		private void initSwapPreference() {
+		private void initSwitchPreference() {
 			boolean swap = YTD.settings.getBoolean("swap_location", false);
 			PreferenceScreen p = (PreferenceScreen) findPreference("open_chooser");
             if (swap == true) {
@@ -524,7 +532,7 @@ public class SettingsActivity extends Activity {
         
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         	updatePrefSummary(findPreference(key));
-        	initSwapPreference();
+        	initSwitchPreference();
         	initMp3BitratePreference();
         	initFFmpegAutoCb();
         }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.5.1 - Dic 09 2013
+        \n v3.6 - xxxxxxxxxxx
         \n-----------------------------------
-        \n[x] fixed two small bugs
+        \n four new custom themes
         \n
         \n v3.5 - Dic 09 2013
         \n-----------------------------------
@@ -317,8 +317,8 @@
     <string name="lgpl_title">LGPL-3.0</string>
     <string name="lgpl_summary">liblame</string>
     
-    <string name="apache_title">Apache</string>
-    <string name="apache_summary">SlidingMenu\nPicasso\nMyID3 &amp; Jakarta</string>
+    <string name="apache_title">Apache 2.0</string>
+    <string name="apache_summary">SlidingMenu\nPicasso\nMyID3 &amp; Jakarta\nQustomDialog</string>
     
     <string name="cc_title">CC BY-NC-ND 3.0</string>
     <string name="cc_summary">App\'s icons\nStack Overflow\'s snippets</string>
@@ -470,6 +470,10 @@
 		    https://github.com/matsuhiro/AndroidDownloadManger
 		    (released "unlicensed"). 
 		\n
+		\nQustomDialog code: released under the Apache license, Version 2.0
+		\n	- Copyright &#169; 2010 The Android Open Source Project
+		\n	- Copyright &#169; 2013 Daniel Smith
+		\n
 		\n
     	\tCode excerpts Licenses
         \n
@@ -541,6 +545,7 @@
     <string name="title_activity_share">YouTube Downloader</string>
     
     <string name="dividers_descr">Divider</string>
+    <string name="alert_image_content_description">Alert Dialog Image</string>
     
     <string-array name="standard_location_entries">
         <item>Downloads</item>
@@ -571,11 +576,13 @@
     <string name="connectbot_flavour_default">org.connectbot</string>
     
     <string-array name="choose_theme_entry_values">
-        <item>D</item>
-        <item>L</item>
+        <item>DB</item>
+        <item>LB</item>
+        <item>DG</item>
+        <item>LR</item>
     </string-array>
     
-    <string name="choose_theme_default">D</string>
+    <string name="choose_theme_default">DB</string>
     
     <string-array name="mp3_bitrate_entry_values">
         <item>128k</item>

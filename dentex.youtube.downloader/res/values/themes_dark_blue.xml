@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="Dark_Blue" parent="android:Theme.Black">
+
+    <item name="android:editTextStyle">@style/EditTextDark_Blue</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDark_Blue</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxDark_Blue</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonDark_Blue</item>
+
+    <item name="android:buttonStyle">@style/ButtonDark_Blue</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonDark_Blue</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerDark_Blue</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemDark_Blue</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarDark_Blue</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarDark_Blue</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleDark_Blue</item>
+
+    <item name="android:listViewStyle">@style/ListViewDark_Blue</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewDark_Blue.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemDark_Blue</item>
+
+  </style>
+
+</resources>

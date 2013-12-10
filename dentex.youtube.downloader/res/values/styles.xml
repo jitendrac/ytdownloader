@@ -10,8 +10,6 @@
     
     <style name="LicenseThemeDark" parent="android:Theme.NoTitleBar" />
     <style name="LicenseThemeLight" parent="android:Theme.Light.NoTitleBar" />
-    <style name="ProgressBarDark" parent="android:Widget.Holo.ProgressBar.Horizontal" />
-    <style name="ProgressBarLight" parent="android:Widget.Holo.Light.ProgressBar.Horizontal" />
     
     <style name="HorizontalDivider">
     	<item name="android:layout_width">match_parent</item>
@@ -24,5 +22,5 @@
     	<item name="android:layout_height">match_parent</item>
     	<item name="android:background">?android:attr/listDivider</item>
     </style>
-
+    
 </resources>

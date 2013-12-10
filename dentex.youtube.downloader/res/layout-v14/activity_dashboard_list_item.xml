@@ -40,18 +40,33 @@
         android:padding="3dp" >
 
         <TextView
-            android:id="@+id/filename_D"
+            android:id="@+id/filename_DB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@android:color/white"
+            android:textIsSelectable="false"
+            android:textSize="18sp" />
+        
+        <TextView
+            android:id="@+id/filename_DG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@style/Dark_Green"
             android:textIsSelectable="false"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/filename_L"
+            android:id="@+id/filename_LB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@android:color/black"
+            android:textColor="@style/Light_Blue"
+            android:textIsSelectable="false"
+            android:textSize="18sp" />
+        
+        <TextView
+            android:id="@+id/filename_LR"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@style/Light_Red"
             android:textIsSelectable="false"
             android:textSize="18sp" />
 

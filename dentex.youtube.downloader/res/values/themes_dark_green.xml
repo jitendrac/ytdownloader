@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="Dark_Green" parent="android:Theme.Black">
+
+    <item name="android:editTextStyle">@style/EditTextDark_Green</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDark_Green</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxDark_Green</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonDark_Green</item>
+
+    <item name="android:buttonStyle">@style/ButtonDark_Green</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonDark_Green</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerDark_Green</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemDark_Green</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarDark_Green</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarDark_Green</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleDark_Green</item>
+
+    <item name="android:listViewStyle">@style/ListViewDark_Green</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewDark_Green.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemDark_Green</item>
+
+  </style>
+
+</resources>

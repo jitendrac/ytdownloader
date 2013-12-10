@@ -237,7 +237,11 @@ public class DashboardActivity extends Activity {
         		
 	        		final boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
 	        		
-	        		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+	        		/*QustomDialogBuilder builder = new QustomDialogBuilder(DashboardActivity.this);
+	        		builder.setDividerColor(Utils.selectThemeColor());
+					builder.setTitleColor(Utils.selectThemeColor());*/
+	        		
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
 	        		
 	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) || 
@@ -246,7 +250,9 @@ public class DashboardActivity extends Activity {
 	        			final boolean audioIsSupported = !currentItem.getAudioExt().equals("unsupported");
 	        			final File in = new File (currentItem.getPath(), currentItem.getFilename());
 	        			
-		        		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) && !currentItem.getAudioExt().equals("x")) {
+		        		if ((currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) ||
+		        				currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_M))
+		        				&& !currentItem.getAudioExt().equals("x")) {
 		        			
 		        			// handle click on a **VIDEO** file entry (non-FLV)
 			        		builder.setItems(R.array.dashboard_click_entries, new DialogInterface.OnClickListener() {
@@ -376,7 +382,10 @@ public class DashboardActivity extends Activity {
 
 								private void downloadLatestFFmpeg() {
 									BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
-									AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
+									/*QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+									adb.setDividerColor(Utils.selectThemeColor());
+									adb.setTitleColor(Utils.selectThemeColor());*/
+									AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 									adb.setTitle(getString(R.string.information));
 									adb.setMessage(getString(R.string.ffmpeg_new_v_required));
 									adb.setIcon(Utils.selectThemedInfoIcon());
@@ -471,6 +480,10 @@ public class DashboardActivity extends Activity {
 	        			disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, SEND, REMOVE, DELETE, PAUSERESUME };
 	        		}
 	
+	        		/*QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+	        		builder.setDividerColor(Utils.selectThemeColor());
+	        		builder.setTitleColor(Utils.selectThemeColor());*/
+	        		
 	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
 	
@@ -584,13 +597,19 @@ public class DashboardActivity extends Activity {
 	}
 	
 	private void rename(final DashboardListItem currentItem) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
+		/*QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+		adb.setDividerColor(Utils.selectThemeColor());
+		adb.setTitleColor(Utils.selectThemeColor());*/
+		
+		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+		
 		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 	    userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
 	    userFilename.setText(currentItem.getFilename());
 	    adb.setView(inputFilename);
 	    adb.setTitle(getString(R.string.rename_dialog_title));
+	    
 	    //adb.setMessage(getString(R.string.rename_dialog_msg));
 	    
 	    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -660,8 +679,9 @@ public class DashboardActivity extends Activity {
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 		
 		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) || 
-				currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O))
-					sharingIntent.setType("video/*");
+				currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_M) || 
+					currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O))
+						sharingIntent.setType("video/*");
 		
 		if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_E) || 
 				currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_M) || 
@@ -674,7 +694,11 @@ public class DashboardActivity extends Activity {
 	}
 	
 	public void  removeFromDashboard(final DashboardListItem currentItem) {
-		AlertDialog.Builder rem = new AlertDialog.Builder(sDashboard);
+		/*QustomDialogBuilder rem = new QustomDialogBuilder(sDashboard);
+		rem.setDividerColor(Utils.selectThemeColor());
+		rem.setTitleColor(Utils.selectThemeColor());*/
+		
+		AlertDialog.Builder rem = new AlertDialog.Builder(DashboardActivity.this);
 		//rem.setTitle(getString(R.string.attention));
 		rem.setTitle(currentItem.getFilename());
 		rem.setMessage(getString(R.string.remove_video_confirm));
@@ -699,7 +723,7 @@ public class DashboardActivity extends Activity {
 	}
 
 	public void delete(final DashboardListItem currentItem) {
-		AlertDialog.Builder del = new AlertDialog.Builder(sDashboard);
+		AlertDialog.Builder del = new AlertDialog.Builder(DashboardActivity.this);
 		del.setTitle(currentItem.getFilename());
 		del.setMessage(getString(R.string.delete_video_confirm));
 		del.setIcon(Utils.selectThemedAlertIcon());
@@ -1016,8 +1040,12 @@ public class DashboardActivity extends Activity {
 	        		boolean backupCheckboxEnabled = YTD.settings.getBoolean("dashboard_backup_info", true);
 				    if (backupCheckboxEnabled == true) {
 				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
-			        	
+			        	/*QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+			        	adb.setDividerColor(Utils.selectThemeColor());
+						adb.setTitleColor(Utils.selectThemeColor());*/
+				    	
+				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+				    	
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
 					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
@@ -1063,8 +1091,11 @@ public class DashboardActivity extends Activity {
 	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
 				    if (restoreCheckboxEnabled == true) {
 				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
-			        	
+			        	/*QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+			        	adb.setDividerColor(Utils.selectThemeColor());
+						adb.setTitleColor(Utils.selectThemeColor());*/
+				    	
+				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
 					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
@@ -1106,8 +1137,10 @@ public class DashboardActivity extends Activity {
         		boolean importCheckboxEnabled1 = YTD.settings.getBoolean("dashboard_import_info", true);
 			    if (importCheckboxEnabled1 == true) {
 			    	
-		        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
-		        	
+		        	/*QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+		        	adb.setDividerColor(Utils.selectThemeColor());
+					adb.setTitleColor(Utils.selectThemeColor());*/
+			    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 				    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
 				    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
@@ -2029,7 +2062,8 @@ public class DashboardActivity extends Activity {
 
 					if (typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_V) || 
 						typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_V_O) ||
-						typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_O)) {
+						typeEntries.get(i).equals(YTD.JSON_DATA_TYPE_A_O)) { 
+						//JSON DATA types for downloads
 						try {
 							if (Maps.mDownloadPercentMap.get(idlong) != null) {
 								bytes_downloaded = Maps.mDownloadSizeMap.get(idlong);
@@ -2079,6 +2113,10 @@ public class DashboardActivity extends Activity {
 						partSizeEntries.add(i, progressRatio + " (" + String.valueOf(progress) + "%)");
 						speedEntries.add(i, speed);
 					} else {
+						// JSON DATA types for FFmpeg output files:
+						// YTD.JSON_DATA_TYPE_A_E
+						// YTD.JSON_DATA_TYPE_A_M
+						// YTD.JSON_DATA_TYPE_V_M
 						try {
 							if (YTD.mFFmpegPercentMap.get(idlong) != null) {
 								progress = (int) YTD.mFFmpegPercentMap.get(idlong);
@@ -2157,7 +2195,11 @@ public class DashboardActivity extends Activity {
 			tagYear = "";
 		}
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
+		/*QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+		builder.setDividerColor(Utils.selectThemeColor());
+		builder.setTitleColor(Utils.selectThemeColor());*/
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 	    LayoutInflater inflater0 = getLayoutInflater();
 	    final View id3s = inflater0.inflate(R.layout.dialog_edit_id3, null);
 	    
@@ -2582,8 +2624,11 @@ public class DashboardActivity extends Activity {
 
 	public void extractAudioOnly(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioOnly");
-		AlertDialog.Builder builder0 = new AlertDialog.Builder(sDashboard);
+		/*QustomDialogBuilder builder0 = new QustomDialogBuilder(sDashboard);
+		builder0.setDividerColor(Utils.selectThemeColor());
+		builder0.setTitleColor(Utils.selectThemeColor());*/
 		
+		AlertDialog.Builder builder0 = new AlertDialog.Builder(DashboardActivity.this);
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
 		builder0.setTitle(title[1]);
 		
@@ -2625,8 +2670,8 @@ public class DashboardActivity extends Activity {
 
 	public void extractAudioAndConvertToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioAndConvertToMp3");
-		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
-		
+		//QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
 		builder.setTitle(title[2]);
 		
@@ -2669,7 +2714,11 @@ public class DashboardActivity extends Activity {
 
 	public void convertAudioToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("convertAudioToMp3");
-		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
+		/*QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+		builder.setDividerColor(Utils.selectThemeColor());
+		builder.setTitleColor(Utils.selectThemeColor());*/
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 		
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries_audio);
 		builder.setTitle(title[1]);
@@ -2740,8 +2789,11 @@ public class DashboardActivity extends Activity {
 		}
 		
 		if (audioOnlyFile != null && audioOnlyFile.exists()) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
+			/*QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+			builder.setDividerColor(Utils.selectThemeColor());
+			builder.setTitleColor(Utils.selectThemeColor());*/
 			
+			AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 			String[] title = getResources().getStringArray(R.array.dashboard_click_entries_vo);
 			builder.setTitle(title[1]);
 			
@@ -2831,7 +2883,7 @@ public class DashboardActivity extends Activity {
 			Json.addEntryToJsonFile(
 					DashboardActivity.this,
 					String.valueOf(aNewId),
-					YTD.JSON_DATA_TYPE_V,  
+					YTD.JSON_DATA_TYPE_V_M,  
 					currentItem.getYtId(),
 					currentItem.getPos(),
 					YTD.JSON_DATA_STATUS_IN_PROGRESS,
@@ -2871,7 +2923,7 @@ public class DashboardActivity extends Activity {
 	    		Json.addEntryToJsonFile(
 	    				DashboardActivity.this,
 	    				String.valueOf(aNewId),
-						YTD.JSON_DATA_TYPE_V, 
+						YTD.JSON_DATA_TYPE_V_M, 
 						currentItem.getYtId(),
 						currentItem.getPos(),
 						YTD.JSON_DATA_STATUS_COMPLETED,
@@ -2887,7 +2939,7 @@ public class DashboardActivity extends Activity {
 				Json.addEntryToJsonFile(
 						DashboardActivity.this,
 						String.valueOf(aNewId),
-						YTD.JSON_DATA_TYPE_V,  
+						YTD.JSON_DATA_TYPE_V_M,  
 						currentItem.getYtId(),
 						currentItem.getPos(),
 						YTD.JSON_DATA_STATUS_FAILED,

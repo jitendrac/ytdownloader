@@ -97,17 +97,21 @@ public class Utils {
     }
     
     public static void themeInit(Context context) {
-		String theme = YTD.settings.getString("choose_theme", "D");
-    	if (theme.equals("D")) {
-    		context.setTheme(R.style.AppThemeDark);
-    	} else {
-    		context.setTheme(R.style.AppThemeLight);
+		String theme = YTD.settings.getString("choose_theme", "DB");
+    	if (theme.equals("DB")) {
+    		context.setTheme(R.style.Dark_Blue);
+    	} else if (theme.equals("LB")) {
+    		context.setTheme(R.style.Light_Blue);
+    	} else if (theme.equals("DG")) {
+    		context.setTheme(R.style.Dark_Green);
+    	} else if (theme.equals("LR")) {
+    		context.setTheme(R.style.Light_Red);
     	}
 	}
     
 	public static int selectThemedInfoIcon() {
-		String theme = YTD.settings.getString("choose_theme", "D");
-    	if (theme.equals("D")) {
+		String theme = YTD.settings.getString("choose_theme", "DB");
+    	if (theme.startsWith("D")) {
     		return R.drawable.ic_dialog_info_holo_dark;
     	} else {
     		return R.drawable.ic_dialog_info_holo_light;
@@ -115,12 +119,23 @@ public class Utils {
 	}
 	
 	public static int selectThemedAlertIcon() {
-		String theme = YTD.settings.getString("choose_theme", "D");
-    	if (theme.equals("D")) {
+		String theme = YTD.settings.getString("choose_theme", "DB");
+    	if (theme.startsWith("D")) {
     		return R.drawable.ic_dialog_alert_holo_dark;
     	} else {
     		return R.drawable.ic_dialog_alert_holo_light;
     	}
+	}
+	
+	public static String selectThemeColor() {
+		String theme = YTD.settings.getString("choose_theme", "DB");
+			if (theme.equals("DG")) {
+	    		return "#22BB3B";
+	    	} else if (theme.equals("LR")) {
+	    		return "#E53737";
+	    	} else { // "DB" or "LB"
+	    		return "#3CAFD9";
+	    	}
 	}
 	
     public static void langInit(Context context) {

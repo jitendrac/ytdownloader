@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="Dark_Green" parent="android:Theme.Holo">
+
+    <item name="android:editTextBackground">@drawable/dark_green_edit_text_holo_dark</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDark_Green</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/dark_green_btn_check_holo_dark</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/dark_green_btn_radio_holo_dark</item>
+
+    <item name="android:buttonStyle">@style/ButtonDark_Green</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonDark_Green</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerDark_Green</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarDark_Green</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarDark_Green</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleDark_Green</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/dark_green_list_selector_holo_dark</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/dark_green_activated_background_holo_dark</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/dark_green_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

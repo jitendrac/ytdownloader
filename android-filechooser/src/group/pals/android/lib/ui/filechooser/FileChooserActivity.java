@@ -313,8 +313,8 @@ public class FileChooserActivity extends Activity {
     	
     	// Theme init
     	settings = getSharedPreferences(PREFS_NAME, 0);
-    	String theme = settings.getString("choose_theme", "D");
-    	if (theme.equals("D")) {
+    	String theme = settings.getString("choose_theme", "DB");
+    	if (theme.startsWith("D")) {
     		this.setTheme(R.style.AppThemeDark);
     	} else {
     		this.setTheme(R.style.AppThemeLight);

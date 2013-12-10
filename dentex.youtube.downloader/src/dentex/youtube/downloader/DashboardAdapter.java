@@ -106,24 +106,33 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 			// This a new view we inflate the new layout
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(R.layout.activity_dashboard_list_item, null);
+			
 			// Now we can fill the layout with the right values
-			TextView tv1D = (TextView) v.findViewById(R.id.filename_D);
-			TextView tv1L = (TextView) v.findViewById(R.id.filename_L);
-			String theme = YTD.settings.getString("choose_theme", "D");
-	    	if (theme.equals("D")) {
-	    		tv1L.setVisibility(View.GONE);
-	    		holder.filename = tv1D;
-	    	} else {
-	    		tv1D.setVisibility(View.GONE);
-	    		holder.filename = tv1L;
+			TextView tv = (TextView) v.findViewById(R.id.filename);
+			ProgressBar pb;
+			
+			String theme = YTD.settings.getString("choose_theme", "DB");
+	    	if (theme.equals("LB")) {
+	    		tv.setTextAppearance(context, R.style.EditTextLight_Blue);
+	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_light_blue, null);
+	    	} else if (theme.equals("DG")) {
+	    		tv.setTextAppearance(context, R.style.EditTextDark_Green);
+	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_dark_green, null);
+	    	} else if (theme.equals("LR")) {
+	    		tv.setTextAppearance(context, R.style.EditTextLight_Red);
+	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_light_red, null);
+	    	} else { // theme.equals("DB")
+	    		tv.setTextAppearance(context, R.style.EditTextDark_Blue);
+	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_dark_blue, null);
 	    	}
+	    	
+	    	holder.filename = tv;
+	    	holder.pb = pb;
 			TextView tv2 = (TextView) v.findViewById(R.id.size);
 			TextView tv3 = (TextView) v.findViewById(R.id.path);
 			TextView tv4 = (TextView) v.findViewById(R.id.status);
 			TextView tv5 = (TextView) v.findViewById(R.id.speed);
-			
-			ProgressBar pb = (ProgressBar) v.findViewById(R.id.pb);
-			
+
 			ImageView th = (ImageView) v.findViewById(R.id.thumb);
 			//ImageView ov = (ImageView) v.findViewById(R.id.overlay);
 
@@ -132,7 +141,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 			holder.status = tv4;
 			holder.speed = tv5;
 			
-			holder.pb = pb;
+			
 			
 			holder.thumb = th;
 			//holder.overlay = ov;
@@ -147,7 +156,9 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		holder.filename.setText(dli.getFilename());
 		
 		int dr;
-		if (dli.getType().equals(YTD.JSON_DATA_TYPE_V) || dli.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
+		if (dli.getType().equals(YTD.JSON_DATA_TYPE_V) || 
+				dli.getType().equals(YTD.JSON_DATA_TYPE_V_O) || 
+					dli.getType().equals(YTD.JSON_DATA_TYPE_V_M)) {
 			dr = R.drawable.ic_video;
 		} else {
 			dr = R.drawable.ic_audio;

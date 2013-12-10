@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AutoCompleteTextViewLight_Red" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/light_red_list_selector_holo_light</item>
+	    <item name="android:background">@drawable/light_red_edit_text_holo_light</item>
+  </style>
+
+  <style name="ButtonLight_Red" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/light_red_btn_default_holo_light</item>
+  </style>
+
+  <style name="ImageButtonLight_Red" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/light_red_btn_default_holo_light</item>
+  </style>
+
+  <style name="SpinnerLight_Red" parent="android:Widget.Holo.Light.Spinner">
+      <item name="android:background">@drawable/light_red_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/light_red_list_selector_holo_light</item>
+  </style>
+
+  <style name="ProgressBarLight_Red" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/light_red_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/light_red_progress_indeterminate_horizontal_holo_light</item>
+  </style>
+
+  <style name="SeekBarLight_Red" parent="android:Widget.Holo.Light.SeekBar">
+      <item name="android:progressDrawable">@drawable/light_red_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/light_red_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:thumb">@drawable/light_red_scrubber_control_selector_holo_light</item>
+  </style>
+
+  <style name="ToggleLight_Red" parent="android:Widget.Holo.Light.Button.Toggle">
+      <item name="android:background">@drawable/light_red_btn_toggle_holo_light</item>
+  </style>
+
+</resources>

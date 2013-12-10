@@ -257,8 +257,10 @@
     <string name="lang_dialog_title">Choose UI language:</string>
     <string name="choose_theme_title">Choose theme</string>
     <string-array name="choose_theme_entries">
-        <item>Dark</item>
-        <item>Light</item>
+        <item>Midnight (Dark and Blue)</item>
+        <item>Noon (Light and Blue)</item>
+        <item>Terminal (Dark and Green)</item>
+        <item>Tube (Light and Red)</item>
     </string-array>
     
     <!-- -->

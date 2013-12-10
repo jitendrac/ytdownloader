@@ -2,4 +2,7 @@
 <resources>
 	<color name="half_gray">#999999</color>
 	<color name="darker_gray">#333333</color>
+	<color name="blue_theme">#3CAFD9</color>
+	<color name="green_theme">#22BB3B</color>
+	<color name="red_theme">#E53737</color>
 </resources>

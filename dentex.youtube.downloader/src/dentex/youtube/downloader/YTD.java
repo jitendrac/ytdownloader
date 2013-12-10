@@ -82,6 +82,7 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_TYPE = "type";
 	public static final String JSON_DATA_TYPE_V = "VIDEO";
 	public static final String JSON_DATA_TYPE_V_O = "VIDEO-ONLY";
+	public static final String JSON_DATA_TYPE_V_M = "VIDEO-MUX";
 	public static final String JSON_DATA_TYPE_A_E = "AUDIO-EXTR";
 	public static final String JSON_DATA_TYPE_A_M = "AUDIO-MP3";
 	public static final String JSON_DATA_TYPE_A_O = "AUDIO-ONLY";

@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="72"`
+`versionCode="71"`
 
-`versionName="3.5.1"`
+`versionName="3.5"`
 
-MD5 checksum: `bab1b22af6af5621dbc658af13fb2295` dentex.youtube.downloader_v3.5.1.apk
+MD5 checksum: `47b79f83d384fb25a4e094fd760655a4` dentex.youtube.downloader_v3.5.apk
 
 DISCLAIMER
 ================================================================
@@ -146,10 +146,6 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
-     v3.5.1 - Dic 09 2013 
-    ----------------------------------- 
-    [x] fixed two small bugs 
-     
      v3.5 - Dic 09 2013 
     ----------------------------------- 
     [x] Dashboard option to mux video-only and audio-only streams 
