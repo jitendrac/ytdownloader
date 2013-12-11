@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="72"`
+`versionCode="73"`
 
-`versionName="3.5.1"`
+`versionName="3.5.2"`
 
-MD5 checksum: `bab1b22af6af5621dbc658af13fb2295` dentex.youtube.downloader_v3.5.1.apk
+MD5 checksum: `c1239e6a3c855c2816aaf293e198f7f7` dentex.youtube.downloader_v3.5.2.apk
 
 DISCLAIMER
 ================================================================
@@ -146,6 +146,12 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.5.2 - Dic 11 2013 
+    ----------------------------------- 
+    [x] fixed missing progress bars during mux 
+    [x] Dashboard backup file can be renamed 
+    [x] indicator for Dashboard background jobs 
+     
      v3.5.1 - Dic 09 2013 
     ----------------------------------- 
     [x] fixed two small bugs 

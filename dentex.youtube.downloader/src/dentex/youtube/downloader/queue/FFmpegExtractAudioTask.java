@@ -175,6 +175,11 @@ public class FFmpegExtractAudioTask implements Runnable {
 	private class AsyncDelete extends AsyncTask<File, Void, Boolean> {
 
 		@Override
+		protected void onPreExecute() {
+			DashboardActivity.dashboardAsyncTaskInProgress(true);
+		}
+		
+		@Override
 		protected Boolean doInBackground(File... file) {
 			if (file[0].exists() && file[0].delete()) {
 				// remove library reference
@@ -198,6 +203,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 			} else {
 				Utils.logger("w", aFileToConvert.getName() + " NOT deleted", DEBUG_TAG);
 			}
+			DashboardActivity.dashboardAsyncTaskInProgress(false);
 		}
 	}
 }

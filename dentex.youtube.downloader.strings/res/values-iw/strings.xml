@@ -7,7 +7,7 @@
     <string name="title_activity_donate">תרומות</string>
     <string name="title_activity_tutorials">הדרכות</string>
     <string name="title_activity_translators_show">מתרגמים</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_dashboard">דאשבורד</string>
 
     <!-- ### ShareActivity ### -->
 
@@ -20,11 +20,11 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="information">מידע</string>
     <string name="dialogs_negative">בטל</string>
     <string name="wait">אנא המתן&#8230;</string>
-    <string name="no_downloads_sys_app">\"Downloads\" system App not found.</string>
+    <string name="no_downloads_sys_app">אפליקציית ההורדות לא נמצאה</string>
     <string name="invalid_url">לא מצליח לאחזר דף אינטרנט. כתובת האתר עלולה להיות לא חוקית.</string>
     <string name="invalid_url_short">לא מצליח לאחזר דף אינטרנט.</string>
     <string name="invalid_response">תגובת שרת HTTP לא חוקית.</string>
-    <string name="rtmpe_streams">Invalid HTTP server response.</string>
+    <string name="rtmpe_streams">תגובת שרת HTTP לא חוקית.</string>
     <string name="bad_link">בדוק את הקישור המצורף.</string>
     <string name="bad_link_dialog_msg">קישור YouTube אינו תקף.</string>
     <string name="no_net">אין חיבור זמין.</string>
@@ -47,7 +47,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="callConnectBot_dialog_msg">הינך צריך אפליקצייה חינמית זאת, כדי לשלוח את הוידאו להורדה דרך SSH.</string>
     <string name="callConnectBot_dialog_positive">הורד</string>
     <string name="download_complete_dialog_msg1">YouTube וידאו:\n</string>
-    <string name="download_complete_dialog_msg2">ההורדה הסתיימה בהצלחה:\n</string>
+    <string name="download_complete_dialog_msg2">\nהורד בהצלחה.</string>
     <string name="download_complete_dialog_positive">פתח</string>
     <string name="downloading">מוריד&#8230;</string>
     <string name="cancel_download_dialog_title">בטל הורדה?</string>
@@ -60,10 +60,10 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="notification_no_downloads">אין הורדות פועלות</string>
     <string name="long_click_title">טפל בקישור הנבחר:</string>
     <string name="ffmpeg_ready">FFmpeg מוכן.</string>
-    <string name="login_required">Login to YouTube may be required.</string>
-    <string name="encrypted_streams">Encrypted video stream</string>
-    <string name="no_video_available">No video available.</string>
-    <string name="retry_button_text">Retry</string>
+    <string name="login_required">נדרש חיבור ליוטיוב.</string>
+    <string name="encrypted_streams">אפיק וידאו מוצפן</string>
+    <string name="no_video_available">וידאו לא זמין.</string>
+    <string name="retry_button_text">נסה/י שנית</string>
     
     <string-array name="long_click_entries">
         <item>העתק ללוח העריכה</item>
@@ -76,20 +76,20 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
         <item>שלח דרך SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">הקישור הועתק לזיכרון</string>
+    <string name="share_link_via">שתף קישור זה דרך:</string>
     
-    <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
-    <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_reset">איפוס המסנן</string>
+    <string name="filter_view_all">הכל</string>
+    <string name="filter_header_format">סינון לפי פורמט</string>
+    <string name="filter_header_quality">סינון לפי איכות</string>
+    <string name="filter_header_others">מסננים אחרים</string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">גדול</string>
+    <string name="filter_md">בינוני</string>
+    <string name="filter_sd">קטן</string>
+    <string name="filter_vo">וידאו בלבד</string>
+    <string name="filter_ao">קול בלבד</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -128,9 +128,9 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <!-- ### ### -->
     
     <string name="ytd_video">וידאו מתחילת השנה</string>
-    <string name="copy_error">Error during copy.</string>
+    <string name="copy_error">ארעה שגיעה בעת העתקה.</string>
     <string name="copy_progress">העתק קובץ בתהליך&#8230;</string>
-    <string name="copy_ok">File copy completed.</string>
+    <string name="copy_ok">העתקת קובץ בוצעה בהצלחה.</string>
     <string name="download_remove_failed">שגיאה: קובץ זמני שהורד לא הוסר!</string>
     <string name="download_failed">ההורדה נכשלה!</string>
     <string name="audio_extr_progress">חילוץ אודיו בתהליך&#8230;</string>
@@ -139,121 +139,121 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
     <string name="audio_conv_completed">קידוד ל-MP3 הושלם.</string>
     <string name="audio_extr_error">שגיאה במהלך חילוץ אודיו.</string>
     <string name="audio_conv_error">שגיאה במהלך קידוד אודיו ל-MP3.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s מתוך %2$s בוצע בהצלחה</string>
+    <string name="auto_audio_extr_completed">כל חילוצי האודיו בוצעו</string>
     
     <!-- ### DonateActivity ### -->
     
     <string name="paypal_item_name">תרומת מתחילת השנה</string>
 	<string name="paypal_summary">תמיכת מפתח מתחילת השנה\'s בתרומה</string>
-	<string name="flattr_summary">Flattr this App</string>
+	<string name="flattr_summary">תרום לאפליקציה (דרך Flattr)</string>
 	
 	<!-- ### FfmpegDownloadService ### -->
 	<string name="ffmpeg_install_failed">FFmpeg התקנה נכשלה.</string>
 	
 	<!-- ### DashboardActivity ### -->
-	<string name="json_status_completed">Completed</string>
-	<string name="json_status_failed">Failed</string>
-	<string name="json_status_in_progress">In Progress</string>
-	<string name="json_status_paused">Paused</string>
-	<string name="json_status_imported">Imported</string>
-	<string name="json_status_queued">Queued</string>
-	<string name="menu_search">search&#8230;</string>
-	<string name="menu_backup">Backup</string>
-	<string name="menu_restore">Restore</string>
-	<string name="menu_import">Import a video</string>
-	<string name="menu_import_file">Import a file</string>
-	<string name="menu_import_double">Video already added.</string>
-	<string name="menu_import_file_double">File already added.</string>
-	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
-	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
-	<string name="menu_restore_info_msg">Present data will be overwritten.</string>
-	<string name="menu_import_info">Import a video and manage it from the Dashboard</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
-	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
-	<string name="menu_backup_result_failed">Error during backup.</string>
-	<string name="menu_restore_result_ok">Dashboard data restored.</string>
-	<string name="menu_restore_result_failed">Error during restore.</string>
-	<string name="unsupported_operation">Unsupported operation.</string>
-	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
-	<string name="invalid_data">Invalid data.</string>
-	<string name="open_chooser_title">Open with:</string>
+	<string name="json_status_completed">בוצע</string>
+	<string name="json_status_failed">נכשל</string>
+	<string name="json_status_in_progress">בתהליך</string>
+	<string name="json_status_paused">מושהה</string>
+	<string name="json_status_imported">מיובא</string>
+	<string name="json_status_queued">בתור</string>
+	<string name="menu_search">חפש&#8230;</string>
+	<string name="menu_backup">גיבוי</string>
+	<string name="menu_restore">שחזור</string>
+	<string name="menu_import">ייבא וידאו</string>
+	<string name="menu_import_file">יבא קובץ</string>
+	<string name="menu_import_double">הוידאו כבר הוסף</string>
+	<string name="menu_import_file_double">הקובץ כבר הוסף</string>
+	<string name="menu_backup_info">בחר תיקיה לגיבוי הגדרות הדאשבורד</string>
+	<string name="menu_restore_info">שחזר הגדרות דאשבורד מקובץ</string>
+	<string name="menu_restore_info_msg">הגדרות נוכחיות יוחלפו</string>
+	<string name="menu_import_info">יבא קובץ וידאו ונהל אותו מהדאשבורד</string>
+	<string name="menu_import_file_info">יבא קובץ ונהל אותו מהדאשבורד</string>
+	<string name="menu_backup_result_ok">גיבוי הגדרות דאשבורד מוכן</string>
+	<string name="menu_backup_result_failed">שגיאה בגיבוי</string>
+	<string name="menu_restore_result_ok">הגדרות דאשבורד שוחזרו</string>
+	<string name="menu_restore_result_failed">שגיאה בשיחזור</string>
+	<string name="unsupported_operation">הפעולה לא נתמכת</string>
+	<string name="ffmpeg_already_running">המקודד כבר פועל</string>
+	<string name="invalid_data">מידע לא תקין</string>
+	<string name="open_chooser_title">פתח באמצעות:</string>
 	
 	<string-array name="dashboard_click_entries">
-	    <item>Open</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>פתח</item>
+	    <item>חלץ אודיו</item>
+        <item>חלץ אודיו וקודד לMp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
-	    <item>Open</item>
-        <item>Encode to mp3</item>
+	    <item>פתח</item>
+        <item>קודד לMp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>פתח</item>
+        <item>חלץ אודיו וקודד לMp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
-        <item>Add audio stream (already downloaded)</item>
+	    <item>פתח</item>
+        <item>הוסף זרם אודיו (שכבר הורד)</item>
     </string-array>
     
-	<string name="ao_not_found">No suitable audio-only stream found</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
-	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
-    <string name="share_file_via">Share this file via:</string>
-	<string name="ffmpeg_not_enabled_title">FFmpeg not installed or enabled:</string>
-	<string name="ffmpeg_not_enabled_msg">Open settings?</string>
-	<string name="remove_video">Delete video after audio extraction (no confirmation!)</string>
-	<string name="remove_original_audio">Delete audio after conversion (no confirmation!)</string>
-	<string name="edit_id3_tags">Edit ID3 tags</string>
-	<string name="id3_album">Album</string>
-	<string name="id3_artist">Artist</string>
-	<string name="id3_title">Title</string>
-	<string name="id3_year">Year</string>
-	<string name="id3_genre">Genre</string>
-	<string name="audio_extr_info">Contained audio stream:</string>
+	<string name="ao_not_found">לא נמצא זרם אודיו-בלבד מתאים</string>
+	<string name="remove_ao_vo">מחק קבצי וידאו-בלבד ואודיו-בלבד לאחר ההורדה (ללא אימות)</string>
+	<string name="ffmpeg_new_v_required">מקודד חדש דרוש. להוריד עכשיו?</string>
+    <string name="share_file_via">שתף באמצעות:</string>
+	<string name="ffmpeg_not_enabled_title">מקודד לא מותקן או מופעל:</string>
+	<string name="ffmpeg_not_enabled_msg">פתח הגדרות?</string>
+	<string name="remove_video">מחק וידאו אחרי חילוץ אודיו (ללא אימות)</string>
+	<string name="remove_original_audio">מחק אודיו אחרי המרה (ללא אימות)</string>
+	<string name="edit_id3_tags">ערוך תג ID3</string>
+	<string name="id3_album">אלבום</string>
+	<string name="id3_artist">אומן</string>
+	<string name="id3_title">כותרת</string>
+	<string name="id3_year">שנה</string>
+	<string name="id3_genre">ז\'אנר</string>
+	<string name="audio_extr_info">מכיל זרם אודיו:</string>
 	
 	<string-array name="dashboard_long_click_entries">
-	    <item>Copy</item>
-	    <item>Move</item>
-        <item>Rename</item>
-        <item>Re-download the video</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+	    <item>העתק</item>
+	    <item>העבר</item>
+        <item>שנה שם</item>
+        <item>הורד וידאו מחדש</item>
+        <item>שלח</item>
+        <item>הסר מהדאשבורד</item>
+        <item>הסר ומחק קובץ</item>
+        <item>השהה\הפעל</item>
     </string-array>
     
-	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
-	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
+	<string name="operation_standby">המתן: פעולה נוספת נמצאת בתהליך</string>
+	<string name="dashboard_delete_data_cb">מחק בנוסף את כל קבצי הווידאו והאודיו הרשומים</string>
     
-	<string name="move_error">Error during move.</string>
-    <string name="move_progress">File move in progress&#8230;</string>
-    <string name="move_ok">File move completed.</string>
-    <string name="long_press_warning_title">Operation not executed:</string>
-    <string name="long_press_warning_msg">Source and destination folders overlap.</string>
-    <string name="long_press_warning_msg2">A copy already exists in this folder.</string>
-    <string name="audio_extr_warning_msg">Same audio file already extracted.</string>
+	<string name="move_error">שגיאה בזמן העברה</string>
+    <string name="move_progress">הקובץ מועבר&#8230;</string>
+    <string name="move_ok">העברת הקובץ הושלמה</string>
+    <string name="long_press_warning_title">פעולה הפעולה לא בוצעה</string>
+    <string name="long_press_warning_msg">תיקיית המקור והיעד חופפות</string>
+    <string name="long_press_warning_msg2">הקובץ כבר נמצא בתיקיה הזאת</string>
+    <string name="audio_extr_warning_msg">קובץ אודיו זהה כבר חולץ</string>
 
-	<string name="delete_video_confirm">Confirm you want to delete this video?</string>
-	<string name="remove_video_confirm">Confirm you want to remove this video?</string>
-	<string name="delete_video_ok">%1$s successfully deleted.</string>
-	<string name="delete_video_failed">Error: %1$s not deleted.</string>
+	<string name="delete_video_confirm">האם אתה באמת רוצה למחוק את הוידאו הזה?</string>
+	<string name="remove_video_confirm">האם אתה באמת רוצה להסיר את הוידאו הזה?</string>
+	<string name="delete_video_ok">%1$s נמחק בהצלחה.</string>
+	<string name="delete_video_failed">שגיאה: %1$s לא נמחק.</string>
 	
-	<string name="empty_dashboard">No downloaded video.</string>
+	<string name="empty_dashboard">אין הורדות</string>
 
     <!-- ### preferences ### -->
 
     <!-- -->
-    <string name="dashboard_summary">Open YTD\'s Dashboard</string>
+    <string name="dashboard_summary">פתח דאשבורד</string>
 
     <!-- -->
     <string name="settings_cat_ui">ממשק משתמש</string>
     <string name="lang_title">שפה</string>
-    <string name="lang_dialog_title">Choose UI language:</string>
+    <string name="lang_dialog_title">בחר שפת ממשק</string>
     <string name="choose_theme_title">בחר ערכת נושא</string>
     <string-array name="choose_theme_entries">
         <item>כהה</item>
@@ -292,25 +292,25 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 
     <!-- -->
     <string name="settings_cat_advanced">מתקדם</string>
-    <string name="enable_advanced_features_title">Enable Advanced Features</string>
-    <string name="enable_advanced_features_summary">Download FFmpeg \"plugin\"</string>
-    <string name="mp3_bitrate_title">Mp3 encoding bitrate:</string>
+    <string name="enable_advanced_features_title">אפשר אפשרויות מתקדמות</string>
+    <string name="enable_advanced_features_summary">הורד מקודד</string>
+    <string name="mp3_bitrate_title">קצב סיביות לקידוד Mp3</string>
     
-    <string name="ffmpeg_auto_title">Auto-extract audio</string>
-    <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
-    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
-    <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
+    <string name="ffmpeg_auto_title">חלץ אודיו אוטומטית</string>
+    <string name="ffmpeg_auto_summary">חלץ או המר אודיו לMp3 אוטומטית אחרי כל הורדה</string>
+    <string name="ffmpeg_auto_cb_title">אפשר חילוץ אוטומטי</string>
+    <string name="ffmpeg_auto_cb_summary">בחר פרמטרים</string>
     
     <string name="audio_extraction_type_title">סוג החילוץ</string>
     <string-array name="audio_extraction_type_entries">
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>חלץ אודיו בלבד</item>
+        <item>חלץ וקודד אודיו לMp3</item>
     </string-array>
     
     <string name="remove_video_title">הסרת וידאו</string>
     
-    <string name="enable_adaptive_title">Get secondary streams</string>
-    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
+    <string name="enable_adaptive_title">קבל זרמים משניים</string>
+    <string name="enable_adaptive_summary">הוסף זרמי וידאו-בלבד ו\או אודיו בלבד (אם קיים) לרשימת הוידאו</string>
     
 <!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
 <!--     <string-array name="vo_download_method_entries"> -->
@@ -335,7 +335,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
         <item>כלום</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">פעילות כניסה (Entry-point)</string>
     
     <!-- -->
     <string name="settings_cat_updates">עדכונים</string>
@@ -367,7 +367,7 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 https://sourceforge.net/projects/ytdownloader/files\n
 </string>
 	<string name="help_translate_title">עזרו לתרגם את האפליקציה הזאת</string>
-    <string name="xda_title">Thread on XDA forum</string>
+    <string name="xda_title">אשכול בפורום XDA</string>
     
     <!-- -->
     <string name="settings_cat_ssh">SSH</string>
@@ -380,13 +380,13 @@ https://sourceforge.net/projects/ytdownloader/files\n
 	<string name="ssh_to_longpress_menu_summary">העבר\ "שלח דרך SSH\" פעולה בתפריט לחיצה ארוכה הזמינה מרשימת הווידאו</string>
 	
     <!-- -->
-	<string name="settings_cat_system">System</string>
+	<string name="settings_cat_system">מערכת</string>
 	<string name="enable_logging_title">אפשר רישום</string>
 	<string name="enable_logging_summary">כולל הודעות מתחילת השנה\'s ביומן המערכת. חובה לשליחת יומן למפתחים.</string>
-	<string name="clear_dashboard_title">Empty the Dashboard</string>
-	<string name="clear_dashboard_summary">Clear all dashboard\'s references (may fix some crashes)</string>
-	<string name="clear_dashboard_msg">Are you sure?\nThis will clear all the list in the Dashboard.</string>
-	<string name="clear_dashboard_ok">Dashboard cleared.</string>
-	<string name="clear_dashboard_failed">Dashboard emptying failed.</string>
+	<string name="clear_dashboard_title">רוקן דאשבורד</string>
+	<string name="clear_dashboard_summary">נקה כל ייחוסי הדאשבורד (עשוי לתקן קריסות)</string>
+	<string name="clear_dashboard_msg">אתה בטוח? זה ינקה את כל הרשימה בדאשבורד</string>
+	<string name="clear_dashboard_ok">דאשבורד נוקה</string>
+	<string name="clear_dashboard_failed">ריקון דאשבורד נכשל</string>
 	
 </resources>

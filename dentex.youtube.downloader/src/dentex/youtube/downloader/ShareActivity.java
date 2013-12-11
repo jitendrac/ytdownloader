@@ -172,7 +172,6 @@ public class ShareActivity extends Activity {
 	private AsyncSizesFiller asyncSizesFiller;
 	private boolean isAsyncDownloadRunning = false;
 	private boolean isAsyncSizesFillerRunning = false;
-	private AlertDialog.Builder  helpBuilder;
 	private Bitmap img;
 	private ImageView imgView;
 	private String videoId;
@@ -502,9 +501,8 @@ public class ShareActivity extends Activity {
 					}
 				}
 			});
-			if (!ShareActivity.this.isFinishing()) {
-				adb.show();
-			}
+
+			Utils.secureShowDialog(sShare, adb);
 		}
 	}
 	
@@ -674,7 +672,8 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-					helpBuilder = new AlertDialog.Builder(ShareActivity.this);
+					AlertDialog.Builder helpBuilder = new AlertDialog.Builder(ShareActivity.this);
+					
 					helpBuilder.setIcon(Utils.selectThemedInfoIcon());
 					helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
 
@@ -736,9 +735,7 @@ public class ShareActivity extends Activity {
 										}
 									});
 									
-									if (!ShareActivity.this.isFinishing()) {
-										adb.show();
-									}
+									Utils.secureShowDialog(sShare, adb);
 								} else {
 									callDownloadManager();
 								}
@@ -766,9 +763,7 @@ public class ShareActivity extends Activity {
 					});
 					
 					if (!showSize) {
-						if (!ShareActivity.this.isFinishing()) {
-							helpBuilder.show();
-						}
+						Utils.secureShowDialog(sShare, helpBuilder);
 					}
 				}
 			});
@@ -813,9 +808,8 @@ public class ShareActivity extends Activity {
 							}
 						});
 					}
-					if (!ShareActivity.this.isFinishing()) {
-						builder.show();
-					}
+
+					Utils.secureShowDialog(sShare, builder);
 					return true;
 				}
 			});
@@ -906,9 +900,7 @@ public class ShareActivity extends Activity {
 					}
 				});
 				
-				if (!ShareActivity.this.isFinishing()) {
-					cb.show();
-				}
+				Utils.secureShowDialog(sShare, cb);
 			}
 		}
 
@@ -960,9 +952,8 @@ public class ShareActivity extends Activity {
 							callConnectBot(); 
 						}
 					});
-					if (!ShareActivity.this.isFinishing()) {
-						adb.show();
-					}
+
+					Utils.secureShowDialog(sShare, adb);
 				} else {
 					callConnectBot();
 				}
@@ -1212,8 +1203,10 @@ public class ShareActivity extends Activity {
 				Maps.removeFromAllMaps(ID);
 				
 				//TODO Auto FFmpeg task
-				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !autoFFmpegTaskAlreadySent && 
-						!jsonDataType.equals(YTD.JSON_DATA_TYPE_V_O)) {
+				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && 
+						!autoFFmpegTaskAlreadySent && 
+						!jsonDataType.equals(YTD.JSON_DATA_TYPE_V_O) && 
+						!jsonDataType.equals(YTD.JSON_DATA_TYPE_A_O)) {
 					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 					
 					autoFFmpegTaskAlreadySent = true;

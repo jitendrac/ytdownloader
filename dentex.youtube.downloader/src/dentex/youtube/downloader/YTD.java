@@ -73,6 +73,8 @@ public class YTD extends Application implements QueueThreadListener{
 	// **********************************
 	
 	public static final String JSON_FILENAME = "dashboard.json";
+	public static final String JSON_FILENAME_NO_EXT = "dashboard";
+	public static final String JSON_FILENAME_EXT_ONLY = ".json";
 	public static final String JSON_FOLDER = "json";
 	public static File JSON_FILE = null;
 	
@@ -82,6 +84,7 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_TYPE = "type";
 	public static final String JSON_DATA_TYPE_V = "VIDEO";
 	public static final String JSON_DATA_TYPE_V_O = "VIDEO-ONLY";
+	public static final String JSON_DATA_TYPE_V_M = "VIDEO-MUX";
 	public static final String JSON_DATA_TYPE_A_E = "AUDIO-EXTR";
 	public static final String JSON_DATA_TYPE_A_M = "AUDIO-MP3";
 	public static final String JSON_DATA_TYPE_A_O = "AUDIO-ONLY";
@@ -108,6 +111,8 @@ public class YTD extends Application implements QueueThreadListener{
 	
 	public static SharedPreferences settings;
 	public static SharedPreferences videoinfo;
+	
+	public static boolean isAnyAsyncInProgress = false;
 	
 	public static String PREFS_NAME = "dentex.youtube.downloader_preferences";
 	public static String VIDEOINFO_NAME = "dentex.youtube.downloader_videoinfo";

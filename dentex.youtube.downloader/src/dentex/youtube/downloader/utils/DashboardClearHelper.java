@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import dentex.youtube.downloader.DashboardActivity;
@@ -108,17 +107,14 @@ public class DashboardClearHelper {
 		@Override
 		protected void onPreExecute() {
 			if (DashboardActivity.isDashboardRunning) {
-				DashboardActivity.isAnyAsyncInProgress = true;
+				DashboardActivity.dashboardAsyncTaskInProgress(true);
 				TextView info = (TextView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_activity_info);
 				info.setVisibility(View.GONE);
 				
 				ListView list = (ListView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_list);
 				list.setVisibility(View.GONE);
-				
-				DashboardActivity.progressBar = (ProgressBar) DashboardActivity.sDashboard.findViewById(R.id.dashboard_progressbar);
-				DashboardActivity.progressBar.setVisibility(View.VISIBLE);
 			} else {
-				DashboardActivity.isAnyAsyncInProgress = true;
+				DashboardActivity.dashboardAsyncTaskInProgress(true);
 			}
 		}
 		
@@ -160,8 +156,6 @@ public class DashboardClearHelper {
 		
 		@Override
 		protected void onPostExecute(Integer result) {
-			if (DashboardActivity.isDashboardRunning) DashboardActivity.progressBar.setVisibility(View.GONE);
-			
 			if (result == 0 && YTD.JSON_FILE.delete()) {
 				clearThumbsAndVideoinfopref();
 				/*Utils.logger("d", "all files successfully deleted.", DEBUG_TAG);
@@ -177,7 +171,7 @@ public class DashboardClearHelper {
         		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
 			}
 			if (sDoReload) Utils.reload(sAct);
-			DashboardActivity.isAnyAsyncInProgress = false;
+			DashboardActivity.dashboardAsyncTaskInProgress(false);
 		}
 	}
 }

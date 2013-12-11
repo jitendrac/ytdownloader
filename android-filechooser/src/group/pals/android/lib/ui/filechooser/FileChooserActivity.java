@@ -1479,10 +1479,12 @@ public class FileChooserActivity extends Activity {
         // return flags for further use (in case the caller needs)
         intent.putExtra(_FilterMode, mFileProvider.getFilterMode());
         intent.putExtra(_SaveDialog, mIsSaveDialog);
-        String path = getIntent().getStringExtra("path");
-		intent.putExtra("path", path);
-        String name = getIntent().getStringExtra("name");
-		intent.putExtra("name", name);
+        String path = getIntent().getStringExtra("PATH");
+		intent.putExtra("PATH", path);
+        String name = getIntent().getStringExtra("NAME");
+		intent.putExtra("NAME", name);
+		String backupName = getIntent().getStringExtra("BACKUP_NAME");
+		intent.putExtra("BACKUP_NAME", backupName);
 
         setResult(RESULT_OK, intent);
 
