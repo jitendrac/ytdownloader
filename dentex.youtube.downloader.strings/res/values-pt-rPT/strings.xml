@@ -6,8 +6,8 @@
     <string name="title_activity_about">Sobre</string>
     <string name="title_activity_donate">Doações</string>
     <string name="title_activity_tutorials">Tutoriais</string>
-    <string name="title_activity_translators_show">Translators</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_translators_show">Tradutores</string>
+    <string name="title_activity_dashboard">Painel de controle</string>
 
     <!-- ### ShareActivity ### -->
 
@@ -22,11 +22,11 @@
     <string name="information">Informação</string>
     <string name="dialogs_negative">Cancelar</string>
     <string name="wait">Por favor aguarde&#8230;</string>
-    <string name="no_downloads_sys_app">\"Downloads\" system App not found.</string>
+    <string name="no_downloads_sys_app">\"Transferências\" Aplicação de sistema não encontrada</string>
     <string name="invalid_url">Incapaz de proceder á extração da pagina web. URL poderá ser invalido."</string>
     <string name="invalid_url_short">Incapaz de proceder á extração da pagina web.</string>
     <string name="invalid_response">Resposta do servidor HTTP inválida.</string>
-    <string name="rtmpe_streams">Invalid HTTP server response.</string>
+    <string name="rtmpe_streams">Resposta do servidor HTTP inválida.</string>
     <string name="bad_link">Reveja o link fornecido.</string>
     <string name="bad_link_dialog_msg">Não é um link do YouTube válido.</string>
     <string name="no_net">Nenhuma coneção disponivel.</string>
@@ -44,27 +44,27 @@
     <string name="ssh_info_tutorial_msg">Um unico comando longo foi carregado na area de tranferencia.
 		\n\nEscolha um perfil no ConnectBot e quando na sua Shell remota, navegue para o desejado 
 		destino, COLE o comando (use o botão do menu) e faça ENTER.</string>
-    <string name="callConnectBot_dialog_title">%1$s not installed!</string>
+    <string name="callConnectBot_dialog_title">%1$s não instalado!</string>
     <string name="callConnectBot_dialog_msg">Precisa desta aplicação gratis para enviar o download do video via SSH.</string>
-    <string name="callConnectBot_dialog_positive">Download</string>
+    <string name="callConnectBot_dialog_positive">Transferência</string>
     <string name="download_complete_dialog_msg1">Video Youtube:\n</string>
     <string name="download_complete_dialog_msg2">\nDescarregado com Sucesso.</string>
     <string name="download_complete_dialog_positive">Abrir</string>
-    <string name="downloading">Descarregando&#8230;</string>
-    <string name="cancel_download_dialog_title">Cancelar Download?</string>
+    <string name="downloading">Transferindo&#8230;</string>
+    <string name="cancel_download_dialog_title">Cancelar transferência?</string>
     <string name="video_list_error_toast">Erro na lista de videos.</string>
     <string name="codec">\n\n\tCodec:</string>
     <string name="quality">\n\tQualidade:</string>
     <string name="size">\n\tTamanho:</string>
     <string name="notification_downloading_pt1">A descarregar</string>
     <string name="notification_downloading_pt2">Ficheiros de video</string>
-    <string name="notification_no_downloads">Nenhuns downloads em progresso</string>
+    <string name="notification_no_downloads">Nenhuma transferência em progresso</string>
     <string name="long_click_title">Manuseie link selecionado:</string>
     <string name="ffmpeg_ready">FFmpeg pronto.</string>
-    <string name="login_required">Login to YouTube may be required.</string>
-    <string name="encrypted_streams">Encrypted video stream</string>
-    <string name="no_video_available">No video available.</string>
-    <string name="retry_button_text">Retry</string>
+    <string name="login_required">Login no YouTube pode ser necessário.</string>
+    <string name="encrypted_streams">Stream de video encriptado</string>
+    <string name="no_video_available">Nenhum video disponível.</string>
+    <string name="retry_button_text">Repetir</string>
     
     <string-array name="long_click_entries">
         <item>Copiar para o clipboard</item>
@@ -77,20 +77,20 @@
         <item>Send via SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Link copiado para a área de transferência</string>
+    <string name="share_link_via">Partilhar o link via:</string>
     
-    <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
-    <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_reset">Redefinir filtros</string>
+    <string name="filter_view_all">Ver todos</string>
+    <string name="filter_header_format">Filtrar por formato</string>
+    <string name="filter_header_quality">Filtrar por qualidade</string>
+    <string name="filter_header_others">Outros filtros</string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">Grande</string>
+    <string name="filter_md">Médio</string>
+    <string name="filter_sd">Pequeno</string>
+    <string name="filter_vo">Só video</string>
+    <string name="filter_ao">Só audio</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -106,8 +106,8 @@
     <string name="ffmpeg_download_dialog_msg">Link da web:</string>
     <string name="ffmpeg_device_not_supported">Dispositivo ainda não suportado.</string>
     <string name="ffmpeg_support_mail">Enviar email ao desenvolvedor?
-\nVais poder rever toda a informação no email antes de enviar quaisquer dados.</string>
-    <string name="ffmpeg_download_notification">A descarregar FFmpeg</string>
+\nVai poder consultar toda a informação antes de ser enviada.</string>
+    <string name="ffmpeg_download_notification">A transferir FFmpeg</string>
     <string name="ffmpeg_install">A instalar o binário do FFmpeg&#8230;</string>
     <string name="email_via">Enviar email via:</string>
     
@@ -124,15 +124,15 @@
     <string name="upgraded_dialog_negative">Mais tarde\n(manualmente)</string>
     <string name="upgrade_latest_installed">A versão mais recente ja está instalada!</string>
     <string name="upgrade_network_error">Incapaz de proceder à extração das informações de actualização.\nTente de novo mais tarde.</string>
-    <string name="upgrade_bad_md5_dialog_msg">Pacote descarregado corrompido.\nSerá apagado agora.\nPressione OK para descarregar de novo</string>
+    <string name="upgrade_bad_md5_dialog_msg">Pacote transferido está corrompido.\nSerá apagado agora.\nPressione OK para transferir de novo</string>
     
     <!-- ### ### -->
     
     <string name="ytd_video">YTD video</string>
-    <string name="copy_error">Error during copy.</string>
+    <string name="copy_error">Erro durante a cópia</string>
     <string name="copy_progress">Cópia de ficheiro em progresso&#8230;</string>
-    <string name="copy_ok">File copy completed.</string>
-    <string name="download_remove_failed">Erro: ficheiro temporario de download não removido!</string>
+    <string name="copy_ok">Cópia do ficheiro completa</string>
+    <string name="download_remove_failed">Erro: ficheiro temporário transferido não removido!</string>
     <string name="download_failed">Baixe falhou!</string>
     <string name="audio_extr_progress">Extração de audio em progresso&#8230;</string>
     <string name="audio_conv_progress">Conversão do audio para mp3 em progresso&#8230;</string>
@@ -140,36 +140,36 @@
     <string name="audio_conv_completed">Conversão do audio para mp3 completa.</string>
     <string name="audio_extr_error">Erro durante a extração do audio.</string>
     <string name="audio_conv_error">Erro durante a conversão do audio para mp3.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s de %2$s extração de audio concluído </string>
+    <string name="auto_audio_extr_completed">Todas as extrações de audio completas</string>
     
     <!-- ### DonateActivity ### -->
     
     <string name="paypal_item_name">Fazer donação a YTD</string>
 	<string name="paypal_summary">Ajudar o desenvolvedor do YTD com uma doação </string>
-	<string name="flattr_summary">Flattr this App</string>
+	<string name="flattr_summary">Flattr esta aplicação</string>
 	
 	<!-- ### FfmpegDownloadService ### -->
 	<string name="ffmpeg_install_failed">Instalação do FFmpeg falhada.</string>
 	
 	<!-- ### DashboardActivity ### -->
-	<string name="json_status_completed">Completed</string>
-	<string name="json_status_failed">Failed</string>
-	<string name="json_status_in_progress">In Progress</string>
-	<string name="json_status_paused">Paused</string>
-	<string name="json_status_imported">Imported</string>
-	<string name="json_status_queued">Queued</string>
-	<string name="menu_search">search&#8230;</string>
-	<string name="menu_backup">Backup</string>
-	<string name="menu_restore">Restore</string>
-	<string name="menu_import">Import a video</string>
-	<string name="menu_import_file">Import a file</string>
-	<string name="menu_import_double">Video already added.</string>
-	<string name="menu_import_file_double">File already added.</string>
-	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
-	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
-	<string name="menu_restore_info_msg">Present data will be overwritten.</string>
-	<string name="menu_import_info">Import a video and manage it from the Dashboard</string>
+	<string name="json_status_completed">Concluído</string>
+	<string name="json_status_failed">Falhado</string>
+	<string name="json_status_in_progress">Em Progresso</string>
+	<string name="json_status_paused">Pausado</string>
+	<string name="json_status_imported">Importado</string>
+	<string name="json_status_queued">Em fila</string>
+	<string name="menu_search">procurar&#8230;</string>
+	<string name="menu_backup">Cópia de segurança</string>
+	<string name="menu_restore">Restaurar</string>
+	<string name="menu_import">Importar video</string>
+	<string name="menu_import_file">Importar ficheiro</string>
+	<string name="menu_import_double">Video já foi adicionado</string>
+	<string name="menu_import_file_double">Ficheiro já foi adicionado.</string>
+	<string name="menu_backup_info">Escolha uma pasta para os dados do Painel de Cópia de Segurança</string>
+	<string name="menu_restore_info">Restaurar dados do painel a partir do ficheiro</string>
+	<string name="menu_restore_info_msg">Os dados presentes serão substituídos.</string>
+	<string name="menu_import_info">Importar um vídeo e gerenciar a partir do Painel</string>
 	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
 	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
 	<string name="menu_backup_result_failed">Error during backup.</string>

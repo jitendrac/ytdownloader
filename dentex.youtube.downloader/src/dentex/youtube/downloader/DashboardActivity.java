@@ -80,6 +80,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -90,7 +91,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -124,7 +124,6 @@ public class DashboardActivity extends Activity {
 	private boolean removeAoVo;
 	private ListView lv;
 	private Editable searchText;
-	public static ProgressBar progressBar;
 	
 	public static List<String> idEntries = new ArrayList<String>();
 	static List<String> typeEntries = new ArrayList<String>();
@@ -146,11 +145,9 @@ public class DashboardActivity extends Activity {
 	private static DashboardAdapter da;
 	private boolean isSearchBarVisible;
 	private DashboardListItem currentItem = null;
-	private TextView userFilename;
 	private boolean extrTypeIsMp3Conv;
 	private String type;
 	private boolean isFfmpegRunning = false;
-	public static boolean isAnyAsyncInProgress = false;
 	
 	private String tagArtist;
 	private String tagAlbum;
@@ -167,10 +164,8 @@ public class DashboardActivity extends Activity {
 	public static long countdown;
 	
 	public static Activity sDashboard;
-	
 	private Timer autoUpdate;
 	public static boolean isLandscape;
-	
 	private String muxedFileName;
 	private File muxedVideo;
 	private long aNewId;
@@ -189,6 +184,8 @@ public class DashboardActivity extends Activity {
 		// Theme init
     	Utils.themeInit(this);
     	
+    	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+    	//setProgressBarIndeterminateVisibility(false);
 		setContentView(R.layout.activity_dashboard);
 		
 		// Language init
@@ -231,7 +228,7 @@ public class DashboardActivity extends Activity {
     	lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-				if (!isAnyAsyncInProgress) {
+				if (!YTD.isAnyAsyncInProgress) {
 					currentItem = da.getItem(position); // in order to refer to the filtered item
 					newClick = true;
         		
@@ -439,7 +436,7 @@ public class DashboardActivity extends Activity {
         	@Override
         	public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-        		if (!isAnyAsyncInProgress) {
+        		if (!YTD.isAnyAsyncInProgress) {
 	        		currentItem = da.getItem(position); // in order to refer to the filtered item
 
 	        		int COPY = 0;
@@ -539,7 +536,9 @@ public class DashboardActivity extends Activity {
 	        		});
 	        		
 		        	Utils.secureShowDialog(sDashboard, builder);
-        		}
+        		} else {
+					notifyAnotherOperationIsInProgress();
+				}
         		
         		return true;
         	}
@@ -579,8 +578,8 @@ public class DashboardActivity extends Activity {
     	if (intent != null) {
     		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
     		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
-    		intent.putExtra("path", currentItem.getPath());
-    		intent.putExtra("name", currentItem.getFilename());
+    		intent.putExtra("PATH", currentItem.getPath());
+    		intent.putExtra("NAME", currentItem.getFilename());
     		startActivityForResult(intent, 1);
     	}
 	}
@@ -590,8 +589,8 @@ public class DashboardActivity extends Activity {
     	if (intent != null) {
     		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
     		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
-    		intent.putExtra("path", currentItem.getPath());
-    		intent.putExtra("name", currentItem.getFilename());
+    		intent.putExtra("PATH", currentItem.getPath());
+    		intent.putExtra("NAME", currentItem.getFilename());
     		startActivityForResult(intent, 2);
     	}
 	}
@@ -605,11 +604,10 @@ public class DashboardActivity extends Activity {
 		
 		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
 	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
-	    userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
+	    final TextView userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
 	    userFilename.setText(currentItem.getFilename());
 	    adb.setView(inputFilename);
 	    adb.setTitle(getString(R.string.rename_dialog_title));
-	    
 	    //adb.setMessage(getString(R.string.rename_dialog_msg));
 	    
 	    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -1183,12 +1181,36 @@ public class DashboardActivity extends Activity {
     }
 
 	private void launchFcForBackup() {
-		Intent intent3 = new Intent(DashboardActivity.this,  FileChooserActivity.class);
-		if (intent3 != null) {
-			intent3.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
-			intent3.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
-			startActivityForResult(intent3, 3);
-		}
+		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+    	adb.setTitle(getString(R.string.rename_dialog_title));
+		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+		View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename_dashboard_backup, null);
+		final EditText userFilename = (EditText) inputFilename.findViewById(R.id.input_backup_name);
+		
+		String date = new SimpleDateFormat("yyyy-MM-dd'_'HH-mm", Locale.US).format(new Date());
+		userFilename.setText(date + "_" + YTD.JSON_FILENAME_NO_EXT);
+		
+		adb.setView(inputFilename);
+		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				
+				Intent intent3 = new Intent(DashboardActivity.this,  FileChooserActivity.class);
+				if (intent3 != null) {
+					intent3.putExtra(FileChooserActivity._Rootpath, (Parcelable) new LocalFile(Environment.getExternalStorageDirectory()));
+					intent3.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
+					intent3.putExtra("BACKUP_NAME", userFilename.getText().toString());
+					startActivityForResult(intent3, 3);
+				}
+			}
+		});
+		
+		adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				// cancel
+			}
+		});
+		
+		Utils.secureShowDialog(sDashboard, adb);
 	}
 
 	private void launchFcForRestore() {
@@ -1288,7 +1310,7 @@ public class DashboardActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			isAnyAsyncInProgress = true;
+			dashboardAsyncTaskInProgress(true);
 		}
 		
 		@Override
@@ -1305,7 +1327,7 @@ public class DashboardActivity extends Activity {
 			} else {
 				notifyDeletionUnsuccessful(mItem, mFile);
 			}
-			isAnyAsyncInProgress = false;
+			dashboardAsyncTaskInProgress(false);
 		}
 	}
 	
@@ -1469,8 +1491,8 @@ public class DashboardActivity extends Activity {
             @SuppressWarnings("unchecked")
 			List<LocalFile> files = (List<LocalFile>) data.getSerializableExtra(FileChooserActivity._Results);
             
-            String path = data.getStringExtra("path");
-            String name = data.getStringExtra("name");
+            String path = data.getStringExtra("PATH");
+            String name = data.getStringExtra("NAME");
             	
         	final File chooserSelection = files.get(0);
         	//Utils.logger("d", "file-chooser selection: " + chooserFolder.getAbsolutePath(), DEBUG_TAG);
@@ -1542,19 +1564,21 @@ public class DashboardActivity extends Activity {
 	        	break;
 	        	
 	        case 3: // ------------- > MENU_BACKUP
-	        	new Thread(new Runnable() {
+	        	final String backupName = data.getStringExtra("BACKUP_NAME");
+				new Thread(new Runnable() {
     				@Override
     				public void run() {
     					Looper.prepare();
     					
-			        	String date = new SimpleDateFormat("yyyy-MM-dd'_'HH-mm-ss", Locale.US).format(new Date());
-			        	final File backup = new File(chooserSelection, date + "_" + YTD.JSON_FILENAME);
+						final File backup = new File(chooserSelection, backupName + YTD.JSON_FILENAME_EXT_ONLY);
 			        	
-    					try {
+    					//TODO overwrite check
+						try {
 							Utils.copyFile(YTD.JSON_FILE, backup);
 							Toast.makeText(sDashboard, 
 									getString(R.string.menu_backup_result_ok), 
 									Toast.LENGTH_SHORT).show();
+							Utils.logger("d", "Dashboard backup result ok", DEBUG_TAG);
 						} catch (IOException e) {
 							Log.e(DEBUG_TAG, "IOException @ MENU_BACKUP: " + e.getMessage());
 							Toast.makeText(sDashboard, 
@@ -1565,6 +1589,7 @@ public class DashboardActivity extends Activity {
 			        	Looper.loop();
     				}
     			}).start();
+		        	
 	        	break;
 	        	
 	        case 4: // ------------- > MENU_RESTORE
@@ -1583,15 +1608,12 @@ public class DashboardActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			isAnyAsyncInProgress = true;
+			dashboardAsyncTaskInProgress(true);
 			TextView info = (TextView) DashboardActivity.this.findViewById(R.id.dashboard_activity_info);
 			info.setVisibility(View.GONE);
 			
 			ListView list = (ListView) DashboardActivity.this.findViewById(R.id.dashboard_list);
 			list.setVisibility(View.GONE);
-			
-			progressBar = (ProgressBar) DashboardActivity.this.findViewById(R.id.dashboard_progressbar);
-			progressBar.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -1656,7 +1678,6 @@ public class DashboardActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(String res) {
-			progressBar.setVisibility(View.GONE);
 			Utils.reload(DashboardActivity.this);
 			
 			if (res.equals("e1")) {
@@ -1672,7 +1693,7 @@ public class DashboardActivity extends Activity {
 						res + " " + getString(R.string.json_status_imported), 
 						Toast.LENGTH_SHORT).show();
 			}
-			isAnyAsyncInProgress = false;
+			dashboardAsyncTaskInProgress(false);
 		}
 	}
 	
@@ -1680,15 +1701,12 @@ public class DashboardActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {
-			isAnyAsyncInProgress = true;
+			dashboardAsyncTaskInProgress(true);
 			TextView info = (TextView) DashboardActivity.this.findViewById(R.id.dashboard_activity_info);
 			info.setVisibility(View.GONE);
 			
 			ListView list = (ListView) DashboardActivity.this.findViewById(R.id.dashboard_list);
 			list.setVisibility(View.GONE);
-			
-			progressBar = (ProgressBar) DashboardActivity.this.findViewById(R.id.dashboard_progressbar);
-			progressBar.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -1745,7 +1763,6 @@ public class DashboardActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(String res) {
-			progressBar.setVisibility(View.GONE);
 			Utils.reload(DashboardActivity.this);
 			
 			if (res.equals("e1")) {
@@ -1769,7 +1786,7 @@ public class DashboardActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 				Utils.logger("d", "Restored " + res + " entries", DEBUG_TAG);
 			}
-			isAnyAsyncInProgress = false;
+			dashboardAsyncTaskInProgress(false);
 		}
 	}
 
@@ -1801,7 +1818,7 @@ public class DashboardActivity extends Activity {
 		private boolean delResOk;
 		
 		protected void onPreExecute() {
-			isAnyAsyncInProgress = true;
+			dashboardAsyncTaskInProgress(true);
 			Utils.logger("d", currentItem.getFilename() + " ---> BEGIN move", DEBUG_TAG);
 			Toast.makeText(DashboardActivity.this, 
 					currentItem.getFilename() + ": " + getString(R.string.move_progress), 
@@ -1860,7 +1877,7 @@ public class DashboardActivity extends Activity {
 				Utils.logger("w", currentItem.getFilename() + " --> Copy OK (but not Deletion: original file still in place)", DEBUG_TAG);
 			}
 			
-			isAnyAsyncInProgress = false;
+			dashboardAsyncTaskInProgress(false);
 		}
 	}
 	
@@ -1869,7 +1886,7 @@ public class DashboardActivity extends Activity {
 		File out;
 		
 		protected void onPreExecute() {
-			isAnyAsyncInProgress = true;
+			dashboardAsyncTaskInProgress(true);
 			Utils.logger("d", currentItem.getFilename() + " ---> BEGIN copy", DEBUG_TAG);
 			Toast.makeText(DashboardActivity.this, 
 					currentItem.getFilename() + ": " + getString(R.string.copy_progress), 
@@ -1922,7 +1939,7 @@ public class DashboardActivity extends Activity {
 			}
 			
 			refreshlist();
-			isAnyAsyncInProgress = false;
+			dashboardAsyncTaskInProgress(false);
 		}
 	}
 	
@@ -2348,7 +2365,7 @@ public class DashboardActivity extends Activity {
 		}
 
 		@Override
-		public void processComplete(DashboardListItem item, int exitValue) {
+		public void processComplete(final DashboardListItem item, int exitValue) {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 			String text = null;
 			
@@ -2969,5 +2986,14 @@ public class DashboardActivity extends Activity {
 			Toast.makeText(DashboardActivity.this,  muxedFileName + ": MUX " + 
 					getString(R.string.json_status_failed), Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	public static void dashboardAsyncTaskInProgress(final boolean isIt) {
+		YTD.isAnyAsyncInProgress = isIt;
+		sDashboard.runOnUiThread(new Runnable() {
+			public void run() {
+				sDashboard.setProgressBarIndeterminateVisibility(isIt);
+		    }
+		});
 	}
 }

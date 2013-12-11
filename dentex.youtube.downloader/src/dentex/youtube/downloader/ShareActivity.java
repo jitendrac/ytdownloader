@@ -1,5 +1,5 @@
 /***
-AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this, R.style.TextViewGreen); 	Copyright (c) 2012-2013 Samuele Rini
+ 	Copyright (c) 2012-2013 Samuele Rini
  	
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -522,9 +522,8 @@ public class ShareActivity extends Activity {
 					}
 				}
 			});
-			if (!ShareActivity.this.isFinishing()) {
-				adb.show();
-			}
+
+			Utils.secureShowDialog(sShare, adb);
 		}
 	}
 	
@@ -765,9 +764,7 @@ public class ShareActivity extends Activity {
 										}
 									});
 									
-									if (!ShareActivity.this.isFinishing()) {
-										adb.show();
-									}
+									Utils.secureShowDialog(sShare, adb);
 								} else {
 									callDownloadManager();
 								}
@@ -795,9 +792,7 @@ public class ShareActivity extends Activity {
 					});
 					
 					if (!showSize) {
-						if (!ShareActivity.this.isFinishing()) {
-							helpBuilder.show();
-						}
+						Utils.secureShowDialog(sShare, helpBuilder);
 					}
 				}
 			});
@@ -846,9 +841,8 @@ public class ShareActivity extends Activity {
 							}
 						});
 					}
-					if (!ShareActivity.this.isFinishing()) {
-						builder.show();
-					}
+
+					Utils.secureShowDialog(sShare, builder);
 					return true;
 				}
 			});
@@ -943,9 +937,7 @@ public class ShareActivity extends Activity {
 					}
 				});
 				
-				if (!ShareActivity.this.isFinishing()) {
-					cb.show();
-				}
+				Utils.secureShowDialog(sShare, cb);
 			}
 		}
 
@@ -1001,9 +993,8 @@ public class ShareActivity extends Activity {
 							callConnectBot(); 
 						}
 					});
-					if (!ShareActivity.this.isFinishing()) {
-						adb.show();
-					}
+
+					Utils.secureShowDialog(sShare, adb);
 				} else {
 					callConnectBot();
 				}
@@ -1253,8 +1244,10 @@ public class ShareActivity extends Activity {
 				Maps.removeFromAllMaps(ID);
 				
 				//TODO Auto FFmpeg task
-				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && !autoFFmpegTaskAlreadySent && 
-						!jsonDataType.equals(YTD.JSON_DATA_TYPE_V_O)) {
+				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && 
+						!autoFFmpegTaskAlreadySent && 
+						!jsonDataType.equals(YTD.JSON_DATA_TYPE_V_O) && 
+						!jsonDataType.equals(YTD.JSON_DATA_TYPE_A_O)) {
 					Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
 					
 					autoFFmpegTaskAlreadySent = true;

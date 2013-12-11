@@ -131,6 +131,8 @@ public class TranslatorsListActivity extends ListActivity {
 	private String ianaDecode(String encoded) {
 		encoded = encoded
 					.replaceFirst("ar", "ar  (Arabic)")
+					.replaceFirst("fi", "fi (Finnish")
+					.replaceFirst("cs_CZ", "cs_CZ (Czech, Czech Republic)")
 					.replaceFirst("zh-CN", "zh-CN  (Chinese, China)")
 			        .replaceFirst("zh-HK", "zh-HK  (Chinese, Hong Kong)")
 			        .replaceFirst("zh-TW", "zh-TW  (Chinese, Taiwan)")
