@@ -243,7 +243,7 @@ public class UpgradeApkActivity extends Activity {
 			    upgradeButton.setEnabled(true);
 			    upgradeButton.setText(getString(R.string.upgrade_button_download));
 	    	} else if (result[0].contentEquals("==")) {
-	    		PopUps.showPopUp(getString(R.string.information), getString(R.string.upgrade_latest_installed), "info", UpgradeApkActivity.this);
+	    		PopUps.showPopUp(getString(R.string.information), getString(R.string.upgrade_latest_installed), "status", UpgradeApkActivity.this);
 	    		Utils.logger("d", "version comparison: latest version is already installed!", DEBUG_TAG);
 	    		upgradeButton.setEnabled(false);
 	    	} else if (result[0].contentEquals("<")) {

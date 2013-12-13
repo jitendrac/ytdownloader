@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="73"`
+`versionCode="74"`
 
-`versionName="3.5.2"`
+`versionName="3.5.3"`
 
-MD5 checksum: `c1239e6a3c855c2816aaf293e198f7f7` dentex.youtube.downloader_v3.5.2.apk
+MD5 checksum: `f22a04d45e767ea71fef03c610e19d41` dentex.youtube.downloader_v3.5.3.apk
 
 DISCLAIMER
 ================================================================
@@ -146,6 +146,10 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.5.3 - Dic 12 2013 
+    ----------------------------------- 
+    [x] auto-update bug fix 
+     
      v3.5.2 - Dic 11 2013 
     ----------------------------------- 
     [x] fixed missing progress bars during mux 

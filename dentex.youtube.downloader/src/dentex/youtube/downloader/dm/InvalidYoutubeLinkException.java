@@ -1,5 +1,5 @@
 
-package com.matsuhiro.android.download;
+package dentex.youtube.downloader.dm;
 
 public class InvalidYoutubeLinkException extends DownloadException {
 	

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        \n v3.6 - xxx xx 201x
+        \n-----------------------------------
+        \n[x] downloads threads queue
+        \n[x] possibility to import into Dashboard multiple files at once
+        \n[x] Dashboard bottom status bar
+        \n
+        \n v3.5.3 - Dic 12 2013
+        \n-----------------------------------
+        \n[x] auto-update bug fix
+        \n
         \n v3.5.2 - Dic 11 2013
         \n-----------------------------------
         \n[x] fixed missing progress bars during mux

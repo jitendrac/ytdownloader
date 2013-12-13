@@ -16,8 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import dentex.youtube.downloader.DashboardActivity;
 import dentex.youtube.downloader.R;
@@ -107,14 +105,12 @@ public class DashboardClearHelper {
 		@Override
 		protected void onPreExecute() {
 			if (DashboardActivity.isDashboardRunning) {
-				DashboardActivity.dashboardAsyncTaskInProgress(true);
-				TextView info = (TextView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_activity_info);
-				info.setVisibility(View.GONE);
+				DashboardActivity.dashboardAsyncTaskInProgress(sAct, true);
+				DashboardActivity.status.setVisibility(View.GONE);
 				
-				ListView list = (ListView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_list);
-				list.setVisibility(View.GONE);
+				DashboardActivity.lv.setVisibility(View.GONE);
 			} else {
-				DashboardActivity.dashboardAsyncTaskInProgress(true);
+				DashboardActivity.dashboardAsyncTaskInProgress(sAct, true);
 			}
 		}
 		
@@ -171,7 +167,7 @@ public class DashboardClearHelper {
         		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
 			}
 			if (sDoReload) Utils.reload(sAct);
-			DashboardActivity.dashboardAsyncTaskInProgress(false);
+			DashboardActivity.dashboardAsyncTaskInProgress(sAct, false);
 		}
 	}
 }

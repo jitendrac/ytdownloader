@@ -1,5 +1,11 @@
+/*
+ * code adapted from download manager project by 
+ * Hiroshi Matsunaga (matsuhiro): 
+ * https://github.com/matsuhiro/AndroidDownloadManger
+ * (released "unlicensed").
+ */
 
-package com.matsuhiro.android.storage;
+package dentex.youtube.downloader.dm;
 
 import java.io.File;
 import java.util.Collections;
@@ -8,7 +14,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.matsuhiro.android.download.DownloadTask;
+import dentex.youtube.downloader.dm.DownloadTask;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Environment;

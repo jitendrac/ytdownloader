@@ -60,6 +60,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,11 +82,11 @@ import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.matsuhiro.android.connect.NetworkUtils;
-import com.matsuhiro.android.download.DownloadTask;
-import com.matsuhiro.android.download.DownloadTaskListener;
-import com.matsuhiro.android.download.Maps;
 
+import dentex.youtube.downloader.dm.NetworkUtils;
+import dentex.youtube.downloader.dm.DownloadManager;
+import dentex.youtube.downloader.dm.DownloadTask;
+import dentex.youtube.downloader.dm.DownloadTaskListener;
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
@@ -189,12 +190,7 @@ public class ShareActivity extends Activity {
 	//private String dashStartUrl;
 	private SlidingMenu slMenu;
 	private static CharSequence constraint;
-	
-//	private int aoIndex;
-//	private File muxedVideo;
-//	private String muxedFileName;
-//	private NotificationCompat.Builder mBuilder;
-//	private NotificationManager mNotificationManager;
+	private DownloadManager mMgr;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -270,7 +266,7 @@ public class ShareActivity extends Activity {
 		lv = (ListView) findViewById(R.id.list);
 
 		// YTD update initialization
-		updateInit();
+		YTD.updateInit(this, false, null);
 		
 		// Get intent, action and MIME type
 		Intent intent = getIntent();
@@ -295,13 +291,13 @@ public class ShareActivity extends Activity {
 				autoModeEnabled = true;
 				extraId = intent.getStringExtra("id");
 				pos = intent.getIntExtra("position", 0);
-				filenameComplete = intent.getStringExtra("filename");
+				filenameComplete = intent.getStringExtra("rFilename");
 				basenameTagged = Utils.getFileNameWithoutExt(filenameComplete);
 				
 				Utils.logger("i", "Auto Mode Enabled:"
 						+ "\n -> id: " + extraId
 						+ "\n -> position: " + pos
-						+ "\n -> filename: " + filenameComplete, DEBUG_TAG);
+						+ "\n -> rFilename: " + filenameComplete, DEBUG_TAG);
 			} else if (intent.hasCategory("RESTART")) {
 				restartModeEnabled = true; 
 				extraId = intent.getStringExtra("id");
@@ -316,6 +312,8 @@ public class ShareActivity extends Activity {
 				Log.e(DEBUG_TAG, "Error: " + e.getMessage(), e);
 			}
 		}
+		
+		mMgr = new DownloadManager(this, new Handler());
 	}
 	
     @Override
@@ -618,13 +616,13 @@ public class ShareActivity extends Activity {
 			
 			if (result != null && result.equals("login_required") && !autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("login_required");
-				noVideosMsgs("info", getString(R.string.login_required));
+				noVideosMsgs("status", getString(R.string.login_required));
 			}
 			
 			if (result != null && result.equals("rtmpe")) {
 				BugSenseHandler.leaveBreadcrumb("encrypted_streams");
 				listEntries.clear();
-				noVideosMsgs("info", getString(R.string.encrypted_streams));
+				noVideosMsgs("status", getString(R.string.encrypted_streams));
 			}
 			
 			aA = new ShareActivityAdapter(listEntries, ShareActivity.this);
@@ -1121,14 +1119,44 @@ public class ShareActivity extends Activity {
 		dtl = new DownloadTaskListener() {
 			
 			@Override
-			public void preDownload(DownloadTask task) {
+			public void queuedTask(DownloadTask task) {
 				long ID = task.getDownloadId();
 				String pathOfVideo = task.getAbsolutePath();
 				String jsonDataType = task.getType();
 				String aExt = task.getAudioExt();
+				Utils.logger("d", "__queuedTask on ID: " + ID, DEBUG_TAG);
+				
+				if (!YTD.dtPreDownloadsMap.containsValue(task)) {
+					Json.addEntryToJsonFile(
+							sShare, 
+							String.valueOf(ID), 
+							jsonDataType, 
+							videoId,
+							pos, 
+							YTD.JSON_DATA_STATUS_QUEUED, 
+							pathOfVideo, 
+							filenameComplete, 
+							//basenameTagged, //(A)
+							basename,  //(B) 
+							aExt, 
+							"-", 
+							false);
+					
+					DashboardActivity.refreshlist();
+				}
+			}
+			
+			@Override
+			public void preDownload(DownloadTask task) {
+				long ID = task.getDownloadId();
+				YTD.dtPreDownloadsMap.put(ID, task);
+				String pathOfVideo = task.getAbsolutePath();
+				String nameOfVideo = task.getFileName();
+				String jsonDataType = task.getType();
+				String aExt = task.getAudioExt();
 				Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
 				
-				Maps.mNetworkSpeedMap.put(ID, (long) 0);
+				YTD.mNetworkSpeedMap.put(ID, (long) 0);
 				
 				Json.addEntryToJsonFile(
 						sShare, 
@@ -1138,12 +1166,14 @@ public class ShareActivity extends Activity {
 						pos, 
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
 						pathOfVideo, 
-						filenameComplete, 
+						nameOfVideo, 
 						//basenameTagged, //(A)
 						basename,  //(B) 
 						aExt, 
 						"-", 
 						false);
+				
+				DashboardActivity.refreshlist();
 				
 				writeThumbToDisk();
 				
@@ -1200,7 +1230,7 @@ public class ShareActivity extends Activity {
 				
 				YTD.videoinfo.edit().remove(String.valueOf(ID) + "_link").commit();
 				
-				Maps.removeFromAllMaps(ID);
+				YTD.removeFromAllMaps(ID);
 				
 				//TODO Auto FFmpeg task
 				if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && 
@@ -1292,9 +1322,9 @@ public class ShareActivity extends Activity {
 				}
 
 				try {
-					Long bytes_downloaded = Maps.mDownloadSizeMap.get(ID);
-					Long bytes_total = Maps.mTotalSizeMap.get(ID);
-					String progress = String.valueOf(Maps.mDownloadPercentMap.get(ID));
+					Long bytes_downloaded = YTD.mDownloadSizeMap.get(ID);
+					Long bytes_total = YTD.mTotalSizeMap.get(ID);
+					String progress = String.valueOf(YTD.mDownloadPercentMap.get(ID));
 					String readableBytesDownloaded = Utils.MakeSizeHumanReadable(bytes_downloaded, false);
 					String readableBytesTotal = Utils.MakeSizeHumanReadable(bytes_total, false);
 					String progressRatio = readableBytesDownloaded + "/" + readableBytesTotal;
@@ -1322,6 +1352,21 @@ public class ShareActivity extends Activity {
 				
 				YTD.removeIdUpdateNotification(ID);
 			}
+
+			@Override
+			public void pausedDownload(DownloadTask task) {
+				// unused
+			}
+
+			@Override
+			public void resumedDownload(DownloadTask task) {
+				// unused
+			}
+
+			@Override
+			public void deletedDownload(DownloadTask task) {
+				// unused
+			}
 		};
 		
 		//TODO DM
@@ -1344,7 +1389,7 @@ public class ShareActivity extends Activity {
 		if (dest.exists() || (destTemp.exists() && previousJson.contains(dest.getName())) && !autoModeEnabled && !restartModeEnabled) {
 			blockDashboardLaunch = true;
 			PopUps.showPopUp(getString(R.string.long_press_warning_title), 
-					getString(R.string.menu_import_double), "info", ShareActivity.this);
+					getString(R.string.file_already_added), "status", ShareActivity.this);
 		} else {
 			long id = 0;
 			if (autoModeEnabled || restartModeEnabled) {
@@ -1354,15 +1399,18 @@ public class ShareActivity extends Activity {
 			}
 			
 			try {
-				DownloadTask dt = new DownloadTask(this, id, links.get(pos), 
+				DownloadTask dt = new DownloadTask(this, mMgr, id, links.get(pos), 
 						filenameComplete, path.getAbsolutePath(), 
 						aExt, jsonDataType, 
 						dtl, false);
 				
 				YTD.videoinfo.edit().putString(String.valueOf(id) + "_link", links.get(pos)).apply();
 
-				Maps.dtMap.put(id, dt);
-				dt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+				YTD.dtMap.put(id, dt);
+				
+				mMgr.addTask(dt);
+				
+				//dt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 			} catch (MalformedURLException e) {
 				Log.e(DEBUG_TAG, "unable to start Download Manager -> " + e.getMessage());
 			}
@@ -2148,7 +2196,7 @@ public class ShareActivity extends Activity {
 		//}
 	}
 	
-	private void updateInit() {
+	/*private void updateInit() {
 		int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
 		Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
 		
@@ -2157,11 +2205,11 @@ public class ShareActivity extends Activity {
 				
 				if (YTD.settings.getBoolean("autoupdate", false)) {
 					Utils.logger("i", "autoupdate enabled", DEBUG_TAG);
-					SettingsActivity.SettingsFragment.autoUpdate(ShareActivity.this);
+					YTD.autoUpdate();
 				}
 		} else {
 			Utils.logger("d", "different or null YTD signature. Update check cancelled.", DEBUG_TAG);
 		}
-	}
+	}*/
 }
 

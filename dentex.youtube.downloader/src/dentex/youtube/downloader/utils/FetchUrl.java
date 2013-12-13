@@ -38,7 +38,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.matsuhiro.android.connect.NetworkUtils;
+import dentex.youtube.downloader.dm.NetworkUtils;
 
 public class FetchUrl {
 	

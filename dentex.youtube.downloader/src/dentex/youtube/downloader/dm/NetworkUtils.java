@@ -1,5 +1,11 @@
+/*
+ * code adapted from download manager project by 
+ * Hiroshi Matsunaga (matsuhiro): 
+ * https://github.com/matsuhiro/AndroidDownloadManger
+ * (released "unlicensed").
+ */
 
-package com.matsuhiro.android.connect;
+package dentex.youtube.downloader.dm;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -15,6 +21,7 @@ import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dentex.youtube.downloader.utils.Utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,7 +36,7 @@ public class NetworkUtils {
 	static String ipRegEx = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}";
 	
 	public static String getExternalIpAddress() {
-		Log.d(DEBUG_TAG, "getExternalIpAddress @ checkip.amazonaws.com");
+		Utils.logger("d", "getExternalIpAddress @ checkip.amazonaws.com", DEBUG_TAG);
 		URL amazonaws = null;
 		try {
 			amazonaws = new URL("http://checkip.amazonaws.com/");
@@ -84,7 +91,7 @@ public class NetworkUtils {
     }
 
 	public static String getExtIpAddress2() {
-		Log.d(DEBUG_TAG, "getExtIpAddress2 @ checkip.org");
+		Utils.logger("d", "getExtIpAddress2 @ checkip.org", DEBUG_TAG);
 		URL checkiporg = null;
 		try {
 			checkiporg = new URL("http://checkip.org/");
@@ -113,7 +120,7 @@ public class NetworkUtils {
     }
 	
 	public static String getExtIpAddress3() {
-		Log.d(DEBUG_TAG, "getExtIpAddress3 @ checkip.com");
+		Utils.logger("d", "getExtIpAddress3 @ checkip.com", DEBUG_TAG);
 		URL checkipcom = null;
 		try {
 			checkipcom = new URL("http://www.checkip.com/");
@@ -142,7 +149,7 @@ public class NetworkUtils {
     }
 	
 	public static String getExtIpAddress4() {
-		Log.d(DEBUG_TAG, "getExtIpAddress4 @ whatismyipaddress.com");
+		Utils.logger("d", "getExtIpAddress4 @ whatismyipaddress.com", DEBUG_TAG);
 		URL whatismyipaddress = null;
 		try {
 			whatismyipaddress = new URL("http://whatismyipaddress.com/");
@@ -181,7 +188,7 @@ public class NetworkUtils {
 	    	if (ipMatcher2.find()) {
 	    		return ipMatcher2.group(1);
 	    	} else {
-	    		Log.w(DEBUG_TAG, "patterns not matched @ findLinkIp");
+	    		Utils.logger("w", "patterns not matched @ findLinkIp", DEBUG_TAG);
 	    		return "0.0.0.0";
 	    	}
     	}
@@ -194,11 +201,11 @@ public class NetworkUtils {
     		try {
 				return Long.parseLong(expMatcher.group(1));
 			} catch (NumberFormatException e) {
-				Log.w(DEBUG_TAG, "NumberFormatException @ findLinkExpiration: falling back to a ~6 hrs expire time");
+				Utils.logger("w", "NumberFormatException @ findLinkExpiration: falling back to a ~6 hrs expire time", DEBUG_TAG);
 				return (System.currentTimeMillis() / 1000) + 21600 + 120; // + 6 hrs + 5 mins
 			}
     	} else {
-    		Log.w(DEBUG_TAG, "pattern not matched @ findLinkExpiration: returning a ~6 hrs expire time");
+    		Utils.logger("w", "pattern not matched @ findLinkExpiration: returning a ~6 hrs expire time", DEBUG_TAG);
     		return (System.currentTimeMillis() / 1000) + 21600 + 120;
     	}
 	}

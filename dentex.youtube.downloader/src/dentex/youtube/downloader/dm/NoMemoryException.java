@@ -1,5 +1,11 @@
+/*
+ * code adapted from download manager project by 
+ * Hiroshi Matsunaga (matsuhiro): 
+ * https://github.com/matsuhiro/AndroidDownloadManger
+ * (released "unlicensed").
+ */
 
-package com.matsuhiro.android.download;
+package dentex.youtube.downloader.dm;
 
 public class NoMemoryException extends DownloadException {
 

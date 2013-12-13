@@ -199,7 +199,7 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 		} else {
 			holder.pb.setVisibility(View.VISIBLE);
 			holder.pb.setIndeterminate(false);
-			holder.pb.setProgress(dli.getProgress());
+			holder.pb.setProgress((int) dli.getProgress());
 		}
 		
 		int height = 180;
@@ -241,14 +241,16 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 			
 			File thumb = new File(getContext().getDir(YTD.THUMBS_FOLDER, 0), dli.getYtId() + ".png");
 			
-			//Picasso.with(getContext()).setDebugging(true);
-			Picasso.with(getContext())
-					.load(thumb)
-					.placeholder(ph)
-					.error(ph)
-					.resize((int) (height/YTD.reduceFactor), (int) (180/YTD.reduceFactor))
-					.centerCrop()
-					.into(holder.thumb);
+			//if (thumb.exists()) {
+				//Picasso.with(getContext()).setDebugging(true);
+				Picasso.with(getContext())
+						.load(thumb)
+						.placeholder(ph)
+						.error(ph)
+						.resize((int) (height/YTD.reduceFactor), (int) (180/YTD.reduceFactor))
+						.centerCrop()
+						.into(holder.thumb);
+			//}
 		}
 		
 		return v;

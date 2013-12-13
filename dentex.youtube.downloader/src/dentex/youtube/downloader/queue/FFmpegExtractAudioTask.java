@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -176,7 +177,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 
 		@Override
 		protected void onPreExecute() {
-			DashboardActivity.dashboardAsyncTaskInProgress(true);
+			DashboardActivity.dashboardAsyncTaskInProgress((Activity) aContext, true);
 		}
 		
 		@Override
@@ -203,7 +204,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 			} else {
 				Utils.logger("w", aFileToConvert.getName() + " NOT deleted", DEBUG_TAG);
 			}
-			DashboardActivity.dashboardAsyncTaskInProgress(false);
+			DashboardActivity.dashboardAsyncTaskInProgress((Activity) aContext, false);
 		}
 	}
 }
