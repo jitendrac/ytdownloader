@@ -18,9 +18,10 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import dentex.youtube.downloader.YTD;
+import dentex.youtube.downloader.utils.Utils;
 
 public class DownloadManager {
-	//private String DEBUG_TAG = "DownloadTask";
+	private static String DEBUG_TAG = "DownloadManager";
 	
     public TreeMap<Long, Integer> mThreads = new TreeMap<Long, Integer>();
 
@@ -30,7 +31,7 @@ public class DownloadManager {
 
     private TaskManageThread<DownloadTask, String> mTaskManageThread;
 
-    private static final int NUMBER_OF_THREADS_IN_SAME_TIME = 1; //YTD.settings.getInt("DOWNLOAD_THREADS", 2); //TODO
+    private static final int NUMBER_OF_THREADS_IN_SAME_TIME = YTD.settings.getInt("DOWNLOAD_THREADS", 1); //TODO pref
 
     private static final int ADD_TASK = 0;
 
@@ -40,8 +41,8 @@ public class DownloadManager {
 
     private static final int DELETE_TASK = 3;
 
-    private ConcurrentHashMap<String, DownloadTask> mDownloadTasks;
-    private ConcurrentHashMap<String, DownloadTask> mPausedDownloadTasks;
+    private ConcurrentHashMap<Long, DownloadTask> mDownloadTasks;
+    public static ConcurrentHashMap<Long, DownloadTask> mPausedDownloadTasks;
 
     private Handler mDownloadListenerHandelr = null;
 
@@ -50,18 +51,18 @@ public class DownloadManager {
         HandlerThread handlerThread = new HandlerThread("DownlaodManagerThread");
         handlerThread.start();
 
-        mDownloadTasks = new ConcurrentHashMap<String, DownloadTask>();
-        mPausedDownloadTasks = new ConcurrentHashMap<String, DownloadTask>();
+        mDownloadTasks = new ConcurrentHashMap<Long, DownloadTask>();
+        mPausedDownloadTasks = new ConcurrentHashMap<Long, DownloadTask>();
 
         Looper looper = handlerThread.getLooper();
         mDownloadHandler = new DownloadHandler(looper, context, this);
-        //Utils.logger("i", "Download threads: " + NUMBER_OF_THREADS_IN_SAME_TIME, DEBUG_TAG);
+        Utils.logger("i", "Download threads: " + NUMBER_OF_THREADS_IN_SAME_TIME, DEBUG_TAG);
         mTaskQueue = new TaskQueue<DownloadTask>(NUMBER_OF_THREADS_IN_SAME_TIME);
         mTaskManageThread = new TaskManageThread<DownloadTask, String>(mTaskQueue);
         mTaskManageThread.start();
     }
 
-    private void notifyEvent(final DownloadTask task, final int event, final String url, final Throwable error) {
+    private void notifyEvent(final DownloadTask task, final int event, final long id, final Throwable error) {
         if (mDownloadListenerHandelr == null) {
             return;
         }
@@ -104,27 +105,27 @@ public class DownloadManager {
         sendMessage(ADD_TASK, 0, 0, task);
     }
 
-    public void pause(String url) {
-        DownloadTask task = mDownloadTasks.get(url);
+    public void pause(long id) {
+        DownloadTask task = mDownloadTasks.get(id);
         if (task instanceof DownloadTask) {
             sendMessage(PAUSE_TASK, 0, 0, task);
         }
     }
 
-    public void resume(String url) {
-        DownloadTask task = mPausedDownloadTasks.get(url);
+    public void resume(long id) {
+        DownloadTask task = mPausedDownloadTasks.get(id);
         if (task instanceof DownloadTask) {
             sendMessage(RESUME_TASK, 0, 0, task);
         }
     }
 
-    public void delete(String url) {
-        DownloadTask task = mDownloadTasks.get(url);
+    public void delete(long id) {
+        DownloadTask task = mDownloadTasks.get(id);
         if (task instanceof DownloadTask) {
             sendMessage(DELETE_TASK, 0, 0, task);
             return;
         }
-        task = mPausedDownloadTasks.get(url);
+        task = mPausedDownloadTasks.get(id);
         if (task instanceof DownloadTask) {
             sendMessage(DELETE_TASK, 0, 0, task);
         }
@@ -144,18 +145,19 @@ public class DownloadManager {
     }
 
     private static class DownloadHandler extends Handler {
-        private final WeakReference<Context> mConextRef;
+        private final WeakReference<Context> mContextRef;
         private final WeakReference<DownloadManager> mDownloadManagerRef;
 
         DownloadHandler(Looper looper, Context context, DownloadManager dnManager) {
             super(looper);
-            mConextRef = new WeakReference<Context>(context);
+            mContextRef = new WeakReference<Context>(context);
             mDownloadManagerRef = new WeakReference<DownloadManager>(dnManager);
         }
 
-        @Override
+        @SuppressWarnings("static-access")
+		@Override
         public void handleMessage(Message msg) {
-            Context context = mConextRef.get();
+            Context context = mContextRef.get();
             if (!(context instanceof Context)) {
                 // error
                 return;
@@ -165,25 +167,25 @@ public class DownloadManager {
             switch(msg.what) {
                 case ADD_TASK:
                     {
-                        String url = task.getUrl();
-                        /*if (dnMgr.mDownloadTasks.containsKey(url)) {
-                            DownloadException e = new DownloadException("" + url + " is downloading");
-                            dnMgr.notifyEvent(task, EVENT_ERROR, url, e);
+                        long id = task.getDownloadId();
+                        /*if (dnMgr.mDownloadTasks.containsKey(id)) {
+                            DownloadException e = new DownloadException("" + id + " is downloading");
+                            dnMgr.notifyEvent(task, EVENT_ERROR, id, e);
                         }
-                        if (dnMgr.mPausedDownloadTasks.containsKey(url)) {
-                            DownloadException e = new DownloadException("" + url + " is paused");
-                            dnMgr.notifyEvent(task, EVENT_ERROR, url, e);
+                        if (dnMgr.mPausedDownloadTasks.containsKey(id)) {
+                            DownloadException e = new DownloadException("" + id + " is paused");
+                            dnMgr.notifyEvent(task, EVENT_ERROR, id, e);
                         }*/
-                        dnMgr.mDownloadTasks.put(url, task);
+                        dnMgr.mDownloadTasks.put(id, task);
                         dnMgr.mTaskQueue.putTask(task);
-                        dnMgr.notifyEvent(task, EVENT_ADDED, url, null);
+                        dnMgr.notifyEvent(task, EVENT_ADDED, id, null);
                     }
                     break;
                 case PAUSE_TASK:
                     {
                         task.cancel();
-                        String url = task.getUrl();
-                        dnMgr.mDownloadTasks.remove(url);
+                        long id = task.getDownloadId();
+                        dnMgr.mDownloadTasks.remove(id);
                         dnMgr.mTaskQueue.removeTask(task);
                         try {
                             DownloadTask newTask = new DownloadTask(
@@ -196,32 +198,32 @@ public class DownloadManager {
                                     task.getAudioExt(),
                                     task.getType(), 
                                     task.getListener(), 
-                                    false);
-                            dnMgr.mPausedDownloadTasks.put(url, newTask);
-                            dnMgr.notifyEvent(task, EVENT_PAUSED, url, null);
+                                    true);
+                            dnMgr.mPausedDownloadTasks.put(id, newTask);
+                            dnMgr.notifyEvent(task, EVENT_PAUSED, id, null);
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
-                            dnMgr.notifyEvent(task, EVENT_ERROR, url, e);
+                            dnMgr.notifyEvent(task, EVENT_ERROR, id, e);
                         }
                     }
                     break;
                 case RESUME_TASK:
                     {
-                        String url = task.getUrl();
-                        dnMgr.mPausedDownloadTasks.remove(url);
-                        dnMgr.mDownloadTasks.put(url, task);
-                        dnMgr.mTaskQueue.putTask(task);
-                        dnMgr.notifyEvent(task, EVENT_RESUMED, url, null);
+						long id = task.getDownloadId();
+						dnMgr.mPausedDownloadTasks.remove(id);
+						dnMgr.mDownloadTasks.put(id, task);
+						dnMgr.mTaskQueue.putTask(task);
+						dnMgr.notifyEvent(task, EVENT_RESUMED, id, null);
                     }
                     break;
                 case DELETE_TASK:
                     {
                         task.cancel();
-                        String url = task.getUrl();
-                        dnMgr.mPausedDownloadTasks.remove(url);
-                        dnMgr.mDownloadTasks.remove(url);
+                        long id = task.getDownloadId();
+                        dnMgr.mPausedDownloadTasks.remove(id);
+                        dnMgr.mDownloadTasks.remove(id);
                         dnMgr.mTaskQueue.removeTask(task);
-                        dnMgr.notifyEvent(task, EVENT_DELETED, url, null);
+                        dnMgr.notifyEvent(task, EVENT_DELETED, id, null);
                     }
                     break;
                 default:

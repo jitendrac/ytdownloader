@@ -54,6 +54,7 @@ import android.view.WindowManager;
 
 import com.bugsense.trace.BugSenseHandler;
 
+import dentex.youtube.downloader.dm.DownloadManager;
 import dentex.youtube.downloader.dm.DownloadTask;
 import dentex.youtube.downloader.queue.QueueThread;
 import dentex.youtube.downloader.queue.QueueThreadListener;
@@ -135,7 +136,7 @@ public class YTD extends Application implements QueueThreadListener{
 	
 	//public static int uid;
 	
-	public static Map<Long, DownloadTask> dtMap = new HashMap<Long, DownloadTask>();
+	//public static Map<Long, DownloadTask> dtMap = new HashMap<Long, DownloadTask>();
 	public static Map<Long, DownloadTask> dtPreDownloadsMap = new HashMap<Long, DownloadTask>();
 	public static Map<Long, Long> mDownloadPercentMap = new HashMap<Long, Long>();
 	public static Map<Long, Long> mDownloadSizeMap = new HashMap<Long, Long>();
@@ -187,12 +188,16 @@ public class YTD extends Application implements QueueThreadListener{
 	public static List<Integer> iVoList = Arrays.asList(iVo);
 	public static List<Integer> iAoList = Arrays.asList(iAo);
 	
+	public static DownloadManager mMgr;
+	
 	@Override
 	public void onCreate() {
 		Log.d(DEBUG_TAG, "onCreate");
 
 		settings = getSharedPreferences(PREFS_NAME, 0);
 		videoinfo = getSharedPreferences(VIDEOINFO_NAME, 0);
+		
+		mMgr = new DownloadManager(this, new Handler());
 		
 		BugSenseHandler.initAndStartSession(getApplicationContext(), BugsenseApiKey);
 		
@@ -342,7 +347,7 @@ public class YTD extends Application implements QueueThreadListener{
     	pt2 = ctx.getString(R.string.notification_downloading_pt2);
     	
     	Intent notificationIntent = new Intent(ctx, DashboardActivity.class);
-    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     	
     	PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
     	
@@ -414,7 +419,7 @@ public class YTD extends Application implements QueueThreadListener{
 
 	public static void removeFromAllMaps(long ID) {
 		try {
-			dtMap.remove(ID);
+			//dtMap.remove(ID);
 			mDownloadPercentMap.remove(ID);
 			mDownloadSizeMap.remove(ID);
 			mTotalSizeMap.remove(ID);

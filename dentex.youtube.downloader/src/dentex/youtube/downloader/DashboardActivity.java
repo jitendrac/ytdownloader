@@ -67,7 +67,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.provider.MediaStore.Video.Thumbnails;
@@ -162,7 +161,7 @@ public class DashboardActivity extends Activity {
     
 	private boolean newClick;
 	public static long countdown;
-	private DownloadManager mMgr;
+	//private DownloadManager mMgr;
 	public static Activity sDashboard;
 	private Timer autoUpdate;
 	public static boolean isLandscape;
@@ -216,7 +215,7 @@ public class DashboardActivity extends Activity {
     	// YTD update initialization
     	YTD.updateInit(this, false, null);
     	
-    	mMgr = new DownloadManager(this, new Handler());
+    	//mMgr = new DownloadManager(this, new Handler());
     	
     	/*Log.i(DEBUG_TAG, "DM Maps:" +
     			"\ndtMap:                 " + Maps.dtMap +
@@ -733,8 +732,11 @@ public class DashboardActivity extends Activity {
 		
 		if (currentItem.getStatus().equals(getString(R.string.json_status_in_progress))) {
 			BugSenseHandler.leaveBreadcrumb("...pausing");
+			Utils.logger("d", "[pausing]", DEBUG_TAG);
 			
-			try {
+			YTD.mMgr.pause(itemIDlong);
+			
+			/*try {
 				if (YTD.dtMap.containsKey(itemIDlong)) {
 					DownloadTask dt = YTD.dtMap.get(itemIDlong);
 					dt.cancel();
@@ -751,46 +753,61 @@ public class DashboardActivity extends Activity {
 			} catch (NullPointerException e) {
 		    	Log.e(DEBUG_TAG, "dt.cancel() @ pauseresume: " + e.getMessage());
 		    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> dt.cancel() @ pauseresume: ", e.getMessage(), e);
-		    }
-			
-			YTD.removeIdUpdateNotification(itemIDlong);
-			
-			// update the JSON file entry
-			Json.addEntryToJsonFile(
-					DashboardActivity.this,
-					itemID, 
-					currentItem.getType(),
-					currentItem.getYtId(), 
-					currentItem.getPos(),
-					YTD.JSON_DATA_STATUS_PAUSED,
-					currentItem.getPath(), 
-					currentItem.getFilename(),
-					currentItem.getBasename(), 
-					currentItem.getAudioExt(),
-					currentItem.getSize(), 
-					false);
+		    }*/
 		}
 		
 		if (currentItem.getStatus().equals(getString(R.string.json_status_paused))) {
 			BugSenseHandler.leaveBreadcrumb("...resuming");
+			Utils.logger("d", "[resuming]", DEBUG_TAG);
 			String link = YTD.videoinfo.getString(String.valueOf(itemID) + "_link", null);
-					
-			if (link != null) {
-				DownloadTaskListener dtl = new DownloadTaskListener() {
-					
-					@Override
-					public void queuedTask(DownloadTask task) {
-						long ID = task.getDownloadId();
-						Utils.logger("d", "__queuedTask on ID: " + ID, DEBUG_TAG);
+				
+			DownloadTask task = DownloadManager.mPausedDownloadTasks.get(itemIDlong);
+	        if (task instanceof DownloadTask) {
+	        	YTD.mMgr.resume(itemIDlong);
+	        } else {
+	        	Utils.logger("w", "[old task NULL: proceeding with new task]", DEBUG_TAG);
+	        	if (link != null) {
+					DownloadTaskListener dtl = new DownloadTaskListener() {
 						
-						if (!YTD.dtPreDownloadsMap.containsValue(task)) {
+						@Override
+						public void queuedTask(DownloadTask task) {
+							long ID = task.getDownloadId();
+							Utils.logger("d", "__queuedTask on ID: " + ID, DEBUG_TAG);
+							
+							if (!YTD.dtPreDownloadsMap.containsValue(task)) {
+								Json.addEntryToJsonFile(
+										sDashboard,
+										String.valueOf(ID),
+										currentItem.getType(),
+										currentItem.getYtId(), 
+										currentItem.getPos(),
+										YTD.JSON_DATA_STATUS_QUEUED,
+										currentItem.getPath(), 
+										currentItem.getFilename(),
+										currentItem.getBasename(), 
+										currentItem.getAudioExt(),
+										currentItem.getSize(), 
+										false);
+								
+								refreshlist();
+							}
+						}
+						
+						@Override
+						public void preDownload(DownloadTask task) {
+							long ID = task.getDownloadId();
+							YTD.dtPreDownloadsMap.put(ID, task);
+							Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
+							
+							YTD.mNetworkSpeedMap.put(ID, (long) 0);
+							
 							Json.addEntryToJsonFile(
 									sDashboard,
 									String.valueOf(ID),
 									currentItem.getType(),
 									currentItem.getYtId(), 
 									currentItem.getPos(),
-									YTD.JSON_DATA_STATUS_QUEUED,
+									YTD.JSON_DATA_STATUS_IN_PROGRESS,
 									currentItem.getPath(), 
 									currentItem.getFilename(),
 									currentItem.getBasename(), 
@@ -799,229 +816,244 @@ public class DashboardActivity extends Activity {
 									false);
 							
 							refreshlist();
+							
+							YTD.sequence.add(ID);
+							
+							YTD.NotificationHelper(sDashboard);
 						}
-					}
-					
-					@Override
-					public void preDownload(DownloadTask task) {
-						long ID = task.getDownloadId();
-						YTD.dtPreDownloadsMap.put(ID, task);
-						Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
 						
-						YTD.mNetworkSpeedMap.put(ID, (long) 0);
-						
-						Json.addEntryToJsonFile(
-								sDashboard,
-								String.valueOf(ID),
-								currentItem.getType(),
-								currentItem.getYtId(), 
-								currentItem.getPos(),
-								YTD.JSON_DATA_STATUS_IN_PROGRESS,
-								currentItem.getPath(), 
-								currentItem.getFilename(),
-								currentItem.getBasename(), 
-								currentItem.getAudioExt(),
-								currentItem.getSize(), 
-								false);
-						
-						refreshlist();
-						
-						YTD.sequence.add(ID);
-						
-						YTD.NotificationHelper(sDashboard);
-					}
-					
-					@Override
-					public void updateProcess(DownloadTask task) {
-						/*YTD.downloadPercentMap = task.getDownloadPercentMap();
-						YTD.downloadTotalSizeMap = task.getTotalSizeMap();
-						YTD.downloadPartialSizeMap = task.getDownloadSizeMap();*/
-					}
-					
-					@Override
-					public void finishDownload(DownloadTask task) {
-						long ID = task.getDownloadId();
-						Utils.logger("d", "__finishDownload on ID: " + ID, DEBUG_TAG);
-						
-						Utils.scanMedia(getApplicationContext(), 
-								new String[] { currentItem.getPath() + File.separator + currentItem.getFilename() }, 
-								new String[] {"video/*"});
-						
-						long downloadTotalSize = task.getTotalSize(); //Maps.mTotalSizeMap.get(ID);
-						String size = String.valueOf(Utils.MakeSizeHumanReadable(downloadTotalSize, false));
-						
-						Json.addEntryToJsonFile(
-								sDashboard, 
-								String.valueOf(ID), 
-								currentItem.getType(),
-								currentItem.getYtId(), 
-								currentItem.getPos(),
-								YTD.JSON_DATA_STATUS_COMPLETED, 
-								currentItem.getPath(), 
-								currentItem.getFilename(),
-								currentItem.getBasename(), 
-								currentItem.getAudioExt(), 
-								size, 
-								false);
-						
-						refreshlist();
-						
-						YTD.removeIdUpdateNotification(ID);
-						
-						YTD.videoinfo.edit().remove(ID + "_link").apply();
-						
-						YTD.removeFromAllMaps(ID);
-						
-						//TODO Auto FFmpeg task
-						if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && 
-								!currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
-							Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
-							
-							String[] bitrateData = null;
-							String brType = null;
-							String brValue = null;
-							
-							String audioFileName;
-							
-							String extrType = YTD.settings.getString("audio_extraction_type", "conv");
-							if (extrType.equals("conv")) {
-								bitrateData = Utils.retrieveBitrateValuesFromPref(sDashboard);
-								audioFileName = currentItem.getBasename() + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
-								brType = bitrateData[0];
-								brValue = bitrateData[1];
-							} else {
-								audioFileName = currentItem.getBasename() + currentItem.getAudioExt();
-							}
-							
-							String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
-							File audioFile = new File(currentItem.getPath(), audioFileName);
-							
-							if (!audioFile.exists()) { 
-								File videoFileToConvert = new File(currentItem.getPath(), currentItem.getFilename());
-								
-								long newId = System.currentTimeMillis();
-								
-								YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
-										sDashboard, newId, 
-										videoFileToConvert, audioFile, 
-										brType, brValue, 
-										currentItem.getId(), 
-										currentItem.getYtId(), 
-										currentItem.getPos()), 0);
-								
-								Json.addEntryToJsonFile(
-										sDashboard, 
-										String.valueOf(newId), 
-										type, 
-										currentItem.getYtId(), 
-										currentItem.getPos(),
-										YTD.JSON_DATA_STATUS_QUEUED,
-										currentItem.getPath(), 
-										audioFileName, 
-										Utils.getFileNameWithoutExt(audioFileName), 
-										"", 
-										"-", 
-										false);
-								
-								refreshlist();
-							}
-						} else {
-							Utils.logger("v", "Auto FFmpeg task for ID " + ID + " not enabled", DEBUG_TAG);
+						@Override
+						public void updateProcess(DownloadTask task) {
+	//						YTD.downloadPercentMap = task.getDownloadPercentMap();
+	//						YTD.downloadTotalSizeMap = task.getTotalSizeMap();
+	//						YTD.downloadPartialSizeMap = task.getDownloadSizeMap();
 						}
-					}
-					
-					@Override
-					public void errorDownload(DownloadTask task, Throwable error) {
-						String nameOfVideo = task.getFileName();
-						long ID = task.getDownloadId();
-							
-						Utils.logger("w", "__errorDownload on ID: " + ID, DEBUG_TAG);
 						
-						if (error != null && error instanceof InvalidYoutubeLinkException) {
-							Toast.makeText(sDashboard,  nameOfVideo
-									+ ": " + getString(R.string.downloading) 
-									+ "\n"+ getString(R.string.wait), 
-									Toast.LENGTH_SHORT).show();
+						@Override
+						public void finishDownload(DownloadTask task) {
+							long ID = task.getDownloadId();
+							Utils.logger("d", "__finishDownload on ID: " + ID, DEBUG_TAG);
+							
+							Utils.scanMedia(getApplicationContext(), 
+									new String[] { currentItem.getPath() + File.separator + currentItem.getFilename() }, 
+									new String[] {"video/*"});
+							
+							long downloadTotalSize = task.getTotalSize(); //Maps.mTotalSizeMap.get(ID);
+							String size = String.valueOf(Utils.MakeSizeHumanReadable(downloadTotalSize, false));
 							
 							Json.addEntryToJsonFile(
 									sDashboard, 
 									String.valueOf(ID), 
-									YTD.JSON_DATA_TYPE_V, 
+									currentItem.getType(),
 									currentItem.getYtId(), 
 									currentItem.getPos(),
-									YTD.JSON_DATA_STATUS_PAUSED, 
+									YTD.JSON_DATA_STATUS_COMPLETED, 
 									currentItem.getPath(), 
-									nameOfVideo, 
+									currentItem.getFilename(),
 									currentItem.getBasename(), 
 									currentItem.getAudioExt(), 
-									currentItem.getSize(), 
+									size, 
 									false);
 							
-							reDownload(currentItem, "AUTO");
-						} else {
-							Toast.makeText(sDashboard,  nameOfVideo + ": " + getString(R.string.download_failed), 
-									Toast.LENGTH_SHORT).show();
-							
-							Json.addEntryToJsonFile(
-									sDashboard, 
-									String.valueOf(ID),  
-									YTD.JSON_DATA_TYPE_V, 
-									currentItem.getYtId(), 
-									currentItem.getPos(),
-									YTD.JSON_DATA_STATUS_PAUSED, 
-									currentItem.getPath(), 
-									nameOfVideo, 
-									currentItem.getBasename(), 
-									currentItem.getAudioExt(), 
-									currentItem.getSize(), 
-									false);
-							
-							if (DashboardActivity.isDashboardRunning)
-								refreshlist();
+							refreshlist();
 							
 							YTD.removeIdUpdateNotification(ID);
+							
+							YTD.videoinfo.edit().remove(ID + "_link").apply();
+							
+							YTD.removeFromAllMaps(ID);
+							
+							//TODO Auto FFmpeg task
+							if (YTD.settings.getBoolean("ffmpeg_auto_cb", false) && 
+									!currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
+								Utils.logger("d", "autoFfmpeg enabled: enqueing task for id: " + ID, DEBUG_TAG);
+								
+								String[] bitrateData = null;
+								String brType = null;
+								String brValue = null;
+								
+								String audioFileName;
+								
+								String extrType = YTD.settings.getString("audio_extraction_type", "conv");
+								if (extrType.equals("conv")) {
+									bitrateData = Utils.retrieveBitrateValuesFromPref(sDashboard);
+									audioFileName = currentItem.getBasename() + "_" + bitrateData[0] + "-" + bitrateData[1] + ".mp3";
+									brType = bitrateData[0];
+									brValue = bitrateData[1];
+								} else {
+									audioFileName = currentItem.getBasename() + currentItem.getAudioExt();
+								}
+								
+								String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
+								File audioFile = new File(currentItem.getPath(), audioFileName);
+								
+								if (!audioFile.exists()) { 
+									File videoFileToConvert = new File(currentItem.getPath(), currentItem.getFilename());
+									
+									long newId = System.currentTimeMillis();
+									
+									YTD.queueThread.enqueueTask(new FFmpegExtractAudioTask(
+											sDashboard, newId, 
+											videoFileToConvert, audioFile, 
+											brType, brValue, 
+											currentItem.getId(), 
+											currentItem.getYtId(), 
+											currentItem.getPos()), 0);
+									
+									Json.addEntryToJsonFile(
+											sDashboard, 
+											String.valueOf(newId), 
+											type, 
+											currentItem.getYtId(), 
+											currentItem.getPos(),
+											YTD.JSON_DATA_STATUS_QUEUED,
+											currentItem.getPath(), 
+											audioFileName, 
+											Utils.getFileNameWithoutExt(audioFileName), 
+											"", 
+											"-", 
+											false);
+									
+									refreshlist();
+								}
+							} else {
+								Utils.logger("v", "Auto FFmpeg task for ID " + ID + " not enabled", DEBUG_TAG);
+							}
 						}
-					}
+						
+						@Override
+						public void errorDownload(DownloadTask task, Throwable error) {
+							String nameOfVideo = task.getFileName();
+							long ID = task.getDownloadId();
+								
+							Utils.logger("w", "__errorDownload on ID: " + ID, DEBUG_TAG);
+							
+							if (error != null && error instanceof InvalidYoutubeLinkException) {
+								Toast.makeText(sDashboard,  nameOfVideo
+										+ ": " + getString(R.string.downloading) 
+										+ "\n"+ getString(R.string.wait), 
+										Toast.LENGTH_SHORT).show();
+								
+								Json.addEntryToJsonFile(
+										sDashboard, 
+										String.valueOf(ID), 
+										YTD.JSON_DATA_TYPE_V, 
+										currentItem.getYtId(), 
+										currentItem.getPos(),
+										YTD.JSON_DATA_STATUS_PAUSED, 
+										currentItem.getPath(), 
+										nameOfVideo, 
+										currentItem.getBasename(), 
+										currentItem.getAudioExt(), 
+										currentItem.getSize(), 
+										false);
+								
+								reDownload(currentItem, "AUTO");
+							} else {
+								Toast.makeText(sDashboard,  nameOfVideo + ": " + getString(R.string.download_failed), 
+										Toast.LENGTH_SHORT).show();
+								
+								Json.addEntryToJsonFile(
+										sDashboard, 
+										String.valueOf(ID),  
+										YTD.JSON_DATA_TYPE_V, 
+										currentItem.getYtId(), 
+										currentItem.getPos(),
+										YTD.JSON_DATA_STATUS_PAUSED, 
+										currentItem.getPath(), 
+										nameOfVideo, 
+										currentItem.getBasename(), 
+										currentItem.getAudioExt(), 
+										currentItem.getSize(), 
+										false);
+								
+								if (DashboardActivity.isDashboardRunning)
+									refreshlist();
+								
+								YTD.removeIdUpdateNotification(ID);
+							}
+						}
+	
+						@Override
+						public void pausedDownload(DownloadTask task) {
+							long ID = task.getDownloadId();
+							
+							YTD.removeIdUpdateNotification(ID);
+							
+							// update the JSON file entry
+							Json.addEntryToJsonFile(
+									sDashboard,
+									String.valueOf(ID), 
+									currentItem.getType(),
+									currentItem.getYtId(), 
+									currentItem.getPos(),
+									YTD.JSON_DATA_STATUS_PAUSED,
+									currentItem.getPath(), 
+									currentItem.getFilename(),
+									currentItem.getBasename(), 
+									currentItem.getAudioExt(), 
+									currentItem.getSize(), 
+									false);
+							
+							refreshlist();
+						}
 
-					@Override
-					public void pausedDownload(DownloadTask task) {
-						// TODO Auto-generated method stub
-						Utils.logger("i", "pausedDownload", DEBUG_TAG);
-					}
+						@Override
+						public void resumedDownload(DownloadTask task) {
+							long ID = task.getDownloadId();
+							YTD.dtPreDownloadsMap.put(ID, task);
+							Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
+							
+							YTD.mNetworkSpeedMap.put(ID, (long) 0);
+							
+							Json.addEntryToJsonFile(
+									sDashboard,
+									String.valueOf(ID), 
+									currentItem.getType(),
+									currentItem.getYtId(), 
+									currentItem.getPos(),
+									YTD.JSON_DATA_STATUS_IN_PROGRESS,
+									currentItem.getPath(), 
+									currentItem.getFilename(),
+									currentItem.getBasename(), 
+									currentItem.getAudioExt(), 
+									"-", 
+									false);
+							
+							refreshlist();
+							
+							YTD.sequence.add(ID);
+							
+							YTD.NotificationHelper(sDashboard);
+						}
 
-					@Override
-					public void resumedDownload(DownloadTask task) {
-						// TODO Auto-generated method stub
-						Utils.logger("i", "resumedDownload", DEBUG_TAG);
-					}
-
-					@Override
-					public void deletedDownload(DownloadTask task) {
-						// TODO Auto-generated method stub
-						Utils.logger("i", "deletedDownload", DEBUG_TAG);
-					}
-				};
-				
-				//TODO DM
-				try {
-					DownloadTask dt = new DownloadTask(this, mMgr, itemIDlong, link, 
-							currentItem.getFilename(), currentItem.getPath(), 
-							currentItem.getAudioExt(), currentItem.getType(), 
-							dtl, true);
-
-					YTD.dtMap.put(itemIDlong, dt);
+						@Override
+						public void deletedDownload(DownloadTask task) {
+							// unused
+						}
+					};
 					
-					mMgr.addTask(dt);
-					
-					//dt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-				} catch (MalformedURLException e) {
-					Log.e(DEBUG_TAG, "unable to start Download Manager -> " + e.getMessage());
+					//TODO DM
+					try {
+						DownloadTask dt = new DownloadTask(this, YTD.mMgr, itemIDlong, link, 
+								currentItem.getFilename(), currentItem.getPath(), 
+								currentItem.getAudioExt(), currentItem.getType(), 
+								dtl, true);
+	
+						//YTD.dtMap.put(itemIDlong, dt);
+						
+						YTD.mMgr.addTask(dt);
+						
+						//dt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+					} catch (MalformedURLException e) {
+						Log.e(DEBUG_TAG, "unable to start Download Manager -> " + e.getMessage());
+					}
+				} else {
+					reDownload(currentItem, "AUTO");
 				}
-			} else {
-				reDownload(currentItem, "AUTO");
 			}
 		}
-		refreshlist();
+		//refreshlist();
 	}
 	
 	private void reDownload(DashboardListItem currentItem, String category) {
@@ -1031,7 +1063,7 @@ public class DashboardActivity extends Activity {
 		rdIntent.addCategory(category);
 		rdIntent.putExtra("id", currentItem.getId());
 		rdIntent.putExtra("position", currentItem.getPos());
-		rdIntent.putExtra("rFilename", currentItem.getFilename());
+		rdIntent.putExtra("filename", currentItem.getFilename());
 		rdIntent.setAction(Intent.ACTION_VIEW);
 		//rdIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(rdIntent);
@@ -1088,7 +1120,7 @@ public class DashboardActivity extends Activity {
 							public void onClick(DialogInterface dialog, int which) {
 			    				if (!showAgain.isChecked()) {
 					    			YTD.settings.edit().putBoolean("dashboard_backup_info", false).apply();
-					    			Utils.logger("d", "dashboard backup status checkbox disabled", DEBUG_TAG);
+					    			Utils.logger("d", "dashboard backup info checkbox disabled", DEBUG_TAG);
 					    		}
 			    				launchFcForBackup();
 			    			}
@@ -1135,7 +1167,7 @@ public class DashboardActivity extends Activity {
 							public void onClick(DialogInterface dialog, int which) {
 			    				if (!showAgain.isChecked()) {
 					    			YTD.settings.edit().putBoolean("dashboard_restore_info", false).apply();
-					    			Utils.logger("d", "dashboard restore status checkbox disabled", DEBUG_TAG);
+					    			Utils.logger("d", "dashboard restore info checkbox disabled", DEBUG_TAG);
 					    		}
 			    				launchFcForRestore();
 			    			}
@@ -1178,7 +1210,7 @@ public class DashboardActivity extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 		    				if (!showAgain.isChecked()) {
 				    			YTD.settings.edit().putBoolean("dashboard_import_info", false).apply();
-				    			Utils.logger("d", "dashboard import status checkbox disabled", DEBUG_TAG);
+				    			Utils.logger("d", "dashboard import info checkbox disabled", DEBUG_TAG);
 				    		}
 		    				launchFcForImport();
 		    			}
@@ -1328,7 +1360,7 @@ public class DashboardActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			dashboardAsyncTaskInProgress(DashboardActivity.this, true);
+			dashboardAsyncTaskInProgress(sDashboard, true);
 		}
 		
 		@Override
@@ -1345,7 +1377,7 @@ public class DashboardActivity extends Activity {
 			} else {
 				notifyDeletionUnsuccessful(mItem, mFile);
 			}
-			dashboardAsyncTaskInProgress(DashboardActivity.this, false);
+			dashboardAsyncTaskInProgress(sDashboard, false);
 		}
 	}
 	
@@ -1354,32 +1386,40 @@ public class DashboardActivity extends Activity {
 		boolean isResultOk = false;
 		long id = Long.parseLong(item.getId());
 
-		if (item.getStatus().equals(getString(R.string.json_status_in_progress))) {
-			// stop download, remove temp file and update notification
-			try {
-				if (YTD.dtMap.containsKey(id)) {
-					DownloadTask dt = YTD.dtMap.get(id);
-					dt.cancel();
-				} else {
-					if (YTD.dtMap.size() > 0) {
-						// cancel (pause) every dt found
-						Utils.logger("w", "doDelete: id not found into 'dtMap'; canceling all tasks", DEBUG_TAG);
-						for (Iterator<DownloadTask> iterator = YTD.dtMap.values().iterator(); iterator.hasNext();) {
-							DownloadTask dt = (DownloadTask) iterator.next();
-							dt.cancel();
-						}
-					}
-				}
-				
-				isResultOk = removeTemp(fileToDel, id);
-			} catch (NullPointerException e) {
-				Log.e(DEBUG_TAG, "dt.cancel(): " + e.getMessage());
-		    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> dt.cancel() @ doDelete: ", e.getMessage(), e);
-			}
-		} else if (item.getStatus().equals(getString(R.string.json_status_paused))) {
-			isResultOk = removeTemp(fileToDel, id);
+//		if (item.getStatus().equals(getString(R.string.json_status_in_progress))) {
+//			// stop download, remove temp file and update notification
+//			try {
+//				if (YTD.dtMap.containsKey(id)) {
+//					DownloadTask dt = YTD.dtMap.get(id);
+//					dt.cancel();
+//				} else {
+//					if (YTD.dtMap.size() > 0) {
+//						// cancel (pause) every dt found
+//						Utils.logger("w", "doDelete: id not found into 'dtMap'; canceling all tasks", DEBUG_TAG);
+//						for (Iterator<DownloadTask> iterator = YTD.dtMap.values().iterator(); iterator.hasNext();) {
+//							DownloadTask dt = (DownloadTask) iterator.next();
+//							dt.cancel();
+//						}
+//					}
+//				}
+//				
+//				isResultOk = removeTemp(fileToDel, id);
+//			} catch (NullPointerException e) {
+//				Log.e(DEBUG_TAG, "dt.cancel(): " + e.getMessage());
+//		    	BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> dt.cancel() @ doDelete: ", e.getMessage(), e);
+//			}
+//		} else if (item.getStatus().equals(getString(R.string.json_status_paused))) {
+//			isResultOk = removeTemp(fileToDel, id);
+//		} else {
+//			// remove file and library reference
+//			isResultOk = removeCompleted(fileToDel);
+//		}
+		
+		// new:
+		if (item.getStatus().equals(getString(R.string.json_status_in_progress)) && 
+				item.getStatus().equals(getString(R.string.json_status_paused))) {
+			YTD.mMgr.delete(id);
 		} else {
-			// remove file and library reference
 			isResultOk = removeCompleted(fileToDel);
 		}
 		
@@ -1394,21 +1434,21 @@ public class DashboardActivity extends Activity {
 		return isResultOk;
 	}
 
-	private boolean removeTemp(File fileToDel, long id) {
-		// update notification
-		YTD.removeIdUpdateNotification(id);
-		
-		//remove YouTube link from prefs
-		YTD.videoinfo.edit().remove(String.valueOf(id) + "_link").apply();
-		
-		// delete temp file
-		File temp = new File(fileToDel.getAbsolutePath() + DownloadTask.TEMP_SUFFIX);
-		if (temp.exists()) {
-			return (temp.delete()) ? true : false;
-		} else {
-			return true;
-		}
-	}
+//	private boolean removeTemp(File fileToDel, long id) {
+//		// update notification
+//		YTD.removeIdUpdateNotification(id);
+//		
+//		//remove YouTube link from prefs
+//		YTD.videoinfo.edit().remove(String.valueOf(id) + "_link").apply();
+//		
+//		// delete temp file
+//		File temp = new File(fileToDel.getAbsolutePath() + DownloadTask.TEMP_SUFFIX);
+//		if (temp.exists()) {
+//			return (temp.delete()) ? true : false;
+//		} else {
+//			return true;
+//		}
+//	}
 
 	public boolean removeCompleted(File fileToDel) {
 		// remove file
@@ -1851,7 +1891,7 @@ public class DashboardActivity extends Activity {
 		private boolean delResOk;
 		
 		protected void onPreExecute() {
-			dashboardAsyncTaskInProgress(DashboardActivity.this, true);
+			dashboardAsyncTaskInProgress(sDashboard, true);
 			Utils.logger("d", currentItem.getFilename() + " ---> BEGIN move", DEBUG_TAG);
 			Toast.makeText(DashboardActivity.this, 
 					currentItem.getFilename() + ": " + getString(R.string.move_progress), 
@@ -1910,7 +1950,7 @@ public class DashboardActivity extends Activity {
 				Utils.logger("w", currentItem.getFilename() + " --> Copy OK (but not Deletion: original file still in place)", DEBUG_TAG);
 			}
 			
-			dashboardAsyncTaskInProgress(DashboardActivity.this, false);
+			dashboardAsyncTaskInProgress(sDashboard, false);
 		}
 	}
 	
@@ -1919,7 +1959,7 @@ public class DashboardActivity extends Activity {
 		File out;
 		
 		protected void onPreExecute() {
-			dashboardAsyncTaskInProgress(DashboardActivity.this, true);
+			dashboardAsyncTaskInProgress(sDashboard, true);
 			Utils.logger("d", currentItem.getFilename() + " ---> BEGIN copy", DEBUG_TAG);
 			Toast.makeText(DashboardActivity.this, 
 					currentItem.getFilename() + ": " + getString(R.string.copy_progress), 
@@ -1972,7 +2012,7 @@ public class DashboardActivity extends Activity {
 			}
 			
 			refreshlist();
-			dashboardAsyncTaskInProgress(DashboardActivity.this, false);
+			dashboardAsyncTaskInProgress(sDashboard, false);
 		}
 	}
 	
@@ -2128,12 +2168,14 @@ public class DashboardActivity extends Activity {
 								Utils.logger("w", "updateProgressBars: waiting " + idstr + " # " + countdown, DEBUG_TAG);
 								progress = -1;
 								
-								DownloadTask dt = YTD.dtMap.get(idlong);
+								//DownloadTask dt = YTD.dtMap.get(idlong);
 								
-								if (countdown <= 0 && dt == null) {
+								if (countdown <= 0 /*&& dt == null*/) {
 									Utils.logger("w", "countdown == 0 && dt == null; "
 											+ "\nsetting STATUS_PAUSED on (video) id " + idstr, DEBUG_TAG);
-									Json.addEntryToJsonFile(
+									
+									YTD.mMgr.pause(idlong);
+									/*Json.addEntryToJsonFile(
 											sDashboard,
 											idstr, 
 											typeEntries.get(i),
@@ -2145,7 +2187,7 @@ public class DashboardActivity extends Activity {
 											basenameEntries.get(i), 
 											audioExtEntries.get(i),
 											sizeEntries.get(i), 
-											false);
+											false);*/
 								}
 							}
 						} catch (NullPointerException e) {

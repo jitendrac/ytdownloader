@@ -104,14 +104,7 @@ public class DashboardClearHelper {
 
 		@Override
 		protected void onPreExecute() {
-			if (DashboardActivity.isDashboardRunning) {
-				DashboardActivity.dashboardAsyncTaskInProgress(sAct, true);
-				DashboardActivity.status.setVisibility(View.GONE);
-				
-				DashboardActivity.lv.setVisibility(View.GONE);
-			} else {
-				DashboardActivity.dashboardAsyncTaskInProgress(sAct, true);
-			}
+			DashboardActivity.dashboardAsyncTaskInProgress(sAct, true);
 		}
 		
 		@Override

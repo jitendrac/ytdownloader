@@ -327,12 +327,12 @@ public class Utils {
 		        
 		        String content = Utils.getCpuInfo();
 		        /*File destDir = getActivity().getExternalFilesDir(null); 
-		        String rFilename = "cpuInfo.txt";
+		        String filename = "cpuInfo.txt";
 		        try {
-					Utils.createLogFile(destDir, rFilename, content);
-					i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(destDir, rFilename)));*/
+					Utils.createLogFile(destDir, filename, content);
+					i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(destDir, filename)));*/
 		            i.putExtra(Intent.EXTRA_EMAIL, new String[] { "samuele.rini76@gmail.com" });
-		            i.putExtra(Intent.EXTRA_SUBJECT, "YTD: device status report");
+		            i.putExtra(Intent.EXTRA_SUBJECT, "YTD: device info report");
 		            i.putExtra(Intent.EXTRA_TEXT, content);
 
 		            ctx.startActivity(createEmailOnlyChooserIntent(ctx, i, ctx.getString(R.string.email_via)));
@@ -366,7 +366,7 @@ public class Utils {
 		BugSenseHandler.leaveBreadcrumb("createEmailOnlyChooserIntent");
 		Stack<Intent> intents = new Stack<Intent>();
         Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
-        		"status@domain.com", null));
+        		"info@domain.com", null));
         List<ResolveInfo> activities = ctx.getPackageManager()
                 .queryIntentActivities(i, 0);
 

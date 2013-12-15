@@ -60,7 +60,7 @@ public class NetworkUtils {
     	} catch (SocketTimeoutException ste) {
     		ip = getExtIpAddress2();
 		} catch (IOException e) {
-			ip = "";
+			ip = getExtIpAddress2();
 		}
 		return ip;
     }
@@ -114,7 +114,7 @@ public class NetworkUtils {
     	} catch (SocketTimeoutException ste) {
     		ip = getExtIpAddress3();
 		} catch (IOException e) {
-			ip = "";
+			ip = getExtIpAddress3();
 		}
     	return ip;
     }
@@ -143,7 +143,7 @@ public class NetworkUtils {
     	} catch (SocketTimeoutException ste) {
     		ip = getExtIpAddress4();
 		} catch (IOException e) {
-			ip = "";
+			ip = getExtIpAddress4();
 		}
     	return ip;
     }

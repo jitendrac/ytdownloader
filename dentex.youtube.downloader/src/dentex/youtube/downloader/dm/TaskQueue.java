@@ -11,10 +11,10 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import android.os.AsyncTask;
-import android.util.Log;
+import dentex.youtube.downloader.utils.Utils;
 
 public class TaskQueue<T extends AsyncTask<?, ?, ?>> {
-    private static final String TAG = TaskQueue.class.getSimpleName();
+    private static final String DEBUG_TAG = "TaskQueue";
 
     private final BlockingQueue<T> mQueue = new LinkedBlockingQueue<T>();
 
@@ -32,12 +32,12 @@ public class TaskQueue<T extends AsyncTask<?, ?, ?>> {
         synchronized (this) {
             runCount = mCount - mQueue.size();
         }
-        Log.d(TAG, "get task, mCount : " + mCount);
-        Log.d(TAG, "get task, runCount : " + runCount);
+        Utils.logger("d", "get task, mCount : " + mCount, DEBUG_TAG);
+        Utils.logger("d", "get task, runCount : " + runCount, DEBUG_TAG);
         if (runCount >= MAXIMUM_RUN_TASK_COUNT) {
             synchronized (this) {
                 try {
-                    Log.d(TAG, "get wait");
+                    Utils.logger("d", "get wait", DEBUG_TAG);
                     this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -46,7 +46,7 @@ public class TaskQueue<T extends AsyncTask<?, ?, ?>> {
         } else {
             try {
                 task = mQueue.take();
-                Log.d(TAG, "taken task");
+                Utils.logger("d", "taken task", DEBUG_TAG);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return null;
@@ -59,7 +59,7 @@ public class TaskQueue<T extends AsyncTask<?, ?, ?>> {
         try {
             mQueue.put(task);
             mCount += 1;
-            Log.d(TAG, "put task, mCount : " + mCount);
+            Utils.logger("d", "put task, mCount : " + mCount, DEBUG_TAG);
             notifyAll();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class TaskQueue<T extends AsyncTask<?, ?, ?>> {
         if (mCount < 0) {
             mCount = 0;
         }
-        Log.d(TAG, "remove task, mCount : " + mCount);
+        Utils.logger("d", "remove task, mCount : " + mCount, DEBUG_TAG);
         notifyAll();
     }
 
@@ -84,7 +84,7 @@ public class TaskQueue<T extends AsyncTask<?, ?, ?>> {
         if (mCount < 0) {
             mCount = 0;
         }
-        Log.d(TAG, "completed task, mCount : " + mCount);
+        Utils.logger("d", "completed task, mCount : " + mCount, DEBUG_TAG);
         notifyAll();
     }
 
