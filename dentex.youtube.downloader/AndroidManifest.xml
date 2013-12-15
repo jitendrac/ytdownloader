@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dentex.youtube.downloader"
     android:installLocation="auto"
-    android:versionCode="73"
-    android:versionName="3.5.2" >
+    android:versionCode="74"
+    android:versionName="3.5.3" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -200,10 +200,13 @@
         </activity>
         <activity
             android:name="dentex.youtube.downloader.DashboardActivity"
-            android:exported="true"
             android:windowSoftInputMode="stateHidden"
             android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/title_activity_dashboard" >
+        </activity>
+        <activity 
+            android:name="dentex.youtube.downloader.DashboardActivityLauncher"
+            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden" >
         </activity>
     </application>
 

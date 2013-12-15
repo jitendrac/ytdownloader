@@ -270,7 +270,7 @@ public class ShareActivity extends Activity {
 		lv = (ListView) findViewById(R.id.list);
 
 		// YTD update initialization
-		updateInit();
+		YTD.updateInit(this, false, null);
 		
 		// Get intent, action and MIME type
 		Intent intent = getIntent();
@@ -618,13 +618,13 @@ public class ShareActivity extends Activity {
 			
 			if (result != null && result.equals("login_required") && !autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("login_required");
-				noVideosMsgs("info", getString(R.string.login_required));
+				noVideosMsgs("status", getString(R.string.login_required));
 			}
 			
 			if (result != null && result.equals("rtmpe")) {
 				BugSenseHandler.leaveBreadcrumb("encrypted_streams");
 				listEntries.clear();
-				noVideosMsgs("info", getString(R.string.encrypted_streams));
+				noVideosMsgs("status", getString(R.string.encrypted_streams));
 			}
 			
 			aA = new ShareActivityAdapter(listEntries, ShareActivity.this);
@@ -641,6 +641,8 @@ public class ShareActivity extends Activity {
 					Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 					launchDashboardActivity();
 				}
+				
+				finish();
 			} else {				
 				setupStoredFilters();
 				//listEntriesBuilder();
@@ -1115,6 +1117,7 @@ public class ShareActivity extends Activity {
 		}
 	}
 	
+	// TODO DM
 	private void callDownloadManager() {
 		BugSenseHandler.leaveBreadcrumb("callDownloadManager");
 		
@@ -1124,6 +1127,7 @@ public class ShareActivity extends Activity {
 			public void preDownload(DownloadTask task) {
 				long ID = task.getDownloadId();
 				String pathOfVideo = task.getAbsolutePath();
+				String nameOfVideo = task.getFileName();
 				String jsonDataType = task.getType();
 				String aExt = task.getAudioExt();
 				Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
@@ -1138,12 +1142,14 @@ public class ShareActivity extends Activity {
 						pos, 
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
 						pathOfVideo, 
-						filenameComplete, 
+						nameOfVideo, 
 						//basenameTagged, //(A)
 						basename,  //(B) 
 						aExt, 
 						"-", 
 						false);
+				
+				DashboardActivity.refreshlist();
 				
 				writeThumbToDisk();
 				
@@ -1344,7 +1350,7 @@ public class ShareActivity extends Activity {
 		if (dest.exists() || (destTemp.exists() && previousJson.contains(dest.getName())) && !autoModeEnabled && !restartModeEnabled) {
 			blockDashboardLaunch = true;
 			PopUps.showPopUp(getString(R.string.long_press_warning_title), 
-					getString(R.string.menu_import_double), "info", ShareActivity.this);
+					getString(R.string.file_already_added), "status", ShareActivity.this);
 		} else {
 			long id = 0;
 			if (autoModeEnabled || restartModeEnabled) {
@@ -2148,7 +2154,7 @@ public class ShareActivity extends Activity {
 		//}
 	}
 	
-	private void updateInit() {
+	/*private void updateInit() {
 		int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
 		Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
 		
@@ -2157,11 +2163,11 @@ public class ShareActivity extends Activity {
 				
 				if (YTD.settings.getBoolean("autoupdate", false)) {
 					Utils.logger("i", "autoupdate enabled", DEBUG_TAG);
-					SettingsActivity.SettingsFragment.autoUpdate(ShareActivity.this);
+					YTD.autoUpdate();
 				}
 		} else {
 			Utils.logger("d", "different or null YTD signature. Update check cancelled.", DEBUG_TAG);
 		}
-	}
+	}*/
 }
 

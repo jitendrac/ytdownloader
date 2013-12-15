@@ -79,7 +79,6 @@ import com.bugsense.trace.BugSenseHandler;
 
 import dentex.youtube.downloader.R;
 import dentex.youtube.downloader.SettingsActivity;
-import dentex.youtube.downloader.SettingsActivity.SettingsFragment;
 import dentex.youtube.downloader.YTD;
 
 public class Utils {
@@ -88,10 +87,15 @@ public class Utils {
 	static MediaScannerConnection msc;
 	
 	public static void reload(Activity activity) {
-    	Intent intent = activity.getIntent();
-    	intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		//finish
     	activity.finish();
     	activity.overridePendingTransition(0, 0);
+    	
+    	//start
+    	Intent intent = activity.getIntent();
+    	intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
     	activity.startActivity(intent);
     	activity.overridePendingTransition(0, 0);
     }
@@ -485,21 +489,22 @@ public class Utils {
             return sb.toString();
         }
     }
-
-	public static int currentHashCode;
 	
-	public static int getSigHash(SettingsFragment sf) {
-
+	public static int getSigHash(Activity act) {
+		int currentHash = 0;
 		try {
-			Signature[] sigs = sf.getActivity().getPackageManager().getPackageInfo(sf.getActivity().getPackageName(), PackageManager.GET_SIGNATURES).signatures;
+			Signature[] sigs = act.getPackageManager()
+					.getPackageInfo(act.getPackageName(), PackageManager.GET_SIGNATURES)
+					.signatures;
+			
 			for (Signature sig : sigs) {
-				currentHashCode = sig.hashCode();
-				logger("d", "getSigHash: App signature " + currentHashCode, DEBUG_TAG);
+				currentHash = sig.hashCode();
+				logger("d", "getSigHash: App signature " + currentHash, DEBUG_TAG);
 			}
 		} catch (NameNotFoundException e) {
 		    Log.e(DEBUG_TAG, "getSigHash: App signature not found; " + e.getMessage());
 		}
-		return currentHashCode;
+		return currentHash;
 	}
 
 	/*
@@ -759,10 +764,8 @@ public class Utils {
         	logger("d", " -> contentUri: " + videoUri, DEBUG_TAG);
         	
         	cursor.close();
-        } catch (IndexOutOfBoundsException e) {
-        	logger("w", " -> contentUri not available", DEBUG_TAG);
-        } catch (NullPointerException e) {
-        	logger("w", " -> contentUri not available (NPE)", DEBUG_TAG);	
+        } catch (Exception e) {
+        	Log.e(DEBUG_TAG, "ContentUri not available: " + e.getMessage());
         } /*finally {
         	cursor.close();
         }*/

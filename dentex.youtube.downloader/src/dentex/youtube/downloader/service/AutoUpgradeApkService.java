@@ -157,7 +157,7 @@ public class AutoUpgradeApkService extends Service {
 		        
 		        callDownloadApk(matchedVersion);
 	    	} else if (result[0].contentEquals("==")) {
-	    		//PopUps.showPopUp(getString(R.string.information), getString(R.string.upgrade_latest_installed), "info", AutoUpgradeApk.this);
+	    		//PopUps.showPopUp(getString(R.string.information), getString(R.string.upgrade_latest_installed), "status", AutoUpgradeApk.this);
 	    		Utils.logger("d", "version comparison: latest version is already installed!", DEBUG_TAG);
 	    		stopSelf();
 	    	} else if (result[0].contentEquals("<")) {

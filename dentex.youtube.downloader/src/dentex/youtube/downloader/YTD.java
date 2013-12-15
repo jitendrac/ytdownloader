@@ -44,7 +44,9 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
+import android.preference.Preference;
 import android.support.v4.app.NotificationCompat;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
@@ -54,6 +56,7 @@ import com.bugsense.trace.BugSenseHandler;
 
 import dentex.youtube.downloader.queue.QueueThread;
 import dentex.youtube.downloader.queue.QueueThreadListener;
+import dentex.youtube.downloader.service.AutoUpgradeApkService;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -129,7 +132,6 @@ public class YTD extends Application implements QueueThreadListener{
 	public static File dir_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 	public static File dir_Movies = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
 	
-	//public static int uid;
 	public static Map<Long, Integer> mFFmpegPercentMap = new HashMap<Long, Integer>();
 
 	public static final String THUMBS_FOLDER = "thumbs";
@@ -233,12 +235,12 @@ public class YTD extends Application implements QueueThreadListener{
 	}
 	
 	private void detectSysDefLang() {
-		String storedDefLang = YTD.settings.getString("DEF_LANG", "");
+		String storedDefLang = settings.getString("DEF_LANG", "");
     	if (storedDefLang.isEmpty() && storedDefLang != null) {	
     		Locale defLocale = Locale.getDefault();
     		String defLang = defLocale.getLanguage();
     		Log.d(DEBUG_TAG, "Storing default system lang: " + defLang);
-    		YTD.settings.edit().putString("DEF_LANG", defLang).commit();
+    		settings.edit().putString("DEF_LANG", defLang).commit();
     	}
 	}
 
@@ -262,6 +264,61 @@ public class YTD extends Application implements QueueThreadListener{
 	    Log.d(DEBUG_TAG, "DispalyDensity: " + density + " - storing a REDUCE_FACTOR of " + rf + " into prefs");
 	    settings.edit().putString("REDUCE_FACTOR", String.valueOf(rf)).apply();;
 	    return rf;
+	}
+	
+	public static void updateInit(Activity act, boolean intoSettings, Preference up) {
+		int prefSig = settings.getInt("APP_SIGNATURE", 0);
+		Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
+		
+		if (prefSig == 0 ) {
+			int currentHash = Utils.getSigHash(act);
+			if (currentHash == SIG_HASH) {
+				Utils.logger("d", "Found YTD signature: update check possile", DEBUG_TAG);
+				if (intoSettings) up.setEnabled(true);
+				
+				if (settings.getBoolean("autoupdate", false)) {
+					Utils.logger("i", "autoupdate enabled", DEBUG_TAG);
+					autoUpdate();
+				}
+	    	} else {
+	    		Utils.logger("d", "Found different signature: " + currentHash + " (F-Droid?). Update check cancelled.", DEBUG_TAG);
+	    		if (intoSettings) {
+	    			up.setEnabled(false);
+	    			up.setSummary(R.string.update_disabled_summary);
+	    		}
+	    	}
+			SharedPreferences.Editor editor = settings.edit();
+	    	editor.putInt("APP_SIGNATURE", currentHash);
+	    	if (editor.commit()) Utils.logger("d", "saving sig pref...", DEBUG_TAG);
+		} else {
+			if (prefSig == SIG_HASH) {
+				Utils.logger("d", "YTD signature in PREFS: update check possile", DEBUG_TAG);
+				if (intoSettings) up.setEnabled(true);
+				
+				if (settings.getBoolean("autoupdate", false)) {
+					Utils.logger("i", "autoupdate enabled", DEBUG_TAG);
+					autoUpdate();
+				}
+			} else {
+				Utils.logger("d", "diffrent YTD signature in prefs (F-Droid?). Update check cancelled.", DEBUG_TAG);
+				if (intoSettings) up.setEnabled(false);
+			}
+		}
+	}
+	
+	public static void autoUpdate() {
+        long storedTime = settings.getLong("time", 0);	// for release
+        //long storedTime = 10000; 						// dev test: forces auto update
+        
+        boolean shouldCheckForUpdate = !DateUtils.isToday(storedTime);
+        Utils.logger("i", "shouldCheckForUpdate: " + shouldCheckForUpdate, DEBUG_TAG);
+        if (shouldCheckForUpdate) {
+        	Intent intent = new Intent(ctx, AutoUpgradeApkService.class);
+	        ctx.startService(intent);
+        }
+        
+        long time = System.currentTimeMillis();
+        if (settings.edit().putLong("time", time).commit()) Utils.logger("i", "time written in prefs", DEBUG_TAG);
 	}
 
 	public static void NoDownProvPopUp(Activity act) {
@@ -339,8 +396,8 @@ public class YTD extends Application implements QueueThreadListener{
 			}
 		});
 	}
-    
-    public static CharSequence getListFilterConstraint(int c) {
+
+	public static CharSequence getListFilterConstraint(int c) {
 		//0
 		List<Integer> iMp4List = Arrays.asList(iMp4);
 		//1

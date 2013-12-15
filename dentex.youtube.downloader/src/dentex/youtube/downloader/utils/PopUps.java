@@ -46,13 +46,13 @@ public class PopUps {
     	if (theme.equals("D")) {
 		    if ( type == "error" ) {
 		        icon = R.drawable.ic_dialog_alert_holo_dark;
-		    } else if ( type == "info" ) {
+		    } else if ( type == "status" ) {
 		        icon = R.drawable.ic_dialog_info_holo_dark;
 		    }
     	} else {
     		if ( type == "error" ) {
 		        icon = R.drawable.ic_dialog_alert_holo_light;
-		    } else if ( type == "info" ) {
+		    } else if ( type == "status" ) {
 		        icon = R.drawable.ic_dialog_info_holo_light;
 		    }
     	}
