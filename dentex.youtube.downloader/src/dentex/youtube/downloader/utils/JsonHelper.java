@@ -31,22 +31,19 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
 import android.util.Log;
 import dentex.youtube.downloader.R;
 import dentex.youtube.downloader.YTD;
 
-public class Json {
+public class JsonHelper {
 	
-	static String DEBUG_TAG = "Json";
-	
-	
+	static String DEBUG_TAG = "JsonHelper";
 
-	public static void addEntryToJsonFile(Context context, String id, String type, String ytId, int pos, String status, 
+	public static void addEntryToJsonFile(String id, String type, String ytId, int pos, String status, 
 			String path, String filename, String basename, String audioExt, String size, boolean forceCopy) {
 		
 		// parse existing/init new JSON 
-		String previousJson = Json.readJsonDashboardFile(context);
+		String previousJson = JsonHelper.readJsonDashboardFile();
 		
 		// create new "complex" object
 		JSONObject mO = null;
@@ -110,8 +107,8 @@ public class Json {
 		}
 	}
 
-	public static void removeEntryFromJsonFile(Context context, String id) {
-		String previousJson = Json.readJsonDashboardFile(context);
+	public static void removeEntryFromJsonFile(String id) {
+		String previousJson = JsonHelper.readJsonDashboardFile();
 		
 		JSONObject mO = null;
 		try {
@@ -136,7 +133,7 @@ public class Json {
 		}
 	}
 
-	public static String readJsonDashboardFile(Context context) {
+	public static String readJsonDashboardFile() {
 		String jsonString = null;
 		if (YTD.JSON_FILE.exists()) {
 			try {

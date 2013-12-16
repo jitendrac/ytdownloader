@@ -108,6 +108,7 @@
     <string name="ffmpeg_download_notification">正在下載 FFmpeg</string>
     <string name="ffmpeg_install">正在安裝 FFmpeg binary&#8230;</string>
     <string name="email_via">寄送 email 透過：</string>
+    <string name="file_already_added">File already added.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -160,15 +161,13 @@
 	<string name="menu_search">搜尋&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
-	<string name="menu_import">Import a video</string>
-	<string name="menu_import_file">Import a file</string>
-	<string name="menu_import_double">Video already added.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
 	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
 	<string name="menu_restore_info_msg">Present data will be overwritten.</string>
-	<string name="menu_import_info">Import a video and manage it from the Dashboard</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
 	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
 	<string name="menu_backup_result_failed">Error during backup.</string>
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
@@ -242,8 +241,10 @@
 	<string name="delete_video_ok">%1$s 已刪除。</string>
 	<string name="delete_video_failed">錯誤：%1$s 未被刪除。</string>
 	
-	<string name="empty_dashboard">沒有已下載的影片。</string>
-
+	<string name="empty_dashboard">No downloads.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -309,13 +310,6 @@
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">通知</string>

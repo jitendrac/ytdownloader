@@ -110,6 +110,7 @@
     <string name="ffmpeg_download_notification">Загрузка FFmpeg</string>
     <string name="ffmpeg_install">Установка бинарного файла FFmpeg&#8230;</string>
     <string name="email_via">Отправить сообщение через:</string>
+    <string name="file_already_added">Файл уже добавлен.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@
 	<string name="menu_search">поиск&#8230;</string>
 	<string name="menu_backup">Резервное копирование</string>
 	<string name="menu_restore">Восстановление</string>
-	<string name="menu_import">Импортировать видео</string>
-	<string name="menu_import_file">Импортировать файл</string>
-	<string name="menu_import_double">Видео уже добавлено.</string>
-	<string name="menu_import_file_double">Файл уже добавлен.</string>
+	<string name="menu_import_file">Импорт файлов</string>
+	<string name="menu_import_file_double">%1$s уже добавлен.</string>
 	<string name="menu_backup_info">Выбрать папку для резервного копирования данных инстр. панели</string>
 	<string name="menu_restore_info">Восстановить данные инстр. панели из файла</string>
 	<string name="menu_restore_info_msg">Текущие данные будут переписаны.</string>
-	<string name="menu_import_info">Импорт видео и управление им из инстр. панели</string>
-	<string name="menu_import_file_info">Импорт файла и управление им из инстр. панели</string>
+	<string name="menu_import_file_info">Импорт файлов и управление ими с инструментальной панели</string>
+	<string name="menu_import_in_progress">Осуществляется импорт: %1$s</string>
 	<string name="menu_backup_result_ok">Копия данных инстр. панели ОК.</string>
 	<string name="menu_backup_result_failed">Ошибка рез. копирования.</string>
 	<string name="menu_restore_result_ok">Данные инстр. панели восстановлены.</string>
@@ -244,8 +243,10 @@
 	<string name="delete_video_ok">%1$s успешно удалено.</string>
 	<string name="delete_video_failed">Ошибка: %1$s не удалено.</string>
 	
-	<string name="empty_dashboard">Нет загруженных видео.</string>
-
+	<string name="empty_dashboard">Отсутствуют загрузки.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@
     
     <string name="enable_adaptive_title">Дополнительные потоки</string>
     <string name="enable_adaptive_summary">Добавить только видео и/или только аудио потоки (если доступно) к списку видео</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Уведомления</string>

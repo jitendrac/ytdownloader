@@ -111,6 +111,7 @@ Pobrać je teraz?</string>
     <string name="ffmpeg_download_notification">Pobieranie FFmpeg</string>
     <string name="ffmpeg_install">Instalowanie bibliotek FFmpeg&#8230;</string>
     <string name="email_via">Wyślij za pomocą -email\'a:</string>
+    <string name="file_already_added">Plik już dodany</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -163,15 +164,13 @@ Pobrać je teraz?</string>
 	<string name="menu_search">szukaj&#8230;</string>
 	<string name="menu_backup">Kopia zapasowa</string>
 	<string name="menu_restore">Przywróć</string>
-	<string name="menu_import">Zaimportuj wideo</string>
-	<string name="menu_import_file">Importuj plik</string>
-	<string name="menu_import_double">Video już dodane.</string>
-	<string name="menu_import_file_double">Plik już dodany</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Wybierz folder dla kopii danych Tablicy aktywności</string>
 	<string name="menu_restore_info">Przywróć ustawienia Tablicy aktywności z pliku</string>
 	<string name="menu_restore_info_msg">Dotychczasowe dane zostaną nadpisane.</string>
-	<string name="menu_import_info">Zaimportuj wideo i zarządzaj nim z Tablicy aktywności</string>
-	<string name="menu_import_file_info">Zaimportuj plik i zarządzaj nim z Tablicy aktywności</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
 	<string name="menu_backup_result_ok">Poprawna kopia zapasowa Tablicy aktywności.</string>
 	<string name="menu_backup_result_failed">Błąd w trakcie tworzenia kopii.</string>
 	<string name="menu_restore_result_ok">Przywrócono dane Tablicy aktywności.</string>
@@ -245,8 +244,10 @@ Pobrać je teraz?</string>
 	<string name="delete_video_ok">%1$s poprawnie usunięty.</string>
 	<string name="delete_video_failed">Błąd: %1$s nie został usunięty.</string>
 	
-	<string name="empty_dashboard">Brak pobranych plików wideo.</string>
-
+	<string name="empty_dashboard">No downloads.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -312,13 +313,6 @@ Aplikacja może zostać wybrana poprzez przycisk udostępnij w aplikacji YouTube
     
     <string name="enable_adaptive_title">Pobierz alternatywne strumienie</string>
     <string name="enable_adaptive_summary">Dodaj do listy tylko wideo i/lub tylko audio (jeśli możliwe)</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Powiadomienia</string>

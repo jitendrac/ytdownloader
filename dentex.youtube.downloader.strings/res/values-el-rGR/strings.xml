@@ -110,6 +110,7 @@
     <string name="ffmpeg_download_notification">Λήψη FFmpeg</string>
     <string name="ffmpeg_install">Εγκατάσταση πακέτου FFmpeg&#8230;</string>
     <string name="email_via">Αποστολή email μέσω:</string>
+    <string name="file_already_added">Το αρχείο έχει ήδη προστεθεί.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@
 	<string name="menu_search">αναζήτηση&#8230;</string>
 	<string name="menu_backup">Λήψη αντιγράφου ασφαλείας</string>
 	<string name="menu_restore">Επαναφορά</string>
-	<string name="menu_import">Εισαγωγή βίντεο</string>
-	<string name="menu_import_file">Εισαγωγή αρχείου</string>
-	<string name="menu_import_double">Το βίντεο έχει ήδη προστεθεί.</string>
-	<string name="menu_import_file_double">Το αρχείο έχει ήδη προστεθεί.</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Επιλέξτε ένα φάκελο για αποθήκευση των δεδομένων του Πίνακα Ελέγχου</string>
 	<string name="menu_restore_info">Επαναφορά των δεδομένων του Πίνακα Ελέγχου από αρχείο</string>
 	<string name="menu_restore_info_msg">Τα υπάρχοντα δεδομένα θα διαγραφούν.</string>
-	<string name="menu_import_info">Εισαγωγή βίντεο και διαχείριση του από τον Πίνακα Ελέγχου</string>
-	<string name="menu_import_file_info">Εισαγωγή αρχείου και διαχείριση του από τον Πίνακα Ελέγχου</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
 	<string name="menu_backup_result_ok">Η λήψη αντιγράφου ασφαλείας του Πίνακα Ελέγχου ολοκληρώθηκε.</string>
 	<string name="menu_backup_result_failed">Σφάλμα κατά τη λήψη αντιγράφου ασφαλείας.</string>
 	<string name="menu_restore_result_ok">Τα δεδομένα του Πίνακα Ελέγχου ανακτήθηκαν.</string>
@@ -244,8 +243,10 @@
 	<string name="delete_video_ok">%1$s διαγράφτηκε επιτυχώς.</string>
 	<string name="delete_video_failed">Σφάλμα: %1$s δε διαγράφτηκε.</string>
 	
-	<string name="empty_dashboard">Κανένα ληφθέν βίντεο.</string>
-
+	<string name="empty_dashboard">No downloads.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@
     
     <string name="enable_adaptive_title">Ανάκτηση δευτερευόντων ροών</string>
     <string name="enable_adaptive_summary">Προσθήκη μόνο-βίντεο και/ή μόνο-ήχου ροών (αν υπάρχουν) στη λίστα βίντεο</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Ειδοποιήσεις</string>

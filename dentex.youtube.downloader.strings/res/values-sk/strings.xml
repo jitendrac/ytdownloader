@@ -110,6 +110,7 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     <string name="ffmpeg_download_notification">Sťahovanie FFmpeg</string>
     <string name="ffmpeg_install">Inštalujem FFmpeg&#8230;</string>
     <string name="email_via">Odoslať e-mail cez:</string>
+    <string name="file_already_added">Súbor je už pridaný.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="menu_search">hľadať&#8230;</string>
 	<string name="menu_backup">Zálohovať</string>
 	<string name="menu_restore">Obnoviť</string>
-	<string name="menu_import">Importovať video</string>
-	<string name="menu_import_file">Importovať súbor</string>
-	<string name="menu_import_double">Video je už pridané.</string>
-	<string name="menu_import_file_double">Súbor je už pridaný.</string>
+	<string name="menu_import_file">Importovať súbory</string>
+	<string name="menu_import_file_double">%1$s už pridaný</string>
 	<string name="menu_backup_info">Zvoľte adresár na zálohu Dashboard údajov</string>
 	<string name="menu_restore_info">Obnoviť Dashboard údaje zo súboru</string>
 	<string name="menu_restore_info_msg">Súčasné údaje budú prepísané.</string>
-	<string name="menu_import_info">Importovať video a spravovať cez Dashboard</string>
-	<string name="menu_import_file_info">Importovať súbor a spravovať cez Dashboard</string>
+	<string name="menu_import_file_info">Naimportujte a spravujte súbory cez Dashboard</string>
+	<string name="menu_import_in_progress">Prebieha import súborov: %1$s</string>
 	<string name="menu_backup_result_ok">Zálohovanie Dashboard údajov je OK.</string>
 	<string name="menu_backup_result_failed">Chyba počas zálohovania.</string>
 	<string name="menu_restore_result_ok">Dashboard údaje obnovené.</string>
@@ -244,8 +243,10 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="delete_video_ok">%1$s úspešne zmazané.</string>
 	<string name="delete_video_failed">Chyba: %1$s nie je zmazané.</string>
 	
-	<string name="empty_dashboard">Žiadne stiahnuté video.</string>
-
+	<string name="empty_dashboard">Žiadne stiahnuté súbory.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
     
     <string name="enable_adaptive_title">Získať sekundárne streamy</string>
     <string name="enable_adaptive_summary">Pridať iba video a/alebo iba audio streamy (ak sú dostupné) do zoznamu</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Oznámenia</string>

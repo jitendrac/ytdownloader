@@ -110,6 +110,7 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
     <string name="ffmpeg_download_notification">Ladataan FFmpeg</string>
     <string name="ffmpeg_install">Asennetaan FFmpeg binääri&#8230;</string>
     <string name="email_via">Lähetä sähköpostia käyttäen:</string>
+    <string name="file_already_added">File already added.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	<string name="menu_search">etsi&#8230;</string>
 	<string name="menu_backup">Varmennus</string>
 	<string name="menu_restore">Palauta</string>
-	<string name="menu_import">Tuo video</string>
-	<string name="menu_import_file">Import a file</string>
-	<string name="menu_import_double">Video on jo lisätty.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Valitse kansio varmentaaksesi Dashboard\in data</string>
 	<string name="menu_restore_info">Palauta Dashboard\in data tiedostosta</string>
 	<string name="menu_restore_info_msg">Nykyinen data ylikirjoitetaan.</string>
-	<string name="menu_import_info">Tuo video ja hallitse sitä Dashboardista</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
 	<string name="menu_backup_result_ok">Dashboardin datan varmennus OK.</string>
 	<string name="menu_backup_result_failed">Virhe varmennuksen aikana.</string>
 	<string name="menu_restore_result_ok">Dashboardin data palautettu.</string>
@@ -244,8 +243,10 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
 	<string name="delete_video_ok">%1$s tuhottu onnistuneesti.</string>
 	<string name="delete_video_failed">Virhe: %1$s ei tuhottu.</string>
 	
-	<string name="empty_dashboard">Ei ladattua videota.</string>
-
+	<string name="empty_dashboard">No downloads.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@ hakemisto, LIITÄ komento (käytä valikon nappia) ja paina ENTER.</string>
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Ilmoitukset</string>

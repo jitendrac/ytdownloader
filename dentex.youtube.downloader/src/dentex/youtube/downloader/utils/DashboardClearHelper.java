@@ -29,7 +29,7 @@ public class DashboardClearHelper {
 	public static Activity sAct;
 	
 	public static void confirmClearDashboard(final Activity act, final boolean doReload) {
-		previousJson = Json.readJsonDashboardFile(act);
+		previousJson = JsonHelper.readJsonDashboardFile();
 		sDoReload = doReload;
 		sAct = act;
 		boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
