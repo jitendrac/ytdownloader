@@ -107,7 +107,7 @@ import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.queue.FFmpegExtractFlvThumbTask;
 import dentex.youtube.downloader.utils.DashboardClearHelper;
-import dentex.youtube.downloader.utils.Json;
+import dentex.youtube.downloader.utils.JsonHelper;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -126,6 +126,7 @@ public class DashboardActivity extends Activity {
 	public static TextView status;
 	private Editable searchText;
 	
+	public static int entries = 0;
 	public static List<String> idEntries = new ArrayList<String>();
 	static List<String> typeEntries = new ArrayList<String>();
 	static List<String> ytidEntries = new ArrayList<String>();
@@ -200,7 +201,7 @@ public class DashboardActivity extends Activity {
     	
     	countdown = 10;
     	
-    	parseJson(this);
+    	parseJson();
     	updateProgressBars();
     	buildList();
     	
@@ -605,8 +606,7 @@ public class DashboardActivity extends Activity {
 		    			currentItem.setFilename(input);
 		    			
 		    			// update the JSON file entry
-		    			Json.addEntryToJsonFile(
-								DashboardActivity.this, 
+		    			JsonHelper.addEntryToJsonFile(
 								currentItem.getId(), 
 								currentItem.getType(), 
 								currentItem.getYtId(), 
@@ -683,7 +683,7 @@ public class DashboardActivity extends Activity {
 		rem.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				Json.removeEntryFromJsonFile(DashboardActivity.this, currentItem.getId());
+				JsonHelper.removeEntryFromJsonFile(currentItem.getId());
 				refreshlist();
 				
 				YTD.videoinfo.edit().remove(currentItem.getId() + "_link").apply();
@@ -752,8 +752,7 @@ public class DashboardActivity extends Activity {
 			YTD.removeIdUpdateNotification(itemIDlong);
 			
 			// update the JSON file entry
-			Json.addEntryToJsonFile(
-					DashboardActivity.this,
+			JsonHelper.addEntryToJsonFile(
 					itemID, 
 					currentItem.getType(),
 					currentItem.getYtId(), 
@@ -781,8 +780,7 @@ public class DashboardActivity extends Activity {
 						
 						Maps.mNetworkSpeedMap.put(ID, (long) 0);
 						
-						Json.addEntryToJsonFile(
-								sDashboard,
+						JsonHelper.addEntryToJsonFile(
 								String.valueOf(ID),
 								currentItem.getType(),
 								currentItem.getYtId(), 
@@ -819,8 +817,7 @@ public class DashboardActivity extends Activity {
 						long downloadTotalSize = task.getTotalSize(); //Maps.mTotalSizeMap.get(ID);
 						String size = String.valueOf(Utils.MakeSizeHumanReadable(downloadTotalSize, false));
 						
-						Json.addEntryToJsonFile(
-								sDashboard, 
+						JsonHelper.addEntryToJsonFile(
 								String.valueOf(ID), 
 								currentItem.getType(),
 								currentItem.getYtId(), 
@@ -876,10 +873,9 @@ public class DashboardActivity extends Activity {
 										brType, brValue, 
 										currentItem.getId(), 
 										currentItem.getYtId(), 
-										currentItem.getPos()), 0);
+										currentItem.getPos()), YTD._AUDIO_EXTR);
 								
-								Json.addEntryToJsonFile(
-										sDashboard, 
+								JsonHelper.addEntryToJsonFile( 
 										String.valueOf(newId), 
 										type, 
 										currentItem.getYtId(), 
@@ -912,8 +908,7 @@ public class DashboardActivity extends Activity {
 									+ "\n"+ getString(R.string.wait), 
 									Toast.LENGTH_SHORT).show();
 							
-							Json.addEntryToJsonFile(
-									sDashboard, 
+							JsonHelper.addEntryToJsonFile(
 									String.valueOf(ID), 
 									YTD.JSON_DATA_TYPE_V, 
 									currentItem.getYtId(), 
@@ -931,8 +926,7 @@ public class DashboardActivity extends Activity {
 							Toast.makeText(sDashboard,  nameOfVideo + ": " + getString(R.string.download_failed), 
 									Toast.LENGTH_SHORT).show();
 							
-							Json.addEntryToJsonFile(
-									sDashboard, 
+							JsonHelper.addEntryToJsonFile(
 									String.valueOf(ID),  
 									YTD.JSON_DATA_TYPE_V, 
 									currentItem.getYtId(), 
@@ -1010,7 +1004,7 @@ public class DashboardActivity extends Activity {
     			return true;
         	case R.id.menu_backup:
         		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_backup");
-        		String previousJson = Json.readJsonDashboardFile(sDashboard);
+        		String previousJson = JsonHelper.readJsonDashboardFile();
                 boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
         				 previousJson.contains(YTD.JSON_DATA_STATUS_PAUSED));
         		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
@@ -1057,7 +1051,7 @@ public class DashboardActivity extends Activity {
         		return true;
         	case R.id.menu_restore:
         		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_restore");
-        		String previousJson2 = Json.readJsonDashboardFile(sDashboard);
+        		String previousJson2 = JsonHelper.readJsonDashboardFile();
                 boolean smtInProgressOrPaused2 = (previousJson2.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
         				 previousJson2.contains(YTD.JSON_DATA_STATUS_PAUSED));
         		if (!smtInProgressOrPaused2) {
@@ -1332,7 +1326,7 @@ public class DashboardActivity extends Activity {
 		
 		if (removeFromJsonAlso/* && isResultOk*/) {
 			// remove entry from JSON and reload Dashboard
-			Json.removeEntryFromJsonFile(DashboardActivity.this, item.getId());
+			JsonHelper.removeEntryFromJsonFile(item.getId());
 		}
 		
 		refreshlist();
@@ -1623,7 +1617,7 @@ public class DashboardActivity extends Activity {
 			Utils.logger("i", "import @ " + i + "/" + tot, DEBUG_TAG);
 
 			File chooserSelection = params[0];
-			String previousJson = Json.readJsonDashboardFile(sDashboard);
+			String previousJson = JsonHelper.readJsonDashboardFile();
 			filename = chooserSelection.getName();
         	
 			if (previousJson.contains(filename)) {
@@ -1637,30 +1631,29 @@ public class DashboardActivity extends Activity {
 	        	
 	        	String ext = Utils.getExtFromFileName(filename).toUpperCase(Locale.ENGLISH);
 	        	String aExt = "";
-	        	boolean go = false;
+	        	boolean doImport = false;
 	        	
 	        	if (ext.equals("WEBM")) {
 	        		aExt = ".ogg";
-	        		go = true;
+	        		doImport = true;
 	        	} else if (ext.equals("MP4") || ext.equals("3GP")) {
 	        		aExt = ".aac";
-	        		go = true;
+	        		doImport = true;
 	        	} else if (ext.equals("FLV")) {
 	        		aExt = "x";
-	        		go = true;
+	        		doImport = true;
 	        	} else if (ext.equals("M4A") || ext.equals("OGG") || ext.equals("MP3")) {
 	        		type = YTD.JSON_DATA_TYPE_A_E;
-	        		go = true;
+	        		doImport = true;
 	        	} else {
-	        		go = false;
+	        		doImport = false;
 	        	}
 	        	
-	        	if (go) {
-	        		if (type == YTD.JSON_DATA_TYPE_V) 
+	        	if (doImport) {
+	        		if (type == YTD.JSON_DATA_TYPE_V)
 	        			writeThumbToDiskForSelectedFile(chooserSelection, id);
 	        		
-					Json.addEntryToJsonFile(
-							sDashboard, 
+					JsonHelper.addEntryToJsonFile(
 							id, 
 							type, 
 							id,
@@ -1706,7 +1699,7 @@ public class DashboardActivity extends Activity {
 		}
 	}
 	
-	private class AsyncRestore extends AsyncTask<File, Void, String> {
+	private class AsyncRestore extends AsyncTask<File, Void, String[]> {
 		
 		@Override
 		protected void onPreExecute() {
@@ -1714,55 +1707,101 @@ public class DashboardActivity extends Activity {
 		}
 
 		@Override
-		protected String doInBackground(File... params) {
+		protected String[] doInBackground(File... params) {
 			File chooserSelection = params[0];
 			if (Utils.getExtFromFileName(chooserSelection.getName()).equals("json")) {
-				Utils.logger("v", "ext => .json", DEBUG_TAG);
+				Utils.logger("v", "Restore: ext \".json\" found", DEBUG_TAG);
 				try {
 					// copy file
 					Utils.copyFile(chooserSelection, YTD.JSON_FILE);
 					
 					// validate the JSON file 
-					String previousJson = Json.readJsonDashboardFile(sDashboard);
+					String previousJson = JsonHelper.readJsonDashboardFile();
 					new JSONObject(previousJson);
-	
-					clearAdapterAndLists();
 					
-					// refill the lists
-					int  entries = parseJson(DashboardActivity.this);
+					int total = parseJsonEntriesNumber();
 
-					Utils.logger("d", "idEntries: " + entries, DEBUG_TAG);
-
-					for (int i = 0; i < entries; i++ ) {
-						writeThumbToDiskForSelectedFile(new File(pathEntries.get(i), filenameEntries.get(i)), ytidEntries.get(i));
-					}
-					return String.valueOf(entries);
+					int removed = checkIfFilesExist();
+					
+					int imported = total - removed;
+					Utils.logger("d","----- RESTORE: -----" +
+									 "\nimported: " + imported +
+									 "\nremoved: " + removed +
+									 "\n--------------------" +
+									 "\ntotal: " + total +
+									 "\n--------------------", DEBUG_TAG);
+					
+					return new String[] { String.valueOf(imported), String.valueOf(total) };
+					
 				} catch (Exception e) {
 					Log.e(DEBUG_TAG, "Exception @ AsyncRestore: " + e.getMessage());
-					return "e1";
+					return new String[] { "e1" };
 				}
 			} else {
-				return "e2";
+				return new String[] { "e2" };
 			}
 		}
 		
+		private int checkIfFilesExist() {
+			int n = 0;
+			String previousJson = JsonHelper.readJsonDashboardFile();
+			
+//			List<File> dashboardFilesList = new ArrayList<File>();
+//			Map<File, String> dashboardIdsMap = new HashMap<File, String>();
+			
+			JSONObject jV = null;
+			String jId = null;
+			
+			try {
+				jV = new JSONObject(previousJson);
+
+				@SuppressWarnings("unchecked")
+				Iterator<Object> ids = jV.keys();
+				while (ids.hasNext()) {
+					jId = (String) ids.next();
+					JSONObject jO = new JSONObject();
+					jO = jV.getJSONObject(jId);
+					
+					final String jYtId = jO.getString(YTD.JSON_DATA_YTID);
+					final String jPath = jO.getString(YTD.JSON_DATA_PATH);
+					final String jFilename = jO.getString(YTD.JSON_DATA_FILENAME);
+					final File jFile = new File(jPath, jFilename);
+					
+					if (jFile.exists()) {
+						writeThumbToDiskForSelectedFile(jFile, jYtId);
+					} else {
+						n++;
+						Utils.logger("w", "Removing (file not found): " + jFile.getName(), DEBUG_TAG);
+						JsonHelper.removeEntryFromJsonFile(jId);
+					}
+				}
+			} catch (JSONException e) {
+				Log.e(DEBUG_TAG, "JSONException @ checkIfFilesExist: ");
+				e.printStackTrace();
+				Toast.makeText(YTD.ctx,
+						YTD.ctx.getString(R.string.invalid_data),
+						Toast.LENGTH_SHORT).show();
+				YTD.JSON_FILE.delete();
+			}
+			return n;
+		}
+
 		@Override
-		protected void onPostExecute(String res) {
-			if (res.equals("e1")) {
+		protected void onPostExecute(String[] res) {
+			if (res[0].equals("e1")) {
 				//JSONException e1
 				Toast.makeText(sDashboard, 
 						sDashboard.getString(R.string.menu_restore_result_failed), 
 						Toast.LENGTH_SHORT).show();
-			} else if (res.equals("e2")) {
+			} else if (res[0].equals("e2")) {
 				//file ext not .json
 				Toast.makeText(sDashboard, 
 						sDashboard.getString(R.string.invalid_data), 
 						Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(sDashboard, 
-						getString(R.string.menu_restore_result_ok) + " (" + res + ")", 
+						getString(R.string.menu_restore_result_ok) + " (" + res[0] + "/" + res[1] + ")", 
 						Toast.LENGTH_SHORT).show();
-				Utils.logger("d", "Restored " + res + " entries", DEBUG_TAG);
 			}
 			
 			dashboardAsyncTaskInProgress(DashboardActivity.this, false);
@@ -1787,7 +1826,9 @@ public class DashboardActivity extends Activity {
 			if (!bmFile.exists()) {
 				File ffmpeg = new File(getDir("bin", 0), YTD.ffmpegBinName);
 				if (ffmpeg.exists())
-					YTD.queueThread.enqueueTask(new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile), 1);
+					YTD.queueThread.enqueueTask(
+							new FFmpegExtractFlvThumbTask(sDashboard, selectedFile, bmFile), 
+							YTD._THUMB_EXTR);
 			}
 		}
 	}
@@ -1829,8 +1870,7 @@ public class DashboardActivity extends Activity {
 						new String[]{ out.getAbsolutePath() }, 
 						new String[]{ "video/*" });
 				
-				Json.addEntryToJsonFile(
-						DashboardActivity.this, 
+				JsonHelper.addEntryToJsonFile(
 						currentItem.getId(), 
 						currentItem.getType(), 
 						currentItem.getYtId(), 
@@ -1896,8 +1936,7 @@ public class DashboardActivity extends Activity {
 						new String[]{ out.getAbsolutePath() }, 
 						new String[]{ "video/*" });
 				
-				Json.addEntryToJsonFile(
-						DashboardActivity.this, 
+				JsonHelper.addEntryToJsonFile(
 						currentItem.getId(), 
 						currentItem.getType(), 
 						currentItem.getYtId(), 
@@ -1931,11 +1970,11 @@ public class DashboardActivity extends Activity {
 					clearAdapterAndLists();
 
 					// refill the Lists and re-populate the adapter
-					parseJson(sDashboard);
+					entries = parseJson();
 					updateProgressBars();
 					buildList();
 
-					writeStatus(da.getCount());
+					writeStatus();
 
 					// refresh the list view
 					da.notifyDataSetChanged();
@@ -1951,6 +1990,8 @@ public class DashboardActivity extends Activity {
 				public void run() {
 					da.clear();
 	
+					entries = 0;
+					
 					// empty the Lists
 					idEntries.clear();
 					typeEntries.clear();
@@ -1970,9 +2011,44 @@ public class DashboardActivity extends Activity {
 		}
 	}
 	
-	private static int parseJson(Context context) {
+	/*private void clearLists() {
+		entries = 0;
+		
+		// empty the Lists
+		idEntries.clear();
+		typeEntries.clear();
+		ytidEntries.clear();
+		posEntries.clear();
+		statusEntries.clear();
+		pathEntries.clear();
+		filenameEntries.clear();
+		basenameEntries.clear();
+		audioExtEntries.clear();
+		sizeEntries.clear();
+		partSizeEntries.clear();
+		progressEntries.clear();
+		speedEntries.clear();
+	}*/
+	
+	private static int parseJsonEntriesNumber() {
 		// read existing/init new JSON 
-		String previousJson = Json.readJsonDashboardFile(context);
+		String previousJson = JsonHelper.readJsonDashboardFile();
+		int n = 0;
+		JSONObject jV = null;
+		try {
+			jV = new JSONObject(previousJson);
+			n = jV.length();
+			//Utils.logger("v", "Json entries found: " + n, DEBUG_TAG);
+		} catch (JSONException e) {
+			Log.e(DEBUG_TAG, "JSONException @ parseJsonEntriesNumber: " + e.getMessage());
+		}
+		
+		return n;
+	}
+	
+	private static int parseJson() {
+		// read existing/init new JSON 
+		String previousJson = JsonHelper.readJsonDashboardFile();
 				
 		JSONObject jV = null;
 		try {
@@ -2000,7 +2076,7 @@ public class DashboardActivity extends Activity {
 			Toast.makeText(sDashboard, 
 					sDashboard.getString(R.string.invalid_data), 
 					Toast.LENGTH_SHORT).show();
-			YTD.JSON_FILE.delete();
+			//YTD.JSON_FILE.delete();
 		}
 		
 		// do sort by filenames
@@ -2080,8 +2156,7 @@ public class DashboardActivity extends Activity {
 								if (countdown <= 0 && dt == null) {
 									Utils.logger("w", "countdown == 0 && dt == null; "
 											+ "\nsetting STATUS_PAUSED on (video) id " + idstr, DEBUG_TAG);
-									Json.addEntryToJsonFile(
-											sDashboard,
+									JsonHelper.addEntryToJsonFile(
 											idstr, 
 											typeEntries.get(i),
 											ytidEntries.get(i), 
@@ -2183,18 +2258,20 @@ public class DashboardActivity extends Activity {
 		}
 	}
 	
-	private static void writeStatus(int count) {
+	private static void writeStatus() {
 		if (da.isEmpty()) {
 			status.setText(R.string.empty_dashboard);
 		} else {
+			String text = "";
 			if (entriesInProgress > 0) {
-				String text = String.format(Locale.US, "Entries: %d (in progress: %d)", count, entriesInProgress); //TODO @strings
-				status.setText(text);
+				text = String.format(sDashboard.getString(R.string.status_text_in_progress), 
+						da.getCount(), 
+						entriesInProgress);
 			} else {
-				String text = String.format(Locale.US, "Entries: %d", count, entriesInProgress); //TODO @strings
-				status.setText(text);
+				text = String.format(sDashboard.getString(R.string.status_text), 
+						da.getCount());
 			}
-				
+			status.setText(text);
 		}
 	}
 
@@ -2333,8 +2410,7 @@ public class DashboardActivity extends Activity {
 			
 			Utils.logger("i", vfilename + ": " + text, DEBUG_TAG);
 			
-			Json.addEntryToJsonFile(
-					DashboardActivity.this, 
+			JsonHelper.addEntryToJsonFile(
 					String.valueOf(aNewId),
 					type, 
 					currentItem.getYtId(),
@@ -2400,8 +2476,7 @@ public class DashboardActivity extends Activity {
 				
 				// add audio file to the JSON file entry
 				if (addItToDb)
-					Json.addEntryToJsonFile(
-							DashboardActivity.this, 
+					JsonHelper.addEntryToJsonFile(
 							String.valueOf(aNewId), 
 							type, 
 							item.getYtId(), 
@@ -2416,8 +2491,7 @@ public class DashboardActivity extends Activity {
 			} else {
 				setNotificationForAudioJobError();
 				
-				Json.addEntryToJsonFile(
-						DashboardActivity.this, 
+				JsonHelper.addEntryToJsonFile(
 						String.valueOf(aNewId),
 						type, 
 						item.getYtId(),
@@ -2882,8 +2956,7 @@ public class DashboardActivity extends Activity {
 					Toast.LENGTH_SHORT).show();
 			Utils.logger("i", muxedFileName + ": " + text, DEBUG_TAG);
 			
-			Json.addEntryToJsonFile(
-					DashboardActivity.this,
+			JsonHelper.addEntryToJsonFile(
 					String.valueOf(aNewId),
 					YTD.JSON_DATA_TYPE_V_M,  
 					currentItem.getYtId(),
@@ -2922,8 +2995,7 @@ public class DashboardActivity extends Activity {
 					new AsyncDelete().execute(aoItem);
 				}
 	    		
-	    		Json.addEntryToJsonFile(
-	    				DashboardActivity.this,
+	    		JsonHelper.addEntryToJsonFile(
 	    				String.valueOf(aNewId),
 						YTD.JSON_DATA_TYPE_V_M, 
 						currentItem.getYtId(),
@@ -2938,8 +3010,7 @@ public class DashboardActivity extends Activity {
 			} else {
 				setNotificationForAudioJobError();
 				
-				Json.addEntryToJsonFile(
-						DashboardActivity.this,
+				JsonHelper.addEntryToJsonFile(
 						String.valueOf(aNewId),
 						YTD.JSON_DATA_TYPE_V_M,  
 						currentItem.getYtId(),

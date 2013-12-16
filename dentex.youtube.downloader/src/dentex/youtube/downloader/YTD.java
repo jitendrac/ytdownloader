@@ -112,6 +112,9 @@ public class YTD extends Application implements QueueThreadListener{
 	public static String ARMv5te = "armv5te";
 	public static String UNSUPPORTED_CPU = "UNSUPPORTED";
 	
+	public static int _AUDIO_EXTR = 0;
+	public static int _THUMB_EXTR = 1;
+	
 	public static SharedPreferences settings;
 	public static SharedPreferences videoinfo;
 	

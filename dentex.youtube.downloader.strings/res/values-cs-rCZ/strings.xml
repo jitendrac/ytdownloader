@@ -33,7 +33,7 @@
     <string name="no_net_dialog_msg">Prosím, nejdříve povolte internetové připojení.</string>
     <string name="no_market">Není dostupná aplikace pro nákup.</string>
     <string name="no_market_dialog_msg">Prosím nainstalujte Google Play</string>
-    <string name="list_click_dialog_title">Potvrdit stazení pro:</string>
+    <string name="list_click_dialog_title">Potvrdit stažení pro:</string>
     <string name="list_click_download_local">Stáhnout zde</string>
     <string name="list_click_download_ssh">Odeslat přes SSH</string>
     <string name="rename_dialog_title">Nový název souboru:</string>
@@ -56,8 +56,8 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="codec">\n\n\tKodek:</string>
     <string name="quality">\n\tKvalita:</string>
     <string name="size">\n\tVelikost:</string>
-    <string name="notification_downloading_pt1">Stahování</string>
-    <string name="notification_downloading_pt2">video soubory</string>
+    <string name="notification_downloading_pt1">Stahování:</string>
+    <string name="notification_downloading_pt2">video soubor(ů)</string>
     <string name="notification_no_downloads">Žádné probíhající stahování</string>
     <string name="long_click_title">Zpracovat vybraný odkaz:</string>
     <string name="ffmpeg_ready">FFmpeg připraven.</string>
@@ -110,6 +110,7 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="ffmpeg_download_notification">Stahování FFmpeg</string>
     <string name="ffmpeg_install">Instaluji FFmpeg binárku&#8230;</string>
     <string name="email_via">Odeslat email přes:</string>
+    <string name="file_already_added">Soubor už je přidaný.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
 	<string name="menu_search">hledat&#8230;</string>
 	<string name="menu_backup">Zálohovat</string>
 	<string name="menu_restore">Obnovit</string>
-	<string name="menu_import">Importovat video</string>
-	<string name="menu_import_file">Importovat soubor</string>
-	<string name="menu_import_double">Video už je přidané.</string>
-	<string name="menu_import_file_double">Soubor už je přidaný.</string>
-	<string name="menu_backup_info">Zvolte složku k záloze Dashboard dat</string>
-	<string name="menu_restore_info">Obnovit Dashboard data ze souboru</string>
+	<string name="menu_import_file">Import souborů</string>
+	<string name="menu_import_file_double">%1$s již přidán.</string>
+	<string name="menu_backup_info">Zvolte složku k záloze Dashboardu</string>
+	<string name="menu_restore_info">Obnovit Dashboard ze souboru</string>
 	<string name="menu_restore_info_msg">Současné údaje budou přepsány.</string>
-	<string name="menu_import_info">Importovat video a spravovat přes Dashboard</string>
-	<string name="menu_import_file_info">Importovat soubor a spravovat přes Dashboard</string>
+	<string name="menu_import_file_info">Importovat a spravovat soubory v Dashboardu</string>
+	<string name="menu_import_in_progress">Probíhá import souborů: %1$s</string>
 	<string name="menu_backup_result_ok">Záloha Dashboard dat je v pořádku.</string>
 	<string name="menu_backup_result_failed">Chyba při zálohování.</string>
 	<string name="menu_restore_result_ok">Dashboard data obnoveny.</string>
@@ -239,13 +238,15 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="long_press_warning_msg2">Kopie již v této složce existuje.</string>
     <string name="audio_extr_warning_msg">Stejný audio soubor již extrahován.</string>
 
-	<string name="delete_video_confirm">Potvrďte, že chcete smazat toto video?</string>
+	<string name="delete_video_confirm">Potvrďte, že chcete smazat tento soubor?</string>
 	<string name="remove_video_confirm">Potvrďte, že chcete odstranit toto video ze seznamu?</string>
 	<string name="delete_video_ok">%1$s úspěšně smazáno.</string>
 	<string name="delete_video_failed">Chyba: %1$s není smazán.</string>
 	
-	<string name="empty_dashboard">Žádné stáhnuté video.</string>
-
+	<string name="empty_dashboard">Prázdný.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -257,8 +258,8 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="lang_dialog_title">Zvolte jazyk:</string>
     <string name="choose_theme_title">Vybrat vzhled</string>
     <string-array name="choose_theme_entries">
-        <item>Tmavé</item>
-        <item>Světlé</item>
+        <item>Tmavý</item>
+        <item>Světlý</item>
     </string-array>
     
     <!-- -->
@@ -312,13 +313,6 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="enable_adaptive_title">Získat sekundární streamy</string>
     <string name="enable_adaptive_summary">Přidat pouze video a/nebo pouze audio streamy (pokud jsou dostupné) do seznamu</string>
     
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
-    
     <!-- -->
     <string name="settings_cat_notifications">Oznámení</string>
     
@@ -326,12 +320,12 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="notification_defaults_dialog_title">Přednastavení YTD oznámení</string>
     <string-array name="notification_defaults_entries">
         <item>Zvuk a vibrace</item>
-        <item>Zvuk a světla</item>
-        <item>Vibrace a světla</item>
-        <item>Zvuk, vibrace a světla</item>
+        <item>Zvuk a dioda</item>
+        <item>Vibrace a dioda</item>
+        <item>Zvuk, vibrace a dioda</item>
         <item>Zvuk</item>
         <item>Vibrace</item>
-        <item>Světla</item>
+        <item>Dioda</item>
         <item>Nic</item>
     </string-array>
     
@@ -354,8 +348,8 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
         
     <!-- -->
     <string name="settings_cat_code">Zdrojový kód</string>
-    <string name="ytd_code_git_title">YTD na GitHub</string>
-    <string name="ytd_code_hg_title">YTD na Sourceforge</string>
+    <string name="ytd_code_git_title">YTD: GitHub</string>
+    <string name="ytd_code_hg_title">YTD: Sourceforge</string>
 
     <!-- -->
     <string name="settings_cat_social">Sociální sítě</string>
@@ -384,7 +378,7 @@ vložení do vzdáleného shellu (funguje JEN když je cílové PC na stejné s�
 	<string name="enable_logging_summary">Zahrnout YTD zprávy do systémového záznamu. Povinné pro odeslání \"logcat\" záznamů vývojáři.</string>
 	<string name="clear_dashboard_title">Vyprázdnit Dashboard</string>
 	<string name="clear_dashboard_summary">Vymazat všechny Dashboard záznamy (může odstranit některé chyby)</string>
-	<string name="clear_dashboard_msg">Pokračovat?\nTato akce vymaže všechny záznamy v Dashboard.</string>
+	<string name="clear_dashboard_msg">Pokračovat?\nTato akce vymaže všechny záznamy v Dashboardu.</string>
 	<string name="clear_dashboard_ok">Dashboard vyprázdněn.</string>
 	<string name="clear_dashboard_failed">Vyprázdnění Dashboard selhalo.</string>
 	

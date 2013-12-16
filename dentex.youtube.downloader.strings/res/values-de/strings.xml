@@ -110,6 +110,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <string name="ffmpeg_download_notification">FFmpeg herunterladen</string>
     <string name="ffmpeg_install">Installiere FFmpeg&#8230;</string>
     <string name="email_via">Senden via E-Mail:</string>
+    <string name="file_already_added">Datei bereits hinzugefügt!</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="menu_search">Suche&#8230;</string>
 	<string name="menu_backup">Sicherung</string>
 	<string name="menu_restore">Wiederherstellen</string>
-	<string name="menu_import">Video importieren</string>
-	<string name="menu_import_file">Datei importieren</string>
-	<string name="menu_import_double">Video bereits hinzugefügt!</string>
-	<string name="menu_import_file_double">Datei bereits hinzugefügt!</string>
+	<string name="menu_import_file">Dateien importieren</string>
+	<string name="menu_import_file_double">%1$s bereits hinzugefügt!</string>
 	<string name="menu_backup_info">Ordner für Dashboard-Sicherung festlegen</string>
 	<string name="menu_restore_info">Dashboard aus Datei wiederherstellen</string>
 	<string name="menu_restore_info_msg">Aktuelle Daten werden alle überschrieben!</string>
-	<string name="menu_import_info">Video importieren und über Dashboard verwalten</string>
-	<string name="menu_import_file_info">Datei importieren und über Dashboard verwalten</string>
+	<string name="menu_import_file_info">Vorhandene Dateien importieren und diese dann über das Dashboard verwalten</string>
+	<string name="menu_import_in_progress">Dateiimport aktiv für: %1$s</string>
 	<string name="menu_backup_result_ok">Dashboard-Datensicherung erfolgreich!</string>
 	<string name="menu_backup_result_failed">Fehler beim Sichern!</string>
 	<string name="menu_restore_result_ok">Dashboard-Datensicherung wiederhergestellt</string>
@@ -244,8 +243,10 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="delete_video_ok">%1$s erfolgreich gelöscht!</string>
 	<string name="delete_video_failed">Fehler: %1$s nicht gelöscht!</string>
 	
-	<string name="empty_dashboard">Keine heruntergeladenen Videos vorhanden!</string>
-
+	<string name="empty_dashboard">Keine Downloads!</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     
     <string name="enable_adaptive_title">2ten Stream empfangen</string>
     <string name="enable_adaptive_summary">Nur-Video- und/oder Nur-Ton-Streams (falls verfügbar) der Videoliste hinzufügen</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Benachrichtigungen</string>

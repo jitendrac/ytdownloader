@@ -77,20 +77,20 @@
         <item>إرسال عبر SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">تم نسخ الرابط إلى الحافظة </string>
+    <string name="share_link_via">مشاركة هذا الرابط عبر:</string>
     
     <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
+    <string name="filter_view_all">عرض الكل</string>
     <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_quality">تصفية حسب الجودة </string>
+    <string name="filter_header_others">فلاتر تصفية أخرى </string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">كبير </string>
+    <string name="filter_md">متوسط </string>
+    <string name="filter_sd">صغير</string>
+    <string name="filter_vo">فيديو فقط </string>
+    <string name="filter_ao">صوت فقط </string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -110,6 +110,7 @@
     <string name="ffmpeg_download_notification">تنزيل FFmpeg</string>
     <string name="ffmpeg_install">جاري تثبيت FFmpeg الثنائي &#8230;</string>
     <string name="email_via">إرسال بريد الكتروني عبر:</string>
+    <string name="file_already_added">بالفعل الملف مضاف. </string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -140,8 +141,8 @@
     <string name="audio_conv_completed">اكتمل تحويل الصوت إلى MP3</string>
     <string name="audio_extr_error">خطأ خلال استخراج الصوت.</string>
     <string name="audio_conv_error">خطأ خلال تحويل الصوت</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s من %2$s إكتمل إستخراج الصوت</string>
+    <string name="auto_audio_extr_completed">إكتمل إستخراج كل الصوت </string>
     
     <!-- ### DonateActivity ### -->
     
@@ -156,29 +157,27 @@
 	<string name="json_status_completed">تمّ</string>
 	<string name="json_status_failed">فشل</string>
 	<string name="json_status_in_progress">جاري العمل</string>
-	<string name="json_status_paused">Paused</string>
-	<string name="json_status_imported">Imported</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_paused">إيقاف </string>
+	<string name="json_status_imported">مستورد</string>
+	<string name="json_status_queued">قائمة الانتظار</string>
 	<string name="menu_search">بحث&#8230;</string>
-	<string name="menu_backup">Backup</string>
-	<string name="menu_restore">Restore</string>
-	<string name="menu_import">Import a video</string>
-	<string name="menu_import_file">Import a file</string>
-	<string name="menu_import_double">Video already added.</string>
-	<string name="menu_import_file_double">File already added.</string>
-	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
-	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
-	<string name="menu_restore_info_msg">Present data will be overwritten.</string>
-	<string name="menu_import_info">Import a video and manage it from the Dashboard</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
-	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
-	<string name="menu_backup_result_failed">Error during backup.</string>
-	<string name="menu_restore_result_ok">Dashboard data restored.</string>
-	<string name="menu_restore_result_failed">Error during restore.</string>
-	<string name="unsupported_operation">Unsupported operation.</string>
-	<string name="ffmpeg_already_running">FFmpeg is already running.</string>
-	<string name="invalid_data">Invalid data.</string>
-	<string name="open_chooser_title">Open with:</string>
+	<string name="menu_backup">نسخ احتياطي</string>
+	<string name="menu_restore">إستعادة</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
+	<string name="menu_backup_info">اختيار مجلد لبيانات النسخ الاحتياطي.</string>
+	<string name="menu_restore_info">استعادة البيانات من ملف</string>
+	<string name="menu_restore_info_msg">سيتم الكتابة فوق البيانات الحالية.</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
+	<string name="menu_backup_result_ok">نسخ إحتياطي لبيانات الواجهة الرئيسية "موافق"</string>
+	<string name="menu_backup_result_failed">حدث خطأ أثناء النسخ.</string>
+	<string name="menu_restore_result_ok">استعادة بيانات الواجهة الرئيسية.</string>
+	<string name="menu_restore_result_failed">حدث خطأ أثناء عملية الإستعادة.</string>
+	<string name="unsupported_operation">العملية غير مدعومة.</string>
+	<string name="ffmpeg_already_running">FFmpeg. قيد التشغيل بالفعل.</string>
+	<string name="invalid_data">بيانات غير صالحة.</string>
+	<string name="open_chooser_title">فتح مع:</string>
 	
 	<string-array name="dashboard_click_entries">
 	    <item>فتح</item>
@@ -204,7 +203,7 @@
 	<string name="ao_not_found">No suitable audio-only stream found</string>
 	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
 	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
-    <string name="share_file_via">Share this file via:</string>
+    <string name="share_file_via">مشاركة هذا الملف عبر:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg غير مثبته أو معطل:</string>
 	<string name="ffmpeg_not_enabled_msg">فتح الإعدادات؟</string>
 	<string name="remove_video">حذف الفيديو بعد استخراج الصوت بنجاح (بدون تأكيد!)</string>
@@ -244,8 +243,10 @@
 	<string name="delete_video_ok">%1$s تم حذفه بنجاح.</string>
 	<string name="delete_video_failed">خطأ: %1$s  لم يتم حذفه.</string>
 	
-	<string name="empty_dashboard">لايوجد ملفات فيديو تم تنزيلها.</string>
-
+	<string name="empty_dashboard">No downloads.</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -312,13 +313,6 @@
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">إشعارات</string>

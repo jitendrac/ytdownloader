@@ -293,6 +293,8 @@ public class FileChooserActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	
         /*
          * THEME
          */
@@ -320,11 +322,6 @@ public class FileChooserActivity extends Activity {
     		this.setTheme(R.style.AppThemeLight);
     	}
 
-        try {
-			super.onCreate(savedInstanceState);
-		} catch (RuntimeException e) {
-			Log.e(_ClassName, "RuntimeException @ super.onCreate(savedInstanceState)");
-		}
         setContentView(R.layout.afc_file_chooser);
 
         initGestureDetector();

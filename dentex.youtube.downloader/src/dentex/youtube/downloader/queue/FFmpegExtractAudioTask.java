@@ -13,7 +13,7 @@ import dentex.youtube.downloader.DashboardListItem;
 import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
-import dentex.youtube.downloader.utils.Json;
+import dentex.youtube.downloader.utils.JsonHelper;
 import dentex.youtube.downloader.utils.Utils;
 
 public class FFmpegExtractAudioTask implements Runnable {
@@ -65,8 +65,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 		
 		@Override
 		public void preProcess() {
-			Json.addEntryToJsonFile(
-					aContext, 
+			JsonHelper.addEntryToJsonFile(
 					String.valueOf(aNewId), 
 					type,
 					aYtId, 
@@ -103,8 +102,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 					new AsyncDelete().execute(aFileToConvert);
 				}
 
-				Json.addEntryToJsonFile(
-						aContext, 
+				JsonHelper.addEntryToJsonFile(
 						String.valueOf(aNewId), 
 						type, 
 						aYtId, 
@@ -117,8 +115,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 						Utils.MakeSizeHumanReadable((int) aAudioFile.length(), false), 
 						false);
 			} else {
-				Json.addEntryToJsonFile(
-						aContext, 
+				JsonHelper.addEntryToJsonFile(
 						String.valueOf(aNewId), 
 						type, 
 						aYtId, 
@@ -199,7 +196,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 		@Override
 		protected void onPostExecute(Boolean success) {
 			if (success) {
-				Json.removeEntryFromJsonFile(aContext, aId);
+				JsonHelper.removeEntryFromJsonFile(aId);
 				DashboardActivity.refreshlist();
 			} else {
 				Utils.logger("w", aFileToConvert.getName() + " NOT deleted", DEBUG_TAG);

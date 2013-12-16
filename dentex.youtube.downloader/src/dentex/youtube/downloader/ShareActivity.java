@@ -91,7 +91,7 @@ import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.utils.FetchUrl;
-import dentex.youtube.downloader.utils.Json;
+import dentex.youtube.downloader.utils.JsonHelper;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.RhinoRunner;
 import dentex.youtube.downloader.utils.Utils;
@@ -1134,8 +1134,7 @@ public class ShareActivity extends Activity {
 				
 				Maps.mNetworkSpeedMap.put(ID, (long) 0);
 				
-				Json.addEntryToJsonFile(
-						sShare, 
+				JsonHelper.addEntryToJsonFile(
 						String.valueOf(ID), 
 						jsonDataType, 
 						videoId,
@@ -1185,8 +1184,7 @@ public class ShareActivity extends Activity {
 					size = "-";
 				}
 				
-				Json.addEntryToJsonFile(
-						sShare, 
+				JsonHelper.addEntryToJsonFile( 
 						String.valueOf(ID), 
 						jsonDataType, 
 						videoId, 
@@ -1250,8 +1248,7 @@ public class ShareActivity extends Activity {
 								videoId, 
 								pos), 0);
 						
-						Json.addEntryToJsonFile(
-								sShare, 
+						JsonHelper.addEntryToJsonFile(
 								String.valueOf(newId), 
 								type, 
 								videoId, 
@@ -1309,8 +1306,7 @@ public class ShareActivity extends Activity {
 					Utils.logger("w", "errorDownload: NPE @ DM Maps", DEBUG_TAG);
 				}
 				
-				Json.addEntryToJsonFile(
-						sShare, 
+				JsonHelper.addEntryToJsonFile( 
 						String.valueOf(ID), 
 						jsonDataType, 
 						videoId, 
@@ -1333,7 +1329,7 @@ public class ShareActivity extends Activity {
 		//TODO DM
 		File dest = new File(path, filenameComplete);
 		File destTemp = new File(path, filenameComplete + DownloadTask.TEMP_SUFFIX);
-		String previousJson = Json.readJsonDashboardFile(sShare);
+		String previousJson = JsonHelper.readJsonDashboardFile();
 		
 		String aExt = findAudioCodec();
 		String jsonDataType;

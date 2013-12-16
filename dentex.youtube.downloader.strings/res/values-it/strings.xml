@@ -110,6 +110,7 @@
     <string name="ffmpeg_download_notification">FFmpeg in download</string>
     <string name="ffmpeg_install">Installazione di FFmpeg&#8230;</string>
     <string name="email_via">Manda email con:</string>
+    <string name="file_already_added">File già aggiunto.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@
 	<string name="menu_search">cerca&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Ripristino</string>
-	<string name="menu_import">Importa un video</string>
-	<string name="menu_import_file">Importa un file</string>
-	<string name="menu_import_double">Video già aggiunto.</string>
-	<string name="menu_import_file_double">File già aggiunto.</string>
+	<string name="menu_import_file">Importa file</string>
+	<string name="menu_import_file_double">%1$s già aggiunto</string>
 	<string name="menu_backup_info">Scegli la cartella in cui salvare i dati dela Dashboard</string>
 	<string name="menu_restore_info">Ripristina i dati della Dasboard da file</string>
 	<string name="menu_restore_info_msg">I dati attuali saranno sovrascritti.</string>
-	<string name="menu_import_info">Importa un video e gestiscilo dalla Dashboard</string>
-	<string name="menu_import_file_info">Importa un file e gestiscilo dalla Dashboard</string>
+	<string name="menu_import_file_info">Importa file e gestiscili dalla Dashboard</string>
+	<string name="menu_import_in_progress">Importazione file in corso: %1$s</string>
 	<string name="menu_backup_result_ok">Backup dei dati Dashboard OK.</string>
 	<string name="menu_backup_result_failed">Errore durante il backup.</string>
 	<string name="menu_restore_result_ok">Dati Dashboard ripristinati.</string>
@@ -244,8 +243,10 @@
 	<string name="delete_video_ok">%1$s cancellato con successo.</string>
 	<string name="delete_video_failed">Errore: %1$s non cancellato.</string>
 	
-	<string name="empty_dashboard">Nessun video scaricato.</string>
-
+	<string name="empty_dashboard">Nessun elemento</string>
+	<string name="status_text_in_progress">Elementi: %1$d (in avanzamento: %2$d)</string>
+	<string name="status_text">Elementi: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@
     
     <string name="enable_adaptive_title">Ottieni flussi secondari</string>
     <string name="enable_adaptive_summary">Aggiungi flussi solo-video e/o solo-audio (se disponibili) alla lista dei video</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Notifiche</string>
