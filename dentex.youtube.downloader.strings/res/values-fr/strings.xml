@@ -243,7 +243,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
 	<string name="delete_video_ok">%1$s est supprimé.</string>
 	<string name="delete_video_failed">Erreur : %1$s n\'a pas été supprimé.</string>
 	
-	<string name="empty_dashboard">No downloads.</string>
+	<string name="empty_dashboard">No entries</string>
 	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
 	<string name="status_text">Entries: %d</string>
 	

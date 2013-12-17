@@ -88,6 +88,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
@@ -101,6 +102,7 @@ import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.InvalidYoutubeLinkException;
 import com.matsuhiro.android.download.Maps;
+import com.squareup.picasso.Picasso;
 
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
@@ -122,11 +124,13 @@ public class DashboardActivity extends Activity {
 	private boolean removeVideo;
 	private boolean removeAudio;
 	private boolean removeAoVo;
-	public static ListView lv;
-	public static TextView status;
+	private ListView lv;
+	private static TextView status;
 	private Editable searchText;
+	//private static RelativeLayout bkgRl;
+	private static ImageView bkgImg;
 	
-	public static int entries = 0;
+	//public static int entries = 0;
 	public static List<String> idEntries = new ArrayList<String>();
 	static List<String> typeEntries = new ArrayList<String>();
 	static List<String> ytidEntries = new ArrayList<String>();
@@ -201,18 +205,20 @@ public class DashboardActivity extends Activity {
     	
     	countdown = 10;
     	
-    	parseJson();
-    	updateProgressBars();
-    	buildList();
-    	
     	lv = (ListView) findViewById(R.id.dashboard_list);
     	status = (TextView) findViewById(R.id.dashboard_status);
+    	//bkgRl = (RelativeLayout) findViewById(R.id.bkg_rl);
+    	bkgImg = (ImageView) findViewById(R.id.bkg_img);
     	
     	da = new DashboardAdapter(itemsList, this);
-    	
     	lv.setAdapter(da);
     	
-    	// YTD update initialization
+		/*entries = */parseJson();
+		updateProgressBars();
+		buildList();
+		writeStatus();
+		
+		// YTD update initialization
     	YTD.updateInit(this, false, null);
     	
     	/*Log.i(DEBUG_TAG, "DM Maps:" +
@@ -1970,7 +1976,7 @@ public class DashboardActivity extends Activity {
 					clearAdapterAndLists();
 
 					// refill the Lists and re-populate the adapter
-					entries = parseJson();
+					/*entries = */parseJson();
 					updateProgressBars();
 					buildList();
 
@@ -1990,7 +1996,7 @@ public class DashboardActivity extends Activity {
 				public void run() {
 					da.clear();
 	
-					entries = 0;
+					//entries = 0;
 					
 					// empty the Lists
 					idEntries.clear();
@@ -2261,6 +2267,12 @@ public class DashboardActivity extends Activity {
 	private static void writeStatus() {
 		if (da.isEmpty()) {
 			status.setText(R.string.empty_dashboard);
+			//bkgRl.setVisibility(View.VISIBLE);
+			if (isLandscape) {
+				Picasso.with(sDashboard).load(R.drawable.ic_bkg_gray).resize(256, 256).into(bkgImg);
+			} else {
+				Picasso.with(sDashboard).load(R.drawable.ic_bkg_gray).resize(512, 512).into(bkgImg);
+			}
 		} else {
 			String text = "";
 			if (entriesInProgress > 0) {
@@ -2272,6 +2284,7 @@ public class DashboardActivity extends Activity {
 						da.getCount());
 			}
 			status.setText(text);
+			//bkgRl.setVisibility(View.GONE);
 		}
 	}
 

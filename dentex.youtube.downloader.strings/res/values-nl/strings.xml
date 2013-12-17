@@ -243,9 +243,9 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="delete_video_ok">%1$s succesvol verwijderd.</string>
 	<string name="delete_video_failed">Fout: %1$s niet verwijderd.</string>
 	
-	<string name="empty_dashboard">Geen downloads</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">Geen ingaven</string>
+	<string name="status_text_in_progress">Ingaven: %1$d  (bezig: %2$d)</string>
+	<string name="status_text">Ingaven: %d</string>
 	
     <!-- ### preferences ### -->
 

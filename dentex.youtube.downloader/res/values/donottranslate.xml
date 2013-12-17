@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.5.4 - Dic 16 2013
+        \n v3.5.4 - Dic 17 2013
         \n-----------------------------------
         \n[x] possibility to import into Dashboard multiple files at once
         \n[x] Dashboard bottom status bar
@@ -551,6 +551,7 @@
     
     <string name="thumb_preview_descr">Video thumbnail</string>
     <string name="dashboard_longclick_item_icon_descr">longclick list item\'s icon</string>
+    <string name="bkg_img_descr">Background image</string>
 	
     <string name="app_name">YouTube Downloader</string>
     <string name="title_activity_share">YouTube Downloader</string>

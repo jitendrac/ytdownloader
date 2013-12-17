@@ -163,13 +163,13 @@
 	<string name="menu_search">αναζήτηση&#8230;</string>
 	<string name="menu_backup">Λήψη αντιγράφου ασφαλείας</string>
 	<string name="menu_restore">Επαναφορά</string>
-	<string name="menu_import_file">Import files</string>
-	<string name="menu_import_file_double">%1$s already added.</string>
+	<string name="menu_import_file">Εισαγωγή αρχείων</string>
+	<string name="menu_import_file_double">Το %1$s έχει ήδη εισαχθεί.</string>
 	<string name="menu_backup_info">Επιλέξτε ένα φάκελο για αποθήκευση των δεδομένων του Πίνακα Ελέγχου</string>
 	<string name="menu_restore_info">Επαναφορά των δεδομένων του Πίνακα Ελέγχου από αρχείο</string>
 	<string name="menu_restore_info_msg">Τα υπάρχοντα δεδομένα θα διαγραφούν.</string>
-	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
-	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
+	<string name="menu_import_file_info">Εισαγωγή αρχείων και διαχείριση τους από τον Πίνακα Ελέγχου</string>
+	<string name="menu_import_in_progress">Εισαγωγή αρχείων σε εξέλιξη: %1$s</string>
 	<string name="menu_backup_result_ok">Η λήψη αντιγράφου ασφαλείας του Πίνακα Ελέγχου ολοκληρώθηκε.</string>
 	<string name="menu_backup_result_failed">Σφάλμα κατά τη λήψη αντιγράφου ασφαλείας.</string>
 	<string name="menu_restore_result_ok">Τα δεδομένα του Πίνακα Ελέγχου ανακτήθηκαν.</string>
@@ -243,9 +243,9 @@
 	<string name="delete_video_ok">%1$s διαγράφτηκε επιτυχώς.</string>
 	<string name="delete_video_failed">Σφάλμα: %1$s δε διαγράφτηκε.</string>
 	
-	<string name="empty_dashboard">No downloads.</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">Καμία καταχώριση</string>
+	<string name="status_text_in_progress">Καταχωρήσεις: %1$d (σε εξέλιξη: %2$d)</string>
+	<string name="status_text">Καταχωρήσεις: %d</string>
 	
     <!-- ### preferences ### -->
 

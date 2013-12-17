@@ -79,7 +79,7 @@
     <string name="link_copied">링크를 클립보드에 복사하였습니다</string>
     <string name="share_link_via">링크 공유하기</string>
     
-    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_header_reset">필터 재설정</string>
     <string name="filter_view_all">전체 보기</string>
     <string name="filter_header_format">Filter by format</string>
     <string name="filter_header_quality">Filter by quality</string>
@@ -242,7 +242,7 @@
 	<string name="delete_video_ok">%1$s 이(가) 성공적으로 삭제되었습니다.</string>
 	<string name="delete_video_failed">에러: %1$s 을(를) 삭제 실패하였습니다.</string>
 	
-	<string name="empty_dashboard">No downloads.</string>
+	<string name="empty_dashboard">No entries</string>
 	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
 	<string name="status_text">Entries: %d</string>
 	

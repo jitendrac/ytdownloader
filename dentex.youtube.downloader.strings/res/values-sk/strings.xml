@@ -243,9 +243,9 @@ adresár, vložte príkaz (použite tlačidlo menu), a stlačte kláves ENTER.</
 	<string name="delete_video_ok">%1$s úspešne zmazané.</string>
 	<string name="delete_video_failed">Chyba: %1$s nie je zmazané.</string>
 	
-	<string name="empty_dashboard">Žiadne stiahnuté súbory.</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">Žiadne položky</string>
+	<string name="status_text_in_progress">Položiek: %1$d (spracováva sa: %2$d)</string>
+	<string name="status_text">Položiek: %d</string>
 	
     <!-- ### preferences ### -->
 

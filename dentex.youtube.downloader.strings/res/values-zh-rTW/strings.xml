@@ -241,7 +241,7 @@
 	<string name="delete_video_ok">%1$s 已刪除。</string>
 	<string name="delete_video_failed">錯誤：%1$s 未被刪除。</string>
 	
-	<string name="empty_dashboard">No downloads.</string>
+	<string name="empty_dashboard">No entries</string>
 	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
 	<string name="status_text">Entries: %d</string>
 	

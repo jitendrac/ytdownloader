@@ -243,7 +243,7 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
 	<string name="delete_video_ok">%1$s úspěšně smazáno.</string>
 	<string name="delete_video_failed">Chyba: %1$s není smazán.</string>
 	
-	<string name="empty_dashboard">Prázdný.</string>
+	<string name="empty_dashboard">No entries</string>
 	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
 	<string name="status_text">Entries: %d</string>
 	

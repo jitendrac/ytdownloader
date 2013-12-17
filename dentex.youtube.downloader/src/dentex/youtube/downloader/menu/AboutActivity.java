@@ -269,7 +269,7 @@ public class AboutActivity extends Activity {
             
             cl = (Preference) findPreference("changelog");
             try {
-				String version = "v" + AboutFragment.this.getActivity().getPackageManager().getPackageInfo(AboutFragment.this.getActivity().getPackageName(), 0).versionName;
+				String version = "v" + getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
 				cl.setSummary(version);
 				Utils.logger("v", "YTD " + version, DEBUG_TAG);
 			} catch (NameNotFoundException e1) {
@@ -298,7 +298,7 @@ public class AboutActivity extends Activity {
                 		Utils.logger("d", "twitter direct link", DEBUG_TAG);
                 		startActivity(new Intent(Intent.ACTION_VIEW, 
                 				Uri.parse("twitter://user?screen_name=@twidentex")));
-                	}catch (Exception e) {
+                	} catch (Exception e) {
                 		Utils.logger("d", "twitter WEB link", DEBUG_TAG);
                 		startActivity(new Intent(Intent.ACTION_VIEW, 
                 				Uri.parse("https://twitter.com/#!/@twidentex")));

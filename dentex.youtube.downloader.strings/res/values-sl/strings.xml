@@ -242,7 +242,7 @@
 	<string name="delete_video_ok">%1$s uspešno izbrisan</string>
 	<string name="delete_video_failed">Napaka: %1$s ni izbrisan.</string>
 	
-	<string name="empty_dashboard">Ni prenosov</string>
+	<string name="empty_dashboard">No entries</string>
 	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
 	<string name="status_text">Entries: %d</string>
 	

@@ -242,9 +242,9 @@ ssh ללחוץ על פריט בשביל להוריד את הווידיאו על 
 	<string name="delete_video_ok">%1$s נמחק בהצלחה.</string>
 	<string name="delete_video_failed">שגיאה: %1$s לא נמחק.</string>
 	
-	<string name="empty_dashboard">אין הורדות</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">אין ערכים</string>
+	<string name="status_text_in_progress">ערכים: %1$d (בתהליך: %2$d)</string>
+	<string name="status_text">ערכים: %d</string>
 	
     <!-- ### preferences ### -->
 

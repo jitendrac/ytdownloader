@@ -163,13 +163,13 @@
 	<string name="menu_search">ara&#8230;</string>
 	<string name="menu_backup">Yedekle</string>
 	<string name="menu_restore">Geri Yükle</string>
-	<string name="menu_import_file">Import files</string>
-	<string name="menu_import_file_double">%1$s already added.</string>
+	<string name="menu_import_file">Dosyaları içe aktar</string>
+	<string name="menu_import_file_double">%1$s zaten eklenmiş durumda.</string>
 	<string name="menu_backup_info">Panel bilgilerinin yedeğini almak için bir klasör seçin</string>
 	<string name="menu_restore_info">Panel bilgilerini yedekten geri yükle</string>
 	<string name="menu_restore_info_msg">Mevcut bilgilerin üzerine yazılacak.</string>
-	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
-	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
+	<string name="menu_import_file_info">Dosyaları içe aktar ve düzenle</string>
+	<string name="menu_import_in_progress">Dosya içe aktarma işlemi sürüyor: %1$s</string>
 	<string name="menu_backup_result_ok">Kontrol panel bilgileri yedeklendi.</string>
 	<string name="menu_backup_result_failed">Yedekleme hatası.</string>
 	<string name="menu_restore_result_ok">Kontrol panel bilgileri geri yüklendi.</string>
@@ -243,9 +243,9 @@
 	<string name="delete_video_ok">%1$s silindi.</string>
 	<string name="delete_video_failed">Hata: %1$s silinemedi.</string>
 	
-	<string name="empty_dashboard">No downloads.</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">Kayıt yok</string>
+	<string name="status_text_in_progress">Kayıt: %1$d (işlem gören: %2$d)</string>
+	<string name="status_text">Kayıt: %d</string>
 	
     <!-- ### preferences ### -->
 

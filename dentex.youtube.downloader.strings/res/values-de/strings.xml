@@ -243,9 +243,9 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="delete_video_ok">%1$s erfolgreich gelöscht!</string>
 	<string name="delete_video_failed">Fehler: %1$s nicht gelöscht!</string>
 	
-	<string name="empty_dashboard">Keine Downloads!</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">Keine Elemente</string>
+	<string name="status_text_in_progress">Elemente: %1$d (Aktiv: %2$d)</string>
+	<string name="status_text">Elemente: %d</string>
 	
     <!-- ### preferences ### -->
 
