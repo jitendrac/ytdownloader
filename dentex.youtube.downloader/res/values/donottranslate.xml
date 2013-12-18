@@ -5,6 +5,15 @@
         \n-----------------------------------
         \n[x] four new custom themes
         \n
+        \n v3.5.4 - Dic 17 2013
+        \n-----------------------------------
+        \n[x] possibility to import into Dashboard multiple files at once
+        \n[x] Dashboard bottom status bar
+        \n
+        \n v3.5.3 - Dic 12 2013
+        \n-----------------------------------
+        \n[x] auto-update bug fix
+        \n
         \n v3.5.2 - Dic 11 2013
         \n-----------------------------------
         \n[x] fixed missing progress bars during mux
@@ -550,6 +559,7 @@
     
     <string name="thumb_preview_descr">Video thumbnail</string>
     <string name="dashboard_longclick_item_icon_descr">longclick list item\'s icon</string>
+    <string name="bkg_img_descr">Background image</string>
 	
     <string name="app_name">YouTube Downloader</string>
     <string name="title_activity_share">YouTube Downloader</string>

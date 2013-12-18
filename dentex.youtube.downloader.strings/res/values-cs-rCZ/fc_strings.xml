@@ -63,7 +63,7 @@
     <string name="afc_title_name">Název</string>
     <string name="afc_title_save_as">Uložit jako&#8230;</string>
     <string name="afc_title_size">Velikost</string>
-    <string name="afc_title_sort_by">Seřadit dle&#8230;</string>
+    <string name="afc_title_sort_by">Řadit dle&#8230;</string>
     <string name="afc_yesterday">Včera</string>
 
 </resources>

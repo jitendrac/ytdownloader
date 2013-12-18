@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="73"`
+`versionCode="76"`
 
-`versionName="3.5.2"`
+`versionName="3.6"`
 
-MD5 checksum: `c1239e6a3c855c2816aaf293e198f7f7` dentex.youtube.downloader_v3.5.2.apk
+MD5 checksum: ``
 
 DISCLAIMER
 ================================================================
@@ -146,6 +146,15 @@ OTHER LICENSES
 CHANGELOG
 ================================================================
     
+     v3.5.4 - Dic 17 2013 
+    ----------------------------------- 
+    [x] possibility to import into Dashboard multiple files at once 
+    [x] Dashboard bottom status bar 
+     
+     v3.5.3 - Dic 12 2013 
+    ----------------------------------- 
+    [x] auto-update bug fix 
+     
      v3.5.2 - Dic 11 2013 
     ----------------------------------- 
     [x] fixed missing progress bars during mux 
@@ -463,7 +472,6 @@ TO-DO LIST
 	[ ] implement other FFmpeg functions
 	[ ] compile FFmpeg to support x86 Android ABI [wip]
 	[ ] support subtitles download
-	[ ] default format/filter selection for video download
 	[ ] use icon/logo to identify codecs available 
         (expand the custom ShareActivity adapter)
 	[ ] make the App tablet friendly

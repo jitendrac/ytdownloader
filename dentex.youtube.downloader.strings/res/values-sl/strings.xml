@@ -76,20 +76,20 @@
         <item>Pošlji po SSH</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Link kopiran v odložišče</string>
+    <string name="share_link_via">Deli link preko:</string>
     
-    <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
-    <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_reset">Ponastavi filtre</string>
+    <string name="filter_view_all">Prikaži vse</string>
+    <string name="filter_header_format">Filtriraj po formatu</string>
+    <string name="filter_header_quality">Filtriraj po kvaliteti</string>
+    <string name="filter_header_others">Drugi filtri</string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">Veliko</string>
+    <string name="filter_md">Srednje</string>
+    <string name="filter_sd">Majhno</string>
+    <string name="filter_vo">Samo video</string>
+    <string name="filter_ao">Samo avdio</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -109,6 +109,7 @@
     <string name="ffmpeg_download_notification">Prenašanje FFmpeg</string>
     <string name="ffmpeg_install">Nameščanje FFmpeg binarijev&#8230;</string>
     <string name="email_via">Pošlji e-pošto preko:</string>
+    <string name="file_already_added">Datoteka že dodana</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -157,19 +158,17 @@
 	<string name="json_status_in_progress">V poteku</string>
 	<string name="json_status_paused">Pauzirano</string>
 	<string name="json_status_imported">Uvoženo</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_queued">Na seznamu</string>
 	<string name="menu_search">išči&#8230;</string>
 	<string name="menu_backup">Varnostno kopiraj</string>
 	<string name="menu_restore">Obnovi</string>
-	<string name="menu_import">Uvozi video</string>
-	<string name="menu_import_file">Import a file</string>
-	<string name="menu_import_double">Video je že dodan.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file">Uvozi datoteke</string>
+	<string name="menu_import_file_double">%1$s je že dodan.</string>
 	<string name="menu_backup_info">Izberite mapo za podatke varnostne kopije upravljalne plošče.</string>
 	<string name="menu_restore_info">Obnovi podatke upravljalne plošče z datoteke</string>
 	<string name="menu_restore_info_msg">Trenutni podatki bodo prepisani</string>
-	<string name="menu_import_info">Uvozi video in ga upravljaj preko upravljalne plošče</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Uvozi datoteke in jih urejaj z upravljalne plošče</string>
+	<string name="menu_import_in_progress">Poteka uvoz datotek: %1$s</string>
 	<string name="menu_backup_result_ok">Varnostna kopija upravljalne plošče je OK.</string>
 	<string name="menu_backup_result_failed">Napaka med varnostnim kopiranjem.</string>
 	<string name="menu_restore_result_ok">Podatki upravljalne plošče obnovljeni.</string>
@@ -181,8 +180,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>Odpri</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Izlušči avdio</item>
+        <item>Izlušči avdio in kodiraj v mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -191,19 +190,19 @@
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>Odpri</item>
+        <item>Izlušči in kodiraj audio v mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
-        <item>Add audio stream (already downloaded)</item>
+	    <item>Odpri</item>
+        <item>Dodaj avdio pretok (že prenešen)</item>
     </string-array>
     
-	<string name="ao_not_found">No suitable audio-only stream found</string>
-	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
-	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
-    <string name="share_file_via">Share this file via:</string>
+	<string name="ao_not_found">Ni najdenih primernih samo-avdio pretokov</string>
+	<string name="remove_ao_vo">Za tem izbriši samo-video in samo-avdio datoteke (brez potrdila!)</string>
+	<string name="ffmpeg_new_v_required">Zahtevana je nova različica FFmpeg. Jo prenesem sedaj?</string>
+    <string name="share_file_via">Deli datoteko preko:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg ni nameščen ali omogočen</string>
 	<string name="ffmpeg_not_enabled_msg">Odprem nastavitve?</string>
 	<string name="remove_video">Izbriši video po audio izluščevanju (brez potrditve!)</string>
@@ -221,14 +220,14 @@
 	    <item>Premakni</item>
         <item>Preimenuj</item>
         <item>Še enkrat prenesi ta video</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>Pošlji</item>
+        <item>Odstrani z upravljalne plošče</item>
+        <item>Odstrani in izbriši datoteko</item>
+        <item>Pavziraj/Nadaljuj</item>
     </string-array>
     
-	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
-	<string name="dashboard_delete_data_cb">Delete also all listed video/audio files</string>
+	<string name="operation_standby">V pripravljenosti: drugo dejanje že poteka.</string>
+	<string name="dashboard_delete_data_cb">Izbriši tudi vse navedene video/avdio datoteke</string>
     
 	<string name="move_error">Napaka med premikanjem</string>
     <string name="move_progress">Premikanje datoteke v poteku&#8230;</string>
@@ -243,8 +242,10 @@
 	<string name="delete_video_ok">%1$s uspešno izbrisan</string>
 	<string name="delete_video_failed">Napaka: %1$s ni izbrisan.</string>
 	
-	<string name="empty_dashboard">Ni prenesenega videa</string>
-
+	<string name="empty_dashboard">No entries</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -309,14 +310,7 @@
     <string name="remove_video_title">Odstranitev videa</string>
     
     <string name="enable_adaptive_title">Pridobi sekundarne pretoke</string>
-    <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
+    <string name="enable_adaptive_summary">Dodaj samo-video in/ali samo-avdio pretoke (če so na voljo) na seznam videov</string>
     
     <!-- -->
     <string name="settings_cat_notifications">Obvestila</string>
@@ -334,7 +328,7 @@
         <item>Nič</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">Aktivnost na točki začetka</string>
     
     <!-- -->
     <string name="settings_cat_updates">Posodobitve</string>

@@ -16,8 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import dentex.youtube.downloader.DashboardActivity;
 import dentex.youtube.downloader.R;
@@ -31,7 +29,7 @@ public class DashboardClearHelper {
 	public static Activity sAct;
 	
 	public static void confirmClearDashboard(final Activity act, final boolean doReload) {
-		previousJson = Json.readJsonDashboardFile(act);
+		previousJson = JsonHelper.readJsonDashboardFile();
 		sDoReload = doReload;
 		sAct = act;
 		boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
@@ -106,16 +104,7 @@ public class DashboardClearHelper {
 
 		@Override
 		protected void onPreExecute() {
-			if (DashboardActivity.isDashboardRunning) {
-				DashboardActivity.dashboardAsyncTaskInProgress(true);
-				TextView info = (TextView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_activity_info);
-				info.setVisibility(View.GONE);
-				
-				ListView list = (ListView) DashboardActivity.sDashboard.findViewById(R.id.dashboard_list);
-				list.setVisibility(View.GONE);
-			} else {
-				DashboardActivity.dashboardAsyncTaskInProgress(true);
-			}
+			DashboardActivity.dashboardAsyncTaskInProgress(sAct, true);
 		}
 		
 		@Override
@@ -171,7 +160,7 @@ public class DashboardClearHelper {
         		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
 			}
 			if (sDoReload) Utils.reload(sAct);
-			DashboardActivity.dashboardAsyncTaskInProgress(false);
+			DashboardActivity.dashboardAsyncTaskInProgress(sAct, false);
 		}
 	}
 }

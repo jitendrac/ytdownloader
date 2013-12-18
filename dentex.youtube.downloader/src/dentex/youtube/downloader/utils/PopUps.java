@@ -43,7 +43,7 @@ public class PopUps {
 	    helpBuilder.setMessage(message);
 	
 	    String theme = YTD.settings.getString("choose_theme", "DB");
-    	if (theme.equals("D")) {
+    	if (theme.startsWith("D")) {
 		    if ( type == "error" ) {
 		        icon = R.drawable.ic_dialog_alert_holo_dark;
 		    } else if ( type == "info" ) {

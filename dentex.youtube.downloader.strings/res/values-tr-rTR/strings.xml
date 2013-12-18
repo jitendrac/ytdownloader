@@ -110,6 +110,7 @@
     <string name="ffmpeg_download_notification">İndiriliyor FFmpeg</string>
     <string name="ffmpeg_install">FFmpeg binary yükleniyor&#8230;</string>
     <string name="email_via">E-posta gönder:</string>
+    <string name="file_already_added">Dosya zaten eklenmiş durumda.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@
 	<string name="menu_search">ara&#8230;</string>
 	<string name="menu_backup">Yedekle</string>
 	<string name="menu_restore">Geri Yükle</string>
-	<string name="menu_import">Bir videoyu içe aktar</string>
-	<string name="menu_import_file">İçe aktar</string>
-	<string name="menu_import_double">Video zaten eklenmiş durumda.</string>
-	<string name="menu_import_file_double">Dosya zaten eklenmiş durumda.</string>
+	<string name="menu_import_file">Dosyaları içe aktar</string>
+	<string name="menu_import_file_double">%1$s zaten eklenmiş durumda.</string>
 	<string name="menu_backup_info">Panel bilgilerinin yedeğini almak için bir klasör seçin</string>
 	<string name="menu_restore_info">Panel bilgilerini yedekten geri yükle</string>
 	<string name="menu_restore_info_msg">Mevcut bilgilerin üzerine yazılacak.</string>
-	<string name="menu_import_info">Bir videoyu içe aktar ve panelde düzenle</string>
-	<string name="menu_import_file_info">Bir dosyayı içe aktar ve panelde düzenle</string>
+	<string name="menu_import_file_info">Dosyaları içe aktar ve düzenle</string>
+	<string name="menu_import_in_progress">Dosya içe aktarma işlemi sürüyor: %1$s</string>
 	<string name="menu_backup_result_ok">Kontrol panel bilgileri yedeklendi.</string>
 	<string name="menu_backup_result_failed">Yedekleme hatası.</string>
 	<string name="menu_restore_result_ok">Kontrol panel bilgileri geri yüklendi.</string>
@@ -244,8 +243,10 @@
 	<string name="delete_video_ok">%1$s silindi.</string>
 	<string name="delete_video_failed">Hata: %1$s silinemedi.</string>
 	
-	<string name="empty_dashboard">İndirilmiş video yok.</string>
-
+	<string name="empty_dashboard">Kayıt yok</string>
+	<string name="status_text_in_progress">Kayıt: %1$d (işlem gören: %2$d)</string>
+	<string name="status_text">Kayıt: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@
     
     <string name="enable_adaptive_title">İkinci akışı al</string>
     <string name="enable_adaptive_summary">Sadece görüntü ve/veya sadece ses akışını görüntü listesine ekle</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Bildirimler</string>

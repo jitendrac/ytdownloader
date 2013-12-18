@@ -110,6 +110,7 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     <string name="ffmpeg_download_notification">Baixando o FFmpeg</string>
     <string name="ffmpeg_install">Instalando os binários do FFmpeg&#8230;</string>
     <string name="email_via">Enviar email via:</string>
+    <string name="file_already_added">Arquivo já adicionado.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="menu_search">pesquisar&#8230;</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restaurar</string>
-	<string name="menu_import">Importar um vídeo</string>
-	<string name="menu_import_file">Importar um arquivo</string>
-	<string name="menu_import_double">Vídeo já adicionado.</string>
-	<string name="menu_import_file_double">Arquivo já adicionado.</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Escolhar uma pasta para o backup dos dados do painel</string>
 	<string name="menu_restore_info">Restaure os dados do painel do arquivo</string>
 	<string name="menu_restore_info_msg">Dados atuais irão ser sobre-escritos.</string>
-	<string name="menu_import_info">Importar um vídeo e gerenciá-lo a partir do painel</string>
-	<string name="menu_import_file_info">Importar um arquivo e gerenciá-lo a partir do painel</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
 	<string name="menu_backup_result_ok">Backup dos dados do painel completo.</string>
 	<string name="menu_backup_result_failed">Erro durante o backup.</string>
 	<string name="menu_restore_result_ok">Dados do painel restaurados.</string>
@@ -244,8 +243,10 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
 	<string name="delete_video_ok">%1$s deletado com sucesso.</string>
 	<string name="delete_video_failed">Erro:  %1$s não foi deletado.</string>
 	
-	<string name="empty_dashboard">Sem downloads de vídeos.</string>
-
+	<string name="empty_dashboard">No entries</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@ diretório, cole o comando (use o botão de menu) e aperte ENTER.</string>
     
     <string name="enable_adaptive_title">Obter streams secundárias</string>
     <string name="enable_adaptive_summary">Adicionar stream de apenas vídeo ou apenas áudio (se disponível) para a lista de vídeo</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Notificações</string>

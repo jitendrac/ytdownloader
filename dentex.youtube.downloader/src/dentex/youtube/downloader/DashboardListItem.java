@@ -32,10 +32,10 @@ public class DashboardListItem {
 	private String basename;
 	private String audioExt;
 	private String size;
-	private int progress;
+	private long progress;
 	private long speed;
 
-	public DashboardListItem(String id, String type, String ytId, int pos, String status, String path, String filename, String basename, String audioExt, String size, int progress, long speed) {
+	public DashboardListItem(String id, String type, String ytId, int pos, String status, String path, String filename, String basename, String audioExt, String size, long progress, long speed) {
 		this.id = id;
 		this.type = type;
 		this.ytId = ytId;
@@ -97,7 +97,7 @@ public class DashboardListItem {
 	public String getSize() {
 		return size;
 	}
-	public int getProgress() {
+	public long getProgress() {
 		return progress;
 	}
 	public void setProgress(int progress) {

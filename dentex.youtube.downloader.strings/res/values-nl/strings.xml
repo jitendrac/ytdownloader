@@ -110,6 +110,7 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     <string name="ffmpeg_download_notification">FFmpeg aan het downloaden</string>
     <string name="ffmpeg_install">FFmpeg binary&#8230; aan het installeren</string>
     <string name="email_via">Stuur email via;</string>
+    <string name="file_already_added">Bestand reeds toegevoegd.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -162,15 +163,13 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="menu_search">Zoeken&#8230;</string>
 	<string name="menu_backup">Back-up </string>
 	<string name="menu_restore">Herstellen</string>
-	<string name="menu_import">Importeer een video</string>
-	<string name="menu_import_file">importeer een bestand</string>
-	<string name="menu_import_double">Video reeds toegevoegd.</string>
-	<string name="menu_import_file_double">Bestand reeds toegevoegd.</string>
+	<string name="menu_import_file">Importeer bestanden</string>
+	<string name="menu_import_file_double">%1$s  reeds toegevoegd.</string>
 	<string name="menu_backup_info">Kies een map om Dashboard\'s date op te slaan.</string>
 	<string name="menu_restore_info">Herstel Dashboard\'s data uit bestand</string>
 	<string name="menu_restore_info_msg">Huidige data wordt overschreven</string>
-	<string name="menu_import_info">Importeer een video en bewerk hem vanuit het Dashboard</string>
-	<string name="menu_import_file_info">Importeer een bestand en bewerk het vanuit het Dashboard</string>
+	<string name="menu_import_file_info">Importeer bestanden en beheer ze uit het Dashboard</string>
+	<string name="menu_import_in_progress">Bestanden importeren bezig: %1$s</string>
 	<string name="menu_backup_result_ok">Dashboard data backup OK.</string>
 	<string name="menu_backup_result_failed">Fout tijdens back-up</string>
 	<string name="menu_restore_result_ok">Dashboard data hersteld.</string>
@@ -244,8 +243,10 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
 	<string name="delete_video_ok">%1$s succesvol verwijderd.</string>
 	<string name="delete_video_failed">Fout: %1$s niet verwijderd.</string>
 	
-	<string name="empty_dashboard">Geen gedownloade video\'s</string>
-
+	<string name="empty_dashboard">Geen ingaven</string>
+	<string name="status_text_in_progress">Ingaven: %1$d  (bezig: %2$d)</string>
+	<string name="status_text">Ingaven: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@ map, PLAK het commando (gebruik de menuknop) en klik ENTER.</string>
     
     <string name="enable_adaptive_title">Krijg secundaire streams</string>
     <string name="enable_adaptive_summary">Voeg enkel-video en/of enkel-audio streams (als beschikbaar) toe aan de video lijst</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Meldingen</string>

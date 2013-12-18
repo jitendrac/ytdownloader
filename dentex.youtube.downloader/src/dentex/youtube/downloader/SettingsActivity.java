@@ -53,10 +53,10 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -64,7 +64,6 @@ import com.bugsense.trace.BugSenseHandler;
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
-import dentex.youtube.downloader.service.AutoUpgradeApkService;
 import dentex.youtube.downloader.service.FfmpegDownloadService;
 import dentex.youtube.downloader.utils.DashboardClearHelper;
 import dentex.youtube.downloader.utils.PopUps;
@@ -80,6 +79,9 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BugSenseHandler.leaveBreadcrumb("SettingsActivity_onCreate");
+        
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
         this.setTitle(R.string.title_activity_settings);
 
     	// Theme init
@@ -224,7 +226,8 @@ public class SettingsActivity extends Activity {
                 }
             });
             
-            settingsUpdateInit();
+            //settingsUpdateInit();
+            YTD.updateInit(getActivity(), true, up);
             
             th = (Preference) findPreference("choose_theme");
 			th.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -439,26 +442,27 @@ public class SettingsActivity extends Activity {
     		}
     	}
 
-		public void settingsUpdateInit() {
+		/*public void settingsUpdateInit() {
 			int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
 			Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
 			
 			if (prefSig == 0 ) {
-				if (Utils.getSigHash(SettingsFragment.this) == YTD.SIG_HASH) {
+				int currentHash = Utils.getSigHash(getActivity());
+				if (currentHash == YTD.SIG_HASH) {
 					Utils.logger("d", "Found YTD signature: update check possile", DEBUG_TAG);
 					up.setEnabled(true);
 					
 					if (YTD.settings.getBoolean("autoupdate", false)) {
 						Utils.logger("i", "autoupdate enabled", DEBUG_TAG);
-						autoUpdate(getActivity());
+						YTD.autoUpdate();
 					}
 		    	} else {
-		    		Utils.logger("d", "Found different signature: " + Utils.currentHashCode + " (F-Droid?). Update check cancelled.", DEBUG_TAG);
+		    		Utils.logger("d", "Found different signature: " + currentHash + " (F-Droid?). Update check cancelled.", DEBUG_TAG);
 		    		up.setEnabled(false);
 		    		up.setSummary(R.string.update_disabled_summary);
 		    	}
 				SharedPreferences.Editor editor = YTD.settings.edit();
-		    	editor.putInt("APP_SIGNATURE", Utils.currentHashCode);
+		    	editor.putInt("APP_SIGNATURE", currentHash);
 		    	if (editor.commit()) Utils.logger("d", "saving sig pref...", DEBUG_TAG);
 			} else {
 				if (prefSig == YTD.SIG_HASH) {
@@ -467,14 +471,14 @@ public class SettingsActivity extends Activity {
 					
 					if (YTD.settings.getBoolean("autoupdate", false)) {
 						Utils.logger("i", "autoupdate enabled", DEBUG_TAG);
-						autoUpdate(getActivity());
+						YTD.autoUpdate();
 					}
 				} else {
 					Utils.logger("d", "diffrent YTD signature in prefs (F-Droid?). Update check cancelled.", DEBUG_TAG);
 					up.setEnabled(false);
 				}
 			}
-		}
+		}*/
 
 		private void initSwitchPreference() {
 			boolean swap = YTD.settings.getBoolean("swap_location", false);
@@ -600,23 +604,6 @@ public class SettingsActivity extends Activity {
 				initSummary(getPreferenceScreen().getPreference(i));
 			}
 			YTD.settings.edit().putString("CHOOSER_FOLDER", chooserSummary).apply();
-		}
-
-		public static void autoUpdate(Context context) {
-	        long storedTime = YTD.settings.getLong("time", 0); // final string
-	        //long storedTime = 10000; // dev test: forces auto update
-	        
-	        boolean shouldCheckForUpdate = !DateUtils.isToday(storedTime);
-	        Utils.logger("i", "shouldCheckForUpdate: " + shouldCheckForUpdate, DEBUG_TAG);
-	        if (shouldCheckForUpdate) {
-	        	//if (YTD.settings.getBoolean("DOWNLOAD_PROVIDER_.apk", true)) {
-	        		Intent intent = new Intent(context, AutoUpgradeApkService.class);
-		        	context.startService(intent);
-	    		//}
-	        }
-	        
-	        long time = System.currentTimeMillis();
-	        if (YTD.settings.edit().putLong("time", time).commit()) Utils.logger("i", "time written in prefs", DEBUG_TAG);
 		}
 
 		public static void touchAdvPref(final boolean enable, final boolean check) {

@@ -19,11 +19,13 @@ package dentex.youtube.downloader.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import dentex.youtube.downloader.R;
 
@@ -31,6 +33,7 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
 
 	/** The custom_body layout */
 	private View mDialogView;
+    private AlertDialog mDialog;
 	
 	/** optional dialog title layout */
 	private TextView mTitle;
@@ -112,11 +115,65 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
     	((FrameLayout)mDialogView.findViewById(R.id.customPanel)).addView(customView);
     	return this;
     }
+
+    /**
+     * Set a list of items to be displayed in the dialog as the content, you will be notified of the
+     * selected item via the supplied listener. This should be an array type i.e. R.array.foo
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    @Override
+    public QustomDialogBuilder setItems(int itemsId, final DialogInterface.OnClickListener listener) {
+        return setItems(getContext().getResources().getTextArray(itemsId), listener);
+    }
+
+    /**
+     * Set a list of items to be displayed in the dialog as the content, you will be notified of the
+     * selected item via the supplied listener.
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    @Override
+    public QustomDialogBuilder setItems(CharSequence[] items, final DialogInterface.OnClickListener listener) {
+        LinearLayout itemList = (LinearLayout) mDialogView.findViewById(R.id.items_list);
+
+        for (int i = 0; i < items.length; i++) {
+            final int currentItem = i;
+            View listItem = inflateItem(items[i].toString());
+            itemList.addView(listItem);
+            if (listener != null) {
+                itemList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onClick(mDialog, currentItem);
+                    }
+                });
+            }
+        }
+
+        return this;
+    }
+
+    private View inflateItem(String itemText) {
+        View listItem = View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
+        TextView bestFriendNameTextView = (TextView) listItem.findViewById(R.id.item_text);
+        bestFriendNameTextView.setText(itemText);
+        return listItem;
+    }
+
+    private View inflateDivider(String itemText) {
+        View listItem = View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
+        TextView bestFriendNameTextView = (TextView) listItem.findViewById(R.id.item_text);
+        bestFriendNameTextView.setText(itemText);
+        return listItem;
+    }
     
     @Override
     public AlertDialog show() {
     	if (mTitle.getText().equals("")) mDialogView.findViewById(R.id.topPanel).setVisibility(View.GONE);
-    	return super.show();
+    	mDialog = super.show();
+        return mDialog;
     }
 
 }
+

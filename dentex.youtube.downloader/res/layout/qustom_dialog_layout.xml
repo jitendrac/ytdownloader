@@ -16,8 +16,10 @@
 ** limitations under the License.
 */
 
-	ref:
-	https://github.com/android/platform_frameworks_base/blob/master/core/res/res/layout/alert_dialog_holo.xml
+I have copied and edited this code from here:
+https://github.com/android/platform_frameworks_base/blob/master/core/res/res/layout/alert_dialog_holo.xml
+
+I should have probably just rewritten similar code, but i was feeling lazy. Maybe I will later.
 
 -->
 
@@ -87,4 +89,14 @@
         android:layout_weight="1">
     </FrameLayout>
 
+    <ScrollView
+        android:layout_height="wrap_content" android:layout_width="match_parent">
+        <LinearLayout
+            android:id="@+id/items_list"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

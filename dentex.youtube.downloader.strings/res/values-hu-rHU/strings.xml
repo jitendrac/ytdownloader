@@ -77,20 +77,20 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
         <item>Küldés SSH-n keresztül</item>
     </string-array>
     
-    <string name="link_copied">Link copied into clipboard</string>
-    <string name="share_link_via">Share this link via:</string>
+    <string name="link_copied">Link kimásolva a vágólapra</string>
+    <string name="share_link_via">A link megosztása a következővel:</string>
     
-    <string name="filter_header_reset">Reset filters</string>
-    <string name="filter_view_all">View all</string>
-    <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_reset">Szűrők visszaállítása</string>
+    <string name="filter_view_all">Összes megtekintése</string>
+    <string name="filter_header_format">Szűrés formátum alapján</string>
+    <string name="filter_header_quality">Szűrés minőség alapján</string>
+    <string name="filter_header_others">Egyéb szűrők</string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">Nagy</string>
+    <string name="filter_md">Közepes</string>
+    <string name="filter_sd">Kicsi</string>
+    <string name="filter_vo">Csak video</string>
+    <string name="filter_ao">Csak hang</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -110,6 +110,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="ffmpeg_download_notification">FFmpeg letöltése</string>
     <string name="ffmpeg_install">FFmpeg telepítése&#8230;</string>
     <string name="email_via">Email küldése ezen keresztül:</string>
+    <string name="file_already_added">A fájl már hozzá lett adva</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -140,14 +141,14 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="audio_conv_completed">MP3 konvertálása sikeres.</string>
     <string name="audio_extr_error">Hiba hangkicsomagolás közben.</string>
     <string name="audio_conv_error">Hiba mp3-ra konvertálás közben.</string>
-    <string name="auto_audio_extr_progress">%1$s of %2$s audio extractions completed</string>
-    <string name="auto_audio_extr_completed">All audio extractions completed</string>
+    <string name="auto_audio_extr_progress">%1$s a(z) %2$s-ból audio kibontva</string>
+    <string name="auto_audio_extr_completed">Az összes kicsomagolás kész</string>
     
     <!-- ### DonateActivity ### -->
     
     <string name="paypal_item_name">YTD adományozás</string>
 	<string name="paypal_summary">Támogasd a YTD fejlesztőjét adománnyal</string>
-	<string name="flattr_summary">Flattr this App</string>
+	<string name="flattr_summary">Flattr-ezz erre az Alkalmazásra</string>
 	
 	<!-- ### FfmpegDownloadService ### -->
 	<string name="ffmpeg_install_failed">FFmpeg telepítése sikertelen</string>
@@ -157,20 +158,18 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="json_status_failed">Sikertelen</string>
 	<string name="json_status_in_progress">Folyamatban</string>
 	<string name="json_status_paused">Szüneteltetve</string>
-	<string name="json_status_imported">Imported</string>
-	<string name="json_status_queued">Queued</string>
+	<string name="json_status_imported">Importált</string>
+	<string name="json_status_queued">Ütemezett</string>
 	<string name="menu_search">keresés&#8230;</string>
 	<string name="menu_backup">Biztonsági mentés</string>
 	<string name="menu_restore">Visszaállítás</string>
-	<string name="menu_import">Video importálása</string>
-	<string name="menu_import_file">Import a file</string>
-	<string name="menu_import_double">Video már hozzá van adva.</string>
-	<string name="menu_import_file_double">File already added.</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Válassz ki egy mappát</string>
 	<string name="menu_restore_info">Irányítópult visszaállítása fájlból</string>
 	<string name="menu_restore_info_msg">Jelenlegi adatok felül lesznek írva</string>
-	<string name="menu_import_info">Video importálása</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
 	<string name="menu_backup_result_ok">Irányítópult visszaállítása sikeres</string>
 	<string name="menu_backup_result_failed">Hiba a visszaállítás közben</string>
 	<string name="menu_restore_result_ok">Dashboard data restored.</string>
@@ -197,7 +196,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
+	    <item>Megnyitás</item>
         <item>Add audio stream (already downloaded)</item>
     </string-array>
     
@@ -222,7 +221,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	    <item>Áthelyezés</item>
         <item>Átnevezés</item>
         <item>Video újra letöltése</item>
-        <item>Send</item>
+        <item>Küldés</item>
         <item>Remove from Dashboard</item>
         <item>Remove and delete file</item>
         <item>Pause/Resume</item>
@@ -244,8 +243,10 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="delete_video_ok">%1$s ssikeresen törölve.</string>
 	<string name="delete_video_failed">Hiba: %1$s nem lett törölve.</string>
 	
-	<string name="empty_dashboard">Nincs letöltött video.</string>
-
+	<string name="empty_dashboard">No entries</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -311,13 +312,6 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     
     <string name="enable_adaptive_title">Get secondary streams</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">Értesítések</string>

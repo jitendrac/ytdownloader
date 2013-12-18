@@ -45,7 +45,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -91,8 +90,9 @@ import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.utils.FetchUrl;
-import dentex.youtube.downloader.utils.Json;
+import dentex.youtube.downloader.utils.JsonHelper;
 import dentex.youtube.downloader.utils.PopUps;
+import dentex.youtube.downloader.utils.QustomDialogBuilder;
 import dentex.youtube.downloader.utils.RhinoRunner;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -287,7 +287,7 @@ public class ShareActivity extends Activity {
 		lv = (ListView) findViewById(R.id.list);
 
 		// YTD update initialization
-		updateInit();
+		YTD.updateInit(this, false, null);
 		
 		// Get intent, action and MIME type
 		Intent intent = getIntent();
@@ -502,11 +502,11 @@ public class ShareActivity extends Activity {
 	private void showGeneralInfoTutorial() {
 		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
 		if (generalInfoCheckboxEnabled == true) {
-			/*QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
+			QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
 			adb.setDividerColor(Utils.selectThemeColor());
-			adb.setTitleColor(Utils.selectThemeColor());*/
+			adb.setTitleColor(Utils.selectThemeColor());
 			
-			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
+//			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
 			final CheckBox showAgainCb = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
@@ -662,6 +662,8 @@ public class ShareActivity extends Activity {
 					Toast.makeText(ShareActivity.this, getString(R.string.video_list_error_toast), Toast.LENGTH_SHORT).show();
 					launchDashboardActivity();
 				}
+				
+				finish();
 			} else {				
 				setupStoredFilters();
 				//listEntriesBuilder();
@@ -693,11 +695,11 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-					/*QustomDialogBuilder helpBuilder = new QustomDialogBuilder(ShareActivity.this);
+					QustomDialogBuilder helpBuilder = new QustomDialogBuilder(ShareActivity.this);
 					helpBuilder.setDividerColor(Utils.selectThemeColor());
-					helpBuilder.setTitleColor(Utils.selectThemeColor());*/
+					helpBuilder.setTitleColor(Utils.selectThemeColor());
 					
-					AlertDialog.Builder helpBuilder = new AlertDialog.Builder(ShareActivity.this);
+//					AlertDialog.Builder helpBuilder = new AlertDialog.Builder(ShareActivity.this);
 					
 					helpBuilder.setIcon(Utils.selectThemedInfoIcon());
 					helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
@@ -722,11 +724,11 @@ public class ShareActivity extends Activity {
 							try {
 								fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
 								if (fileRenameEnabled == true) {
-									/*QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
+									QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
 									adb.setDividerColor(Utils.selectThemeColor());
-									adb.setTitleColor(Utils.selectThemeColor());*/
+									adb.setTitleColor(Utils.selectThemeColor());
 									
-									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
+//									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
 									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
@@ -808,11 +810,11 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-					/*QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
+					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
 					builder.setDividerColor(Utils.selectThemeColor());
-					builder.setTitleColor(Utils.selectThemeColor());*/
+					builder.setTitleColor(Utils.selectThemeColor());
 					
-					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
+//					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
 						builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
@@ -912,11 +914,11 @@ public class ShareActivity extends Activity {
 				Utils.logger("d", "appStartIntent: " + appStartIntent, DEBUG_TAG);
 				context.startActivity(appStartIntent);
 			} else {
-				/*QustomDialogBuilder cb = new QustomDialogBuilder(ShareActivity.this);
+				QustomDialogBuilder cb = new QustomDialogBuilder(ShareActivity.this);
 				cb.setDividerColor(Utils.selectThemeColor());
-				cb.setTitleColor(Utils.selectThemeColor());*/
+				cb.setTitleColor(Utils.selectThemeColor());
 				
-				AlertDialog.Builder cb = new AlertDialog.Builder(ShareActivity.this);
+//				AlertDialog.Builder cb = new AlertDialog.Builder(ShareActivity.this);
 				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
 				cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
 				cb.setIcon(Utils.selectThemedAlertIcon());
@@ -971,11 +973,11 @@ public class ShareActivity extends Activity {
 				
 				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
 				if (sshInfoCheckboxEnabled == true) {
-					/*QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
+					QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
 					adb.setDividerColor(Utils.selectThemeColor());
-					adb.setTitleColor(Utils.selectThemeColor());*/
+					adb.setTitleColor(Utils.selectThemeColor());
 					
-					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
+//					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
 					View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
 					final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
@@ -1156,6 +1158,7 @@ public class ShareActivity extends Activity {
 		}
 	}
 	
+	// TODO DM
 	private void callDownloadManager() {
 		BugSenseHandler.leaveBreadcrumb("callDownloadManager");
 		
@@ -1165,26 +1168,28 @@ public class ShareActivity extends Activity {
 			public void preDownload(DownloadTask task) {
 				long ID = task.getDownloadId();
 				String pathOfVideo = task.getAbsolutePath();
+				String nameOfVideo = task.getFileName();
 				String jsonDataType = task.getType();
 				String aExt = task.getAudioExt();
 				Utils.logger("d", "__preDownload on ID: " + ID, DEBUG_TAG);
 				
 				Maps.mNetworkSpeedMap.put(ID, (long) 0);
 				
-				Json.addEntryToJsonFile(
-						sShare, 
+				JsonHelper.addEntryToJsonFile(
 						String.valueOf(ID), 
 						jsonDataType, 
 						videoId,
 						pos, 
 						YTD.JSON_DATA_STATUS_IN_PROGRESS, 
 						pathOfVideo, 
-						filenameComplete, 
+						nameOfVideo, 
 						//basenameTagged, //(A)
 						basename,  //(B) 
 						aExt, 
 						"-", 
 						false);
+				
+				DashboardActivity.refreshlist();
 				
 				writeThumbToDisk();
 				
@@ -1220,8 +1225,7 @@ public class ShareActivity extends Activity {
 					size = "-";
 				}
 				
-				Json.addEntryToJsonFile(
-						sShare, 
+				JsonHelper.addEntryToJsonFile( 
 						String.valueOf(ID), 
 						jsonDataType, 
 						videoId, 
@@ -1285,8 +1289,7 @@ public class ShareActivity extends Activity {
 								videoId, 
 								pos), 0);
 						
-						Json.addEntryToJsonFile(
-								sShare, 
+						JsonHelper.addEntryToJsonFile(
 								String.valueOf(newId), 
 								type, 
 								videoId, 
@@ -1344,8 +1347,7 @@ public class ShareActivity extends Activity {
 					Utils.logger("w", "errorDownload: NPE @ DM Maps", DEBUG_TAG);
 				}
 				
-				Json.addEntryToJsonFile(
-						sShare, 
+				JsonHelper.addEntryToJsonFile( 
 						String.valueOf(ID), 
 						jsonDataType, 
 						videoId, 
@@ -1368,7 +1370,7 @@ public class ShareActivity extends Activity {
 		//TODO DM
 		File dest = new File(path, filenameComplete);
 		File destTemp = new File(path, filenameComplete + DownloadTask.TEMP_SUFFIX);
-		String previousJson = Json.readJsonDashboardFile(sShare);
+		String previousJson = JsonHelper.readJsonDashboardFile();
 		
 		String aExt = findAudioCodec();
 		String jsonDataType;
@@ -1385,7 +1387,7 @@ public class ShareActivity extends Activity {
 		if (dest.exists() || (destTemp.exists() && previousJson.contains(dest.getName())) && !autoModeEnabled && !restartModeEnabled) {
 			blockDashboardLaunch = true;
 			PopUps.showPopUp(getString(R.string.long_press_warning_title), 
-					getString(R.string.menu_import_double), "info", ShareActivity.this);
+					getString(R.string.file_already_added), "info", ShareActivity.this);
 		} else {
 			long id = 0;
 			if (autoModeEnabled || restartModeEnabled) {
@@ -2189,7 +2191,7 @@ public class ShareActivity extends Activity {
 		//}
 	}
 	
-	private void updateInit() {
+	/*private void updateInit() {
 		int prefSig = YTD.settings.getInt("APP_SIGNATURE", 0);
 		Utils.logger("d", "prefSig: " + prefSig, DEBUG_TAG);
 		
@@ -2198,11 +2200,11 @@ public class ShareActivity extends Activity {
 				
 				if (YTD.settings.getBoolean("autoupdate", false)) {
 					Utils.logger("i", "autoupdate enabled", DEBUG_TAG);
-					SettingsActivity.SettingsFragment.autoUpdate(ShareActivity.this);
+					YTD.autoUpdate();
 				}
 		} else {
 			Utils.logger("d", "different or null YTD signature. Update check cancelled.", DEBUG_TAG);
 		}
-	}
+	}*/
 }
 

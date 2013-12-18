@@ -2,6 +2,7 @@ package dentex.youtube.downloader.queue;
 
 import dentex.youtube.downloader.DashboardActivity;
 import dentex.youtube.downloader.R;
+import dentex.youtube.downloader.YTD;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -29,8 +30,6 @@ public final class QueueThread extends Thread {
 	private int totalQueued;
 	
 	private int totalCompleted;
-	
-	private int _AUDIO_EXTR = 0;
 	
 	private QueueThreadListener listener;
 	
@@ -97,15 +96,15 @@ public final class QueueThread extends Thread {
 					// register task completion
 					synchronized (QueueThread.this) {
 						// type is 0 when the task is an Audio Extraction
-						if (type == _AUDIO_EXTR) totalCompleted++;
+						if (type == YTD._AUDIO_EXTR) totalCompleted++;
 					}
 					// tell the listener something has happened
-					if (type == _AUDIO_EXTR) signalUpdate();
+					if (type == YTD._AUDIO_EXTR) signalUpdate();
 				}				
 			}
 		});
 		
-		if (type == _AUDIO_EXTR) {
+		if (type == YTD._AUDIO_EXTR) {
 			totalQueued++;
 			// tell the listeners the queue is now longer
 			signalUpdate();

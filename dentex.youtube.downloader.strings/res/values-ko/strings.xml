@@ -79,7 +79,7 @@
     <string name="link_copied">링크를 클립보드에 복사하였습니다</string>
     <string name="share_link_via">링크 공유하기</string>
     
-    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_header_reset">필터 재설정</string>
     <string name="filter_view_all">전체 보기</string>
     <string name="filter_header_format">Filter by format</string>
     <string name="filter_header_quality">Filter by quality</string>
@@ -109,6 +109,7 @@
     <string name="ffmpeg_download_notification">FFmpeg 다운로드 중</string>
     <string name="ffmpeg_install">FFmpeg 바이너리 설치&#8230;</string>
     <string name="email_via">이메일로 보내기:</string>
+    <string name="file_already_added">파일이 이미 추가되어 있습니다</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -161,15 +162,13 @@
 	<string name="menu_search">검색&#8230;</string>
 	<string name="menu_backup">백업</string>
 	<string name="menu_restore">복구</string>
-	<string name="menu_import">비디오 가져오기</string>
-	<string name="menu_import_file">파일 불러오기</string>
-	<string name="menu_import_double">비디오가 이미 추가되어 있습니다.</string>
-	<string name="menu_import_file_double">파일이 이미 추가되어 있습니다</string>
+	<string name="menu_import_file">Import files</string>
+	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">대시보드 데이터를 백업할 폴더를 선택하세요</string>
 	<string name="menu_restore_info">대시보드의 내용을 파일로부터 복구합니다</string>
 	<string name="menu_restore_info_msg">현재의 데이터가 사라지고 복원 데이터로 변경됩니다.</string>
-	<string name="menu_import_info">비디오를 가져와 대시보드에서 관리할 수 있도록 합니다</string>
-	<string name="menu_import_file_info">Import a file and manage it from the Dashboard</string>
+	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
+	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
 	<string name="menu_backup_result_ok">대시보드 데이터 백언 성공</string>
 	<string name="menu_backup_result_failed">백업 중 에러가 발생하였습니다.</string>
 	<string name="menu_restore_result_ok">대시보드 데이터 복원 완료</string>
@@ -243,8 +242,10 @@
 	<string name="delete_video_ok">%1$s 이(가) 성공적으로 삭제되었습니다.</string>
 	<string name="delete_video_failed">에러: %1$s 을(를) 삭제 실패하였습니다.</string>
 	
-	<string name="empty_dashboard">다운로드한 비디오 없음.</string>
-
+	<string name="empty_dashboard">No entries</string>
+	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
+	<string name="status_text">Entries: %d</string>
+	
     <!-- ### preferences ### -->
 
     <!-- -->
@@ -310,13 +311,6 @@
     
     <string name="enable_adaptive_title">보조 스트림 받기</string>
     <string name="enable_adaptive_summary">Add video-only and/or audio-only streams (if available) to the video list</string>
-    
-<!--     <string name="vo_download_method_title">Choose download method for video-only streams</string> -->
-<!--     <string-array name="vo_download_method_entries"> -->
-<!--         <item>FFmpeg download and mux</item> -->
-<!--         <item>Normal download into Dashboard for later (manual) mux</item> -->
-<!--         <item>Asks every time</item> -->
-<!--     </string-array> -->
     
     <!-- -->
     <string name="settings_cat_notifications">알림</string>
