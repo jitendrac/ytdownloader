@@ -56,7 +56,6 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -80,7 +79,7 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         BugSenseHandler.leaveBreadcrumb("SettingsActivity_onCreate");
         
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         
         this.setTitle(R.string.title_activity_settings);
 
@@ -291,7 +290,7 @@ public class SettingsActivity extends Activity {
 					
 						if (!ffmpegInstalled && isCpuSupported) {	
 							AlertDialog.Builder adb = new AlertDialog.Builder(sSettings);
-	                        adb.setIcon(Utils.selectThemedInfoIcon());
+	                        adb.setIcon(Utils.getThemedInfoIcon());
 	                        adb.setTitle(getString(R.string.ffmpeg_download_dialog_title));
 	                        
 	                        link = getString(R.string.ffmpeg_download_dialog_msg_link, cpuVers);

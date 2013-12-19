@@ -503,8 +503,8 @@ public class ShareActivity extends Activity {
 		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
 		if (generalInfoCheckboxEnabled == true) {
 			QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
-			adb.setDividerColor(Utils.selectThemeColor());
-			adb.setTitleColor(Utils.selectThemeColor());
+			adb.setDividerColor(Utils.getThemeDarkColor());
+			adb.setTitleColor(Utils.getThemeDarkColor());
 			
 //			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -696,12 +696,12 @@ public class ShareActivity extends Activity {
 					filenameComplete = composeFilenameWithExt();
 					
 					QustomDialogBuilder helpBuilder = new QustomDialogBuilder(ShareActivity.this);
-					helpBuilder.setDividerColor(Utils.selectThemeColor());
-					helpBuilder.setTitleColor(Utils.selectThemeColor());
+					helpBuilder.setDividerColor(Utils.getThemeDarkColor());
+					helpBuilder.setTitleColor(Utils.getThemeDarkColor());
 					
 //					AlertDialog.Builder helpBuilder = new AlertDialog.Builder(ShareActivity.this);
 					
-					helpBuilder.setIcon(Utils.selectThemedInfoIcon());
+					helpBuilder.setIcon(Utils.getThemedInfoIcon());
 					helpBuilder.setTitle(getString(R.string.list_click_dialog_title));
 
 					boolean showSize = false;
@@ -725,8 +725,8 @@ public class ShareActivity extends Activity {
 								fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
 								if (fileRenameEnabled == true) {
 									QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
-									adb.setDividerColor(Utils.selectThemeColor());
-									adb.setTitleColor(Utils.selectThemeColor());
+									adb.setDividerColor(Utils.getThemeDarkColor());
+									adb.setTitleColor(Utils.getThemeDarkColor());
 									
 //									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -811,8 +811,8 @@ public class ShareActivity extends Activity {
 					filenameComplete = composeFilenameWithExt();
 					
 					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
-					builder.setDividerColor(Utils.selectThemeColor());
-					builder.setTitleColor(Utils.selectThemeColor());
+					builder.setDividerColor(Utils.getThemeDarkColor());
+					builder.setTitleColor(Utils.getThemeDarkColor());
 					
 //					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
@@ -915,13 +915,13 @@ public class ShareActivity extends Activity {
 				context.startActivity(appStartIntent);
 			} else {
 				QustomDialogBuilder cb = new QustomDialogBuilder(ShareActivity.this);
-				cb.setDividerColor(Utils.selectThemeColor());
-				cb.setTitleColor(Utils.selectThemeColor());
+				cb.setDividerColor(Utils.getThemeDarkColor());
+				cb.setTitleColor(Utils.getThemeDarkColor());
 				
 //				AlertDialog.Builder cb = new AlertDialog.Builder(ShareActivity.this);
 				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
 				cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
-				cb.setIcon(Utils.selectThemedAlertIcon());
+				cb.setIcon(Utils.getThemedAlertIcon());
 				cb.setPositiveButton(getString(R.string.callConnectBot_dialog_positive), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						Intent intent = new Intent(Intent.ACTION_VIEW); 
@@ -974,8 +974,8 @@ public class ShareActivity extends Activity {
 				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
 				if (sshInfoCheckboxEnabled == true) {
 					QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
-					adb.setDividerColor(Utils.selectThemeColor());
-					adb.setTitleColor(Utils.selectThemeColor());
+					adb.setDividerColor(Utils.getThemeDarkColor());
+					adb.setTitleColor(Utils.getThemeDarkColor());
 					
 //					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);

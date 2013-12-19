@@ -3,9 +3,13 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="Dark_Green" parent="android:Theme.Black">
+  <style name="Dark_Green" parent="android:Theme.Holo">
+      
+<!--     <item name="android:textColor">@color/green_light</item> -->
 
     <item name="android:editTextStyle">@style/EditTextDark_Green</item>
+
+    <item name="android:editTextBackground">@drawable/dark_green_edit_text_holo_dark</item>
 
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDark_Green</item>
 
@@ -13,9 +17,15 @@
 
     <item name="android:radioButtonStyle">@style/RadioButtonDark_Green</item>
 
+    <item name="android:listChoiceIndicatorMultiple">@drawable/dark_green_btn_check_holo_dark</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/dark_green_btn_radio_holo_dark</item>
+
     <item name="android:buttonStyle">@style/ButtonDark_Green</item>
 
     <item name="android:imageButtonStyle">@style/ImageButtonDark_Green</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerDark_Green</item>
 
     <item name="android:spinnerStyle">@style/SpinnerDark_Green</item>
 
@@ -32,6 +42,12 @@
     <item name="android:listViewWhiteStyle">@style/ListViewDark_Green.White</item>
 
     <item name="android:spinnerItemStyle">@style/SpinnerItemDark_Green</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/dark_green_list_selector_holo_dark</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/dark_green_activated_background_holo_dark</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/dark_green_fastscroll_thumb_holo</item>
 
   </style>
 

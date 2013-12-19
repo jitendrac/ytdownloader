@@ -3,15 +3,21 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="Dark_Blue" parent="android:Theme.Black">
+  <style name="Dark_Blue" parent="android:Theme.Holo">
 
     <item name="android:editTextStyle">@style/EditTextDark_Blue</item>
+
+    <item name="android:editTextBackground">@drawable/dark_blue_edit_text_holo_dark</item>
 
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDark_Blue</item>
 
     <item name="android:checkboxStyle">@style/CheckBoxDark_Blue</item>
 
     <item name="android:radioButtonStyle">@style/RadioButtonDark_Blue</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/dark_blue_btn_check_holo_dark</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/dark_blue_btn_radio_holo_dark</item>
 
     <item name="android:buttonStyle">@style/ButtonDark_Blue</item>
 
@@ -20,6 +26,8 @@
     <item name="android:spinnerStyle">@style/SpinnerDark_Blue</item>
 
     <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemDark_Blue</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerDark_Blue</item>
 
     <item name="android:progressBarStyleHorizontal">@style/ProgressBarDark_Blue</item>
 
@@ -32,6 +40,12 @@
     <item name="android:listViewWhiteStyle">@style/ListViewDark_Blue.White</item>
 
     <item name="android:spinnerItemStyle">@style/SpinnerItemDark_Blue</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/dark_blue_list_selector_holo_dark</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/dark_blue_activated_background_holo_dark</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/dark_blue_fastscroll_thumb_holo</item>
 
   </style>
 

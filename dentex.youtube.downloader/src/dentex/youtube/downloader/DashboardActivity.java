@@ -242,8 +242,8 @@ public class DashboardActivity extends Activity {
 	        		final boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
 	        		
 	        		QustomDialogBuilder builder = new QustomDialogBuilder(DashboardActivity.this);
-	        		builder.setDividerColor(Utils.selectThemeColor());
-					builder.setTitleColor(Utils.selectThemeColor());
+	        		builder.setDividerColor(Utils.getThemeDarkColor());
+					builder.setTitleColor(Utils.getThemeDarkColor());
 	        		
 //	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
@@ -387,13 +387,13 @@ public class DashboardActivity extends Activity {
 								private void downloadLatestFFmpeg() {
 									BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
 									QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-									adb.setDividerColor(Utils.selectThemeColor());
-									adb.setTitleColor(Utils.selectThemeColor());
+									adb.setDividerColor(Utils.getThemeDarkColor());
+									adb.setTitleColor(Utils.getThemeDarkColor());
 									
 //									AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 									adb.setTitle(getString(R.string.information));
 									adb.setMessage(getString(R.string.ffmpeg_new_v_required));
-									adb.setIcon(Utils.selectThemedInfoIcon());
+									adb.setIcon(Utils.getThemedInfoIcon());
 									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 										public void onClick(DialogInterface dialog, int which) {
@@ -486,8 +486,8 @@ public class DashboardActivity extends Activity {
 	        		}
 	
 	        		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
-	        		builder.setDividerColor(Utils.selectThemeColor());
-	        		builder.setTitleColor(Utils.selectThemeColor());
+	        		builder.setDividerColor(Utils.getThemeDarkColor());
+	        		builder.setTitleColor(Utils.getThemeDarkColor());
 	        		
 //	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
@@ -605,8 +605,8 @@ public class DashboardActivity extends Activity {
 	
 	private void rename(final DashboardListItem currentItem) {
 		QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-		adb.setDividerColor(Utils.selectThemeColor());
-		adb.setTitleColor(Utils.selectThemeColor());
+		adb.setDividerColor(Utils.getThemeDarkColor());
+		adb.setTitleColor(Utils.getThemeDarkColor());
 		
 //		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 		
@@ -700,14 +700,14 @@ public class DashboardActivity extends Activity {
 	
 	public void  removeFromDashboard(final DashboardListItem currentItem) {
 		QustomDialogBuilder rem = new QustomDialogBuilder(sDashboard);
-		rem.setDividerColor(Utils.selectThemeColor());
-		rem.setTitleColor(Utils.selectThemeColor());
+		rem.setDividerColor(Utils.getThemeDarkColor());
+		rem.setTitleColor(Utils.getThemeDarkColor());
 		
 //		AlertDialog.Builder rem = new AlertDialog.Builder(DashboardActivity.this);
 		//rem.setTitle(getString(R.string.attention));
 		rem.setTitle(currentItem.getFilename());
 		rem.setMessage(getString(R.string.remove_video_confirm));
-		rem.setIcon(Utils.selectThemedAlertIcon());
+		rem.setIcon(Utils.getThemedAlertIcon());
 		rem.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
@@ -731,7 +731,7 @@ public class DashboardActivity extends Activity {
 		AlertDialog.Builder del = new AlertDialog.Builder(sDashboard);
 		del.setTitle(currentItem.getFilename());
 		del.setMessage(getString(R.string.delete_video_confirm));
-		del.setIcon(Utils.selectThemedAlertIcon());
+		del.setIcon(Utils.getThemedAlertIcon());
 		del.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
@@ -1040,8 +1040,8 @@ public class DashboardActivity extends Activity {
 				    if (backupCheckboxEnabled == true) {
 				    	
 			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-			        	adb.setDividerColor(Utils.selectThemeColor());
-						adb.setTitleColor(Utils.selectThemeColor());
+			        	adb.setDividerColor(Utils.getThemeDarkColor());
+						adb.setTitleColor(Utils.getThemeDarkColor());
 				    	
 //				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 				    	
@@ -1054,7 +1054,7 @@ public class DashboardActivity extends Activity {
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_backup_info));
-			    		adb.setIcon(Utils.selectThemedInfoIcon());
+			    		adb.setIcon(Utils.getThemedInfoIcon());
 			    		
 			    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -1091,8 +1091,8 @@ public class DashboardActivity extends Activity {
 				    if (restoreCheckboxEnabled == true) {
 				    	
 			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-			        	adb.setDividerColor(Utils.selectThemeColor());
-						adb.setTitleColor(Utils.selectThemeColor());
+			        	adb.setDividerColor(Utils.getThemeDarkColor());
+						adb.setTitleColor(Utils.getThemeDarkColor());
 				    	
 //				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
@@ -1104,7 +1104,7 @@ public class DashboardActivity extends Activity {
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_restore_info) + ".\n" + getString(R.string.menu_restore_info_msg));
-			    		adb.setIcon(Utils.selectThemedInfoIcon());
+			    		adb.setIcon(Utils.getThemedInfoIcon());
 			    		
 			    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	
@@ -1137,8 +1137,8 @@ public class DashboardActivity extends Activity {
 			    if (importCheckboxEnabled1 == true) {
 			    	
 		        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-		        	adb.setDividerColor(Utils.selectThemeColor());
-					adb.setTitleColor(Utils.selectThemeColor());
+		        	adb.setDividerColor(Utils.getThemeDarkColor());
+					adb.setTitleColor(Utils.getThemeDarkColor());
 					
 //			    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
@@ -1150,7 +1150,7 @@ public class DashboardActivity extends Activity {
 				    
 		    		adb.setTitle(getString(R.string.information));
 		    		adb.setMessage(getString(R.string.menu_import_file_info));
-		    		adb.setIcon(Utils.selectThemedInfoIcon());
+		    		adb.setIcon(Utils.getThemedInfoIcon());
 		    		
 		    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -2756,8 +2756,8 @@ public class DashboardActivity extends Activity {
 	public void extractAudioOnly(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioOnly");
 		QustomDialogBuilder builder0 = new QustomDialogBuilder(sDashboard);
-		builder0.setDividerColor(Utils.selectThemeColor());
-		builder0.setTitleColor(Utils.selectThemeColor());
+		builder0.setDividerColor(Utils.getThemeDarkColor());
+		builder0.setTitleColor(Utils.getThemeDarkColor());
 		
 //		AlertDialog.Builder builder0 = new AlertDialog.Builder(DashboardActivity.this);
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
@@ -2802,8 +2802,8 @@ public class DashboardActivity extends Activity {
 	public void extractAudioAndConvertToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("extractAudioAndConvertToMp3");
 		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
-		builder.setDividerColor(Utils.selectThemeColor());
-		builder.setTitleColor(Utils.selectThemeColor());
+		builder.setDividerColor(Utils.getThemeDarkColor());
+		builder.setTitleColor(Utils.getThemeDarkColor());
 		
 //		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
@@ -2849,8 +2849,8 @@ public class DashboardActivity extends Activity {
 	public void convertAudioToMp3(final File in) {
 		BugSenseHandler.leaveBreadcrumb("convertAudioToMp3");
 		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
-		builder.setDividerColor(Utils.selectThemeColor());
-		builder.setTitleColor(Utils.selectThemeColor());
+		builder.setDividerColor(Utils.getThemeDarkColor());
+		builder.setTitleColor(Utils.getThemeDarkColor());
 		
 //		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 		
@@ -2924,8 +2924,8 @@ public class DashboardActivity extends Activity {
 		
 		if (audioOnlyFile != null && audioOnlyFile.exists()) {
 			QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
-			builder.setDividerColor(Utils.selectThemeColor());
-			builder.setTitleColor(Utils.selectThemeColor());
+			builder.setDividerColor(Utils.getThemeDarkColor());
+			builder.setTitleColor(Utils.getThemeDarkColor());
 			
 //			AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 			String[] title = getResources().getStringArray(R.array.dashboard_click_entries_vo);

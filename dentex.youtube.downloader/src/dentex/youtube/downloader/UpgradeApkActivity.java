@@ -300,7 +300,7 @@ public class UpgradeApkActivity extends Activity {
                     	if (Utils.checkMD5(matchedMd5, new File(dir, apkFilename))) {
                     	
 	                        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
-	                        helpBuilder.setIcon(Utils.selectThemedInfoIcon())
+	                        helpBuilder.setIcon(Utils.getThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgraded_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -328,7 +328,7 @@ public class UpgradeApkActivity extends Activity {
                         
                     	} else {
                     		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
-	                        helpBuilder.setIcon(Utils.selectThemedInfoIcon())
+	                        helpBuilder.setIcon(Utils.getThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgrade_bad_md5_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -64,6 +64,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.OnScanCompletedListener;
 import android.net.Uri;
@@ -74,6 +75,8 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -113,7 +116,7 @@ public class Utils {
     	}
 	}
     
-	public static int selectThemedInfoIcon() {
+	public static int getThemedInfoIcon() {
 		String theme = YTD.settings.getString("choose_theme", "DB");
     	if (theme.startsWith("D")) {
     		return R.drawable.ic_dialog_info_holo_dark;
@@ -122,7 +125,7 @@ public class Utils {
     	}
 	}
 	
-	public static int selectThemedAlertIcon() {
+	public static int getThemedAlertIcon() {
 		String theme = YTD.settings.getString("choose_theme", "DB");
     	if (theme.startsWith("D")) {
     		return R.drawable.ic_dialog_alert_holo_dark;
@@ -131,15 +134,42 @@ public class Utils {
     	}
 	}
 	
-	public static String selectThemeColor() {
+	public static String getThemeDarkColor() {
 		String theme = YTD.settings.getString("choose_theme", "DB");
-			if (theme.equals("DG")) {
-	    		return "#22BB3B";
-	    	} else if (theme.equals("LR")) {
-	    		return "#E53737";
-	    	} else { // "DB" or "LB"
-	    		return "#3CAFD9";
-	    	}
+		if (theme.equals("DG")) {
+    		return "#23B800";
+    	} else if (theme.equals("LR")) {
+    		return "#E53737";
+    	} else { // "DB" or "LB"
+    		return "#3AAFD9";
+    	}
+	}
+	
+	public static String getThemeLightColor() {
+		String theme = YTD.settings.getString("choose_theme", "DB");
+		if (theme.equals("DG")) {
+    		return "#42FF14";
+    	} else if (theme.equals("LR")) {
+    		return "#E53737";
+    	} else { // "DB" or "LB"
+    		return "#3EAFD9";
+    	}
+	}
+	
+	public static void setCustomTitleAndSummaryColors(View newView) {
+		TextView title = (TextView) newView.findViewById(android.R.id.title);
+    	TextView summary = (TextView) newView.findViewById(android.R.id.summary);
+	    
+    	String theme = YTD.settings.getString("choose_theme", "DB");
+	    if (theme.equals("DG")) {
+//	    	if (!title.isFocusable()) {
+//	    		title.setTextColor(Color.DKGRAY);
+//	    		summary.setTextColor(Color.GRAY);
+//	    	} else {
+	    		title.setTextColor(Color.parseColor(getThemeLightColor()));
+				summary.setTextColor(Color.parseColor(getThemeDarkColor()));
+//	    	}
+	    }
 	}
 	
     public static void langInit(Context context) {
@@ -327,7 +357,7 @@ public class Utils {
 	
 	public static void offerDevMail(final Context ctx) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
-		adb.setIcon(Utils.selectThemedAlertIcon());
+		adb.setIcon(Utils.getThemedAlertIcon());
 		adb.setTitle(ctx.getString(R.string.ffmpeg_device_not_supported));
 		adb.setMessage(ctx.getString(R.string.ffmpeg_support_mail));
 		

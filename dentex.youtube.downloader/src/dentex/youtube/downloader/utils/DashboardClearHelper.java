@@ -46,7 +46,7 @@ public class DashboardClearHelper {
 		    deleteData.setText(act.getString(R.string.dashboard_delete_data_cb));
 		    adb.setView(deleteDataView);
 		    
-		    adb.setIcon(Utils.selectThemedInfoIcon());
+		    adb.setIcon(Utils.getThemedInfoIcon());
 		    adb.setTitle(act.getString(R.string.information));
 		    adb.setMessage(act.getString(R.string.clear_dashboard_msg));
 		    

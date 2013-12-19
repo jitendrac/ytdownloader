@@ -6,10 +6,10 @@
 <!-- 		android:title="@string/title_activity_dashboard" -->
 <!-- 		android:summary="@string/dashboard_summary"/> -->
     
-    <PreferenceCategory
+    <dentex.youtube.downloader.YTDSettings_PreferenceCategory
     	android:title="@string/settings_cat_folder">
 
-        <ListPreference
+        <dentex.youtube.downloader.YTDSettings_ListPreference
             android:dependency="swap_location"
             android:key="standard_location"
             android:title="@string/standard_location_title"
@@ -27,29 +27,29 @@
 		    android:key="open_chooser"
 		    android:title="@string/chooser_location_title"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.YTDSettings_PreferenceCategory>
     
-    <PreferenceCategory
+    <dentex.youtube.downloader.YTDSettings_PreferenceCategory
         android:title="@string/settings_cat_files">
     	
-    	<CheckBoxPreference
+    	<dentex.youtube.downloader.YTDSettings_CheckBoxPreference
         	android:key="enable_rename"
         	android:title="@string/enable_rename_title"
         	android:summary="@string/enable_rename_summary"
         	android:defaultValue="false"/>
     	
-    	<CheckBoxPreference
+    	<dentex.youtube.downloader.YTDSettings_CheckBoxPreference
             android:key="show_thumb"
             android:title="@string/show_thumb_title"
             android:summary="@string/show_thumb_summary" 
             android:defaultValue="false"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.YTDSettings_PreferenceCategory>
     
-    <PreferenceCategory
+    <dentex.youtube.downloader.YTDSettings_PreferenceCategory
         android:title="@string/settings_cat_advanced">
     	
-    	<CheckBoxPreference
+    	<dentex.youtube.downloader.YTDSettings_CheckBoxPreference
         	android:key="enable_advanced_features"
         	android:title="@string/enable_advanced_features_title"
         	android:summary="@string/enable_advanced_features_summary"/>
@@ -60,13 +60,13 @@
     	    android:title="@string/ffmpeg_auto_title"
     	    android:summary="@string/ffmpeg_auto_summary">
     	    
-    	    <CheckBoxPreference
+    	    <dentex.youtube.downloader.YTDSettings_CheckBoxPreference
     	        android:key="ffmpeg_auto_cb"
     	        android:title="@string/ffmpeg_auto_cb_title"
     	        android:summary="@string/ffmpeg_auto_cb_summary"
     	        android:defaultValue="false"/>
     	    
-    	    <ListPreference 
+    	    <dentex.youtube.downloader.YTDSettings_ListPreference
         		android:key="audio_extraction_type"
         		android:dependency="ffmpeg_auto_cb"
         		android:title="@string/audio_extraction_type_title"
@@ -75,7 +75,7 @@
         	    android:entryValues="@array/audio_extraction_type_entry_values"
         	    android:defaultValue="@string/audio_extraction_type_default"/>
         	    
-        	<ListPreference
+        	<dentex.youtube.downloader.YTDSettings_ListPreference
         	    android:key="auto-mp3_bitrates"
         	    android:dependency="ffmpeg_auto_cb"
         	    android:title="@string/mp3_bitrate_title"
@@ -84,7 +84,7 @@
         	    android:entryValues="@array/mp3_bitrate_entry_values"
         	    android:defaultValue="@string/mp3_bitrate_default"/>
     	    
-    	    <CheckBoxPreference
+    	    <dentex.youtube.downloader.YTDSettings_CheckBoxPreference
     	        android:key="ffmpeg_auto_rem_video"
     	        android:dependency="ffmpeg_auto_cb"
     	        android:title="@string/remove_video_title"
@@ -93,13 +93,13 @@
     	    
     	</PreferenceScreen>
     	
-   		<CheckBoxPreference
+   		<dentex.youtube.downloader.YTDSettings_CheckBoxPreference
    	        android:key="enable_adaptive"
    	        android:title="@string/enable_adaptive_title"
    	    	android:summary="@string/enable_adaptive_summary"
    	    	android:defaultValue="false"/>
    		
-<!--    		<ListPreference -->
+<!--    		<dentex.youtube.downloader.YTDSettings_ListPreference -->
 <!--    		    android:key="vo_download_method" -->
 <!--    		    android:dependency="enable_advanced_features" -->
 <!--    		    android:title="@string/vo_download_method_title" -->
@@ -108,12 +108,12 @@
 <!--    	    	android:entryValues="@array/vo_download_method_entry_values" -->
 <!--    		    android:defaultValue="@string/vo_download_method_default"/> -->
             
-	</PreferenceCategory>
+	</dentex.youtube.downloader.YTDSettings_PreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.YTDSettings_PreferenceCategory 
     	android:title="@string/settings_cat_ui">
    		
-   		<ListPreference
+   		<dentex.youtube.downloader.YTDSettings_ListPreference
         	android:key="launcher"
         	android:title="@string/launcher_title" 
         	android:dialogTitle="@string/launcher_title" 
@@ -121,7 +121,7 @@
             android:entryValues="@array/launcher_entry_values"
             android:defaultValue="@string/launcher_default"/>
    		
-        <ListPreference 
+        <dentex.youtube.downloader.YTDSettings_ListPreference 
         	android:key="lang"
 			android:title="@string/lang_title" 
 			android:dialogTitle="@string/lang_dialog_title" 
@@ -129,7 +129,7 @@
             android:entryValues="@array/lang_entry_values"
             android:defaultValue="@string/lang_default"/>
         
-        <ListPreference
+        <dentex.youtube.downloader.YTDSettings_ListPreference
             android:key="choose_theme"
             android:title="@string/choose_theme_title"
 		    android:dialogTitle="@string/choose_theme_title"
@@ -137,12 +137,12 @@
             android:entryValues="@array/choose_theme_entry_values"
             android:defaultValue="@string/choose_theme_default"/>
         
-<!--     </PreferenceCategory> -->
+<!--     </dentex.youtube.downloader.YTDSettings_PreferenceCategory> -->
     
-<!--     <PreferenceCategory -->
+<!--     <dentex.youtube.downloader.YTDSettings_PreferenceCategory -->
 <!-- 		android:title="@string/settings_cat_notifications"> -->
         
-		<ListPreference
+		<dentex.youtube.downloader.YTDSettings_ListPreference
 		    android:key="notification_defaults"
 		    android:title="@string/notification_defaults_title"
 		    android:dialogTitle="@string/notification_defaults_dialog_title"
@@ -150,34 +150,34 @@
 		    android:entryValues="@array/notification_defaults_entry_values"
 		    android:defaultValue="@string/notification_defaults_default"/>
         
-    </PreferenceCategory>
+    </dentex.youtube.downloader.YTDSettings_PreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.YTDSettings_PreferenceCategory 
     	android:title="@string/settings_cat_updates">
     	
         <Preference 
         	android:key="update"
 			android:title="@string/update_title"/>
         
-        <CheckBoxPreference 
+        <dentex.youtube.downloader.YTDSettings_CheckBoxPreference 
             android:key="autoupdate"
             android:dependency="update"
             android:title="@string/autoupdate_title"
             android:summary="@string/autoupdate_summary"
             android:defaultValue="false"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.YTDSettings_PreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.YTDSettings_PreferenceCategory 
     	android:title="@string/settings_cat_ssh">
         
-        <CheckBoxPreference 
+        <dentex.youtube.downloader.YTDSettings_CheckBoxPreference 
             android:key="ssh_to_longpress_menu"
             android:title="@string/ssh_to_longpress_menu_title"
             android:summary="@string/ssh_to_longpress_menu_summary"
             android:defaultValue="false"/>
         
-        <ListPreference
+        <dentex.youtube.downloader.YTDSettings_ListPreference
 		    android:key="connectbot_flavour"
 		    android:title="@string/connectbot_flavour_title"
 		    android:dialogTitle="@string/connectbot_flavour_dialog_title"
@@ -185,28 +185,28 @@
 		    android:entryValues="@array/connectbot_flavour_entry_values"
 		    android:defaultValue="@string/connectbot_flavour_default"/>
         
-        <CheckBoxPreference 
+        <dentex.youtube.downloader.YTDSettings_CheckBoxPreference 
             android:key="enable_connectbot_short_cmd"
             android:title="@string/enable_connectbot_short_cmd_title"
             android:summary="@string/enable_connectbot_short_cmd_summary"
             android:defaultValue="true"/>
         
-    </PreferenceCategory>
+    </dentex.youtube.downloader.YTDSettings_PreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.YTDSettings_PreferenceCategory 
     	android:title="@string/settings_cat_system">
         
-        <Preference    
+        <dentex.youtube.downloader.YTDSettings_Preference    
 			android:key="clear_dashboard"
 			android:title="@string/clear_dashboard_title"
 			android:summary="@string/clear_dashboard_summary"/>
         
-        <CheckBoxPreference 
+        <dentex.youtube.downloader.YTDSettings_CheckBoxPreference 
             android:key="enable_logging"
             android:title="@string/enable_logging_title"
             android:summary="@string/enable_logging_summary"
             android:defaultValue="false"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.YTDSettings_PreferenceCategory>
 
 </PreferenceScreen>

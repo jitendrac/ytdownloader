@@ -8,7 +8,7 @@
 	  <item name="android:textColor">#ffffff</item>
   </style>
 
-  <style name="AutoCompleteTextViewDark_Blue" parent="android:Widget.AutoCompleteTextView">
+  <style name="AutoCompleteTextViewDark_Blue" parent="android:Widget.Holo.AutoCompleteTextView">
       <item name="android:dropDownSelector">@drawable/dark_blue_list_selector_holo_dark</item>
 	  <item name="android:background">@drawable/dark_blue_edit_text_holo_dark</item>
 	  <item name="android:textColor">#ffffff</item>
@@ -22,18 +22,18 @@
       <item name="android:button">@drawable/dark_blue_btn_radio_holo_dark</item>
   </style>
 
-  <style name="ButtonDark_Blue" parent="android:Widget.Button">
+  <style name="ButtonDark_Blue" parent="android:Widget.Holo.Button">
 	  <item name="android:background">@drawable/dark_blue_btn_default_holo_dark</item>
 	  <item name="android:minHeight">48dip</item>
 	  <item name="android:minWidth">64dip</item>
 	  <item name="android:textColor">#ffffff</item>
   </style>
 
-  <style name="ImageButtonDark_Blue" parent="android:Widget.ImageButton">
+  <style name="ImageButtonDark_Blue" parent="android:Widget.Holo.ImageButton">
 	  <item name="android:background">@drawable/dark_blue_btn_default_holo_dark</item>
   </style>
 
-  <style name="SpinnerDark_Blue" parent="android:Widget.Spinner">
+  <style name="SpinnerDark_Blue" parent="android:Widget.Holo.Spinner">
       <item name="android:background">@drawable/dark_blue_spinner_background_holo_dark</item>
       <item name="android:dropDownSelector">@drawable/dark_blue_list_selector_holo_dark</item>
   </style>
@@ -41,14 +41,14 @@
   <style name="SpinnerDropDownItemDark_Blue" parent="android:Widget.DropDownItem.Spinner">
       <item name="android:checkMark">@drawable/dark_blue_btn_radio_holo_dark</item>
   </style>
-  <style name="ProgressBarDark_Blue" parent="android:Widget.ProgressBar.Horizontal">
+  <style name="ProgressBarDark_Blue" parent="android:Widget.Holo.ProgressBar.Horizontal">
       <item name="android:progressDrawable">@drawable/dark_blue_progress_horizontal_holo_dark</item>
       <item name="android:indeterminateDrawable">@drawable/dark_blue_progress_indeterminate_horizontal_holo_dark</item>
       <item name="android:minHeight">16dip</item>
       <item name="android:maxHeight">16dip</item>
   </style>
 
-  <style name="SeekBarDark_Blue" parent="android:Widget.SeekBar">
+  <style name="SeekBarDark_Blue" parent="android:Widget.Holo.SeekBar">
       <item name="android:progressDrawable">@drawable/dark_blue_scrubber_progress_horizontal_holo_dark</item>
       <item name="android:indeterminateDrawable">@drawable/dark_blue_scrubber_progress_horizontal_holo_dark</item>
       <item name="android:minHeight">13dip</item>
@@ -59,7 +59,7 @@
       <item name="android:paddingRight">16dip</item>
   </style>
 
-  <style name="ToggleDark_Blue" parent="android:Widget.Button.Toggle">
+  <style name="ToggleDark_Blue" parent="android:Widget.Holo.Button.Toggle">
       <item name="android:background">@drawable/dark_blue_btn_toggle_holo_dark</item>
       <item name="android:minHeight">48dip</item>
 	  <item name="android:textColor">#ffffff</item>
