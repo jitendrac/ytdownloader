@@ -26,11 +26,10 @@
 
 package dentex.youtube.downloader.utils;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import dentex.youtube.downloader.R;
 import dentex.youtube.downloader.YTD;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 public class PopUps {
 	
@@ -38,7 +37,10 @@ public class PopUps {
 
 	public static void showPopUp(String title, String message, String type, Activity activity) {
         
-		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(activity);
+//		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(activity);
+		QustomDialogBuilder helpBuilder = new QustomDialogBuilder(activity);
+		helpBuilder.setDividerColor(Utils.getThemeDarkColor());
+		helpBuilder.setTitleColor(Utils.getThemeDarkColor());
 	    helpBuilder.setTitle(title);
 	    helpBuilder.setMessage(message);
 	
@@ -65,11 +67,6 @@ public class PopUps {
 	        }
 	    });
 	
-	    AlertDialog helpDialog = helpBuilder.create();
-	    if (! activity.isFinishing()) {
-	    	helpDialog.show();
-	    } else {
-	    	Utils.logger("w", "PopUp not showed", "PopUps");
-	    }
+	    Utils.secureShowDialog(activity, helpBuilder);
 	}
 }

@@ -344,13 +344,26 @@ public class Utils {
 		}
 	}
 	
-	public static void secureShowDialog(final Activity act, final AlertDialog.Builder adb) {
+	public static void secureShowDialog1(final Activity act, final AlertDialog.Builder adb) {
 		act.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				if(!act.isFinishing()){
 					adb.show();
 				}
+			}
+		});
+	}
+	
+	public static void secureShowDialog(final Activity act, final QustomDialogBuilder qdb) {
+		act.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if(!act.isFinishing()){
+					qdb.show();
+				} else {
+			    	Utils.logger("w", "Dialog not showed. Activity was finishing.", DEBUG_TAG);
+			    }
 			}
 		});
 	}
@@ -436,7 +449,12 @@ public class Utils {
 	public static void notifyFfmpegNotInstalled(final Activity act) {
 		Utils.logger("w", "FFmpeg not installed/enabled", DEBUG_TAG);
 		BugSenseHandler.leaveBreadcrumb("notifyFfmpegNotInstalled");
-		AlertDialog.Builder adb = new AlertDialog.Builder(act);
+		
+		QustomDialogBuilder adb = new QustomDialogBuilder(act);
+		adb.setDividerColor(Utils.getThemeDarkColor());
+		adb.setTitleColor(Utils.getThemeDarkColor());
+		
+//		AlertDialog.Builder adb = new AlertDialog.Builder(act);
 		adb.setTitle(act.getString(R.string.ffmpeg_not_enabled_title));
 		adb.setMessage(act.getString(R.string.ffmpeg_not_enabled_msg));
 		

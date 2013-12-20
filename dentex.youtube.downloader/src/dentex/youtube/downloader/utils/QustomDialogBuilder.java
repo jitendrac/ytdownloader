@@ -55,6 +55,10 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
         mIcon = (ImageView) mDialogView.findViewById(R.id.icon);
         mDivider = mDialogView.findViewById(R.id.titleDivider);
 	}
+    
+    public View getDialogView() {
+    	return mDialogView;
+    }
 
     /** 
      * Use this method to color the divider between the title and content.
@@ -161,12 +165,12 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
         return listItem;
     }
 
-    private View inflateDivider(String itemText) {
-        View listItem = View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
-        TextView bestFriendNameTextView = (TextView) listItem.findViewById(R.id.item_text);
-        bestFriendNameTextView.setText(itemText);
-        return listItem;
-    }
+//    private View inflateDivider(String itemText) {
+//        View listItem = View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
+//        TextView bestFriendNameTextView = (TextView) listItem.findViewById(R.id.item_text);
+//        bestFriendNameTextView.setText(itemText);
+//        return listItem;
+//    }
     
     @Override
     public AlertDialog show() {
@@ -174,6 +178,5 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
     	mDialog = super.show();
         return mDialog;
     }
-
 }
 

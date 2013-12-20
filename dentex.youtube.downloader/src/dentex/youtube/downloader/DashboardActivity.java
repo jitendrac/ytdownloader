@@ -241,11 +241,11 @@ public class DashboardActivity extends Activity {
         		
 	        		final boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
 	        		
-	        		QustomDialogBuilder builder = new QustomDialogBuilder(DashboardActivity.this);
-	        		builder.setDividerColor(Utils.getThemeDarkColor());
-					builder.setTitleColor(Utils.getThemeDarkColor());
+//	        		QustomDialogBuilder builder = new QustomDialogBuilder(DashboardActivity.this);
+//	        		builder.setDividerColor(Utils.getThemeDarkColor());
+//					builder.setTitleColor(Utils.getThemeDarkColor());
 	        		
-//	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
 	        		
 	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) || 
@@ -298,7 +298,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-			        		Utils.secureShowDialog(sDashboard, builder);
+			        		Utils.secureShowDialog1(sDashboard, builder);
 			        		
 		        		} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) && 
 								currentItem.getAudioExt().equals("x")) {
@@ -328,7 +328,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-		        			Utils.secureShowDialog(sDashboard, builder);
+		        			Utils.secureShowDialog1(sDashboard, builder);
 				    		
 						} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_E) ||
 								currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_M) ||
@@ -355,7 +355,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-			        		Utils.secureShowDialog(sDashboard, builder);
+			        		Utils.secureShowDialog1(sDashboard, builder);
 			        		
 						} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
 							
@@ -429,7 +429,7 @@ public class DashboardActivity extends Activity {
 								}
 								
 							});
-							Utils.secureShowDialog(sDashboard, builder);
+							Utils.secureShowDialog1(sDashboard, builder);
 						}
 	        		}
 				} else {
@@ -485,11 +485,11 @@ public class DashboardActivity extends Activity {
 	        			disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, SEND, REMOVE, DELETE, PAUSERESUME };
 	        		}
 	
-	        		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
-	        		builder.setDividerColor(Utils.getThemeDarkColor());
-	        		builder.setTitleColor(Utils.getThemeDarkColor());
+//	        		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+//	        		builder.setDividerColor(Utils.getThemeDarkColor());
+//	        		builder.setTitleColor(Utils.getThemeDarkColor());
 	        		
-//	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
 	
 	    			final ArrayAdapter<CharSequence> cla = DashboardLongClickAdapter.createFromResource(
@@ -543,7 +543,7 @@ public class DashboardActivity extends Activity {
 						}	
 	        		});
 	        		
-		        	Utils.secureShowDialog(sDashboard, builder);
+		        	Utils.secureShowDialog1(sDashboard, builder);
         		} else {
 					notifyAnotherOperationIsInProgress();
 				}
@@ -609,12 +609,15 @@ public class DashboardActivity extends Activity {
 		adb.setTitleColor(Utils.getThemeDarkColor());
 		
 //		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+//		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+//	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
+//	    final TextView userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
+	    
+	    adb.setCustomView(R.layout.dialog_input_filename, DashboardActivity.this);
+	    final TextView userFilename = (TextView) adb.getDialogView().findViewById(R.id.input_filename);
 		
-		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-	    View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
-	    final TextView userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
 	    userFilename.setText(currentItem.getFilename());
-	    adb.setView(inputFilename);
+//	    adb.setView(inputFilename);
 	    adb.setTitle(getString(R.string.rename_dialog_title));
 	    //adb.setMessage(getString(R.string.rename_dialog_msg));
 	    
@@ -728,7 +731,11 @@ public class DashboardActivity extends Activity {
 	}
 
 	public void delete(final DashboardListItem currentItem) {
-		AlertDialog.Builder del = new AlertDialog.Builder(sDashboard);
+		QustomDialogBuilder del = new QustomDialogBuilder(sDashboard);
+		del.setDividerColor(Utils.getThemeDarkColor());
+		del.setTitleColor(Utils.getThemeDarkColor());
+		
+//		AlertDialog.Builder del = new AlertDialog.Builder(sDashboard);
 		del.setTitle(currentItem.getFilename());
 		del.setMessage(getString(R.string.delete_video_confirm));
 		del.setIcon(Utils.getThemedAlertIcon());
@@ -745,7 +752,7 @@ public class DashboardActivity extends Activity {
 			}
 		});
 		
-		Utils.secureShowDialog(sDashboard, del);
+		Utils.secureShowDialog1(sDashboard, del);
 	}
 	
 	private void pauseresume(final DashboardListItem currentItem) {
@@ -1044,13 +1051,16 @@ public class DashboardActivity extends Activity {
 						adb.setTitleColor(Utils.getThemeDarkColor());
 				    	
 //				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
-				    	
-			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+//			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+//					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+//					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+					    
+					    adb.setCustomView(R.layout.dialog_inflatable_checkbox, DashboardActivity.this);
+					    final CheckBox showAgain = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
+					    
 					    showAgain.setChecked(true);
 					    showAgain.setText(getString(R.string.show_again_checkbox));
-					    adb.setView(showAgainView);
+//					    adb.setView(showAgainView);
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_backup_info));
@@ -1095,12 +1105,16 @@ public class DashboardActivity extends Activity {
 						adb.setTitleColor(Utils.getThemeDarkColor());
 				    	
 //				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
-			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+//			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+//					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+//					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+					    
+					    adb.setCustomView(R.layout.dialog_inflatable_checkbox, DashboardActivity.this);
+					    final CheckBox showAgain = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
+					    
 					    showAgain.setChecked(true);
 					    showAgain.setText(getString(R.string.show_again_checkbox));
-					    adb.setView(showAgainView);
+//					    adb.setView(showAgainView);
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_restore_info) + ".\n" + getString(R.string.menu_restore_info_msg));
@@ -1141,12 +1155,16 @@ public class DashboardActivity extends Activity {
 					adb.setTitleColor(Utils.getThemeDarkColor());
 					
 //			    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
-		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-				    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-				    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+//		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+//				    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+//				    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+				    
+					adb.setCustomView(R.layout.dialog_inflatable_checkbox, DashboardActivity.this);
+				    final CheckBox showAgain = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
+				    
 				    showAgain.setChecked(true);
 				    showAgain.setText(getString(R.string.show_again_checkbox));
-				    adb.setView(showAgainView);
+//				    adb.setView(showAgainView);
 				    
 		    		adb.setTitle(getString(R.string.information));
 		    		adb.setMessage(getString(R.string.menu_import_file_info));
@@ -1183,16 +1201,22 @@ public class DashboardActivity extends Activity {
     }
 
 	private void launchFcForBackup() {
-		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
-    	adb.setTitle(getString(R.string.rename_dialog_title));
-		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-		View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename_dashboard_backup, null);
-		final EditText userFilename = (EditText) inputFilename.findViewById(R.id.input_backup_name);
+//		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+//		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+//		View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename_dashboard_backup, null);
+//		final EditText userFilename = (EditText) inputFilename.findViewById(R.id.input_backup_name);
+		
+		QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+    	adb.setDividerColor(Utils.getThemeDarkColor());
+		adb.setTitleColor(Utils.getThemeDarkColor());
+		adb.setCustomView(R.layout.dialog_input_filename_dashboard_backup, sDashboard);
+		final EditText userFilename = (EditText) adb.getDialogView().findViewById(R.id.input_backup_name);
 		
 		String date = new SimpleDateFormat("yyyy-MM-dd'_'HH-mm", Locale.US).format(new Date());
 		userFilename.setText(date + "_" + YTD.JSON_FILENAME_NO_EXT);
 		
-		adb.setView(inputFilename);
+		adb.setTitle(getString(R.string.rename_dialog_title));
+//		adb.setView(inputFilename);
 		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				
@@ -1212,7 +1236,7 @@ public class DashboardActivity extends Activity {
 			}
 		});
 		
-		Utils.secureShowDialog(sDashboard, adb);
+		Utils.secureShowDialog1(sDashboard, adb);
 	}
 
 	private void launchFcForRestore() {
@@ -2332,15 +2356,26 @@ public class DashboardActivity extends Activity {
 			tagYear = "";
 		}
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
-	    LayoutInflater inflater0 = getLayoutInflater();
-	    final View id3s = inflater0.inflate(R.layout.dialog_edit_id3, null);
+//		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
+//	    LayoutInflater inflater0 = getLayoutInflater();
+//	    final View id3s = inflater0.inflate(R.layout.dialog_edit_id3, null);
+		
+		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+		builder.setDividerColor(Utils.getThemeDarkColor());
+		builder.setTitleColor(Utils.getThemeDarkColor());
+		builder.setCustomView(R.layout.dialog_edit_id3, sDashboard);
 	    
-	    final EditText artistEt = (EditText) id3s.findViewById(R.id.id3_et_artist);
-	    final EditText titleEt = (EditText) id3s.findViewById(R.id.id3_et_title);	
-	    final EditText albumEt = (EditText) id3s.findViewById(R.id.id3_et_album);
-	    final EditText genreEt = (EditText) id3s.findViewById(R.id.id3_et_genre);
-	    final EditText yearEt = (EditText) id3s.findViewById(R.id.id3_et_year);
+//	    final EditText artistEt = (EditText) id3s.findViewById(R.id.id3_et_artist);
+//	    final EditText titleEt = (EditText) id3s.findViewById(R.id.id3_et_title);	
+//	    final EditText albumEt = (EditText) id3s.findViewById(R.id.id3_et_album);
+//	    final EditText genreEt = (EditText) id3s.findViewById(R.id.id3_et_genre);
+//	    final EditText yearEt = (EditText) id3s.findViewById(R.id.id3_et_year);
+		
+	    final EditText artistEt = (EditText) builder.getDialogView().findViewById(R.id.id3_et_artist);
+	    final EditText titleEt = (EditText) builder.getDialogView().findViewById(R.id.id3_et_title);	
+	    final EditText albumEt = (EditText) builder.getDialogView().findViewById(R.id.id3_et_album);
+	    final EditText genreEt = (EditText) builder.getDialogView().findViewById(R.id.id3_et_genre);
+	    final EditText yearEt = (EditText) builder.getDialogView().findViewById(R.id.id3_et_year);
 	    
 	    if (tagTitle.isEmpty()) {
 			titleEt.setText(currentItem.getBasename());
@@ -2360,8 +2395,9 @@ public class DashboardActivity extends Activity {
 		albumEt.setText(tagAlbum);
 		genreEt.setText(tagGenre);
 	    
-		builder.setView(id3s)
-	           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//		builder.setView(id3s);
+		
+	    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	               @Override
 	               public void onClick(DialogInterface dialog, int id) {
 	            	   tagArtist = artistEt.getText().toString();
@@ -2937,8 +2973,8 @@ public class DashboardActivity extends Activity {
 			TextView info = (TextView) view.findViewById(R.id.ao_info);
 			info.setText(currentItem.getFilename() + "\n\t+\n" + audioOnlyFile.getName());
 			
-			builder.setView(view)
-			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			builder.setView(view);
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			           @Override
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   

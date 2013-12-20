@@ -45,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -61,7 +62,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -507,11 +507,15 @@ public class ShareActivity extends Activity {
 			adb.setTitleColor(Utils.getThemeDarkColor());
 			
 //			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
-			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
-			final CheckBox showAgainCb = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
+//			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+//			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
+//			final CheckBox showAgainCb = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
+			
+			adb.setCustomView(R.layout.dialog_general_info, ShareActivity.this);
+			final CheckBox showAgainCb = (CheckBox) adb.getDialogView().findViewById(R.id.showAgain1);
 			showAgainCb.setChecked(true);
-			adb.setView(generalInfo);
+			
+//			adb.setView(generalInfo);
 			adb.setTitle(getString(R.string.tutorial_title));			
 			adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
@@ -729,9 +733,12 @@ public class ShareActivity extends Activity {
 									adb.setTitleColor(Utils.getThemeDarkColor());
 									
 //									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
-									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
-									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
+//									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+//									View inputFilename = adbInflater.inflate(R.layout.dialog_input_filename, null);
+//									userFilename = (TextView) inputFilename.findViewById(R.id.input_filename);
+									
+									adb.setCustomView(R.layout.dialog_input_filename, ShareActivity.this);
+									userFilename = (TextView) adb.getDialogView().findViewById(R.id.input_filename);
 									
 									// ====================================
 									//userFilename.setText(basenameTagged);
@@ -743,7 +750,7 @@ public class ShareActivity extends Activity {
 									userFilename.setText(basename);
 									// ====================================
 									
-									adb.setView(inputFilename);
+//									adb.setView(inputFilename);
 									adb.setTitle(getString(R.string.rename_dialog_title));
 									adb.setMessage(getString(R.string.rename_dialog_msg));
 									
@@ -810,13 +817,14 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
-					builder.setDividerColor(Utils.getThemeDarkColor());
-					builder.setTitleColor(Utils.getThemeDarkColor());
+//					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
+//					builder.setDividerColor(Utils.getThemeDarkColor());
+//					builder.setTitleColor(Utils.getThemeDarkColor());
 					
-//					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
+					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
-						builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries, new DialogInterface.OnClickListener() {
+						String[] entries1 = getResources().getStringArray(R.array.long_click_entries);
+						builder.setTitle(R.string.long_click_title).setItems(entries1, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								switch (which) {
 									case 0: // copy
@@ -828,7 +836,8 @@ public class ShareActivity extends Activity {
 							}
 						});
 					} else {
-						builder.setTitle(R.string.long_click_title).setItems(R.array.long_click_entries2, new DialogInterface.OnClickListener() {
+						String[] entries2 = getResources().getStringArray(R.array.long_click_entries);
+						builder.setTitle(R.string.long_click_title).setItems(entries2, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								switch (which) {
 									case 0: // copy
@@ -844,7 +853,7 @@ public class ShareActivity extends Activity {
 						});
 					}
 
-					Utils.secureShowDialog(sShare, builder);
+					Utils.secureShowDialog1(sShare, builder);
 					return true;
 				}
 			});
@@ -978,12 +987,17 @@ public class ShareActivity extends Activity {
 					adb.setTitleColor(Utils.getThemeDarkColor());
 					
 //					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
-					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-					View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-					final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
+//					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
+//					View showAgain = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+//					final CheckBox showAgainCb = (CheckBox) showAgain.findViewById(R.id.infl_cb);
+					
+					adb.setCustomView(R.layout.dialog_inflatable_checkbox, ShareActivity.this);
+					final CheckBox showAgainCb = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
+					
 					showAgainCb.setChecked(true);
 					showAgainCb.setText(getString(R.string.show_again_checkbox));
-					adb.setView(showAgain);
+					
+//					adb.setView(showAgain);
 					adb.setTitle(getString(R.string.ssh_info_tutorial_title));
 					adb.setMessage(getString(R.string.ssh_info_tutorial_msg));
 					adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
