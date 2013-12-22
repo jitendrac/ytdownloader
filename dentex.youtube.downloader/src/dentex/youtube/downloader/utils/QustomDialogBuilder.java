@@ -56,6 +56,20 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
         mDivider = mDialogView.findViewById(R.id.titleDivider);
 	}
     
+    /**
+     * Use this method to reference the whole dialog view, i.e. when inflating a custom 
+     * view with {@link #setCustomView(int, Context)} and you want to find an id from the
+     * inflated layout.
+     * 
+     *   example: 
+     *   
+     *   CheckBox showAgain = (CheckBox) myQustomDialogBuilder.getDialogView().findViewById(R.id.inflated_checkbox);
+     *   if (!showAgain.isChecked()) {
+     *   	// do something
+     *   }
+     *   
+     * @return the qustom dialog view
+     */
     public View getDialogView() {
     	return mDialogView;
     }
@@ -144,9 +158,12 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
         for (int i = 0; i < items.length; i++) {
             final int currentItem = i;
             View listItem = inflateItem(items[i].toString());
+            View divider = inflateDivider();
             itemList.addView(listItem);
+            if (i+1 != items.length) itemList.addView(divider);
             if (listener != null) {
-                itemList.setOnClickListener(new View.OnClickListener() {
+            	// fix
+                listItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listener.onClick(mDialog, currentItem);
@@ -160,23 +177,22 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
 
     private View inflateItem(String itemText) {
         View listItem = View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
-        TextView bestFriendNameTextView = (TextView) listItem.findViewById(R.id.item_text);
-        bestFriendNameTextView.setText(itemText);
+        TextView icaoTextView = (TextView) listItem.findViewById(R.id.item_text);
+        icaoTextView.setText(itemText);
         return listItem;
     }
 
-//    private View inflateDivider(String itemText) {
-//        View listItem = View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
-//        TextView bestFriendNameTextView = (TextView) listItem.findViewById(R.id.item_text);
-//        bestFriendNameTextView.setText(itemText);
-//        return listItem;
-//    }
+    private View inflateDivider() {
+        View listDivider = View.inflate(getContext(), R.layout.qustom_dialog_items_divider, null);
+        return listDivider;
+    }
     
     @Override
     public AlertDialog show() {
     	if (mTitle.getText().equals("")) mDialogView.findViewById(R.id.topPanel).setVisibility(View.GONE);
+    	// hide also message TextView if empty
+    	if (mMessage.getText().equals("")) mDialogView.findViewById(R.id.contentPanel).setVisibility(View.GONE);
     	mDialog = super.show();
         return mDialog;
     }
 }
-

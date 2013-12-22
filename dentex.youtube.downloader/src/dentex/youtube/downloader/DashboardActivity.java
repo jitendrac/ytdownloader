@@ -241,13 +241,14 @@ public class DashboardActivity extends Activity {
         		
 	        		final boolean ffmpegEnabled = YTD.settings.getBoolean("enable_advanced_features", false);
 	        		
-//	        		QustomDialogBuilder builder = new QustomDialogBuilder(DashboardActivity.this);
-//	        		builder.setDividerColor(Utils.getThemeDarkColor());
-//					builder.setTitleColor(Utils.getThemeDarkColor());
+	        		QustomDialogBuilder builder = new QustomDialogBuilder(DashboardActivity.this);
+	        		builder.setDividerColor(Utils.getThemeDarkColor());
+					builder.setTitleColor(Utils.getThemeDarkColor());
 	        		
-	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
-	        		builder.setTitle(currentItem.getFilename());
+//	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		
+					builder.setTitle(currentItem.getFilename());
+
 	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) || 
 	        				currentItem.getStatus().equals(getString(R.string.json_status_imported))) {
 	        			
