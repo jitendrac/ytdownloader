@@ -56,7 +56,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -85,7 +84,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -486,20 +484,22 @@ public class DashboardActivity extends Activity {
 	        			disabledItems = new int[] { COPY, MOVE, RENAME, REDOWNLOAD, SEND, REMOVE, DELETE, PAUSERESUME };
 	        		}
 	
-//	        		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
-//	        		builder.setDividerColor(Utils.getThemeDarkColor());
-//	        		builder.setTitleColor(Utils.getThemeDarkColor());
+	        		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
+	        		builder.setDividerColor(Utils.getThemeDarkColor());
+	        		builder.setTitleColor(Utils.getThemeDarkColor());
 	        		
-	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
+//	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
 	
-	    			final ArrayAdapter<CharSequence> cla = DashboardLongClickAdapter.createFromResource(
-	    					sDashboard,
-	    					R.array.dashboard_long_click_entries,
-	    		            android.R.layout.simple_list_item_1, 
-	    		            disabledItems);
+//	    			final ArrayAdapter<CharSequence> cla = DashboardLongClickAdapter.createFromResource(
+//	    					sDashboard,
+//	    					R.array.dashboard_long_click_entries,
+//	    		            android.R.layout.simple_list_item_1, 
+//	    		            disabledItems);
 	    			
-	    			builder.setAdapter(cla, new DialogInterface.OnClickListener() {
+//	    			builder.setAdapter(cla, new DialogInterface.OnClickListener() {
+	        		
+	        		builder.setItems(R.array.dashboard_long_click_entries, disabledItems, new DialogInterface.OnClickListener() {
 	
 						public void onClick(DialogInterface dialog, int which) {
 				    		switch (which) {

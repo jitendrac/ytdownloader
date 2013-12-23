@@ -41,11 +41,6 @@ public class DashboardLongClickAdapter extends ArrayAdapter<CharSequence> {
     }
 
     @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    @Override
     public boolean isEnabled(int position) {
     	if (disabledOptions != null) {
 	    	for (int i = 0; i < disabledOptions.length; i++) {

@@ -18,6 +18,7 @@ package dentex.youtube.downloader.utils;
 */
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -153,12 +154,28 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
      */
     @Override
     public QustomDialogBuilder setItems(CharSequence[] items, final DialogInterface.OnClickListener listener) {
+    	return (QustomDialogBuilder) setItems(items, null, listener);
+    }
+    
+    public Builder setItems(int itemsId, int[] disabledOptions, final DialogInterface.OnClickListener listener) {
+    	CharSequence[] items = getContext().getResources().getTextArray(itemsId);
+    	return setItems(items, disabledOptions, listener);
+    }
+    
+    public Builder setItems(CharSequence[] items, int[] disabledOptions, final DialogInterface.OnClickListener listener) {
         LinearLayout itemList = (LinearLayout) mDialogView.findViewById(R.id.items_list);
 
         for (int i = 0; i < items.length; i++) {
             final int currentItem = i;
-            View listItem = inflateItem(items[i].toString());
+            TextView listItem = inflateItem(items[i].toString());
             View divider = inflateDivider();
+            
+            if (disabledOptions != null) {
+            	final boolean enabled = isEnabled(i, disabledOptions);
+				listItem.setEnabled(enabled);
+            	if (!enabled) listItem.setTextColor(Color.GRAY);
+            }
+            
             itemList.addView(listItem);
             if (i+1 != items.length) itemList.addView(divider);
             if (listener != null) {
@@ -167,6 +184,7 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
                     @Override
                     public void onClick(View v) {
                         listener.onClick(mDialog, currentItem);
+                        mDialog.dismiss();
                     }
                 });
             }
@@ -174,9 +192,18 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
 
         return this;
     }
+    
+    public boolean isEnabled(int position, int[] disabledOptions) {
+    	if (disabledOptions != null) {
+	    	for (int i = 0; i < disabledOptions.length; i++) {
+	    		if (position == disabledOptions[i]) return false;
+	    	}
+    	}
+        return true;
+    }
 
-    private View inflateItem(String itemText) {
-        View listItem = View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
+    private TextView inflateItem(String itemText) {
+        TextView listItem = (TextView) View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
         TextView icaoTextView = (TextView) listItem.findViewById(R.id.item_text);
         icaoTextView.setText(itemText);
         return listItem;
