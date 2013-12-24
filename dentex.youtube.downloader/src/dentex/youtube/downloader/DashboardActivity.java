@@ -56,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -246,6 +247,7 @@ public class DashboardActivity extends Activity {
 //	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		
 					builder.setTitle(currentItem.getFilename());
+					//builder.setMessage("Test message");
 
 	        		if (currentItem.getStatus().equals(getString(R.string.json_status_completed)) || 
 	        				currentItem.getStatus().equals(getString(R.string.json_status_imported))) {
@@ -297,7 +299,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-			        		Utils.secureShowDialog1(sDashboard, builder);
+			        		Utils.secureShowDialog(sDashboard, builder);
 			        		
 		        		} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V) && 
 								currentItem.getAudioExt().equals("x")) {
@@ -327,7 +329,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-		        			Utils.secureShowDialog1(sDashboard, builder);
+		        			Utils.secureShowDialog(sDashboard, builder);
 				    		
 						} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_E) ||
 								currentItem.getType().equals(YTD.JSON_DATA_TYPE_A_M) ||
@@ -354,7 +356,7 @@ public class DashboardActivity extends Activity {
 			    					}
 								}
 			        		});
-			        		Utils.secureShowDialog1(sDashboard, builder);
+			        		Utils.secureShowDialog(sDashboard, builder);
 			        		
 						} else if (currentItem.getType().equals(YTD.JSON_DATA_TYPE_V_O)) {
 							
@@ -428,7 +430,7 @@ public class DashboardActivity extends Activity {
 								}
 								
 							});
-							Utils.secureShowDialog1(sDashboard, builder);
+							Utils.secureShowDialog(sDashboard, builder);
 						}
 	        		}
 				} else {
@@ -544,7 +546,7 @@ public class DashboardActivity extends Activity {
 						}	
 	        		});
 	        		
-		        	Utils.secureShowDialog1(sDashboard, builder);
+		        	Utils.secureShowDialog(sDashboard, builder);
         		} else {
 					notifyAnotherOperationIsInProgress();
 				}
@@ -753,7 +755,7 @@ public class DashboardActivity extends Activity {
 			}
 		});
 		
-		Utils.secureShowDialog1(sDashboard, del);
+		Utils.secureShowDialog(sDashboard, del);
 	}
 	
 	private void pauseresume(final DashboardListItem currentItem) {
@@ -1101,21 +1103,21 @@ public class DashboardActivity extends Activity {
 	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
 				    if (restoreCheckboxEnabled == true) {
 				    	
-			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-			        	adb.setDividerColor(Utils.getThemeDarkColor());
-						adb.setTitleColor(Utils.getThemeDarkColor());
+//			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+//			        	adb.setDividerColor(Utils.getThemeDarkColor());
+//						adb.setTitleColor(Utils.getThemeDarkColor());
 				    	
-//				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
-//			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-//					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-//					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
 					    
-					    adb.setCustomView(R.layout.dialog_inflatable_checkbox, DashboardActivity.this);
-					    final CheckBox showAgain = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
+//					    adb.setCustomView(R.layout.dialog_inflatable_checkbox, DashboardActivity.this);
+//					    final CheckBox showAgain = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
 					    
 					    showAgain.setChecked(true);
 					    showAgain.setText(getString(R.string.show_again_checkbox));
-//					    adb.setView(showAgainView);
+					    adb.setView(showAgainView);
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_restore_info) + ".\n" + getString(R.string.menu_restore_info_msg));
@@ -1237,7 +1239,7 @@ public class DashboardActivity extends Activity {
 			}
 		});
 		
-		Utils.secureShowDialog1(sDashboard, adb);
+		Utils.secureShowDialog(sDashboard, adb);
 	}
 
 	private void launchFcForRestore() {

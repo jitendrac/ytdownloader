@@ -44,6 +44,8 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
 	private TextView mMessage;
 	/** The colored holo divider. You can set its color with the setDividerColor method */
 	private View mDivider;
+	/** optional custom panel image */
+	private FrameLayout mCustom;
 	
     public QustomDialogBuilder(Context context) {
         super(context);
@@ -55,6 +57,7 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
         mMessage = (TextView) mDialogView.findViewById(R.id.message);
         mIcon = (ImageView) mDialogView.findViewById(R.id.icon);
         mDivider = mDialogView.findViewById(R.id.titleDivider);
+        mCustom = (FrameLayout) mDialogView.findViewById(R.id.customPanel);
 	}
     
     /**
@@ -111,6 +114,7 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
 
     @Override
     public QustomDialogBuilder setIcon(int drawableResId) {
+    	mIcon.setVisibility(View.VISIBLE);
         mIcon.setImageResource(drawableResId);
         return this;
     }
@@ -131,7 +135,8 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
      */
     public QustomDialogBuilder setCustomView(int resId, Context context) {
     	View customView = View.inflate(context, resId, null);
-    	((FrameLayout)mDialogView.findViewById(R.id.customPanel)).addView(customView);
+    	mCustom.setVisibility(View.VISIBLE);
+    	mCustom.addView(customView);
     	return this;
     }
 

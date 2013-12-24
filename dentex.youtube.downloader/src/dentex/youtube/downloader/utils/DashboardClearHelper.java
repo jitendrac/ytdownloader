@@ -13,8 +13,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 import dentex.youtube.downloader.DashboardActivity;
@@ -37,14 +35,21 @@ public class DashboardClearHelper {
 		
 		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
 			
-			AlertDialog.Builder adb = new AlertDialog.Builder(act);
+			QustomDialogBuilder adb = new QustomDialogBuilder(act);
+        	adb.setDividerColor(Utils.getThemeDarkColor());
+			adb.setTitleColor(Utils.getThemeDarkColor());
 			
-			LayoutInflater adbInflater = LayoutInflater.from(act);
-		    View deleteDataView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-		    final CheckBox deleteData = (CheckBox) deleteDataView.findViewById(R.id.infl_cb);
+//			AlertDialog.Builder adb = new AlertDialog.Builder(act);
+//			LayoutInflater adbInflater = LayoutInflater.from(act);
+//		    View deleteDataView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+//		    final CheckBox deleteData = (CheckBox) deleteDataView.findViewById(R.id.infl_cb);
+		    
+		    adb.setCustomView(R.layout.dialog_inflatable_checkbox, act);
+		    final CheckBox deleteData = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
+		    
 		    deleteData.setChecked(false);
 		    deleteData.setText(act.getString(R.string.dashboard_delete_data_cb));
-		    adb.setView(deleteDataView);
+//		    adb.setView(deleteDataView);
 		    
 		    adb.setIcon(Utils.getThemedInfoIcon());
 		    adb.setTitle(act.getString(R.string.information));

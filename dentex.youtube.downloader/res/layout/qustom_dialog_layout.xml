@@ -42,6 +42,7 @@ https://github.com/android/platform_frameworks_base/blob/master/core/res/res/lay
             android:layout_marginStart="16dip"
             android:layout_marginEnd="16dip">
             <ImageView android:id="@+id/icon"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="8dip"
@@ -65,19 +66,23 @@ https://github.com/android/platform_frameworks_base/blob/master/core/res/res/lay
     <LinearLayout android:id="@+id/contentPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical">
         <TextView android:id="@+id/message"
             style="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dip"/>
+            android:paddingStart="16dip"
+            android:paddingEnd="16dip"
+            android:paddingTop="8dip"
+            android:paddingBottom="8dip"
+            />
     </LinearLayout>
 
     <FrameLayout android:id="@+id/customPanel"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:minHeight="64dp">
     </FrameLayout>
 
     <ScrollView

@@ -853,7 +853,7 @@ public class ShareActivity extends Activity {
 						});
 					}
 
-					Utils.secureShowDialog1(sShare, builder);
+					Utils.secureShowDialog(sShare, builder);
 					return true;
 				}
 			});

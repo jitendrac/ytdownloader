@@ -8,7 +8,9 @@
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/item_text"
         style="?android:attr/textAppearanceListItemSmall"
-        android:padding="11dip"
+        android:paddingStart="16dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content" >
     </TextView>

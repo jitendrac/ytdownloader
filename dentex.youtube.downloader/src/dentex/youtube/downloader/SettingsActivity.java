@@ -337,7 +337,7 @@ public class SettingsActivity extends Activity {
 	                            }
 	                        });
 	
-	                        Utils.secureShowDialog1(sSettings, adb);
+	                        Utils.secureShowDialog(sSettings, adb);
 						}
 					}
 					if (ffmpegInstalled) {

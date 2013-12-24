@@ -344,26 +344,13 @@ public class Utils {
 		}
 	}
 	
-	public static void secureShowDialog1(final Activity act, final AlertDialog.Builder adb) {
+	public static void secureShowDialog(final Activity act, final AlertDialog.Builder adb) {
 		act.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				if(!act.isFinishing()){
 					adb.show();
 				}
-			}
-		});
-	}
-	
-	public static void secureShowDialog(final Activity act, final QustomDialogBuilder qdb) {
-		act.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if(!act.isFinishing()){
-					qdb.show();
-				} else {
-			    	Utils.logger("w", "Dialog not showed. Activity was finishing.", DEBUG_TAG);
-			    }
 			}
 		});
 	}
