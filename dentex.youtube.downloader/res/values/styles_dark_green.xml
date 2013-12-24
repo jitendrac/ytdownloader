@@ -76,5 +76,9 @@
   <style name="SpinnerItemDark_Green" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
       <item name="android:textColor">#ffffff</item>
   </style>
+  
+  <style name="ActionBar.Transparent.Dark_green" parent="@android:style/Widget.Holo.ActionBar">
+      <item name="android:background">@drawable/ab_transparent_dark_green</item>
+  </style>
 
 </resources>

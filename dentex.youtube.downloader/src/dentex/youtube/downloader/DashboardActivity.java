@@ -62,6 +62,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -242,7 +243,7 @@ public class DashboardActivity extends Activity {
 	        		
 	        		QustomDialogBuilder builder = new QustomDialogBuilder(DashboardActivity.this);
 	        		builder.setDividerColor(Utils.getThemeDarkColor());
-					builder.setTitleColor(Utils.getThemeDarkColor());
+					builder.setTitleColor(Utils.getThemeLightColor());
 	        		
 //	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		
@@ -389,7 +390,7 @@ public class DashboardActivity extends Activity {
 									BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
 									QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
 									adb.setDividerColor(Utils.getThemeDarkColor());
-									adb.setTitleColor(Utils.getThemeDarkColor());
+									adb.setTitleColor(Utils.getThemeLightColor());
 									
 //									AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 									adb.setTitle(getString(R.string.information));
@@ -488,7 +489,7 @@ public class DashboardActivity extends Activity {
 	
 	        		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
 	        		builder.setDividerColor(Utils.getThemeDarkColor());
-	        		builder.setTitleColor(Utils.getThemeDarkColor());
+	        		builder.setTitleColor(Utils.getThemeLightColor());
 	        		
 //	        		AlertDialog.Builder builder = new AlertDialog.Builder(sDashboard);
 	        		builder.setTitle(currentItem.getFilename());
@@ -609,7 +610,7 @@ public class DashboardActivity extends Activity {
 	private void rename(final DashboardListItem currentItem) {
 		QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
 		adb.setDividerColor(Utils.getThemeDarkColor());
-		adb.setTitleColor(Utils.getThemeDarkColor());
+		adb.setTitleColor(Utils.getThemeLightColor());
 		
 //		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 //		LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
@@ -707,7 +708,7 @@ public class DashboardActivity extends Activity {
 	public void  removeFromDashboard(final DashboardListItem currentItem) {
 		QustomDialogBuilder rem = new QustomDialogBuilder(sDashboard);
 		rem.setDividerColor(Utils.getThemeDarkColor());
-		rem.setTitleColor(Utils.getThemeDarkColor());
+		rem.setTitleColor(Utils.getThemeLightColor());
 		
 //		AlertDialog.Builder rem = new AlertDialog.Builder(DashboardActivity.this);
 		//rem.setTitle(getString(R.string.attention));
@@ -736,7 +737,7 @@ public class DashboardActivity extends Activity {
 	public void delete(final DashboardListItem currentItem) {
 		QustomDialogBuilder del = new QustomDialogBuilder(sDashboard);
 		del.setDividerColor(Utils.getThemeDarkColor());
-		del.setTitleColor(Utils.getThemeDarkColor());
+		del.setTitleColor(Utils.getThemeLightColor());
 		
 //		AlertDialog.Builder del = new AlertDialog.Builder(sDashboard);
 		del.setTitle(currentItem.getFilename());
@@ -1051,7 +1052,7 @@ public class DashboardActivity extends Activity {
 				    	
 			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
 			        	adb.setDividerColor(Utils.getThemeDarkColor());
-						adb.setTitleColor(Utils.getThemeDarkColor());
+						adb.setTitleColor(Utils.getThemeLightColor());
 				    	
 //				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 //			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
@@ -1105,7 +1106,7 @@ public class DashboardActivity extends Activity {
 				    	
 //			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
 //			        	adb.setDividerColor(Utils.getThemeDarkColor());
-//						adb.setTitleColor(Utils.getThemeDarkColor());
+//						adb.setTitleColor(Utils.getThemeLightColor());
 				    	
 				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
@@ -1155,7 +1156,7 @@ public class DashboardActivity extends Activity {
 			    	
 		        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
 		        	adb.setDividerColor(Utils.getThemeDarkColor());
-					adb.setTitleColor(Utils.getThemeDarkColor());
+					adb.setTitleColor(Utils.getThemeLightColor());
 					
 //			    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
 //		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
@@ -1211,7 +1212,7 @@ public class DashboardActivity extends Activity {
 		
 		QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
     	adb.setDividerColor(Utils.getThemeDarkColor());
-		adb.setTitleColor(Utils.getThemeDarkColor());
+		adb.setTitleColor(Utils.getThemeLightColor());
 		adb.setCustomView(R.layout.dialog_input_filename_dashboard_backup, sDashboard);
 		final EditText userFilename = (EditText) adb.getDialogView().findViewById(R.id.input_backup_name);
 		
@@ -2343,6 +2344,11 @@ public class DashboardActivity extends Activity {
 						da.getCount());
 			}
 			status.setText(text);
+			
+			String theme = YTD.settings.getString("choose_theme", "DB");
+	    	if (theme.equals("DG")) {
+	    		status.setTextColor(Color.parseColor("#42FF14"));
+	    	}
 			//bkgRl.setVisibility(View.GONE);
 		}
 	}
@@ -2365,7 +2371,7 @@ public class DashboardActivity extends Activity {
 		
 		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
 		builder.setDividerColor(Utils.getThemeDarkColor());
-		builder.setTitleColor(Utils.getThemeDarkColor());
+		builder.setTitleColor(Utils.getThemeLightColor());
 		builder.setCustomView(R.layout.dialog_edit_id3, sDashboard);
 	    
 //	    final EditText artistEt = (EditText) id3s.findViewById(R.id.id3_et_artist);
@@ -2796,7 +2802,7 @@ public class DashboardActivity extends Activity {
 		BugSenseHandler.leaveBreadcrumb("extractAudioOnly");
 		QustomDialogBuilder builder0 = new QustomDialogBuilder(sDashboard);
 		builder0.setDividerColor(Utils.getThemeDarkColor());
-		builder0.setTitleColor(Utils.getThemeDarkColor());
+		builder0.setTitleColor(Utils.getThemeLightColor());
 		
 //		AlertDialog.Builder builder0 = new AlertDialog.Builder(DashboardActivity.this);
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
@@ -2842,7 +2848,7 @@ public class DashboardActivity extends Activity {
 		BugSenseHandler.leaveBreadcrumb("extractAudioAndConvertToMp3");
 		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
 		builder.setDividerColor(Utils.getThemeDarkColor());
-		builder.setTitleColor(Utils.getThemeDarkColor());
+		builder.setTitleColor(Utils.getThemeLightColor());
 		
 //		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 		String[] title = getResources().getStringArray(R.array.dashboard_click_entries);
@@ -2889,7 +2895,7 @@ public class DashboardActivity extends Activity {
 		BugSenseHandler.leaveBreadcrumb("convertAudioToMp3");
 		QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
 		builder.setDividerColor(Utils.getThemeDarkColor());
-		builder.setTitleColor(Utils.getThemeDarkColor());
+		builder.setTitleColor(Utils.getThemeLightColor());
 		
 //		AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 		
@@ -2964,7 +2970,7 @@ public class DashboardActivity extends Activity {
 		if (audioOnlyFile != null && audioOnlyFile.exists()) {
 			QustomDialogBuilder builder = new QustomDialogBuilder(sDashboard);
 			builder.setDividerColor(Utils.getThemeDarkColor());
-			builder.setTitleColor(Utils.getThemeDarkColor());
+			builder.setTitleColor(Utils.getThemeLightColor());
 			
 //			AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 			String[] title = getResources().getStringArray(R.array.dashboard_click_entries_vo);

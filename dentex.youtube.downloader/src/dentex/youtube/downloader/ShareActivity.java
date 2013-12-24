@@ -504,7 +504,7 @@ public class ShareActivity extends Activity {
 		if (generalInfoCheckboxEnabled == true) {
 			QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
 			adb.setDividerColor(Utils.getThemeDarkColor());
-			adb.setTitleColor(Utils.getThemeDarkColor());
+			adb.setTitleColor(Utils.getThemeLightColor());
 			
 //			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 //			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -701,7 +701,7 @@ public class ShareActivity extends Activity {
 					
 					QustomDialogBuilder helpBuilder = new QustomDialogBuilder(ShareActivity.this);
 					helpBuilder.setDividerColor(Utils.getThemeDarkColor());
-					helpBuilder.setTitleColor(Utils.getThemeDarkColor());
+					helpBuilder.setTitleColor(Utils.getThemeLightColor());
 					
 //					AlertDialog.Builder helpBuilder = new AlertDialog.Builder(ShareActivity.this);
 					
@@ -730,7 +730,7 @@ public class ShareActivity extends Activity {
 								if (fileRenameEnabled == true) {
 									QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
 									adb.setDividerColor(Utils.getThemeDarkColor());
-									adb.setTitleColor(Utils.getThemeDarkColor());
+									adb.setTitleColor(Utils.getThemeLightColor());
 									
 //									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 //									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -819,7 +819,7 @@ public class ShareActivity extends Activity {
 					
 //					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
 //					builder.setDividerColor(Utils.getThemeDarkColor());
-//					builder.setTitleColor(Utils.getThemeDarkColor());
+//					builder.setTitleColor(Utils.getThemeLightColor());
 					
 					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
@@ -925,7 +925,7 @@ public class ShareActivity extends Activity {
 			} else {
 				QustomDialogBuilder cb = new QustomDialogBuilder(ShareActivity.this);
 				cb.setDividerColor(Utils.getThemeDarkColor());
-				cb.setTitleColor(Utils.getThemeDarkColor());
+				cb.setTitleColor(Utils.getThemeLightColor());
 				
 //				AlertDialog.Builder cb = new AlertDialog.Builder(ShareActivity.this);
 				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
@@ -984,7 +984,7 @@ public class ShareActivity extends Activity {
 				if (sshInfoCheckboxEnabled == true) {
 					QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
 					adb.setDividerColor(Utils.getThemeDarkColor());
-					adb.setTitleColor(Utils.getThemeDarkColor());
+					adb.setTitleColor(Utils.getThemeLightColor());
 					
 //					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 //					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);

@@ -439,7 +439,7 @@ public class Utils {
 		
 		QustomDialogBuilder adb = new QustomDialogBuilder(act);
 		adb.setDividerColor(Utils.getThemeDarkColor());
-		adb.setTitleColor(Utils.getThemeDarkColor());
+		adb.setTitleColor(Utils.getThemeLightColor());
 		
 //		AlertDialog.Builder adb = new AlertDialog.Builder(act);
 		adb.setTitle(act.getString(R.string.ffmpeg_not_enabled_title));

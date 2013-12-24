@@ -5,7 +5,7 @@
 
   <style name="Dark_Green" parent="android:Theme.Holo">
       
-<!--     <item name="android:textColor">@color/green_light</item> -->
+    <item name="android:textColor">@color/green_light</item>
 
     <item name="android:editTextStyle">@style/EditTextDark_Green</item>
 
@@ -48,6 +48,8 @@
     <item name="android:activatedBackgroundIndicator">@drawable/dark_green_activated_background_holo_dark</item>
 
     <item name="android:fastScrollThumbDrawable">@drawable/dark_green_fastscroll_thumb_holo</item>
+    
+    <item name="android:actionBarStyle">@style/ActionBar.Transparent.Dark_green</item>
 
   </style>
 
