@@ -23,7 +23,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -211,6 +213,27 @@ public class QustomDialogBuilder extends AlertDialog.Builder{
         TextView listItem = (TextView) View.inflate(getContext(), R.layout.qustom_dialog_item_layout, null);
         TextView icaoTextView = (TextView) listItem.findViewById(R.id.item_text);
         icaoTextView.setText(itemText);
+        
+        listItem.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event){
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    v.setBackgroundColor(getContext().getResources().getColor(android.R.color.darker_gray));
+                }
+				
+				if(event.getAction() == MotionEvent.ACTION_UP || 
+	                	event.getAction() == MotionEvent.ACTION_MOVE ||
+	                	event.getAction() == MotionEvent.ACTION_CANCEL) {
+                	
+                    v.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
+                }
+                
+                return false;
+            }
+		});
+
         return listItem;
     }
 

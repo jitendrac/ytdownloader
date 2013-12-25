@@ -56,7 +56,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -186,9 +185,6 @@ public class DashboardActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("DashboardActivity_onCreate");
 		sDashboard = DashboardActivity.this;
-
-		// Theme init
-    	Utils.themeInit(this);
     	
     	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_dashboard);
@@ -1104,21 +1100,21 @@ public class DashboardActivity extends Activity {
 	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
 				    if (restoreCheckboxEnabled == true) {
 				    	
-//			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-//			        	adb.setDividerColor(Utils.getThemeDarkColor());
-//						adb.setTitleColor(Utils.getThemeLightColor());
+			        	QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+			        	adb.setDividerColor(Utils.getThemeDarkColor());
+						adb.setTitleColor(Utils.getThemeLightColor());
 				    	
-				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
-			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+//				    	AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+//			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+//					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+//					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
 					    
-//					    adb.setCustomView(R.layout.dialog_inflatable_checkbox, DashboardActivity.this);
-//					    final CheckBox showAgain = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
+					    adb.setCustomView(R.layout.dialog_inflatable_checkbox, DashboardActivity.this);
+					    final CheckBox showAgain = (CheckBox) adb.getDialogView().findViewById(R.id.infl_cb);
 					    
 					    showAgain.setChecked(true);
 					    showAgain.setText(getString(R.string.show_again_checkbox));
-					    adb.setView(showAgainView);
+//					    adb.setView(showAgainView);
 					    
 			    		adb.setTitle(getString(R.string.information));
 			    		adb.setMessage(getString(R.string.menu_restore_info) + ".\n" + getString(R.string.menu_restore_info_msg));
@@ -1265,6 +1261,10 @@ public class DashboardActivity extends Activity {
 	@Override
     public void onResume(){
 		super.onResume();
+		
+		// Theme init
+    	Utils.themeInit(this);
+    	
     	Utils.logger("v", "_onResume", DEBUG_TAG);
     	isDashboardRunning = true;
     	

@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,6 +65,7 @@ import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.service.FfmpegDownloadService;
 import dentex.youtube.downloader.utils.DashboardClearHelper;
 import dentex.youtube.downloader.utils.PopUps;
+import dentex.youtube.downloader.utils.QustomDialogBuilder;
 import dentex.youtube.downloader.utils.Utils;
 
 public class SettingsActivity extends Activity {
@@ -289,7 +289,12 @@ public class SettingsActivity extends Activity {
 						Utils.logger("d", "ffmpegInstalled: " + ffmpegInstalled, DEBUG_TAG);
 					
 						if (!ffmpegInstalled && isCpuSupported) {	
-							AlertDialog.Builder adb = new AlertDialog.Builder(sSettings);
+//							AlertDialog.Builder adb = new AlertDialog.Builder(sSettings);
+							
+							QustomDialogBuilder adb = new QustomDialogBuilder(sSettings);
+				        	adb.setDividerColor(Utils.getThemeDarkColor());
+							adb.setTitleColor(Utils.getThemeLightColor());
+							
 	                        adb.setIcon(Utils.getThemedInfoIcon());
 	                        adb.setTitle(getString(R.string.ffmpeg_download_dialog_title));
 	                        

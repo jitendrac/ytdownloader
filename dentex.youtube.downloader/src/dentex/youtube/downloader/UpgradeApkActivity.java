@@ -60,6 +60,7 @@ import com.bugsense.trace.BugSenseHandler;
 
 import dentex.youtube.downloader.utils.FetchUrl;
 import dentex.youtube.downloader.utils.PopUps;
+import dentex.youtube.downloader.utils.QustomDialogBuilder;
 import dentex.youtube.downloader.utils.UpdateHelper;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -299,8 +300,13 @@ public class UpgradeApkActivity extends Activity {
                     	
                     	if (Utils.checkMD5(matchedMd5, new File(dir, apkFilename))) {
                     	
-	                        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
-	                        helpBuilder.setIcon(Utils.getThemedInfoIcon())
+//	                        AlertDialog.Builder adb = new AlertDialog.Builder(UpgradeApkActivity.this);
+                    		
+                    		QustomDialogBuilder adb = new QustomDialogBuilder(UpgradeApkActivity.this);
+				        	adb.setDividerColor(Utils.getThemeDarkColor());
+							adb.setTitleColor(Utils.getThemeLightColor());
+							
+	                        adb.setIcon(Utils.getThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgraded_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -314,21 +320,26 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 	
-	                        helpBuilder.setNegativeButton(getString(R.string.upgraded_dialog_negative), new DialogInterface.OnClickListener() {
+	                        adb.setNegativeButton(getString(R.string.upgraded_dialog_negative), new DialogInterface.OnClickListener() {
 	
 	                            public void onClick(DialogInterface dialog, int which) {
 	                            	// cancel
 	                            }
 	                        });
 	
-	                        AlertDialog helpDialog = helpBuilder.create();
+	                        AlertDialog helpDialog = adb.create();
 	                        if (! ((Activity) context).isFinishing()) {
 	                        	helpDialog.show();
 	                        }
                         
                     	} else {
-                    		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
-	                        helpBuilder.setIcon(Utils.getThemedInfoIcon())
+//                    		AlertDialog.Builder adb = new AlertDialog.Builder(UpgradeApkActivity.this);
+                    		
+                    		QustomDialogBuilder adb = new QustomDialogBuilder(UpgradeApkActivity.this);
+				        	adb.setDividerColor(Utils.getThemeDarkColor());
+							adb.setTitleColor(Utils.getThemeLightColor());
+							
+	                        adb.setIcon(Utils.getThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgrade_bad_md5_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -340,7 +351,7 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 	
-	                        helpBuilder.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+	                        adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
 	
 	                            public void onClick(DialogInterface dialog, int which) {
 	                            	deleteBadDownload(id);
@@ -348,7 +359,7 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 
-	                        AlertDialog helpDialog = helpBuilder.create();
+	                        AlertDialog helpDialog = adb.create();
 	                        if (! ((Activity) context).isFinishing()) {
 	                        	helpDialog.show();
 	                        }

@@ -356,7 +356,12 @@ public class Utils {
 	}
 	
 	public static void offerDevMail(final Context ctx) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
+		QustomDialogBuilder adb = new QustomDialogBuilder(ctx);
+		adb.setDividerColor(Utils.getThemeDarkColor());
+		adb.setTitleColor(Utils.getThemeLightColor());
+		
+//		AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
+		
 		adb.setIcon(Utils.getThemedAlertIcon());
 		adb.setTitle(ctx.getString(R.string.ffmpeg_device_not_supported));
 		adb.setMessage(ctx.getString(R.string.ffmpeg_support_mail));

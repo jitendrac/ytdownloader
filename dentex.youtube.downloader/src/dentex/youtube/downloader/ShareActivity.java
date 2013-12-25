@@ -45,7 +45,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -199,15 +198,18 @@ public class ShareActivity extends Activity {
 //	private NotificationManager mNotificationManager;
 	
 	@Override
+    public void onResume(){
+		super.onResume();
+		
+		// Theme init
+    	Utils.themeInit(this);
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
 		sShare = ShareActivity.this;
-		
-//		aoIndex = -1;
-		
-		// Theme init
-		Utils.themeInit(this);
 		
 		setContentView(R.layout.activity_share);
 		
@@ -817,11 +819,11 @@ public class ShareActivity extends Activity {
 					basenameTagged = composeFilenameWithOutExt();
 					filenameComplete = composeFilenameWithExt();
 					
-//					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
-//					builder.setDividerColor(Utils.getThemeDarkColor());
-//					builder.setTitleColor(Utils.getThemeLightColor());
+					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
+					builder.setDividerColor(Utils.getThemeDarkColor());
+					builder.setTitleColor(Utils.getThemeLightColor());
 					
-					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
+//					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
 						String[] entries1 = getResources().getStringArray(R.array.long_click_entries);
 						builder.setTitle(R.string.long_click_title).setItems(entries1, new DialogInterface.OnClickListener() {
