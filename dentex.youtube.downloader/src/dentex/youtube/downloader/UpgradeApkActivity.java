@@ -303,8 +303,8 @@ public class UpgradeApkActivity extends Activity {
 //	                        AlertDialog.Builder adb = new AlertDialog.Builder(UpgradeApkActivity.this);
                     		
                     		QustomDialogBuilder adb = new QustomDialogBuilder(UpgradeApkActivity.this);
-				        	adb.setDividerColor(Utils.getThemeDarkColor());
-							adb.setTitleColor(Utils.getThemeLightColor());
+				        	adb.setDividerColor(Utils.getThemeColor());
+							adb.setTitleColor(Utils.getThemeColor());
 							
 	                        adb.setIcon(Utils.getThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
@@ -336,8 +336,8 @@ public class UpgradeApkActivity extends Activity {
 //                    		AlertDialog.Builder adb = new AlertDialog.Builder(UpgradeApkActivity.this);
                     		
                     		QustomDialogBuilder adb = new QustomDialogBuilder(UpgradeApkActivity.this);
-				        	adb.setDividerColor(Utils.getThemeDarkColor());
-							adb.setTitleColor(Utils.getThemeLightColor());
+				        	adb.setDividerColor(Utils.getThemeColor());
+							adb.setTitleColor(Utils.getThemeColor());
 							
 	                        adb.setIcon(Utils.getThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))

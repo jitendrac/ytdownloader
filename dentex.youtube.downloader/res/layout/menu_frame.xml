@@ -8,7 +8,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:background="@drawable/grad_bg_gray"
+		android:background="@drawable/grad_bg_dark_gray"
 	    android:gravity="center" 
 	    android:orientation="vertical">
 	    

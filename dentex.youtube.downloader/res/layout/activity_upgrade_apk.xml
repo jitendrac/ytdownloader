@@ -21,7 +21,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
-            android:background="@drawable/grad_bg_gray"
+            android:background="@drawable/grad_bg_dark_gray"
             android:textColor="@android:color/white"
             android:textAlignment="center"
             android:textIsSelectable="false" 

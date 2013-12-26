@@ -41,7 +41,7 @@ public class YTDSettings_PreferenceCategory extends PreferenceCategory {
 	    
 //	    String theme = YTD.settings.getString("choose_theme", "DB");
 //	    if (theme.equals("DG") || theme.equals("LR")) {
-	    	categoryTitle.setTextColor(Color.parseColor(Utils.getThemeDarkColor()));
+	    	categoryTitle.setTextColor(Color.parseColor(Utils.getThemeColor()));
 //	    }
 	    
 	    return categoryTitle;

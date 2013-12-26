@@ -108,25 +108,34 @@ public class DashboardAdapter extends ArrayAdapter<DashboardListItem> implements
 			v = inflater.inflate(R.layout.activity_dashboard_list_item, null);
 			// Now we can fill the layout with the right values
 			TextView tv = (TextView) v.findViewById(R.id.filename);
-			ProgressBar pb;
+
+			ProgressBar progressBarDB = (ProgressBar) v.findViewById(R.id.d_progressBarDB);
+			ProgressBar progressBarLB = (ProgressBar) v.findViewById(R.id.d_progressBarLB);
+			ProgressBar progressBarDG = (ProgressBar) v.findViewById(R.id.d_progressBarDG);
+			ProgressBar progressBarLR = (ProgressBar) v.findViewById(R.id.d_progressBarLR);
+			
 			
 			String theme = YTD.settings.getString("choose_theme", "DB");
 	    	if (theme.equals("LB")) {
-	    		tv.setTextAppearance(context, R.style.EditTextLight_Blue);
-	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_light_blue, null);
+	    		tv.setTextColor(Color.BLACK);
+	    		progressBarLB.setVisibility(View.VISIBLE);
+	    		holder.pb = progressBarLB;
 	    	} else if (theme.equals("DG")) {
-	    		tv.setTextAppearance(context, R.style.EditTextDark_Green);
-	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_dark_green, null);
+	    		tv.setTextColor(Color.WHITE);
+	    		progressBarDG.setVisibility(View.VISIBLE);
+	    		holder.pb = progressBarDG;
 	    	} else if (theme.equals("LR")) {
-	    		tv.setTextAppearance(context, R.style.EditTextLight_Red);
-	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_light_red, null);
+	    		tv.setTextColor(Color.BLACK);
+	    		progressBarLR.setVisibility(View.VISIBLE);
+	    		holder.pb = progressBarLR;
 	    	} else { // theme.equals("DB")
-	    		tv.setTextAppearance(context, R.style.EditTextDark_Blue);
-	    		pb = (ProgressBar) inflater.inflate(R.layout.progress_bar_dark_blue, null);
+	    		tv.setTextColor(Color.WHITE);
+	    		progressBarDB.setVisibility(View.VISIBLE);
+	    		holder.pb = progressBarDB;
 	    	}
 	    	
 	    	holder.filename = tv;
-	    	holder.pb = pb;
+
 			TextView tv2 = (TextView) v.findViewById(R.id.size);
 			TextView tv3 = (TextView) v.findViewById(R.id.path);
 			TextView tv4 = (TextView) v.findViewById(R.id.status);

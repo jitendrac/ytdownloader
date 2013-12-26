@@ -39,8 +39,8 @@ public class PopUps {
         
 //		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(activity);
 		QustomDialogBuilder helpBuilder = new QustomDialogBuilder(activity);
-		helpBuilder.setDividerColor(Utils.getThemeDarkColor());
-		helpBuilder.setTitleColor(Utils.getThemeLightColor());
+		helpBuilder.setDividerColor(Utils.getThemeColor());
+		helpBuilder.setTitleColor(Utils.getThemeColor());
 	    helpBuilder.setTitle(title);
 	    helpBuilder.setMessage(message);
 	

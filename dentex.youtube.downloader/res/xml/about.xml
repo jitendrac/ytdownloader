@@ -38,6 +38,11 @@
 	            android:summary="@string/cc_summary"/>
 	        
 	        <Preference
+	            android:key="cc_b"
+	            android:title="@string/cc_title_b"
+	            android:summary="@string/cc_summary_b"/>
+	        
+	        <Preference
 	            android:key="mpl"
 	            android:title="@string/mpl_title"
 	            android:summary="@string/mpl_summary"/>

@@ -342,6 +342,9 @@
     <string name="cc_title">CC BY-NC-ND 3.0</string>
     <string name="cc_summary">App\'s icons\nStack Overflow\'s snippets</string>
     
+    <string name="cc_title_b">CC BY 3.0</string>
+    <string name="cc_summary_b">App\'s colored holo resources</string>
+    
     <string name="mpl_title">MPL-2.0</string>
     <string name="mpl_summary">Rhino</string>
 		
@@ -441,6 +444,32 @@
 			The best way to do this is with a link to this web page.
     </string>
     
+    <string name="cc_text_b">Attribution 3.0 Unported
+        \n
+		\nThis is a human-readable summary of (and not a substitute for) the license: 
+			<http>http://creativecommons.org/licenses/by/3.0/legalcode/</http>.
+		\n
+		\nYou are free:
+		\n
+		\n\tto Share - copy and redistribute the material in any medium or format
+		\n\tto Adapt - remix, transform, and build upon the material 
+		\nfor any purpose, even commercially.
+		\nThe licensor cannot revoke these freedoms as long as you follow the license terms.
+		\n
+		\nUnder the following terms:
+		\n
+		\n\tAttribution - You must give appropriate credit, provide a link to the license, and indicate if changes were made. 
+		    You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+		\n
+    	\n\tNo additional restrictions - You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+    	\n
+    	\nNotices:
+    	\n
+    	\nYou do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.
+    	\nNo warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
+		\n
+    </string>
+    
     <string name="mpl_text">This Source Code Form is subject to the terms of the Mozilla Public License, v2.0. 
         If a copy of the MPL was not distributed with this file, You can obtain one at 
         <http>http://mozilla.org/MPL/2.0</http>.</string>
@@ -484,6 +513,15 @@
 		\nLauncher and notification icons by Sam Plane: 
 			http://samplane123.deviantart.com/, released under the CC BY-NC-ND 
 			(http://creativecommons.org/licenses/by-nc-nd/3.0)
+		\n
+		\nApp\'s colored holo resources thanks to http://android-holo-colors.com/ created by Jérôme Van Der Linden.
+		\nBuilt upon the android-ui-utils asset studio framework created by Roman Nurik, copyright Google Inc.
+		\nand
+		\nhttp://jgilfelt.github.io/android-actionbarstylegenerator/ created by Jeff Gilfelt, 
+			source code at https://github.com/jgilfelt/android-actionbarstylegenerator, 
+			Copyright &#169; 2012 readyState Software Ltd.
+			Built upon the android-ui-utils asset studio framework created by Roman Nurik, copyright &#169; Google Inc.
+		\nAll generated art is licensed under a Creative Commons Attribution 3.0 Unported License. 
 		\n
 		\nCredits for the custom download manager to  Hiroshi Matsunaga (matsuhiro): 
 		    https://github.com/matsuhiro/AndroidDownloadManger

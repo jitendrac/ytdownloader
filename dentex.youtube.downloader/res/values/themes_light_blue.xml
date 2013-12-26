@@ -3,11 +3,16 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="Light_Blue" parent="android:Theme.Holo.Light.DarkActionBar">
+  <style name="Light_Blue" parent="@style/_Light_Blue"/>
 
-    <item name="android:editTextStyle">@style/EditTextLight_Blue</item>
+  <style name="_Light_Blue" parent="android:Theme.Holo.Light.DarkActionBar">
 
     <item name="android:editTextBackground">@drawable/light_blue_edit_text_holo_light</item>
+
+    <item name="android:textColorHighlight">#9933b5e5</item>
+    <item name="android:textSelectHandleLeft">@drawable/light_blue_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/light_blue_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/light_blue_text_select_handle_middle</item>
 
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLight_Blue</item>
 
@@ -15,19 +20,11 @@
 
     <item name="android:listChoiceIndicatorSingle">@drawable/light_blue_btn_radio_holo_light</item>
 
-    <item name="android:checkboxStyle">@style/CheckBoxLight_Blue</item>
-
-    <item name="android:radioButtonStyle">@style/RadioButtonLight_Blue</item>
-
     <item name="android:buttonStyle">@style/ButtonLight_Blue</item>
 
     <item name="android:imageButtonStyle">@style/ImageButtonLight_Blue</item>
 
     <item name="android:dropDownSpinnerStyle">@style/SpinnerLight_Blue</item>
-
-    <item name="android:spinnerStyle">@style/SpinnerLight_Blue</item>
-
-    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemLight_Blue</item>
 
     <item name="android:progressBarStyleHorizontal">@style/ProgressBarLight_Blue</item>
 
@@ -40,12 +37,6 @@
     <item name="android:activatedBackgroundIndicator">@drawable/light_blue_activated_background_holo_light</item>
 
     <item name="android:fastScrollThumbDrawable">@drawable/light_blue_fastscroll_thumb_holo</item>
-
-    <item name="android:listViewStyle">@style/ListViewLight_Blue</item>
-
-    <item name="android:listViewWhiteStyle">@style/ListViewLight_Blue.White</item>
-
-    <item name="android:spinnerItemStyle">@style/SpinnerItemLight_Blue</item>
 
   </style>
 

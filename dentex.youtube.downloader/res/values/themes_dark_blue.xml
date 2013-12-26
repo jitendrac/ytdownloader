@@ -5,15 +5,14 @@
 
   <style name="Dark_Blue" parent="android:Theme.Holo">
 
-    <item name="android:editTextStyle">@style/EditTextDark_Blue</item>
-
     <item name="android:editTextBackground">@drawable/dark_blue_edit_text_holo_dark</item>
 
+    <item name="android:textColorHighlight">#9933b5e5</item>
+    <item name="android:textSelectHandleLeft">@drawable/dark_blue_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/dark_blue_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/dark_blue_text_select_handle_middle</item>
+
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDark_Blue</item>
-
-    <item name="android:checkboxStyle">@style/CheckBoxDark_Blue</item>
-
-    <item name="android:radioButtonStyle">@style/RadioButtonDark_Blue</item>
 
     <item name="android:listChoiceIndicatorMultiple">@drawable/dark_blue_btn_check_holo_dark</item>
 
@@ -23,10 +22,6 @@
 
     <item name="android:imageButtonStyle">@style/ImageButtonDark_Blue</item>
 
-    <item name="android:spinnerStyle">@style/SpinnerDark_Blue</item>
-
-    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemDark_Blue</item>
-
     <item name="android:dropDownSpinnerStyle">@style/SpinnerDark_Blue</item>
 
     <item name="android:progressBarStyleHorizontal">@style/ProgressBarDark_Blue</item>
@@ -35,17 +30,13 @@
 
     <item name="android:buttonStyleToggle">@style/ToggleDark_Blue</item>
 
-    <item name="android:listViewStyle">@style/ListViewDark_Blue</item>
-
-    <item name="android:listViewWhiteStyle">@style/ListViewDark_Blue.White</item>
-
-    <item name="android:spinnerItemStyle">@style/SpinnerItemDark_Blue</item>
-
     <item name="android:listChoiceBackgroundIndicator">@drawable/dark_blue_list_selector_holo_dark</item>
 
     <item name="android:activatedBackgroundIndicator">@drawable/dark_blue_activated_background_holo_dark</item>
 
     <item name="android:fastScrollThumbDrawable">@drawable/dark_blue_fastscroll_thumb_holo</item>
+    
+    <item name="android:actionBarStyle">@style/ActionBar.Transparent.Blue</item>
 
   </style>
 

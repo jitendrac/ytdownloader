@@ -46,7 +46,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 		aYtId = YtId;
 		aPos = pos;
 		aNewId = newId;
-		type = (aBitrateValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
+		type = (aBitrateValue == null) ? YTD.JSON_DATA_TYPE_A_E : YTD.JSON_DATA_TYPE_A_M;
 	}
 	
 	@Override
@@ -114,6 +114,8 @@ public class FFmpegExtractAudioTask implements Runnable {
 						"", 
 						Utils.MakeSizeHumanReadable((int) aAudioFile.length(), false), 
 						false);
+			} else if (exitValue == 9){
+				Utils.logger("w", "FFmpeg process stopped by user", DEBUG_TAG);
 			} else {
 				JsonHelper.addEntryToJsonFile(
 						String.valueOf(aNewId), 

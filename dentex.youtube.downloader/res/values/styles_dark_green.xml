@@ -3,30 +3,13 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="EditTextDark_Green" parent="android:Widget.EditText">
-	  <item name="android:background">@drawable/dark_green_edit_text_holo_dark</item>
-	  <item name="android:textColor">#ffffff</item>
-  </style>
-
   <style name="AutoCompleteTextViewDark_Green" parent="android:Widget.Holo.AutoCompleteTextView">
       <item name="android:dropDownSelector">@drawable/dark_green_list_selector_holo_dark</item>
 	  <item name="android:background">@drawable/dark_green_edit_text_holo_dark</item>
-	  <item name="android:textColor">#ffffff</item>
-  </style>
-
-  <style name="CheckBoxDark_Green" parent="android:Widget.CompoundButton.CheckBox">
-      <item name="android:button">@drawable/dark_green_btn_check_holo_dark</item>
-  </style>
-
-  <style name="RadioButtonDark_Green" parent="android:Widget.CompoundButton.RadioButton">
-      <item name="android:button">@drawable/dark_green_btn_radio_holo_dark</item>
   </style>
 
   <style name="ButtonDark_Green" parent="android:Widget.Holo.Button">
 	  <item name="android:background">@drawable/dark_green_btn_default_holo_dark</item>
-	  <item name="android:minHeight">48dip</item>
-	  <item name="android:minWidth">64dip</item>
-	  <item name="android:textColor">#ffffff</item>
   </style>
 
   <style name="ImageButtonDark_Green" parent="android:Widget.Holo.ImageButton">
@@ -38,47 +21,23 @@
       <item name="android:dropDownSelector">@drawable/dark_green_list_selector_holo_dark</item>
   </style>
 
-  <style name="SpinnerDropDownItemDark_Green" parent="android:Widget.DropDownItem.Spinner">
-      <item name="android:checkMark">@drawable/dark_green_btn_radio_holo_dark</item>
-  </style>
   <style name="ProgressBarDark_Green" parent="android:Widget.Holo.ProgressBar.Horizontal">
       <item name="android:progressDrawable">@drawable/dark_green_progress_horizontal_holo_dark</item>
       <item name="android:indeterminateDrawable">@drawable/dark_green_progress_indeterminate_horizontal_holo_dark</item>
-      <item name="android:minHeight">16dip</item>
-      <item name="android:maxHeight">16dip</item>
   </style>
 
   <style name="SeekBarDark_Green" parent="android:Widget.Holo.SeekBar">
       <item name="android:progressDrawable">@drawable/dark_green_scrubber_progress_horizontal_holo_dark</item>
       <item name="android:indeterminateDrawable">@drawable/dark_green_scrubber_progress_horizontal_holo_dark</item>
-      <item name="android:minHeight">13dip</item>
-      <item name="android:maxHeight">13dip</item>
       <item name="android:thumb">@drawable/dark_green_scrubber_control_selector_holo_dark</item>
-      <item name="android:thumbOffset">16dip</item>
-      <item name="android:paddingLeft">16dip</item>
-      <item name="android:paddingRight">16dip</item>
   </style>
 
   <style name="ToggleDark_Green" parent="android:Widget.Holo.Button.Toggle">
       <item name="android:background">@drawable/dark_green_btn_toggle_holo_dark</item>
-      <item name="android:minHeight">48dip</item>
-	  <item name="android:textColor">#ffffff</item>
-  </style>
-
-  <style name="ListViewDark_Green" parent="android:Widget.ListView">
-      <item name="android:listSelector">@drawable/dark_green_list_selector_holo_dark</item>
-  </style>
-
-  <style name="ListViewDark_Green.White" parent="android:Widget.ListView.White">
-      <item name="android:listSelector">@drawable/dark_green_list_selector_holo_dark</item>
-  </style>
-
-  <style name="SpinnerItemDark_Green" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-      <item name="android:textColor">#ffffff</item>
   </style>
   
-  <style name="ActionBar.Transparent.Dark_green" parent="@android:style/Widget.Holo.ActionBar">
-      <item name="android:background">@drawable/ab_transparent_dark_green</item>
+  <style name="ActionBar.Transparent.Green" parent="@android:style/Widget.Holo.ActionBar">
+      <item name="android:background">@drawable/ab_transparent_green</item>
   </style>
 
 </resources>

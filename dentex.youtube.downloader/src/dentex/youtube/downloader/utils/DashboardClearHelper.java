@@ -36,8 +36,8 @@ public class DashboardClearHelper {
 		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
 			
 			QustomDialogBuilder adb = new QustomDialogBuilder(act);
-        	adb.setDividerColor(Utils.getThemeDarkColor());
-			adb.setTitleColor(Utils.getThemeLightColor());
+        	adb.setDividerColor(Utils.getThemeColor());
+			adb.setTitleColor(Utils.getThemeColor());
 			
 //			AlertDialog.Builder adb = new AlertDialog.Builder(act);
 //			LayoutInflater adbInflater = LayoutInflater.from(act);

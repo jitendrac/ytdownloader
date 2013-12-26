@@ -56,6 +56,7 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -189,27 +190,17 @@ public class ShareActivity extends Activity {
 	//private String dashUrl = "";
 	//private String dashStartUrl;
 	private SlidingMenu slMenu;
+	private Drawable slMenuOrigBkg;
 	private static CharSequence constraint;
-	
-//	private int aoIndex;
-//	private File muxedVideo;
-//	private String muxedFileName;
-//	private NotificationCompat.Builder mBuilder;
-//	private NotificationManager mNotificationManager;
-	
-	@Override
-    public void onResume(){
-		super.onResume();
-		
-		// Theme init
-    	Utils.themeInit(this);
-	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
 		sShare = ShareActivity.this;
+		
+		// Theme init
+    	Utils.themeInit(this);
 		
 		setContentView(R.layout.activity_share);
 		
@@ -264,27 +255,20 @@ public class ShareActivity extends Activity {
 		String theme = YTD.settings.getString("choose_theme", "DB");
 		if (theme.equals("DB")) {
 			progressBar1 = progressBarDB;
-			progressBarLB.setVisibility(View.GONE);
-			progressBarDG.setVisibility(View.GONE);
-			progressBarLR.setVisibility(View.GONE);
+			progressBarDB.setVisibility(View.VISIBLE);
 		} else if (theme.equals("LB")) {
 			progressBar1 = progressBarLB;
-			progressBarDB.setVisibility(View.GONE);
-			progressBarDG.setVisibility(View.GONE);
-			progressBarLR.setVisibility(View.GONE);
+			progressBarLB.setVisibility(View.VISIBLE);
 		} else if (theme.equals("DG")) {
 			progressBar1 = progressBarDG;
-			progressBarDB.setVisibility(View.GONE);
-			progressBarLB.setVisibility(View.GONE);
-			progressBarLR.setVisibility(View.GONE);
+			progressBarDG.setVisibility(View.VISIBLE);
 		} else if (theme.equals("LR")) {
 			progressBar1 = progressBarLR;
-			progressBarDB.setVisibility(View.GONE);
-			progressBarLB.setVisibility(View.GONE);
-			progressBarDG.setVisibility(View.GONE);
+			progressBarLR.setVisibility(View.VISIBLE);
 		}
 
 		imgView = (ImageView)findViewById(R.id.imgview);
+		slMenuOrigBkg = findViewById(R.id.list).getBackground();
 		
 		lv = (ListView) findViewById(R.id.list);
 
@@ -505,8 +489,8 @@ public class ShareActivity extends Activity {
 		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
 		if (generalInfoCheckboxEnabled == true) {
 			QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
-			adb.setDividerColor(Utils.getThemeDarkColor());
-			adb.setTitleColor(Utils.getThemeLightColor());
+			adb.setDividerColor(Utils.getThemeColor());
+			adb.setTitleColor(Utils.getThemeColor());
 			
 //			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 //			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -702,8 +686,8 @@ public class ShareActivity extends Activity {
 					filenameComplete = composeFilenameWithExt();
 					
 					QustomDialogBuilder helpBuilder = new QustomDialogBuilder(ShareActivity.this);
-					helpBuilder.setDividerColor(Utils.getThemeDarkColor());
-					helpBuilder.setTitleColor(Utils.getThemeLightColor());
+					helpBuilder.setDividerColor(Utils.getThemeColor());
+					helpBuilder.setTitleColor(Utils.getThemeColor());
 					
 //					AlertDialog.Builder helpBuilder = new AlertDialog.Builder(ShareActivity.this);
 					
@@ -731,8 +715,8 @@ public class ShareActivity extends Activity {
 								fileRenameEnabled = YTD.settings.getBoolean("enable_rename", false);
 								if (fileRenameEnabled == true) {
 									QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
-									adb.setDividerColor(Utils.getThemeDarkColor());
-									adb.setTitleColor(Utils.getThemeLightColor());
+									adb.setDividerColor(Utils.getThemeColor());
+									adb.setTitleColor(Utils.getThemeColor());
 									
 //									AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 //									LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -820,8 +804,8 @@ public class ShareActivity extends Activity {
 					filenameComplete = composeFilenameWithExt();
 					
 					QustomDialogBuilder builder = new QustomDialogBuilder(ShareActivity.this);
-					builder.setDividerColor(Utils.getThemeDarkColor());
-					builder.setTitleColor(Utils.getThemeLightColor());
+					builder.setDividerColor(Utils.getThemeColor());
+					builder.setTitleColor(Utils.getThemeColor());
 					
 //					AlertDialog.Builder builder = new AlertDialog.Builder(ShareActivity.this);
 					if (!YTD.settings.getBoolean("ssh_to_longpress_menu", false)) {
@@ -926,13 +910,13 @@ public class ShareActivity extends Activity {
 				context.startActivity(appStartIntent);
 			} else {
 				QustomDialogBuilder cb = new QustomDialogBuilder(ShareActivity.this);
-				cb.setDividerColor(Utils.getThemeDarkColor());
-				cb.setTitleColor(Utils.getThemeLightColor());
+				cb.setDividerColor(Utils.getThemeColor());
+				cb.setTitleColor(Utils.getThemeColor());
 				
 //				AlertDialog.Builder cb = new AlertDialog.Builder(ShareActivity.this);
 				cb.setTitle(getString(R.string.callConnectBot_dialog_title, connectBotFlavourPlain));
 				cb.setMessage(getString(R.string.callConnectBot_dialog_msg));
-				cb.setIcon(Utils.getThemedAlertIcon());
+				cb.setIcon(Utils.getThemeAlertIcon());
 				cb.setPositiveButton(getString(R.string.callConnectBot_dialog_positive), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						Intent intent = new Intent(Intent.ACTION_VIEW); 
@@ -985,8 +969,8 @@ public class ShareActivity extends Activity {
 				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
 				if (sshInfoCheckboxEnabled == true) {
 					QustomDialogBuilder adb = new QustomDialogBuilder(ShareActivity.this);
-					adb.setDividerColor(Utils.getThemeDarkColor());
-					adb.setTitleColor(Utils.getThemeLightColor());
+					adb.setDividerColor(Utils.getThemeColor());
+					adb.setTitleColor(Utils.getThemeColor());
 					
 //					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 //					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -1030,7 +1014,7 @@ public class ShareActivity extends Activity {
 		resetAllBkg();
 		if (storedView != R.id.ALL) {
 			View sv = findViewById(storedView);
-			if (sv != null) sv.setBackgroundResource(R.drawable.grad_bg_sel);
+			if (sv != null) sv.setBackgroundResource(Utils.getThemedBgDrawable());
 		}
 		
 		setupFilters();
@@ -1050,8 +1034,6 @@ public class ShareActivity extends Activity {
 		final View vo = findViewById(R.id.VO);
 		final View ao = findViewById(R.id.AO);
 		final View all = findViewById(R.id.ALL);
-		
-		YTD.slMenuOrigBkg = findViewById(R.id.list).getBackground();
 		
 		mp4.setOnClickListener(new OnClickListener() {
 			@Override
@@ -1156,13 +1138,12 @@ public class ShareActivity extends Activity {
 	
 	private void reactToViewClick(View v, int filterInt) {
 		resetAllBkg();
-		v.setBackgroundResource(R.drawable.grad_bg_sel);
+		v.setBackgroundResource(Utils.getThemedBgDrawable());
 		assignConstraint(YTD.getListFilterConstraint(filterInt));
 		YTD.settings.edit().putInt("list_filter", filterInt).commit();
 		YTD.settings.edit().putInt("view_filter", v.getId()).commit();
 	}
 
-	@SuppressWarnings("deprecation")
 	private void resetAllBkg() {
 		LinearLayout ll = (LinearLayout) findViewById(R.id.all_filters);
 		int childCount = ll.getChildCount();
@@ -1170,7 +1151,7 @@ public class ShareActivity extends Activity {
 			
 			final View childAt = ll.getChildAt(i);
 			if (childAt instanceof TextView)
-				childAt.setBackgroundDrawable(YTD.slMenuOrigBkg);
+				childAt.setBackground(slMenuOrigBkg);
 		}
 	}
 	
@@ -1289,7 +1270,7 @@ public class ShareActivity extends Activity {
 						
 					}
 					
-					String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
+					String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_E : YTD.JSON_DATA_TYPE_A_M;
 					File audioFile = new File(path.getAbsolutePath(), audioFileName);
 					
 					if (!audioFile.exists()) { 

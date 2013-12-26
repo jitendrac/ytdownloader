@@ -47,10 +47,36 @@
             android:textSize="18sp" />
 
         <ProgressBar
-            android:id="@+id/pb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+	        android:id="@+id/d_progressBarDB"
+	        android:visibility="gone"
+	        style="@style/ProgressBarDark_Blue"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center" />
+	    
+	    <ProgressBar
+	        android:id="@+id/d_progressBarLB"
+	        android:visibility="gone"
+	        style="@style/ProgressBarLight_Blue"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center" />
+	    
+	    <ProgressBar
+	        android:id="@+id/d_progressBarDG"
+	        android:visibility="gone"
+	        style="@style/ProgressBarDark_Green"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center" />
+	    
+	    <ProgressBar
+	        android:id="@+id/d_progressBarLR"
+	        android:visibility="gone"
+	        style="@style/ProgressBarLight_Red"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center" />
         
 		<RelativeLayout
             android:id="@+id/h"

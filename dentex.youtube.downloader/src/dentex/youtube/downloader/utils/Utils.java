@@ -125,7 +125,7 @@ public class Utils {
     	}
 	}
 	
-	public static int getThemedAlertIcon() {
+	public static int getThemeAlertIcon() {
 		String theme = YTD.settings.getString("choose_theme", "DB");
     	if (theme.startsWith("D")) {
     		return R.drawable.ic_dialog_alert_holo_dark;
@@ -134,26 +134,36 @@ public class Utils {
     	}
 	}
 	
-	public static String getThemeDarkColor() {
+	public static String getThemeColor() {
 		String theme = YTD.settings.getString("choose_theme", "DB");
 		if (theme.equals("DG")) {
-    		return "#23B800";
+    		return "#25C900";
     	} else if (theme.equals("LR")) {
-    		return "#E53737";
+    		return "#CC181E";
     	} else { // "DB" or "LB"
-    		return "#3AAFD9";
+    		return "#33B5E5";
     	}
 	}
 	
-	public static String getThemeLightColor() {
+	public static int getThemeBkgGradient() {
+		String theme = YTD.settings.getString("choose_theme", "DB");
+		if (theme.startsWith("D") || theme.equals("LB")) {
+			return R.drawable.grad_bg_dark_gray;
+		} else { // "LR" only, due to light actionbar
+			return R.drawable.grad_bg_light_gray;
+		}
+	}
+	
+	public static int getThemedBgDrawable() {
 		String theme = YTD.settings.getString("choose_theme", "DB");
 		if (theme.equals("DG")) {
-    		return "#42FF14";
+    		return R.drawable.grad_bg_green;
     	} else if (theme.equals("LR")) {
-    		return "#E53737";
-    	} else { // "DB" or "LB"
-    		return "#3EAFD9";
-    	}
+    		return R.drawable.grad_bg_red;
+    	} else if (theme.equals("LB")){
+    		return R.drawable.grad_bg_blue_light;
+    	} // DB
+		return R.drawable.grad_bg_blue_dark;
 	}
 	
 	public static void setCustomTitleAndSummaryColors(View newView) {
@@ -166,8 +176,8 @@ public class Utils {
 //	    		title.setTextColor(Color.DKGRAY);
 //	    		summary.setTextColor(Color.GRAY);
 //	    	} else {
-	    		title.setTextColor(Color.parseColor(getThemeLightColor()));
-				summary.setTextColor(Color.parseColor(getThemeDarkColor()));
+	    		title.setTextColor(Color.parseColor(getThemeColor()));
+				summary.setTextColor(Color.parseColor(getThemeColor()));
 //	    	}
 	    }
 	}
@@ -357,12 +367,12 @@ public class Utils {
 	
 	public static void offerDevMail(final Context ctx) {
 		QustomDialogBuilder adb = new QustomDialogBuilder(ctx);
-		adb.setDividerColor(Utils.getThemeDarkColor());
-		adb.setTitleColor(Utils.getThemeLightColor());
+		adb.setDividerColor(Utils.getThemeColor());
+		adb.setTitleColor(Utils.getThemeColor());
 		
 //		AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
 		
-		adb.setIcon(Utils.getThemedAlertIcon());
+		adb.setIcon(Utils.getThemeAlertIcon());
 		adb.setTitle(ctx.getString(R.string.ffmpeg_device_not_supported));
 		adb.setMessage(ctx.getString(R.string.ffmpeg_support_mail));
 		
@@ -443,8 +453,8 @@ public class Utils {
 		BugSenseHandler.leaveBreadcrumb("notifyFfmpegNotInstalled");
 		
 		QustomDialogBuilder adb = new QustomDialogBuilder(act);
-		adb.setDividerColor(Utils.getThemeDarkColor());
-		adb.setTitleColor(Utils.getThemeLightColor());
+		adb.setDividerColor(Utils.getThemeColor());
+		adb.setTitleColor(Utils.getThemeColor());
 		
 //		AlertDialog.Builder adb = new AlertDialog.Builder(act);
 		adb.setTitle(act.getString(R.string.ffmpeg_not_enabled_title));

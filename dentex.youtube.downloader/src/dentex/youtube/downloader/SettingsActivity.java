@@ -292,8 +292,8 @@ public class SettingsActivity extends Activity {
 //							AlertDialog.Builder adb = new AlertDialog.Builder(sSettings);
 							
 							QustomDialogBuilder adb = new QustomDialogBuilder(sSettings);
-				        	adb.setDividerColor(Utils.getThemeDarkColor());
-							adb.setTitleColor(Utils.getThemeLightColor());
+				        	adb.setDividerColor(Utils.getThemeColor());
+							adb.setTitleColor(Utils.getThemeColor());
 							
 	                        adb.setIcon(Utils.getThemedInfoIcon());
 	                        adb.setTitle(getString(R.string.ffmpeg_download_dialog_title));

@@ -23,6 +23,8 @@ import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.utils.Utils;
 
 public class FfmpegController {
+	
+	public static Process process;
 
 	private final static String DEBUG_TAG = "FfmpegController";
 	
@@ -40,6 +42,10 @@ public class FfmpegController {
 	public void execFFMPEG (List<String> cmd, DashboardListItem item, ShellUtils.ShellCallback sc) {
 		execChmod(mFfmpegBinPath, "755");
 		execProcess(cmd, item, sc);
+	}
+	
+	public void stopFFMPEG (DashboardListItem item, ShellUtils.ShellCallback sc) {
+		stopProcess(item, sc);
 	}
 	
 	public  void execChmod(String filepath, String code) {
@@ -70,7 +76,7 @@ public class FfmpegController {
 		pb.directory(mBinFileDir);
 		pb.command(cmds);
 
-    	Process process = null;
+    	process = null;
     	int exitVal = 1; // Default error
     	boolean started = true;
     	try {	
@@ -87,7 +93,7 @@ public class FfmpegController {
     		// kick them off
     		errorGobbler.start();
     		outputGobbler.start();
-     
+
     		exitVal = process.waitFor();
         
     		sc.processComplete(item, exitVal);
@@ -103,6 +109,10 @@ public class FfmpegController {
     		sc.processNotStartedCheck(started);
     	}
         return exitVal;
+	}
+	
+	public void stopProcess(DashboardListItem item, ShellUtils.ShellCallback sc) {
+		android.os.Process.killProcess(0);
 	}
 	
 	public void extractAudio(File videoIn, File audioOut, String bitrateType, String bitrateValue, 
