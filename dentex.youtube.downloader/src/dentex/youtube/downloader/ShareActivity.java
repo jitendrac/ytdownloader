@@ -237,8 +237,6 @@ public class ShareActivity extends Activity {
 		slMenu.setMenu(R.layout.menu_frame);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		//showSizesInVideoList = YTD.settings.getBoolean("show_size_list", false);
 
 		// Language init
 		Utils.langInit(this);
@@ -1144,6 +1142,7 @@ public class ShareActivity extends Activity {
 		YTD.settings.edit().putInt("view_filter", v.getId()).commit();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void resetAllBkg() {
 		LinearLayout ll = (LinearLayout) findViewById(R.id.all_filters);
 		int childCount = ll.getChildCount();
@@ -1151,7 +1150,7 @@ public class ShareActivity extends Activity {
 			
 			final View childAt = ll.getChildAt(i);
 			if (childAt instanceof TextView)
-				childAt.setBackground(slMenuOrigBkg);
+				childAt.setBackgroundDrawable(slMenuOrigBkg);
 		}
 	}
 	

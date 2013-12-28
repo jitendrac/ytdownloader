@@ -1,13 +1,5 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppThemeDark" parent="android:Theme.Holo" >
-<!--         <item name="android:homeAsUpIndicator">@drawable/up_indicator</item> -->
-    </style>
-    
-    <style name="AppThemeLight" parent="android:Theme.Holo.Light.DarkActionBar" >
-<!--         <item name="android:homeAsUpIndicator">@drawable/up_indicator</item> -->
-    </style>
-    
     <style name="LicenseThemeDark" parent="android:Theme.NoTitleBar" />
     <style name="LicenseThemeLight" parent="android:Theme.Light.NoTitleBar" />
     
