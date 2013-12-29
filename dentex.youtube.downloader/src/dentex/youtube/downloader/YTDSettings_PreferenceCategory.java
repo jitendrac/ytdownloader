@@ -38,12 +38,7 @@ public class YTDSettings_PreferenceCategory extends PreferenceCategory {
     @Override
     protected View onCreateView(ViewGroup parent) {
 	    TextView categoryTitle = (TextView) super.onCreateView(parent);
-	    
-//	    String theme = YTD.settings.getString("choose_theme", "DB");
-//	    if (theme.equals("DG") || theme.equals("LR")) {
-	    	categoryTitle.setTextColor(Color.parseColor(Utils.getThemeColor()));
-//	    }
-	    
+	    categoryTitle.setTextColor(Color.parseColor(Utils.getThemeColor()));
 	    return categoryTitle;
     }
 }

@@ -38,7 +38,7 @@
 
     <item name="android:fastScrollThumbDrawable">@drawable/light_red_fastscroll_thumb_holo</item>
     
-    <item name="android:homeAsUpIndicator">@drawable/light_red_ic_navigation_drawer</item>
+    <item name="android:actionBarItemBackground">@drawable/selectable_background_red</item>
 
   </style>
 

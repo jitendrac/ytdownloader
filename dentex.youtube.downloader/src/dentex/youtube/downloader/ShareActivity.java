@@ -43,7 +43,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -77,14 +78,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bugsense.trace.BugSenseHandler;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.matsuhiro.android.connect.NetworkUtils;
 import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.Maps;
-
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
@@ -193,6 +192,7 @@ public class ShareActivity extends Activity {
 	private Drawable slMenuOrigBkg;
 	private static CharSequence constraint;
 	
+	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -236,8 +236,12 @@ public class ShareActivity extends Activity {
 
 		slMenu.setMenu(R.layout.menu_frame);
 		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		ActionBar ab = getActionBar();
+		ab.setDisplayHomeAsUpEnabled(true);
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+			ab.setHomeAsUpIndicator(Utils.getThemeHomeAsUpDrawable());
+		}
+		
 		// Language init
 		Utils.langInit(this);
 		
@@ -1012,7 +1016,7 @@ public class ShareActivity extends Activity {
 		resetAllBkg();
 		if (storedView != R.id.ALL) {
 			View sv = findViewById(storedView);
-			if (sv != null) sv.setBackgroundResource(Utils.getThemedBgDrawable());
+			if (sv != null) sv.setBackgroundResource(Utils.getThemeBgDrawable());
 		}
 		
 		setupFilters();
@@ -1136,7 +1140,7 @@ public class ShareActivity extends Activity {
 	
 	private void reactToViewClick(View v, int filterInt) {
 		resetAllBkg();
-		v.setBackgroundResource(Utils.getThemedBgDrawable());
+		v.setBackgroundResource(Utils.getThemeBgDrawable());
 		assignConstraint(YTD.getListFilterConstraint(filterInt));
 		YTD.settings.edit().putInt("list_filter", filterInt).commit();
 		YTD.settings.edit().putInt("view_filter", v.getId()).commit();

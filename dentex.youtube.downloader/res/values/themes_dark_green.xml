@@ -37,8 +37,7 @@
     <item name="android:fastScrollThumbDrawable">@drawable/dark_green_fastscroll_thumb_holo</item>
     
     <item name="android:actionBarStyle">@style/ActionBar.Transparent.Green</item>
-    
-    <item name="android:homeAsUpIndicator">@drawable/dark_green_ic_navigation_drawer</item>
+    <item name="android:actionBarItemBackground">@drawable/selectable_background_gray</item>
 
   </style>
 

@@ -64,7 +64,6 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.OnScanCompletedListener;
 import android.net.Uri;
@@ -75,8 +74,6 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -154,7 +151,7 @@ public class Utils {
 		}
 	}
 	
-	public static int getThemedBgDrawable() {
+	public static int getThemeBgDrawable() {
 		String theme = YTD.settings.getString("choose_theme", "DB");
 		if (theme.equals("DG")) {
     		return R.drawable.grad_bg_green;
@@ -166,20 +163,16 @@ public class Utils {
 		return R.drawable.grad_bg_blue_dark;
 	}
 	
-	public static void setCustomTitleAndSummaryColors(View newView) {
-		TextView title = (TextView) newView.findViewById(android.R.id.title);
-    	TextView summary = (TextView) newView.findViewById(android.R.id.summary);
-	    
-    	String theme = YTD.settings.getString("choose_theme", "DB");
-	    if (theme.equals("DG")) {
-//	    	if (!title.isFocusable()) {
-//	    		title.setTextColor(Color.DKGRAY);
-//	    		summary.setTextColor(Color.GRAY);
-//	    	} else {
-	    		title.setTextColor(Color.parseColor(getThemeColor()));
-				summary.setTextColor(Color.parseColor(getThemeColor()));
-//	    	}
-	    }
+	public static int getThemeHomeAsUpDrawable() {
+		String theme = YTD.settings.getString("choose_theme", "DB");
+		if (theme.equals("DG")) {
+    		return R.drawable.dark_green_ic_navigation_drawer;
+    	} else if (theme.equals("LR")) {
+    		return R.drawable.light_red_ic_navigation_drawer;
+    	} else if (theme.equals("LB")){
+    		return R.drawable.light_blue_ic_navigation_drawer;
+    	} // DB
+		return R.drawable.dark_blue_ic_navigation_drawer;
 	}
 	
     public static void langInit(Context context) {
