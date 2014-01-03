@@ -23,6 +23,8 @@ import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.utils.Utils;
 
 public class FfmpegController {
+	
+	public static Process process;
 
 	private final static String DEBUG_TAG = "FfmpegController";
 	
@@ -70,7 +72,7 @@ public class FfmpegController {
 		pb.directory(mBinFileDir);
 		pb.command(cmds);
 
-    	Process process = null;
+    	process = null;
     	int exitVal = 1; // Default error
     	boolean started = true;
     	try {	
@@ -87,7 +89,7 @@ public class FfmpegController {
     		// kick them off
     		errorGobbler.start();
     		outputGobbler.start();
-     
+
     		exitVal = process.waitFor();
         
     		sc.processComplete(item, exitVal);

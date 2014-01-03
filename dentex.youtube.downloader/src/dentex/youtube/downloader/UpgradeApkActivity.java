@@ -243,7 +243,7 @@ public class UpgradeApkActivity extends Activity {
 			    upgradeButton.setEnabled(true);
 			    upgradeButton.setText(getString(R.string.upgrade_button_download));
 	    	} else if (result[0].contentEquals("==")) {
-	    		PopUps.showPopUp(getString(R.string.information), getString(R.string.upgrade_latest_installed), "status", UpgradeApkActivity.this);
+	    		PopUps.showPopUp(getString(R.string.information), getString(R.string.upgrade_latest_installed), "info", UpgradeApkActivity.this);
 	    		Utils.logger("d", "version comparison: latest version is already installed!", DEBUG_TAG);
 	    		upgradeButton.setEnabled(false);
 	    	} else if (result[0].contentEquals("<")) {
@@ -299,8 +299,8 @@ public class UpgradeApkActivity extends Activity {
                     	
                     	if (Utils.checkMD5(matchedMd5, new File(dir, apkFilename))) {
                     	
-	                        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
-	                        helpBuilder.setIcon(Utils.selectThemedInfoIcon())
+	                        AlertDialog.Builder adb = new AlertDialog.Builder(UpgradeApkActivity.this);
+	                        adb.setIcon(Utils.selectThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgraded_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -314,21 +314,21 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 	
-	                        helpBuilder.setNegativeButton(getString(R.string.upgraded_dialog_negative), new DialogInterface.OnClickListener() {
+	                        adb.setNegativeButton(getString(R.string.upgraded_dialog_negative), new DialogInterface.OnClickListener() {
 	
 	                            public void onClick(DialogInterface dialog, int which) {
 	                            	// cancel
 	                            }
 	                        });
 	
-	                        AlertDialog helpDialog = helpBuilder.create();
+	                        AlertDialog helpDialog = adb.create();
 	                        if (! ((Activity) context).isFinishing()) {
 	                        	helpDialog.show();
 	                        }
                         
                     	} else {
-                    		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(UpgradeApkActivity.this);
-	                        helpBuilder.setIcon(Utils.selectThemedInfoIcon())
+                    		AlertDialog.Builder adb = new AlertDialog.Builder(UpgradeApkActivity.this);
+	                        adb.setIcon(Utils.selectThemedInfoIcon())
 	                        	.setTitle(getString(R.string.information))
 	                        	.setMessage(getString(R.string.upgrade_bad_md5_dialog_msg))
 	                        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -340,7 +340,7 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 	
-	                        helpBuilder.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
+	                        adb.setNegativeButton(getString(R.string.dialogs_negative), new DialogInterface.OnClickListener() {
 	
 	                            public void onClick(DialogInterface dialog, int which) {
 	                            	deleteBadDownload(id);
@@ -348,7 +348,7 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 
-	                        AlertDialog helpDialog = helpBuilder.create();
+	                        AlertDialog helpDialog = adb.create();
 	                        if (! ((Activity) context).isFinishing()) {
 	                        	helpDialog.show();
 	                        }

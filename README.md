@@ -8,11 +8,11 @@ For Android 4+
 
 ################################################################
 
-`versionCode="75"`
+`versionCode="76"`
 
-`versionName="3.5.4"`
+`versionName="3.5.5"`
 
-MD5 checksum: `486a4299a4b1bb7330a7c488a93d3d1d` dentex.youtube.downloader_v3.5.4.apk
+MD5 checksum: ``
 
 DISCLAIMER
 ================================================================

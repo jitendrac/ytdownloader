@@ -104,7 +104,7 @@ public class TutorialsActivity extends Activity {
             quickStart.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				
 				public boolean onPreferenceClick(Preference preference) {
-					PopUps.showPopUp(getString(R.string.quick_start_title), getString(R.string.quick_start_text), "status", getActivity());
+					PopUps.showPopUp(getString(R.string.quick_start_title), getString(R.string.quick_start_text), "info", getActivity());
 					return true;
 				}
 			});
@@ -113,7 +113,7 @@ public class TutorialsActivity extends Activity {
             audioTutorial.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				
 				public boolean onPreferenceClick(Preference preference) {
-					PopUps.showPopUp(getString(R.string.audio_tutorial_title), getString(R.string.audio_tutorial_text), "status", getActivity());
+					PopUps.showPopUp(getString(R.string.audio_tutorial_title), getString(R.string.audio_tutorial_text), "info", getActivity());
 					return true;
 				}
 			});*/

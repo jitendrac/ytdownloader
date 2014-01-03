@@ -46,14 +46,9 @@ import android.view.Window;
 import com.bugsense.trace.BugSenseHandler;
 
 import dentex.youtube.downloader.R;
-import dentex.youtube.downloader.docs.ApacheShowActivity;
-import dentex.youtube.downloader.docs.CcShowActivity;
 import dentex.youtube.downloader.docs.ChangelogActivity;
 import dentex.youtube.downloader.docs.CreditsShowActivity;
-import dentex.youtube.downloader.docs.GplShowActivity;
-import dentex.youtube.downloader.docs.LgplShowActivity;
-import dentex.youtube.downloader.docs.MitShowActivity;
-import dentex.youtube.downloader.docs.MplShowActivity;
+import dentex.youtube.downloader.docs.ShowLicenseActivity;
 import dentex.youtube.downloader.docs.TranslatorsListActivity;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
@@ -143,7 +138,8 @@ public class AboutActivity extends Activity {
 	        gpl.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	Intent intent = new Intent(getActivity(),  GplShowActivity.class);
+	            	Intent intent = new Intent(getActivity(),  ShowLicenseActivity.class);
+	            	intent.putExtra("license_text", "gpl");
 	        		startActivity(intent);
 	                return true;
 	            }
@@ -153,7 +149,8 @@ public class AboutActivity extends Activity {
 	        mit.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	Intent intent = new Intent(getActivity(),  MitShowActivity.class);
+	            	Intent intent = new Intent(getActivity(),  ShowLicenseActivity.class);
+	            	intent.putExtra("license_text", "mit");
 	        		startActivity(intent);
 	                return true;
 	            }
@@ -163,7 +160,8 @@ public class AboutActivity extends Activity {
 	        lgpl.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	Intent intent = new Intent(getActivity(),  LgplShowActivity.class);
+	            	Intent intent = new Intent(getActivity(),  ShowLicenseActivity.class);
+	            	intent.putExtra("license_text", "lgpl");
 	        		startActivity(intent);
 	                return true;
 	            }
@@ -173,7 +171,8 @@ public class AboutActivity extends Activity {
 	        apache.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	Intent intent = new Intent(getActivity(),  ApacheShowActivity.class);
+	            	Intent intent = new Intent(getActivity(),  ShowLicenseActivity.class);
+	            	intent.putExtra("license_text", "apache");
 	        		startActivity(intent);
 	                return true;
 	            }
@@ -183,7 +182,8 @@ public class AboutActivity extends Activity {
 	        cc.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	Intent intent = new Intent(getActivity(),  CcShowActivity.class);
+	            	Intent intent = new Intent(getActivity(),  ShowLicenseActivity.class);
+	            	intent.putExtra("license_text", "cc");
 	        		startActivity(intent);
 	                return true;
 	            }
@@ -193,7 +193,8 @@ public class AboutActivity extends Activity {
 	        mpl.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	Intent intent = new Intent(getActivity(),  MplShowActivity.class);
+	            	Intent intent = new Intent(getActivity(),  ShowLicenseActivity.class);
+	            	intent.putExtra("license_text", "mpl");
 	        		startActivity(intent);
 	                return true;
 	            }

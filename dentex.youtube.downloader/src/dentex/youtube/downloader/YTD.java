@@ -41,7 +41,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.Preference;
@@ -105,11 +104,12 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_SIZE = "size";
 	
 	public static final String ffmpegBinName = "ffmpeg";
-	public static String FFMPEG_CURRENT_V = "_v2.1";
+	public static String FFMPEG_CURRENT_V = "_v2.1.1";
 	
 	public static String ARMv7a_NEON = "armv7a-neon";
 	public static String ARMv7a = "armv7a";
-	public static String ARMv5te = "armv5te";
+//	public static String ARMv5te = "armv5te";
+	public static String x86 = "x86";
 	public static String UNSUPPORTED_CPU = "UNSUPPORTED";
 	
 	public static int _AUDIO_EXTR = 0;
@@ -142,8 +142,6 @@ public class YTD extends Application implements QueueThreadListener{
 	
 	public static QueueThread queueThread;
 	public static Handler handler;
-	
-	public static Drawable slMenuOrigBkg;
 	
 	public static final String VIEW_ALL_STRING = "";
 	public static final int VIEW_ALL = -1;

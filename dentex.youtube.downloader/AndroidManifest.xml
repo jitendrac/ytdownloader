@@ -3,7 +3,7 @@
     package="dentex.youtube.downloader"
     android:installLocation="auto"
     android:versionCode="75"
-    android:versionName="3.5.4" >
+    android:versionName="3.5.4.01-test-ffmpeg-x86" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -99,54 +99,6 @@
                 android:value=".SettingsActivity" />
         </activity>
         <activity
-            android:name="dentex.youtube.downloader.docs.GplShowActivity"
-            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
-            android:label="@string/gpl_title" >
-<!--             <meta-data -->
-<!--                 android:name="android.support.PARENT_ACTIVITY" -->
-<!--                 android:value=".menu.AboutActivity" /> -->
-        </activity>
-        <activity
-            android:name="dentex.youtube.downloader.docs.LgplShowActivity"
-            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
-            android:label="@string/lgpl_title" >
-<!--             <meta-data -->
-<!--                 android:name="android.support.PARENT_ACTIVITY" -->
-<!--                 android:value=".menu.AboutActivity" /> -->
-        </activity>
-        <activity
-            android:name="dentex.youtube.downloader.docs.MitShowActivity"
-            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
-            android:label="@string/mit_title" >
-<!--             <meta-data -->
-<!--                 android:name="android.support.PARENT_ACTIVITY" -->
-<!--                 android:value=".menu.AboutActivity" /> -->
-        </activity>
-        <activity
-            android:name="dentex.youtube.downloader.docs.ApacheShowActivity"
-            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
-            android:label="@string/apache_title" >
-<!--             <meta-data -->
-<!--                 android:name="android.support.PARENT_ACTIVITY" -->
-<!--                 android:value=".menu.AboutActivity" /> -->
-        </activity>
-        <activity
-            android:name="dentex.youtube.downloader.docs.CcShowActivity"
-            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
-            android:label="@string/cc_title" >
-<!--             <meta-data -->
-<!--                 android:name="android.support.PARENT_ACTIVITY" -->
-<!--                 android:value=".menu.AboutActivity" /> -->
-        </activity>
-        <activity
-            android:name="dentex.youtube.downloader.docs.MplShowActivity"
-            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
-            android:label="@string/mpl_title" >
-<!--             <meta-data -->
-<!--                 android:name="android.support.PARENT_ACTIVITY" -->
-<!--                 android:value=".menu.AboutActivity" /> -->
-        </activity>
-        <activity
             android:name="dentex.youtube.downloader.docs.CreditsShowActivity"
             android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/title_activity_credits_show" >
@@ -161,6 +113,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".menu.AboutActivity" />
+        </activity>
+        <activity
+            android:name="dentex.youtube.downloader.docs.ShowLicenseActivity"
+            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden">
         </activity>
         <activity
             android:name="dentex.youtube.downloader.menu.DonateActivity"

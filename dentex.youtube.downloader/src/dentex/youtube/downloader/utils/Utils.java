@@ -291,9 +291,12 @@ public class Utils {
 				Utils.logger("d", " -> v7a", DEBUG_TAG);
 				return YTD.ARMv7a;
 			}
-		} else if (cpuAbi.equals("armeabi")) {
-			Utils.logger("d", " -> v5te", DEBUG_TAG);
-			return YTD.ARMv5te;
+//		} else if (cpuAbi.equals("armeabi")) {
+//			Utils.logger("d", " -> v5te", DEBUG_TAG);
+//			return YTD.ARMv5te;
+		} else if (cpuAbi.equals("x86")) {
+			Utils.logger("d", " -> x86", DEBUG_TAG);
+			return YTD.x86;	
 		} else {
 			return YTD.UNSUPPORTED_CPU;
 		}

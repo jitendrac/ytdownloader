@@ -44,6 +44,8 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -57,6 +59,7 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -188,6 +191,7 @@ public class ShareActivity extends Activity {
 	//private String dashUrl = "";
 	//private String dashStartUrl;
 	private SlidingMenu slMenu;
+	private Drawable slMenuOrigBkg;
 	private static CharSequence constraint;
 	
 //	private int aoIndex;
@@ -196,16 +200,15 @@ public class ShareActivity extends Activity {
 //	private NotificationCompat.Builder mBuilder;
 //	private NotificationManager mNotificationManager;
 	
+	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BugSenseHandler.leaveBreadcrumb("ShareActivity_onCreate");
 		sShare = ShareActivity.this;
 		
-//		aoIndex = -1;
-		
 		// Theme init
-		Utils.themeInit(this);
+    	Utils.themeInit(this);
 		
 		setContentView(R.layout.activity_share);
 		
@@ -218,8 +221,6 @@ public class ShareActivity extends Activity {
 		itagsText.clear();
 		itags.clear();
 		listEntries.clear();
-		
-		String theme = YTD.settings.getString("choose_theme", "D");
 		
 		int or = this.getResources().getConfiguration().orientation;
     	boolean isLandscape = (or == 2) ? true : false;
@@ -243,10 +244,12 @@ public class ShareActivity extends Activity {
 
 		slMenu.setMenu(R.layout.menu_frame);
 		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ActionBar ab = getActionBar();
+		ab.setDisplayHomeAsUpEnabled(true);
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+			ab.setHomeAsUpIndicator(R.drawable.dark_blue_ic_navigation_drawer);
+		}
 		
-		//showSizesInVideoList = YTD.settings.getBoolean("show_size_list", false);
-
 		// Language init
 		Utils.langInit(this);
 		
@@ -257,6 +260,7 @@ public class ShareActivity extends Activity {
 		progressBarD = (ProgressBar) findViewById(R.id.progressBarD);
 		progressBarL = (ProgressBar) findViewById(R.id.progressBarL);
 		
+		String theme = YTD.settings.getString("choose_theme", "D");
 		if (theme.equals("D")) {
 			progressBar1 = progressBarD;
 			progressBarL.setVisibility(View.GONE);
@@ -266,6 +270,7 @@ public class ShareActivity extends Activity {
 		}
 
 		imgView = (ImageView)findViewById(R.id.imgview);
+		slMenuOrigBkg = findViewById(R.id.list).getBackground();
 		
 		lv = (ListView) findViewById(R.id.list);
 
@@ -618,13 +623,13 @@ public class ShareActivity extends Activity {
 			
 			if (result != null && result.equals("login_required") && !autoModeEnabled) {
 				BugSenseHandler.leaveBreadcrumb("login_required");
-				noVideosMsgs("status", getString(R.string.login_required));
+				noVideosMsgs("info", getString(R.string.login_required));
 			}
 			
 			if (result != null && result.equals("rtmpe")) {
 				BugSenseHandler.leaveBreadcrumb("encrypted_streams");
 				listEntries.clear();
-				noVideosMsgs("status", getString(R.string.encrypted_streams));
+				noVideosMsgs("info", getString(R.string.encrypted_streams));
 			}
 			
 			aA = new ShareActivityAdapter(listEntries, ShareActivity.this);
@@ -994,8 +999,6 @@ public class ShareActivity extends Activity {
 		final View ao = findViewById(R.id.AO);
 		final View all = findViewById(R.id.ALL);
 		
-		YTD.slMenuOrigBkg = findViewById(R.id.list).getBackground();
-		
 		mp4.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -1113,7 +1116,7 @@ public class ShareActivity extends Activity {
 			
 			final View childAt = ll.getChildAt(i);
 			if (childAt instanceof TextView)
-				childAt.setBackgroundDrawable(YTD.slMenuOrigBkg);
+				childAt.setBackgroundDrawable(slMenuOrigBkg);
 		}
 	}
 	
@@ -1232,7 +1235,7 @@ public class ShareActivity extends Activity {
 						
 					}
 					
-					String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_M : YTD.JSON_DATA_TYPE_A_E;
+					String type = (brValue == null) ? YTD.JSON_DATA_TYPE_A_E : YTD.JSON_DATA_TYPE_A_M;
 					File audioFile = new File(path.getAbsolutePath(), audioFileName);
 					
 					if (!audioFile.exists()) { 
@@ -1346,7 +1349,7 @@ public class ShareActivity extends Activity {
 		if (dest.exists() || (destTemp.exists() && previousJson.contains(dest.getName())) && !autoModeEnabled && !restartModeEnabled) {
 			blockDashboardLaunch = true;
 			PopUps.showPopUp(getString(R.string.long_press_warning_title), 
-					getString(R.string.file_already_added), "status", ShareActivity.this);
+					getString(R.string.file_already_added), "info", ShareActivity.this);
 		} else {
 			long id = 0;
 			if (autoModeEnabled || restartModeEnabled) {

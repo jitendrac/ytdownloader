@@ -46,13 +46,13 @@ public class PopUps {
     	if (theme.equals("D")) {
 		    if ( type == "error" ) {
 		        icon = R.drawable.ic_dialog_alert_holo_dark;
-		    } else if ( type == "status" ) {
+		    } else if ( type == "info" ) {
 		        icon = R.drawable.ic_dialog_info_holo_dark;
 		    }
     	} else {
     		if ( type == "error" ) {
 		        icon = R.drawable.ic_dialog_alert_holo_light;
-		    } else if ( type == "status" ) {
+		    } else if ( type == "info" ) {
 		        icon = R.drawable.ic_dialog_info_holo_light;
 		    }
     	}
@@ -65,11 +65,6 @@ public class PopUps {
 	        }
 	    });
 	
-	    AlertDialog helpDialog = helpBuilder.create();
-	    if (! activity.isFinishing()) {
-	    	helpDialog.show();
-	    } else {
-	    	Utils.logger("w", "PopUp not showed", "PopUps");
-	    }
+	    Utils.secureShowDialog(activity, helpBuilder);
 	}
 }
