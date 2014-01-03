@@ -158,9 +158,9 @@ public class FfmpegDownloadService extends Service {
 						File dst = new File(nContext.getDir("bin", 0), YTD.ffmpegBinName);
 						
 						String md5 = null;
-						if (cpuVers.equals(YTD.ARMv7a_NEON)) 	md5 = "ed3ac5269496b2625d26471cf57f15d0";
-						if (cpuVers.equals(YTD.ARMv7a)) 		md5 = "deadfb4746e4cdf47aa2bcf7b55d718b";
-						if (cpuVers.equals(YTD.ARMv5te)) 		md5 = "ecd4372e667feb2b2971dbe361a3fe40";
+						if (cpuVers.equals(YTD.ARMv7a_NEON)) 	md5 = "3321f1a50bc4fe06118f482ab77eb546";
+						if (cpuVers.equals(YTD.ARMv7a)) 		md5 = "e52b285669890304032a9647f7e3a695";
+						if (cpuVers.equals(YTD.x86)) 			md5 = "f0b5bbc7ac650b720e5045940b7edb2b";
 						
 						if (Utils.checkMD5(md5, src)) {
 							SettingsActivity.SettingsFragment.copyFfmpegToAppDataDir(context, src, dst);

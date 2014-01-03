@@ -124,19 +124,21 @@ public class SettingsActivity extends Activity {
         	case R.id.menu_tutorials:
         		startActivity(new Intent(this, TutorialsActivity.class));
         		return true;
-        	case R.id.menu_dashboard:
-        		Intent dashboardIntent = new Intent(this, DashboardActivity.class);
-        		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        		startActivity(dashboardIntent);
-        		return true;
+//        	case R.id.menu_dashboard:
+//        		Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+//        		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        		startActivity(dashboardIntent);
+//        		return true;
         	default:
         		return super.onOptionsItemSelected(item);
         }
     }
 
 	public static class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
+		
+		public static PreferenceScreen sSettingsPr;
     	
-		//private Preference dashboard;
+		private Preference dashboard;
 		private Preference filechooser;
 		private Preference up;
 		private Preference th;
@@ -164,6 +166,20 @@ public class SettingsActivity extends Activity {
             addPreferencesFromResource(R.xml.settings);
 
             sSettings = getActivity();
+            sSettingsPr = getPreferenceScreen();
+            
+			//TODO reset_adv_pref
+			Bundle args = getArguments();
+            if (args.getBoolean("reset_adv_pref")) {
+            	Log.i(DEBUG_TAG, "resetting FFmpeg option");
+            	touchAdvPref(true, false);
+            	
+            	File oldPrivateFile = new File(getActivity().getDir("bin", 0), YTD.ffmpegBinName);
+				oldPrivateFile.delete();
+				
+				File oldExtFile = new File(getActivity().getExternalFilesDir(null), YTD.ffmpegBinName);
+				oldExtFile.delete();
+            }
 
             String cf = YTD.settings.getString("CHOOSER_FOLDER", "");
             if (cf.isEmpty() && cf != null) {
@@ -180,16 +196,16 @@ public class SettingsActivity extends Activity {
                 initSummary(getPreferenceScreen().getPreference(i));
             }
 
-//            dashboard = (Preference) findPreference("dashboard");
-//            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-//            	
-//                public boolean onPreferenceClick(Preference preference) {
-//                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
-//            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//            		startActivity(dashboardIntent);
-//                  return true;
-//                }
-//            });
+            dashboard = (Preference) findPreference("dashboard");
+            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            	
+                public boolean onPreferenceClick(Preference preference) {
+                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
+            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            		startActivity(dashboardIntent);
+                  return true;
+                }
+            });
             
             //sw = (SwitchPreference) findPreference("swap_location");
             
@@ -304,7 +320,7 @@ public class SettingsActivity extends Activity {
 	                        String ffmpegSize = "n.a.";
 	                        if (cpuVers.equals(YTD.ARMv7a_NEON))	ffmpegSize = getString(R.string.ffmpeg_size_armv7);
 	                        if (cpuVers.equals(YTD.ARMv7a))			ffmpegSize = getString(R.string.ffmpeg_size_armv7);
-	                        if (cpuVers.equals(YTD.ARMv5te))		ffmpegSize = getString(R.string.ffmpeg_size_armv5);
+	                        if (cpuVers.equals(YTD.x86))			ffmpegSize = getString(R.string.ffmpeg_size_x86);
 		                    
 	                        String size = getString(R.string.size) + " " + ffmpegSize;
 	                        adb.setMessage(msg + " " + link + "\n" + size);                      
@@ -352,13 +368,6 @@ public class SettingsActivity extends Activity {
 					}
 				}
 			});
-			
-			//TODO
-			Bundle args = getArguments();
-            if (args.getBoolean("reset_adv_pref")) {
-            	Log.i(DEBUG_TAG, "resetting FFmpeg option");
-            	touchAdvPref(true, false);
-            }
 		}
         
         /*private void downloadFfmpeg() {
@@ -614,6 +623,7 @@ public class SettingsActivity extends Activity {
 			sSettings.runOnUiThread(new Runnable() {
 				public void run() {
 					Utils.logger("d", "adv-features-checkbox: " + "enabled: " + enable + " / checked: " + check, DEBUG_TAG);
+					CheckBoxPreference advanced = (CheckBoxPreference) sSettingsPr.findPreference("enable_advanced_features");
 					advanced.setEnabled(enable);
 					advanced.setChecked(check);
 			    }

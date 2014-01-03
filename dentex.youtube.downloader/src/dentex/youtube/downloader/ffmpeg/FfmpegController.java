@@ -44,10 +44,6 @@ public class FfmpegController {
 		execProcess(cmd, item, sc);
 	}
 	
-	public void stopFFMPEG (DashboardListItem item, ShellUtils.ShellCallback sc) {
-		stopProcess(item, sc);
-	}
-	
 	public  void execChmod(String filepath, String code) {
 		Utils.logger("v", "Trying to chmod '" + filepath + "' to: " + code, DEBUG_TAG);
 		try {
@@ -109,10 +105,6 @@ public class FfmpegController {
     		sc.processNotStartedCheck(started);
     	}
         return exitVal;
-	}
-	
-	public void stopProcess(DashboardListItem item, ShellUtils.ShellCallback sc) {
-		android.os.Process.killProcess(0);
 	}
 	
 	public void extractAudio(File videoIn, File audioOut, String bitrateType, String bitrateValue, 

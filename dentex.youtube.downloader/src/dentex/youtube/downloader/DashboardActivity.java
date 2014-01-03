@@ -271,7 +271,11 @@ public class DashboardActivity extends Activity {
 					    				if (!isFfmpegRunning) {
 						    				if (audioIsSupported) {
 							    				if (ffmpegEnabled) {
-								    				extractAudioOnly(in);
+							    					if (isFFmpegLatest()) {
+							    						extractAudioOnly(in);
+							    					} else {
+						    							downloadLatestFFmpeg();
+						    						}
 							    				} else {
 							    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 							    				}
@@ -286,7 +290,11 @@ public class DashboardActivity extends Activity {
 					    				if (!isFfmpegRunning) {
 						    				if (audioIsSupported) {
 							    				if (ffmpegEnabled) {
-								    				extractAudioAndConvertToMp3(in);
+								    				if (isFFmpegLatest()) {
+								    					extractAudioAndConvertToMp3(in);
+							    					} else {
+						    							downloadLatestFFmpeg();
+						    						}
 							    				} else {
 							    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 							    				}
@@ -316,7 +324,11 @@ public class DashboardActivity extends Activity {
 					    				if (!isFfmpegRunning) {
 						    				if (audioIsSupported) {
 							    				if (ffmpegEnabled) {
-								    				extractAudioAndConvertToMp3(in);
+							    					if (isFFmpegLatest()) {
+								    					extractAudioAndConvertToMp3(in);
+							    					} else {
+						    							downloadLatestFFmpeg();
+						    						}
 							    				} else {
 							    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 							    				}
@@ -346,7 +358,11 @@ public class DashboardActivity extends Activity {
 					    			case 1: // convert audio to mp3
 					    				if (!isFfmpegRunning) {
 					    					if (ffmpegEnabled) {
-							    				convertAudioToMp3(in);
+							    				if (isFFmpegLatest()) {
+							    					convertAudioToMp3(in);
+						    					} else {
+					    							downloadLatestFFmpeg();
+					    						}
 					    					} else {
 						    					Utils.notifyFfmpegNotInstalled(DashboardActivity.this);
 						    				}
@@ -383,52 +399,7 @@ public class DashboardActivity extends Activity {
 			    							notifyFfmpegIsAlreadyRunning();
 			    						}
 			    					}
-								}
-
-								private void downloadLatestFFmpeg() {
-									BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
-									QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
-									adb.setDividerColor(Utils.getThemeColor());
-									adb.setTitleColor(Utils.getThemeColor());
-									
-//									AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
-									adb.setTitle(getString(R.string.information));
-									adb.setMessage(getString(R.string.ffmpeg_new_v_required));
-									adb.setIcon(Utils.getThemedInfoIcon());
-									adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-										public void onClick(DialogInterface dialog, int which) {
-											File oldPrivateFile = new File(getDir("bin", 0), YTD.ffmpegBinName);
-											oldPrivateFile.delete();
-											
-											File oldExtFile = new File(getExternalFilesDir(null), YTD.ffmpegBinName);
-											oldExtFile.delete();
-											
-											Intent sIntent = new Intent(sDashboard, SettingsActivity.class);
-							        		sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-							        		sIntent.putExtra("reset_adv_pref", true);
-							        		startActivity(sIntent);
-										}
-									});
-									
-									adb.setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
-										public void onClick(DialogInterface dialog, int which) {
-											// cancel
-										}
-									});
-									
-									Utils.secureShowDialog(sDashboard, adb);
-								}
-
-								private boolean isFFmpegLatest() {
-									File extFile = new File(getExternalFilesDir(null), YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V);
-									if (extFile.exists()) {
-										return true;
-									} else {
-										return false;
-									}
-								}
-								
+								}								
 							});
 							Utils.secureShowDialog(sDashboard, builder);
 						}
@@ -560,6 +531,44 @@ public class DashboardActivity extends Activity {
         		return true;
         	}
     	});
+	}
+	
+	private void downloadLatestFFmpeg() {
+		BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
+		QustomDialogBuilder adb = new QustomDialogBuilder(sDashboard);
+		adb.setDividerColor(Utils.getThemeColor());
+		adb.setTitleColor(Utils.getThemeColor());
+		
+//		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
+		adb.setTitle(getString(R.string.information));
+		adb.setMessage(getString(R.string.ffmpeg_new_v_required));
+		adb.setIcon(Utils.getThemedInfoIcon());
+		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {	
+				Intent sIntent = new Intent(sDashboard, SettingsActivity.class);
+        		sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        		sIntent.putExtra("reset_adv_pref", true);
+        		startActivity(sIntent);
+			}
+		});
+		
+		adb.setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				// cancel
+			}
+		});
+		
+		Utils.secureShowDialog(sDashboard, adb);
+	}
+
+	private boolean isFFmpegLatest() {
+		File extFile = new File(getExternalFilesDir(null), YTD.ffmpegBinName + YTD.FFMPEG_CURRENT_V);
+		if (extFile.exists()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public static Context getContext() {
@@ -1712,7 +1721,7 @@ public class DashboardActivity extends Activity {
 	        	} else if (ext.equals("FLV")) {
 	        		aExt = "x";
 	        		doImport = true;
-	        	} else if (ext.equals("M4A") || ext.equals("OGG") || ext.equals("MP3")) {
+	        	} else if (ext.equals("M4A") || ext.equals("AAC") || ext.equals("OGG") || ext.equals("MP3")) {
 	        		type = YTD.JSON_DATA_TYPE_A_E;
 	        		doImport = true;
 	        	} else {

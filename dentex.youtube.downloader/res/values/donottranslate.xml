@@ -5,6 +5,10 @@
         \n-----------------------------------
         \n[x] four new custom themes
         \n
+        \n v3.5.5 - Jan 03 2014
+        \n-----------------------------------
+        \n[x] new FFmpeg builds from latest v2.1.1 - now with x86 CPU support
+        \n
         \n v3.5.4 - Dic 17 2013
         \n-----------------------------------
         \n[x] possibility to import into Dashboard multiple files at once
@@ -686,13 +690,14 @@
     <string name="apk_download_sourceforge_link">http://sourceforge.net/projects/ytdownloader/files/dentex.youtube.downloader_v%1$s.apk/download</string>
 	<string name="apk_filename">dentex.youtube.downloader_v%1$s.apk</string>
     
-    <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/2.1/ffmpeg_%1$s/download</string>
+    <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/2.1.1/ffmpeg_%1$s/download</string>
     
 <!--     <string name="ffmpeg_download_dialog_msg_link_test">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/ffmpeg_armv7a_v2.1/download</string> -->
 <!--     <string name="ffmpeg_download_dialog_msg_link_no_red">http://optimate.dl.sourceforge.net/project/ytdownloader/files/ffmpeg/ffmpeg_arm%1$s</string> -->
     
-    <string name="ffmpeg_size_armv7">7.0 MB</string>
-    <string name="ffmpeg_size_armv5">6.6 MB</string>
+    <string name="ffmpeg_size_armv7">6.9 MB</string>
+<!--     <string name="ffmpeg_size_armv5">6.6 MB</string> -->
+    <string name="ffmpeg_size_x86">11.1 MB</string>
     
     <string-array name="notification_defaults_entry_values">
         <item>0</item>

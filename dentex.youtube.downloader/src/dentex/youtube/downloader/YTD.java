@@ -104,11 +104,12 @@ public class YTD extends Application implements QueueThreadListener{
 	public static final String JSON_DATA_SIZE = "size";
 	
 	public static final String ffmpegBinName = "ffmpeg";
-	public static String FFMPEG_CURRENT_V = "_v2.1";
+	public static String FFMPEG_CURRENT_V = "_v2.1.1";
 	
 	public static String ARMv7a_NEON = "armv7a-neon";
 	public static String ARMv7a = "armv7a";
-	public static String ARMv5te = "armv5te";
+//	public static String ARMv5te = "armv5te";
+	public static String x86 = "x86";
 	public static String UNSUPPORTED_CPU = "UNSUPPORTED";
 	
 	public static int _AUDIO_EXTR = 0;
