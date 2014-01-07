@@ -14,6 +14,10 @@ For Android 4+
 
 MD5 checksum: ``
 
+DEVELOPER'S E-MAIL:
+================================================================
+    samuele.rini76@gmail.com (Hello Aptoide team!) ;)
+
 DISCLAIMER
 ================================================================
     You, the user, accept the full responsibility for the usage of 
