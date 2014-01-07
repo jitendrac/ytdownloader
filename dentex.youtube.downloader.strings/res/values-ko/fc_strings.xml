@@ -36,7 +36,7 @@
     <string name="afc_msg_done">완료</string>
     <string name="afc_msg_empty">&#8230;비어있음</string>
     <string name="afc_msg_filename_is_empty">파일 이름이 비어있습니다</string>
-    <string name="afc_msg_loading">로딩 중&#8230;</string>
+    <string name="afc_msg_loading">로딩 중…</string>
     <string name="afc_pmsg_cannot_access_dir">\"%1$s\"에 접근할 수 없습니다</string>
     <string name="afc_pmsg_cannot_create_folder">폴더 \"%1$s\" 을(를) 생성할 수 없습니다</string>
     <string name="afc_pmsg_cannot_delete_file">%1$s \"%2$s\"을(를) 삭제할 수 없습니다</string>

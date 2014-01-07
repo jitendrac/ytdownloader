@@ -55,6 +55,8 @@ import org.cmc.music.myid3.MyID3;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -80,6 +82,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -98,6 +101,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.InvalidYoutubeLinkException;
@@ -106,6 +110,9 @@ import com.squareup.picasso.Picasso;
 
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
+import dentex.youtube.downloader.menu.AboutActivity;
+import dentex.youtube.downloader.menu.DonateActivity;
+import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.queue.FFmpegExtractFlvThumbTask;
 import dentex.youtube.downloader.utils.DashboardClearHelper;
@@ -129,6 +136,12 @@ public class DashboardActivity extends Activity {
 	private Editable searchText;
 	//private static RelativeLayout bkgRl;
 	private static ImageView bkgImg;
+	
+	private static final int DASHBOARD_ACTION_YOUTUBE = 104;
+	private static final int DASHBOARD_TOOL_CLEAR = 103;
+	private static final int DASHBOARD_TOOL_IMPORT = 102;
+	private static final int DASHBOARD_TOOL_RESTORE = 101;
+	private static final int DASHBOARD_TOOL_BACKUP = 100;
 	
 	//public static int entries = 0;
 	public static List<String> idEntries = new ArrayList<String>();
@@ -179,7 +192,10 @@ public class DashboardActivity extends Activity {
 	private File audioOnlyFile;
 	public String audioOnlyExt = "";
 	DashboardListItem aoItem;
+	
+	private SlidingMenu slMenu;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -195,13 +211,48 @@ public class DashboardActivity extends Activity {
 		// Language init
     	Utils.langInit(this);
     	
+    	//general Info PopUp;
+    	PopUps.showPopUp(getString(R.string.quick_start_dashboard_title), 
+				getString(R.string.quick_start_dashboard_text), 
+				"info", 
+				sDashboard, 
+				"show_quick_start_dahboard");
+    	
     	// Detect screen orientation
     	int or = this.getResources().getConfiguration().orientation;
     	isLandscape = (or == 2) ? true : false;
     	
+		// configure the SlidingMenu
+		slMenu = new SlidingMenu(this);
+		slMenu.setMode(SlidingMenu.LEFT);
+		slMenu.setShadowWidthRes(R.dimen.shadow_width);
+		slMenu.setShadowDrawable(R.drawable.shadow);
+		if (isLandscape) {
+//			slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_landscape);
+			slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_portrait);
+			slMenu.showMenu();
+		} else {
+			slMenu.setBehindWidthRes(R.dimen.slidingmenu_width_portrait);
+			slMenu.showContent();
+		}
+		slMenu.setFadeDegree(0.35f);
+		slMenu.setHapticFeedbackEnabled(true);
+		slMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+
+		slMenu.setMenu(R.layout.menu_frame_dashboard);
+		
+		ActionBar ab = getActionBar();
+		ab.setDisplayHomeAsUpEnabled(true);
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+			ab.setHomeAsUpIndicator(R.drawable.dark_blue_ic_navigation_drawer);
+		}
+    	
     	if (da != null) {
     		clearAdapterAndLists();
     	}
+    	
+    	setupDashboardActions();
     	
     	countdown = 10;
     	
@@ -520,7 +571,7 @@ public class DashboardActivity extends Activity {
         	}
     	});
 	}
-	
+
 	private void downloadLatestFFmpeg() {
 		BugSenseHandler.leaveBreadcrumb("downloadLatestFFmpeg");
 		AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
@@ -1010,6 +1061,9 @@ public class DashboardActivity extends Activity {
         super.onOptionsItemSelected(item);
         
         switch(item.getItemId()){
+	        case android.R.id.home:
+				slMenu.toggle();
+				return true;
         	case R.id.menu_search:
         		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_search");
     			if (!isSearchBarVisible) {
@@ -1023,104 +1077,82 @@ public class DashboardActivity extends Activity {
         		sIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         		startActivity(sIntent);
     			return true;
-        	case R.id.menu_backup:
-        		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_backup");
-        		String previousJson = JsonHelper.readJsonDashboardFile();
-                boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
-        				 previousJson.contains(YTD.JSON_DATA_STATUS_PAUSED));
-        		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
-	        		boolean backupCheckboxEnabled = YTD.settings.getBoolean("dashboard_backup_info", true);
-				    if (backupCheckboxEnabled == true) {
-				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
-			        	
-			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
-					    showAgain.setChecked(true);
-					    showAgain.setText(getString(R.string.show_again_checkbox));
-					    adb.setView(showAgainView);
-					    
-			    		adb.setTitle(getString(R.string.information));
-			    		adb.setMessage(getString(R.string.menu_backup_info));
-			    		adb.setIcon(Utils.selectThemedInfoIcon());
-			    		
-			    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-							public void onClick(DialogInterface dialog, int which) {
-			    				if (!showAgain.isChecked()) {
-					    			YTD.settings.edit().putBoolean("dashboard_backup_info", false).apply();
-					    			Utils.logger("d", "dashboard backup info checkbox disabled", DEBUG_TAG);
-					    		}
-			    				launchFcForBackup();
-			    			}
-			    		});
-			    		
-			    		adb.setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
-			    			public void onClick(DialogInterface dialog, int which) {
-			    				// cancel
-			    			}
-			    		});
-			    		
-			    		Utils.secureShowDialog(sDashboard, adb);
-				    } else {
-				    	launchFcForBackup();
-				    }
-	        	} else {
-        			toastOpsNotExecuted();
-        		}
+        	case R.id.menu_donate:
+        		startActivity(new Intent(this, DonateActivity.class));
         		return true;
-        	case R.id.menu_restore:
-        		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_restore");
-        		String previousJson2 = JsonHelper.readJsonDashboardFile();
-                boolean smtInProgressOrPaused2 = (previousJson2.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
-        				 previousJson2.contains(YTD.JSON_DATA_STATUS_PAUSED));
-        		if (!smtInProgressOrPaused2) {
-	        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
-				    if (restoreCheckboxEnabled == true) {
-				    	
-			        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
-			        	
-			        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
-					    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
-					    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
-					    showAgain.setChecked(true);
-					    showAgain.setText(getString(R.string.show_again_checkbox));
-					    adb.setView(showAgainView);
-					    
-			    		adb.setTitle(getString(R.string.information));
-			    		adb.setMessage(getString(R.string.menu_restore_info) + ".\n" + getString(R.string.menu_restore_info_msg));
-			    		adb.setIcon(Utils.selectThemedInfoIcon());
-			    		
-			    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        	case R.id.menu_about:
+        		startActivity(new Intent(this, AboutActivity.class));
+        		return true;
+        	case R.id.menu_tutorials:
+        		startActivity(new Intent(this, TutorialsActivity.class));
+        		return true;
+        	default:
+        		return super.onOptionsItemSelected(item);
+        }
+    }
 	
-							public void onClick(DialogInterface dialog, int which) {
-			    				if (!showAgain.isChecked()) {
-					    			YTD.settings.edit().putBoolean("dashboard_restore_info", false).apply();
-					    			Utils.logger("d", "dashboard restore info checkbox disabled", DEBUG_TAG);
-					    		}
-			    				launchFcForRestore();
-			    			}
-			    		});
-			    		
-			    		adb.setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
-			    			public void onClick(DialogInterface dialog, int which) {
-			    				// cancel
-			    			}
-			    		});
-			    		
-			    		Utils.secureShowDialog(sDashboard, adb);
-				    } else {
-				    	launchFcForRestore();
-				    }
-        		} else {
-        			toastOpsNotExecuted();
-        		}
-        		return true;
-        	case R.id.menu_import:
-        		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_import");
-        		boolean importCheckboxEnabled1 = YTD.settings.getBoolean("dashboard_import_info", true);
-			    if (importCheckboxEnabled1 == true) {
+	private void setupDashboardActions() {
+		View backup = findViewById(R.id.menu_backup);
+		View restore = findViewById(R.id.menu_restore);
+		View importFiles = findViewById(R.id.menu_import_file);
+		View clearDashboard = findViewById(R.id.menu_clear_dashboard);
+		View launchYoutube = findViewById(R.id.menu_launch_youtube);
+		
+		View[] actionsViews = {backup, restore, importFiles, clearDashboard, launchYoutube};
+//		int[] actionsInts = {
+//				DASHBOARD_TOOL_BACKUP, 
+//				DASHBOARD_TOOL_RESTORE, 
+//				DASHBOARD_TOOL_IMPORT, 
+//				DASHBOARD_TOOL_CLEAR };
+		
+		for (int i = 0; i < actionsViews.length; i++) {
+			Utils.setBkgChangeOnTouchListener(sDashboard, actionsViews[i]);
+		}
+		
+		backup.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "backup action clicked", DEBUG_TAG);
+				slidingMenuActions(DASHBOARD_TOOL_BACKUP);
+			}
+		});
+		
+		restore.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "restore action clicked", DEBUG_TAG);
+				slidingMenuActions(DASHBOARD_TOOL_RESTORE);
+			}
+		});
+		
+		importFiles.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "importFiles action clicked", DEBUG_TAG);
+				slidingMenuActions(DASHBOARD_TOOL_IMPORT);
+			}
+		});
+		
+		clearDashboard.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "clearDashboard action clicked", DEBUG_TAG);
+				slidingMenuActions(DASHBOARD_TOOL_CLEAR);
+			}
+		});
+	}
+	
+	private void slidingMenuActions(int type) {
+		switch (type) {
+		case DASHBOARD_TOOL_BACKUP:
+//		case R.id.menu_backup:
+    		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_backup");
+    		String previousJson = JsonHelper.readJsonDashboardFile();
+            boolean smtInProgressOrPaused = (previousJson.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
+    				 previousJson.contains(YTD.JSON_DATA_STATUS_PAUSED));
+    		if (YTD.JSON_FILE.exists() && !previousJson.equals("{}\n") && !smtInProgressOrPaused) {
+        		boolean backupCheckboxEnabled = YTD.settings.getBoolean("dashboard_backup_info", true);
+			    if (backupCheckboxEnabled == true) {
 			    	
 		        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
 		        	
@@ -1132,17 +1164,17 @@ public class DashboardActivity extends Activity {
 				    adb.setView(showAgainView);
 				    
 		    		adb.setTitle(getString(R.string.information));
-		    		adb.setMessage(getString(R.string.menu_import_file_info));
+		    		adb.setMessage(getString(R.string.menu_backup_info));
 		    		adb.setIcon(Utils.selectThemedInfoIcon());
 		    		
 		    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int which) {
 		    				if (!showAgain.isChecked()) {
-				    			YTD.settings.edit().putBoolean("dashboard_import_info", false).apply();
-				    			Utils.logger("d", "dashboard import info checkbox disabled", DEBUG_TAG);
+				    			YTD.settings.edit().putBoolean("dashboard_backup_info", false).apply();
+				    			Utils.logger("d", "dashboard backup info checkbox disabled", DEBUG_TAG);
 				    		}
-		    				launchFcForImport();
+		    				launchFcForBackup();
 		    			}
 		    		});
 		    		
@@ -1154,16 +1186,114 @@ public class DashboardActivity extends Activity {
 		    		
 		    		Utils.secureShowDialog(sDashboard, adb);
 			    } else {
-			    	launchFcForImport();
+			    	launchFcForBackup();
 			    }
-        		return true;
-        	case R.id.menu_clear_dashboard:
-        		DashboardClearHelper.confirmClearDashboard(DashboardActivity.this, true);
-        		return true;
-        	default:
-        		return super.onOptionsItemSelected(item);
-        }
-    }
+        	} else {
+    			toastOpsNotExecuted();
+    		}
+    		break;
+    		
+		case DASHBOARD_TOOL_RESTORE:	
+//    	case R.id.menu_restore:
+    		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_restore");
+    		String previousJson2 = JsonHelper.readJsonDashboardFile();
+            boolean smtInProgressOrPaused2 = (previousJson2.contains(YTD.JSON_DATA_STATUS_IN_PROGRESS) || 
+    				 previousJson2.contains(YTD.JSON_DATA_STATUS_PAUSED));
+    		if (!smtInProgressOrPaused2) {
+        		boolean restoreCheckboxEnabled = YTD.settings.getBoolean("dashboard_restore_info", true);
+			    if (restoreCheckboxEnabled == true) {
+			    	
+		        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
+		        	
+		        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+				    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+				    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+				    showAgain.setChecked(true);
+				    showAgain.setText(getString(R.string.show_again_checkbox));
+				    adb.setView(showAgainView);
+				    
+		    		adb.setTitle(getString(R.string.information));
+		    		adb.setMessage(getString(R.string.menu_restore_info) + ".\n" + getString(R.string.menu_restore_info_msg));
+		    		adb.setIcon(Utils.selectThemedInfoIcon());
+		    		
+		    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+						public void onClick(DialogInterface dialog, int which) {
+		    				if (!showAgain.isChecked()) {
+				    			YTD.settings.edit().putBoolean("dashboard_restore_info", false).apply();
+				    			Utils.logger("d", "dashboard restore info checkbox disabled", DEBUG_TAG);
+				    		}
+		    				launchFcForRestore();
+		    			}
+		    		});
+		    		
+		    		adb.setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+		    			public void onClick(DialogInterface dialog, int which) {
+		    				// cancel
+		    			}
+		    		});
+		    		
+		    		Utils.secureShowDialog(sDashboard, adb);
+			    } else {
+			    	launchFcForRestore();
+			    }
+    		} else {
+    			toastOpsNotExecuted();
+    		}
+    		break;
+    		
+		case DASHBOARD_TOOL_IMPORT:
+//    	case R.id.menu_import:
+    		BugSenseHandler.leaveBreadcrumb("DashboardActivity_menu_import");
+    		boolean importCheckboxEnabled1 = YTD.settings.getBoolean("dashboard_import_info", true);
+		    if (importCheckboxEnabled1 == true) {
+		    	
+	        	AlertDialog.Builder adb = new AlertDialog.Builder(sDashboard);
+	        	
+	        	LayoutInflater adbInflater = LayoutInflater.from(DashboardActivity.this);
+			    View showAgainView = adbInflater.inflate(R.layout.dialog_inflatable_checkbox, null);
+			    final CheckBox showAgain = (CheckBox) showAgainView.findViewById(R.id.infl_cb);
+			    showAgain.setChecked(true);
+			    showAgain.setText(getString(R.string.show_again_checkbox));
+			    adb.setView(showAgainView);
+			    
+	    		adb.setTitle(getString(R.string.information));
+	    		adb.setMessage(getString(R.string.menu_import_file_info));
+	    		adb.setIcon(Utils.selectThemedInfoIcon());
+	    		
+	    		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+	    				if (!showAgain.isChecked()) {
+			    			YTD.settings.edit().putBoolean("dashboard_import_info", false).apply();
+			    			Utils.logger("d", "dashboard import info checkbox disabled", DEBUG_TAG);
+			    		}
+	    				launchFcForImport();
+	    			}
+	    		});
+	    		
+	    		adb.setNegativeButton(R.string.dialogs_negative, new DialogInterface.OnClickListener() {
+	    			public void onClick(DialogInterface dialog, int which) {
+	    				// cancel
+	    			}
+	    		});
+	    		
+	    		Utils.secureShowDialog(sDashboard, adb);
+		    } else {
+		    	launchFcForImport();
+		    }
+    		break;
+    		
+		case DASHBOARD_TOOL_CLEAR:
+//    	case R.id.menu_clear_dashboard:
+    		DashboardClearHelper.confirmClearDashboard(DashboardActivity.this, true);
+    		break;
+    			
+		case DASHBOARD_ACTION_YOUTUBE:
+			Utils.launchYoutube(sDashboard);
+    		//TODO
+		}
+	}
 
 	private void launchFcForBackup() {
 		AlertDialog.Builder adb = new AlertDialog.Builder(DashboardActivity.this);
@@ -1458,7 +1588,7 @@ public class DashboardActivity extends Activity {
 		searchText = inputSearch.getEditableText();
 		layout.removeView(inputSearch);
 		
-		Utils.reload(DashboardActivity.this);
+		recreate();
 		
 		isSearchBarVisible = false;
 	}
@@ -1714,7 +1844,7 @@ public class DashboardActivity extends Activity {
 			
 			if (importEnd) {
 				dashboardAsyncTaskInProgress(DashboardActivity.this, false);
-				Utils.reload(DashboardActivity.this);
+				recreate();
 			}
 		}
 	}
@@ -1825,7 +1955,7 @@ public class DashboardActivity extends Activity {
 			}
 			
 			dashboardAsyncTaskInProgress(DashboardActivity.this, false);
-			Utils.reload(DashboardActivity.this);
+			recreate();
 		}
 	}
 

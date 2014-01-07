@@ -26,21 +26,46 @@
 
 package dentex.youtube.downloader.utils;
 
-import dentex.youtube.downloader.R;
-import dentex.youtube.downloader.YTD;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import dentex.youtube.downloader.R;
+import dentex.youtube.downloader.YTD;
 
 public class PopUps {
 	
-	static int icon;
-
+	private static String DEBUG_TAG = "PopUps";
+	private static int icon;
+	private static CheckBox showAgain;
+	private static TextView msg;
+	
 	public static void showPopUp(String title, String message, String type, Activity activity) {
+		showPopUp(title, message, type, activity, null);
+	}
+
+	public static void showPopUp(String title, String message, String type, Activity activity, final String pref) {
         
-		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(activity);
-	    helpBuilder.setTitle(title);
-	    helpBuilder.setMessage(message);
+		AlertDialog.Builder adb = new AlertDialog.Builder(activity);
+		adb.setTitle(title);
+		
+		if (pref != null) {
+			LayoutInflater adbInflater = LayoutInflater.from(activity);
+		    View showAgainView = adbInflater.inflate(R.layout.dialog_msg_text_and_checkbox, null);
+		    
+		    msg = (TextView) showAgainView.findViewById(R.id.msg);
+		    msg.setText(message);
+		    
+		    showAgain = (CheckBox) showAgainView.findViewById(R.id.showAgain);
+		    showAgain.setChecked(true);
+		    showAgain.setText(activity.getString(R.string.show_again_checkbox));
+		    adb.setView(showAgainView);
+		} else {
+			adb.setMessage(message);
+		}
 	
 	    String theme = YTD.settings.getString("choose_theme", "D");
     	if (theme.equals("D")) {
@@ -57,14 +82,26 @@ public class PopUps {
 		    }
     	}
 	
-	    helpBuilder.setIcon(icon);
-	    helpBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    	adb.setIcon(icon);
+    	adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	
 	        public void onClick(DialogInterface dialog, int which) {
-	            // close the dialog
+	            // close the dialog and store (eventually) the "show again" pref
+	        	if (pref != null) {
+	        		if (!showAgain.isChecked()) {
+	        			YTD.settings.edit().putBoolean(pref, false).apply();
+	        			Utils.logger("d", pref + "checkbox disabled", DEBUG_TAG);
+	        		}
+	        	}
 	        }
 	    });
 	
-	    Utils.secureShowDialog(activity, helpBuilder);
+    	if (pref != null) {
+    		if (YTD.settings.getBoolean(pref, true)) {
+    			Utils.secureShowDialog(activity, adb);
+    		}
+    	} else {
+    		Utils.secureShowDialog(activity, adb);
+    	}
 	}
 }

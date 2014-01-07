@@ -10,13 +10,6 @@
     <string name="title_activity_dashboard">Dashboard</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">一般程式教學</string>
-	<string name="tutorial_msg_new">現在你會看到一個目錄列出了影片支援的解碼器和影片素質。你可以：
-\n\n*) 按一個項目以下載影片至裝置上或者透過 SSH 傳送下載至遠程電腦。
-\n目的地機器需求：Bash and Wget。更多 SSH 資訊;
-\n\n*) 長按一個項目並選擇複製至剪貼版或用文字形式分享連結（傳送至其他程式）。
-\n請注意這個連結（與 SSH 傳送的不同）只能在同一個裝置上或者同一個網路上使用，如果你分享它至其他機器。\n</string>
     <string name="loading">載入中&#8230;</string>
     <string name="error">錯誤！</string>
     <string name="information">資訊</string>
@@ -40,14 +33,12 @@
     <string name="rename_dialog_msg">請勿輸入附檔名（像是 .mp4 或 .flv）</string>
     <string name="unable_save">無法儲存影片！</string>
     <string name="unable_save_dialog_msg">目的地資料夾不存在或無法存取。</string>
-    <string name="ssh_info_tutorial_title">如何透過 SSH 寄送</string>
-    <string name="ssh_info_tutorial_msg">一個很長的指令已經複製至剪貼版。\n\n在 ConnectBot 選擇一個個人資料，並且在你的 remote shell，瀏覽至想要的目的地，貼上指令（使用選項鍵）然後按 ENTER。</string>
+
     <string name="callConnectBot_dialog_title">%1$s 未安裝！</string>
     <string name="callConnectBot_dialog_msg">你需要這個免費程式來透過 SSH 寄送下載影片。</string>
     <string name="callConnectBot_dialog_positive">下載</string>
     <string name="download_complete_dialog_msg1">YouTube 影片:\n</string>
     <string name="download_complete_dialog_msg2">\n成功下載。</string>
-    <string name="download_complete_dialog_positive">開啟</string>
     <string name="downloading">下載中&#8230;</string>
     <string name="cancel_download_dialog_title">取消下載？</string>
     <string name="video_list_error_toast">影片目錄錯誤。</string>
@@ -159,9 +150,14 @@
 	<string name="json_status_imported">Imported</string>
 	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">search&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
 	<string name="menu_import_file">Import files</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
 	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
@@ -261,19 +257,86 @@
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">快速開始</string>
-    <string name="quick_start_summ">開啟快速開始教學</string>
-    <string name="quick_start_text">這裡是 YouTube 下載器的偏好設定。
-\n\n實際程式可以從 YouTube 程式的分享按鈕存取，當你在看影片的時候。
-\n\n然後選擇 YouTube 下載器，您就能進一步獲的使用資訊。
-\n\n您也可以透過任何程式分享任何 YouTube 連結：也就是您的瀏覽器。</string>
-    <string name="general_info_title">允許一般教學</string>
-    <string name="general_info_summary">在開啟時顯示一般程式教學</string>
     <string name="show_again_checkbox">下次再次顯示</string>
-    <string name="ssh_info_title">允許 SSH 教學</string>
-    <string name="ssh_info_summary">顯示快速提示關於從 SSH 控制下載</string>
-    <string name="audio_tutorial_title">音效提取教學</string>
-    <string name="audio_tutorial_summary">開啟一個關於音效提取功能的簡略指南</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">開啟</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">現在你會看到一個目錄列出了影片支援的解碼器和影片素質。你可以：
+\n\n*) 按一個項目以下載影片至裝置上或者透過 SSH 傳送下載至遠程電腦。
+\n目的地機器需求：Bash and Wget。更多 SSH 資訊;
+\n\n*) 長按一個項目並選擇複製至剪貼版或用文字形式分享連結（傳送至其他程式）。
+\n請注意這個連結（與 SSH 傳送的不同）只能在同一個裝置上或者同一個網路上使用，如果你分享它至其他機器。\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">一個很長的指令已經複製至剪貼版。\n\n在 ConnectBot 選擇一個個人資料，並且在你的 remote shell，瀏覽至想要的目的地，貼上指令（使用選項鍵）然後按 ENTER。</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">下載資料夾</string>
@@ -283,7 +346,7 @@
     <string name="chooser_location_summary">長按以選擇資料夾</string>
 	
     <!-- -->
-    <string name="settings_cat_files">影片檔案</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">允許修改檔案名稱</string>
     <string name="enable_rename_summary">在下載之前更改影片檔案名稱（只限手機下載）</string>
 	<string name="show_thumb_title">顯示預覽相片</string>
@@ -329,6 +392,9 @@
     
     <string name="launcher_title">Entry-point activity</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">更新</string>
     <string name="update_title">檢查更新</string>
@@ -356,7 +422,7 @@
     <string name="share_warning">找不到合適的程式</string>
     <string name="share_message">#YouTubeDownloader
 \n下載 YouTube 影片的免費、開放原始碼 Android 程式！
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">幫忙翻譯此程式</string>
     <string name="xda_title">Thread on XDA forum</string>
     

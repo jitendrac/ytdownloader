@@ -74,6 +74,9 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -86,7 +89,7 @@ public class Utils {
 	static String DEBUG_TAG = "Utils";
 	static MediaScannerConnection msc;
 	
-	public static void reload(Activity activity) {
+	public static void reloadNoAnim(Activity activity) {
 		//finish
     	activity.finish();
     	activity.overridePendingTransition(0, 0);
@@ -99,6 +102,20 @@ public class Utils {
     	activity.startActivity(intent);
     	activity.overridePendingTransition(0, 0);
     }
+	
+	public static void launchYoutube(Context context) {
+		PackageManager pm = context.getPackageManager();
+		Intent ytIntent = pm.getLaunchIntentForPackage("com.google.android.youtube");
+		if (ytIntent != null) {
+			Utils.logger("d", "ytIntent: " + ytIntent, DEBUG_TAG);
+			context.startActivity(ytIntent);
+		} else {
+			String url = "http://m.youtube.com/home";
+        	Intent i = new Intent(Intent.ACTION_VIEW);
+        	i.setData(Uri.parse(url));
+        	context.startActivity(i);
+		}
+	}
     
     public static void themeInit(Context context) {
 		String theme = YTD.settings.getString("choose_theme", "D");
@@ -125,6 +142,28 @@ public class Utils {
     	} else {
     		return R.drawable.ic_dialog_alert_holo_light;
     	}
+	}
+	
+	public static void setBkgChangeOnTouchListener(final Context ctx, final View v) {
+		v.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event){
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    v.setBackgroundColor(ctx.getResources().getColor(android.R.color.darker_gray));
+                }
+				
+				if(event.getAction() == MotionEvent.ACTION_UP || 
+	                	event.getAction() == MotionEvent.ACTION_MOVE ||
+	                	event.getAction() == MotionEvent.ACTION_CANCEL) {
+                	
+                    v.setBackgroundColor(ctx.getResources().getColor(android.R.color.transparent));
+                }
+                
+                return false;
+            }
+		});
 	}
 	
     public static void langInit(Context context) {

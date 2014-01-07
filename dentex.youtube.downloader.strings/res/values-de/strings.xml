@@ -10,13 +10,6 @@
     <string name="title_activity_dashboard">Dashboard</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">Allgemeine App-Anleitung</string>
-	<string name="tutorial_msg_new">Nachfolgend ist eine Liste mit allen Codecs und Auflösungen für das betreffende Video zu sehen. Sie können:
-\n\n*) Ein Element auswählen, um das Video lokal (auf das Gerät) herunterzuladen oder es via SSH an einen PC zu senden.
-\nVoraussetzungen an den PC: Bash und Wget. Weitere SSH Informationen weiter unten;
-\n\n*) Lange auf ein Element drücken und zwischen \'In die Zwischenablage kopieren\' oder \'Als Text teilen\' (z. B. um es zu einer anderen App zu senden) auswählen.
-\nBitte beachten Sie, dass ein solcher Link (anders als bei \'Senden via SSH\') nur vom selben Gerät, auf welchem er erstellt wurde, benutzt werden kann ODER im selben Netzwerk, falls Sie ihn mit einem anderen Gerät teilen.\n</string>
     <string name="loading">Lade&#8230;</string>
     <string name="error">Fehler!</string>
     <string name="information">Information</string>
@@ -40,16 +33,12 @@
     <string name="rename_dialog_msg">Nicht die Dateiendung angeben (wie .mp4 oder .flv)</string>
     <string name="unable_save">Video kann nicht gespeichert werden!</string>
     <string name="unable_save_dialog_msg">Zielordner ist nicht verfügbar und/oder nicht beschreibbar!</string>
-    <string name="ssh_info_tutorial_title">Mit SSH-Anleitung senden</string>
-    <string name="ssh_info_tutorial_msg">Ein einzelner, langer Befehl wurde in den Zwischenablage geladen.
-\n\nWählen Sie ein Profil in ConnectBot und in Ihrer Remote-Shell, wechslen Sie nun zum gewünschten
-Verzeichnis, fügen den Befehl (über die Menü-Taste) ein und drücken ENTER.</string>
+
     <string name="callConnectBot_dialog_title">%1$s nicht installiert!</string>
     <string name="callConnectBot_dialog_msg">Sie benötigen diese kostenlose App, um den Video-Download via SSH zu senden</string>
     <string name="callConnectBot_dialog_positive">Herunterladen</string>
     <string name="download_complete_dialog_msg1">YouTube-Video:\n</string>
     <string name="download_complete_dialog_msg2">\nErfolgreich heruntergeladen!</string>
-    <string name="download_complete_dialog_positive">Öffnen</string>
     <string name="downloading">Herunterladen&#8230;</string>
     <string name="cancel_download_dialog_title">Download abbrechen?</string>
     <string name="video_list_error_toast">Fehler in der Video-Liste</string>
@@ -161,9 +150,14 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
 	<string name="json_status_imported">Importiert</string>
 	<string name="json_status_queued">In Warteschlange</string>
 	<string name="menu_search">Suche&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Sicherung</string>
 	<string name="menu_restore">Wiederherstellen</string>
 	<string name="menu_import_file">Dateien importieren</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s bereits hinzugefügt!</string>
 	<string name="menu_backup_info">Ordner für Dashboard-Sicherung festlegen</string>
 	<string name="menu_restore_info">Dashboard aus Datei wiederherstellen</string>
@@ -238,8 +232,8 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <string name="long_press_warning_msg2">Datei in diesem Ordner bereits vorhanden!</string>
     <string name="audio_extr_warning_msg">Diese Tondatei existiert bereits!</string>
 
-	<string name="delete_video_confirm">Möchten Sie das Video wirklich löschen?</string>
-	<string name="remove_video_confirm">Möchten Sie das Video wirklich entfernen?</string>
+	<string name="delete_video_confirm">Möchten Sie diese Datei wirklich löschen?</string>
+	<string name="remove_video_confirm">Möchten Sie diese Datei wirklich entfernen?</string>
 	<string name="delete_video_ok">%1$s erfolgreich gelöscht!</string>
 	<string name="delete_video_failed">Fehler: %1$s nicht gelöscht!</string>
 	
@@ -263,19 +257,88 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">Schnellstart</string>
-    <string name="quick_start_summ">Starte Kurz-Einführung</string>
-    <string name="quick_start_text">Hier finden Sie nur die Einstellungen für \'YouTube Downloader\'.
-\n\nDie eigentliche App kann über \'Teilen\' in der YouTube App aufgerufen werden, während das Video läuft.
-\n\nDann \'YouTube Downloader\' wählen und Sie erhalten weitere Benutzerhilfe.
-\n\nSie können auch jeden YouTube Klartext-Link über jede App teilen, z.B. einen Browser.</string>
-    <string name="general_info_title">Aktiviere Allgemeine Anleitung</string>
-    <string name="general_info_summary">Starte allgemeine Anleitung beim Öffnen</string>
     <string name="show_again_checkbox">Nochmal anzeigen</string>
-    <string name="ssh_info_title">Aktiviere SSH Anleitung</string>
-    <string name="ssh_info_summary">Zeige einen Hinweis über Herunterladen via SSH</string>
-    <string name="audio_tutorial_title">Tonspur-Extraktionsanleitung</string>
-    <string name="audio_tutorial_summary">Öffne eine kurze Anleitung über die Tonspurextraktionsfunktion</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">Öffnen</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">Nachfolgend ist eine Liste mit allen Codecs und Auflösungen für das betreffende Video zu sehen. Sie können:
+\n\n*) Ein Element auswählen, um das Video lokal (auf das Gerät) herunterzuladen oder es via SSH an einen PC zu senden.
+\nVoraussetzungen an den PC: Bash und Wget. Weitere SSH Informationen weiter unten;
+\n\n*) Lange auf ein Element drücken und zwischen \'In die Zwischenablage kopieren\' oder \'Als Text teilen\' (z. B. um es zu einer anderen App zu senden) auswählen.
+\nBitte beachten Sie, dass ein solcher Link (anders als bei \'Senden via SSH\') nur vom selben Gerät, auf welchem er erstellt wurde, benutzt werden kann ODER im selben Netzwerk, falls Sie ihn mit einem anderen Gerät teilen.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">Ein einzelner, langer Befehl wurde in den Zwischenablage geladen.
+\n\nWählen Sie ein Profil in ConnectBot und in Ihrer Remote-Shell, wechslen Sie nun zum gewünschten
+Verzeichnis, fügen den Befehl (über die Menü-Taste) ein und drücken ENTER.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">Downloadordner</string>
@@ -285,7 +348,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <string name="chooser_location_summary">Lange Drücken, um Ordner zu wählen</string>
 	
     <!-- -->
-    <string name="settings_cat_files">Videodateien</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">Dateiumbenennung aktivieren</string>
     <string name="enable_rename_summary">Video umbenennen, bevor es heruntergeladen wird (nur für den lokalen Download)</string>
 	<string name="show_thumb_title">Vorschaubild anzeigen</string>
@@ -331,6 +394,9 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     
     <string name="launcher_title">Startaktivität</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">Aktualisierungen</string>
     <string name="update_title">Nach Aktualisierungen suchen</string>
@@ -358,7 +424,7 @@ Sie können alle Daten in Ihrer E-Mail einsehen, bevor sie gesendet werden!</str
     <string name="share_warning">Keine passenden Apps gefunden!</string>
     <string name="share_message">#YouTubeDownloader
 \nFreie und Open-Source Android App, um YouTube-Videos herunterzuladen!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">Helfen Sie mit bei der Übersetzung</string>
     <string name="xda_title">Diskussion im XDA-Forum</string>
     

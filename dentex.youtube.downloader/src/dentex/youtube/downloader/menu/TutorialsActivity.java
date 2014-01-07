@@ -27,6 +27,8 @@
 package dentex.youtube.downloader.menu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -44,7 +46,6 @@ import dentex.youtube.downloader.utils.Utils;
 public class TutorialsActivity extends Activity {
 	
 	public static final String DEBUG_TAG = "TutorialsActivity";
-	public static String chooserSummary;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +88,7 @@ public class TutorialsActivity extends Activity {
 
     public static class TutorialsFragment extends PreferenceFragment /*implements OnSharedPreferenceChangeListener */{
     	
-    	private Preference quickStart;
-    	//private Preference audioTutorial;
+    	private Preference tutRead;
     	
     	@Override
         public void onCreate(Bundle savedInstanceState) {
@@ -100,25 +100,67 @@ public class TutorialsActivity extends Activity {
                 initSummary(getPreferenceScreen().getPreference(i));
             }*/
             
-            quickStart = (Preference) getPreferenceScreen().findPreference("quick_start");
-            quickStart.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-				
-				public boolean onPreferenceClick(Preference preference) {
-					PopUps.showPopUp(getString(R.string.quick_start_title), getString(R.string.quick_start_text), "info", getActivity());
-					return true;
-				}
-			});
-            
-            /*audioTutorial = (Preference) getPreferenceScreen().findPreference("audio_tutorial");
-            audioTutorial.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-				
-				public boolean onPreferenceClick(Preference preference) {
-					PopUps.showPopUp(getString(R.string.audio_tutorial_title), getString(R.string.audio_tutorial_text), "info", getActivity());
-					return true;
-				}
-			});*/
-    	}
+            tutRead = (Preference) findPreference("tutorials_read");
+            tutRead.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            	
+                public boolean onPreferenceClick(Preference preference) {
+                	AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                	adb.setTitle(R.string.tutorials_read_title);
+                	adb.setItems(R.array.tutorials_read_entries, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							
+		    				switch (which) {
+	    					case 0: // settings
+	    						quickstartsSettings();
+	    						break;
+			    			case 1: // dashboard
+			    				quickstartsDashboard();
+			    				break;
+			    			case 2: // share
+			    				generalAppTutorial();
+			    				break;
+			    			case 3: // ssh
+			    				sshTutorial();
+		    				}
+		        		}
+                	});
+                	
+                	Utils.secureShowDialog(getActivity(), adb);
+                	
+                	return true;
+            	}
+            });
 
+    	}
+    	
+    	private void quickstartsSettings() {
+			PopUps.showPopUp(getString(R.string.quick_start_settings_title), 
+					getString(R.string.quick_start_settings_text), 
+					"info", 
+					getActivity());
+		}
+        
+        private void quickstartsDashboard() {
+			PopUps.showPopUp(getString(R.string.quick_start_dashboard_title), 
+					getString(R.string.quick_start_dashboard_text), 
+					"info", 
+					getActivity());
+		}
+        
+        private void generalAppTutorial() { //ShareActivity
+        	PopUps.showPopUp(getString(R.string.tutorial_share_title), 
+					getString(R.string.tutorial_share_text), 
+					"info", 
+					getActivity());
+        }
+        
+        private void sshTutorial() { //ShareActivity -> SSH
+        	PopUps.showPopUp(getString(R.string.tutorial_ssh_title), 
+					getString(R.string.tutorial_ssh_text), 
+					"info", 
+					getActivity());
+        }
+        
 	    /*public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 	    	updatePrefSummary(findPreference(key));
 		}

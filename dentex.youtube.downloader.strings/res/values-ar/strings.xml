@@ -10,15 +10,6 @@
     <string name="title_activity_dashboard">لوحة القياس</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">البرنامج التعليمي للتطبيق</string>
-	<string name="tutorial_msg_new">الآن سوف يتم رؤية قائمة لكل الترميزات والجودة المتوفرة للفيديو الذي تم اختياره. يمكن:
-\n\n*) الضغط على عنصر لتنزيل الفيديو محلياً (على الجهاز) أو التنزيل عبر SSH إلى جهاز كمبيوتر بعيد.
-\nمتطلبات الجهاز المتلقي: Bash and Wget. معلومات اخرى عن SSH;
-\n\n*) الضغط-المطول على عنصر واختيار بين نسخ إلى الحافظة أو مشاركة الرابط على شكل نص (إرسال إلى تطبيق آخر. الخ.).
-\nالرجاء ملاحظة ان الرابط (خاصة عند الإرسال عبر SSH) يمكن فقط لن يستخدم على نفس الجهاز حيث تم انشاؤه
-أو من نفس شبكة الاتصال، إذا تمت مشاركة الرابط على جهاز آخر.\n
-</string>
     <string name="loading">تحميل&#8230;</string>
     <string name="error">خطأ</string>
     <string name="information">معلومات</string>
@@ -42,14 +33,12 @@
     <string name="rename_dialog_msg">لاتقم بإضافة صيغة الملف (مثل .mp4 او .flv (.</string>
     <string name="unable_save">غير قادر على حفظ الفيديو.</string>
     <string name="unable_save_dialog_msg">المجلد الوجهة غير متوفر / او لايقبل الكتابة عليه.</string>
-    <string name="ssh_info_tutorial_title">كيفية الإرسال عبر SSH</string>
-    <string name="ssh_info_tutorial_msg">امر طويل تم تحويله الى الحافظة.</string>
+
     <string name="callConnectBot_dialog_title">%1$s غير مثبت!</string>
     <string name="callConnectBot_dialog_msg">بحاجة الى هذا التطبيق المجاني لارسال الفيديو المحمل عبر SSH.</string>
     <string name="callConnectBot_dialog_positive">تنزيل</string>
     <string name="download_complete_dialog_msg1">فيديو اليوتيوب:\n</string>
     <string name="download_complete_dialog_msg2">تم تنزيله بنجاح \n</string>
-    <string name="download_complete_dialog_positive">فتح</string>
     <string name="downloading">تنزيل&#8230;</string>
     <string name="cancel_download_dialog_title"> إلغاء التنزيل؟</string>
     <string name="video_list_error_toast">خطأ في قائمة الفيديو</string>
@@ -62,7 +51,7 @@
     <string name="long_click_title">التحكم في الرابط الذي تم اختياره:</string>
     <string name="ffmpeg_ready">FFmpeg جاهز</string>
     <string name="login_required">قد يتطلب تسجيل الدخول إلى يوتيوب.</string>
-    <string name="encrypted_streams">Encrypted video stream</string>
+    <string name="encrypted_streams">تشفير دفق الفيديو</string>
     <string name="no_video_available">لايتوفر أي  فيديو.</string>
     <string name="retry_button_text">إعادة المحاولة</string>
     
@@ -80,9 +69,9 @@
     <string name="link_copied">تم نسخ الرابط إلى الحافظة </string>
     <string name="share_link_via">مشاركة هذا الرابط عبر:</string>
     
-    <string name="filter_header_reset">Reset filters</string>
+    <string name="filter_header_reset">إعادة الضبط المرشحات</string>
     <string name="filter_view_all">عرض الكل</string>
-    <string name="filter_header_format">Filter by format</string>
+    <string name="filter_header_format">تصفية حسب الشكل</string>
     <string name="filter_header_quality">تصفية حسب الجودة </string>
     <string name="filter_header_others">فلاتر تصفية أخرى </string>
 
@@ -161,9 +150,14 @@
 	<string name="json_status_imported">مستورد</string>
 	<string name="json_status_queued">قائمة الانتظار</string>
 	<string name="menu_search">بحث&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">نسخ احتياطي</string>
 	<string name="menu_restore">إستعادة</string>
 	<string name="menu_import_file">Import files</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">اختيار مجلد لبيانات النسخ الاحتياطي.</string>
 	<string name="menu_restore_info">استعادة البيانات من ملف</string>
@@ -181,7 +175,7 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>فتح</item>
-	    <item>Extract audio</item>
+	    <item>إستخراج الصوت </item>
         <item>Extract audio and encode to mp3</item>
     </string-array>
     
@@ -191,12 +185,12 @@
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
+	    <item>فتح </item>
         <item>Extract audio and encode to mp3</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
+	    <item>فتح </item>
         <item>Add audio stream (already downloaded)</item>
     </string-array>
     
@@ -221,10 +215,10 @@
 	    <item>نقل</item>
         <item>إعادة تسمية</item>
         <item>إعادة تنزيل هذا الفيديو</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>إرسال </item>
+        <item>إزالة من لوحة التحكم الرئيسية</item>
+        <item>حذف وإزالة الملف </item>
+        <item>إيقاف/ إستئناف</item>
     </string-array>
     
 	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
@@ -263,19 +257,88 @@
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">بداية سريعة</string>
-    <string name="quick_start_summ">فتح عرض تعليم سريع</string>
-    <string name="quick_start_text">هاهي فقط التفضيلات الخاصة بـ \'YouTube Downloader\'.
-\n\nالتطبيق بذاته يمكن الوصول اليه عبر زر المشاركة في تطبيق اليوتيوب، بينما تشاهدون مقطع الفيديو.
-\n\nثم اختيار \'YouTube Downloader\' وسوف تحصلون على معلومات اضافية للاستخدام.
-\n\nتستطيعون ايضاً مشاركة أي نص رابط لليوتيوب عبر تطبيقات آخرى:متصفح الانترنت.</string>
-    <string name="general_info_title">تفعيل الكيفيات العامة</string>
-    <string name="general_info_summary">عرض البرنامج التعليمي في بداية التشغيل</string>
     <string name="show_again_checkbox">عرض في المرات القادمة</string>
-    <string name="ssh_info_title">تفعيل كيفية الـ SSH</string>
-    <string name="ssh_info_summary">عرض نصائح سريعة بخصوص التنزيل البعيد عبر SSH</string>
-    <string name="audio_tutorial_title">البرنامج التعليمي لاستخراج الصوت</string>
-    <string name="audio_tutorial_summary">فتح دليل موجز حول ميزة استخراج الصوت</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">فتح</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">الآن سوف يتم رؤية قائمة لكل الترميزات والجودة المتوفرة للفيديو الذي تم اختياره. يمكن:
+\n\n*) الضغط على عنصر لتنزيل الفيديو محلياً (على الجهاز) أو التنزيل عبر SSH إلى جهاز كمبيوتر بعيد.
+\nمتطلبات الجهاز المتلقي: Bash and Wget. معلومات اخرى عن SSH;
+\n\n*) الضغط-المطول على عنصر واختيار بين نسخ إلى الحافظة أو مشاركة الرابط على شكل نص (إرسال إلى تطبيق آخر. الخ.).
+\nالرجاء ملاحظة ان الرابط (خاصة عند الإرسال عبر SSH) يمكن فقط لن يستخدم على نفس الجهاز حيث تم انشاؤه
+أو من نفس شبكة الاتصال، إذا تمت مشاركة الرابط على جهاز آخر.\n
+</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">امر طويل تم تحويله الى الحافظة.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">مجلد التحميل</string>
@@ -285,7 +348,7 @@
     <string name="chooser_location_summary">ضغطة طويلة لاختيار مجلد</string>
 	
     <!-- -->
-    <string name="settings_cat_files">ملفات الفيديو</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">تفعيل تغيير اسم الملف</string>
     <string name="enable_rename_summary">إعادة تسمية ملف الفيديو قبل تنزيله (للتحميل المحلي فقط)
 </string>
@@ -298,15 +361,15 @@
     <string name="enable_advanced_features_summary">تنزيل FFmpeg \"plugin\"</string>
     <string name="mp3_bitrate_title">معدل البت في الترميز للـ mp3:</string>
     
-    <string name="ffmpeg_auto_title">Auto-extract audio</string>
+    <string name="ffmpeg_auto_title">تلقائي-إستخراج الصوت </string>
     <string name="ffmpeg_auto_summary">Extract or convert audio to mp3 automatically after every download</string>
-    <string name="ffmpeg_auto_cb_title">Enable automatic extraction</string>
+    <string name="ffmpeg_auto_cb_title">تمكين الأستخراج التلقائي </string>
     <string name="ffmpeg_auto_cb_summary">Choose parameters below</string>
     
     <string name="audio_extraction_type_title">نوع الاستخراج</string>
     <string-array name="audio_extraction_type_entries">
-	    <item>Extract audio only</item>
-        <item>Extract and encode audio to mp3</item>
+	    <item>إستخراج الصوت فقط </item>
+        <item>إستخراج الصوت وبصيغة mp3</item>
     </string-array>
     
     <string name="remove_video_title">إزالة الفيديو</string>
@@ -331,6 +394,9 @@
     </string-array>
     
     <string name="launcher_title">Entry-point activity</string>
+    
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
     
     <!-- -->
     <string name="settings_cat_updates">التحديثات</string>
@@ -359,9 +425,9 @@
     <string name="share_warning">لاتوجد تطبيقات مناسبة.</string>
     <string name="share_message">#YouTubeDownloader
 \nتطبيق مجاني ومفتوح المصدر للاندرويد لتنزيل ملفات فيديو من اليوتيوب!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">ساعد في ترجمة هذا التطبيق</string>
-    <string name="xda_title">Thread on XDA forum</string>
+    <string name="xda_title">الموضوع في منتدى  XDA</string>
     
     <!-- -->
     <string name="settings_cat_ssh">SSH</string>

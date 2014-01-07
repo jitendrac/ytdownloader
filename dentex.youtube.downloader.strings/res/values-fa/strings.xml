@@ -10,9 +10,6 @@
     <string name="title_activity_dashboard">Dashboard</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">آموختار عمومی برنامه</string>
-	<string name="tutorial_msg_new">حالا شما یک لیست با تمام کدک ها و کیفیتهای موجود برای ویدئوی انتخاب شده خواهید دید.شما می توانید:\n\n*) روی یک آیتم کلیک کنید تا ویدئو را به طور محلی دانلود کنید(بر روی دستگاه) یا از طریق SSH برای کامپیوتر راه دور ارسال کنید.\nالزامات ماشین راه دور : Bash و Wget. اطلاعات بیشتر درباره SSH ؛\n\n*) روی یک آیتم به مدت طولانی فشار دهید تا بین رونوشت به کلیپبورد یا به اشتراک گذاری پیوند به صورت متن(به طور مثال ارسال به برنامه دیگر)، انتخاب کنید.\n لطفا توجه کنید اگر شما آن پیوند را بین ماشین دیگری به اشتراک بگذارید، که چنین پیوندی(متفاوت نسبت به زمانی که از طریق SSH ارسال می کنید) تنها می تواند در همان دستگاهی که در آن ساخته شده یا در یک شبکه LAN مشابه  به کار برده شود.\n</string>
     <string name="loading">در حال بارگیری&#8230; </string>
     <string name="error">خطا!</string>
     <string name="information">اطلاعات</string>
@@ -36,14 +33,12 @@
     <string name="rename_dialog_msg">پسوند فایل را وارد نکنید(مثل mp4. یا flv.)</string>
     <string name="unable_save">قادر به ذخیره سازی ویدئو نیستیم!</string>
     <string name="unable_save_dialog_msg">پوشه مقصد وجود ندارد یا قابل نوشتن نیست.</string>
-    <string name="ssh_info_tutorial_title">چگونگی ارسال از طریق پروتکل امن SSH</string>
-    <string name="ssh_info_tutorial_msg">یک تک دستور طولانی در کلیپبورد بارگذاری شده است.\n\n یک نمایه از ربات اتصال انتخاب کنید و همینکه در پوسته راه دور بودید، به شاخه مورد نظر بروید، دستور را بچسبانید(از دکمه منو استفاده کنید) و دکمه enter را فشار دهید.</string>
+
     <string name="callConnectBot_dialog_title">%1$s نصب نشده است!</string>
     <string name="callConnectBot_dialog_msg">شما به این برنامه رایگان برای ارسال ویدئو از طریق پروتکل امن SSH نیاز دارید</string>
     <string name="callConnectBot_dialog_positive">دانلود</string>
     <string name="download_complete_dialog_msg1">ویدئو یوتیوب:\n</string>
     <string name="download_complete_dialog_msg2">\n با موفقیت دانلود شد.</string>
-    <string name="download_complete_dialog_positive">باز کردن</string>
     <string name="downloading"> در حال دانلود کردن&#8230;</string>
     <string name="cancel_download_dialog_title">لغو دانلود؟</string>
     <string name="video_list_error_toast">خطا در لیست ویدئو.</string>
@@ -154,9 +149,14 @@
 	<string name="json_status_imported">Imported</string>
 	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">search&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
 	<string name="menu_import_file">Import files</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
 	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
@@ -256,16 +256,82 @@
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">شروع سریع</string>
-    <string name="quick_start_summ">باز کردن آموختار شروع سریع</string>
-    <string name="quick_start_text">در اینجا فقط تنظیمات برای برنامه \'دانلود کننده یوتیوب\' است.\n\n برنامه حقیقی می تواند از طریق دکمه به اشتراک گذاری در برنامه یوتیوب، در حالی که یک برنامه ویدئویی را تماشا می کنید،مورد دسترسی قرار گیرد.\n\nسپس \'دانلود کننده یوتیوب\' را انتخاب کنید و شما اطلاعاتی بیشتری راجع به نحوه استفاده خواهید داشت.\n\nشما همچنین می توانید هر لینک متنی مربوط به یوتیوب را از طریق هر برنامه دیگری مثل مرورگرتان، به اشتراک بگذارید.</string>
-    <string name="general_info_title">فعال کردن راهنمای چگونگی عمومی</string>
-    <string name="general_info_summary">موقع راه اندازی آموختار عمومی برنامه را نشان بده</string>
     <string name="show_again_checkbox">دفعه بعد دوباره نشان بده</string>
-    <string name="ssh_info_title">فعال کردن راهنمای چگونگی SSH</string>
-    <string name="ssh_info_summary">یک نکته سریع درباره دانلود از راه دور از طریق SSH نمایش بده</string>
-    <string name="audio_tutorial_title">آموختار استخراج صدا</string>
-    <string name="audio_tutorial_summary">درباره ویژگی استخراج صدا یک راهنمایی خلاصه را باز کن</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">باز کردن</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">حالا شما یک لیست با تمام کدک ها و کیفیتهای موجود برای ویدئوی انتخاب شده خواهید دید.شما می توانید:\n\n*) روی یک آیتم کلیک کنید تا ویدئو را به طور محلی دانلود کنید(بر روی دستگاه) یا از طریق SSH برای کامپیوتر راه دور ارسال کنید.\nالزامات ماشین راه دور : Bash و Wget. اطلاعات بیشتر درباره SSH ؛\n\n*) روی یک آیتم به مدت طولانی فشار دهید تا بین رونوشت به کلیپبورد یا به اشتراک گذاری پیوند به صورت متن(به طور مثال ارسال به برنامه دیگر)، انتخاب کنید.\n لطفا توجه کنید اگر شما آن پیوند را بین ماشین دیگری به اشتراک بگذارید، که چنین پیوندی(متفاوت نسبت به زمانی که از طریق SSH ارسال می کنید) تنها می تواند در همان دستگاهی که در آن ساخته شده یا در یک شبکه LAN مشابه  به کار برده شود.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">یک تک دستور طولانی در کلیپبورد بارگذاری شده است.\n\n یک نمایه از ربات اتصال انتخاب کنید و همینکه در پوسته راه دور بودید، به شاخه مورد نظر بروید، دستور را بچسبانید(از دکمه منو استفاده کنید) و دکمه enter را فشار دهید.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">پوشه دانلود</string>
@@ -275,7 +341,7 @@
     <string name="chooser_location_summary">مدت زیادی فشار دهید تا پوشه انتخاب شود</string>
 	
     <!-- -->
-    <string name="settings_cat_files">فایل های ویدئو</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">فعال کردن تغییر نام دادن فایل</string>
     <string name="enable_rename_summary">قبل از اینکه فایل ویدئویی را دانلود کنی آن را تغییر نام بده(فقط برای دانلود محلی)</string>
 	<string name="show_thumb_title">نمایش تصویر پیش نمایش</string>
@@ -321,6 +387,9 @@
     
     <string name="launcher_title">Entry-point activity</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">به روزرسانی</string>
     <string name="update_title">بررسی برای به روزرسانی</string>
@@ -348,7 +417,7 @@
     <string name="share_warning">برنامه مفیدی پیدا نشد.</string>
     <string name="share_message">#YouTubeDownloader
 \nبرنامه آندروییدی رایگان و منبع-باز برای دانلود کردن ویدئوهای یوتیوب!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">به ترجمه کردن این برنامه کمک کنید</string>
     <string name="xda_title">Thread on XDA forum</string>
     

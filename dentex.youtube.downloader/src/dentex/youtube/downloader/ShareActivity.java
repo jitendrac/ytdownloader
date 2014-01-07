@@ -168,7 +168,7 @@ public class ShareActivity extends Activity {
 	public static Uri videoUri;
 	private TextView userFilename;
 	private boolean sshInfoCheckboxEnabled;
-	private boolean generalInfoCheckboxEnabled;
+	private boolean shareTutCbEnabled;
 	private boolean fileRenameEnabled;
 	private File chooserFolder;
 	private AsyncDownload asyncDownload;
@@ -449,7 +449,7 @@ public class ShareActivity extends Activity {
 				if (linkValidator(sharedText) == "bad_link") {
 					badOrNullLinkAlert();
 				} else if (sharedText != null) {
-					showGeneralInfoTutorial();
+					showSharingTutorial();
 					asyncDownload = new AsyncDownload();
 					asyncDownload.execute(validatedLink);
 				}
@@ -473,7 +473,7 @@ public class ShareActivity extends Activity {
 		retry.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Utils.reload(ShareActivity.this);					
+				Utils.reloadNoAnim(ShareActivity.this);					
 			}
 		});
 	}
@@ -487,22 +487,26 @@ public class ShareActivity extends Activity {
 		noVideoInfo.setVisibility(View.VISIBLE);
 	}
 	
-	private void showGeneralInfoTutorial() {
-		generalInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
-		if (generalInfoCheckboxEnabled == true) {
+	private void showSharingTutorial() {
+		shareTutCbEnabled = YTD.settings.getBoolean("general_info", true);
+		if (shareTutCbEnabled) {
 			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
-			View generalInfo = adbInflater.inflate(R.layout.dialog_general_info, null);
-			final CheckBox showAgainCb = (CheckBox) generalInfo.findViewById(R.id.showAgain1);
+			View generalInfo = adbInflater.inflate(R.layout.dialog_msg_text_and_checkbox, null);
+			
+			final CheckBox showAgainCb = (CheckBox) generalInfo.findViewById(R.id.showAgain);
 			showAgainCb.setChecked(true);
+			
+			final TextView msg = (TextView) generalInfo.findViewById(R.id.msg);
+			msg.setText(R.string.tutorial_share_text);
+			
 			adb.setView(generalInfo);
-			adb.setTitle(getString(R.string.tutorial_title));			
+			adb.setTitle(getString(R.string.tutorial_share_title));			
 			adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					if (!showAgainCb.isChecked()) {
-						YTD.settings.edit().putBoolean("general_info", false).commit();
-						sshInfoCheckboxEnabled = YTD.settings.getBoolean("general_info", true);
-						Utils.logger("v", "generalInfoCheckboxEnabled: " + generalInfoCheckboxEnabled, DEBUG_TAG);
+						YTD.settings.edit().putBoolean("tutorial_share", false).apply();
+						Utils.logger("v", "generalInfoCheckboxEnabled: false", DEBUG_TAG);
 					}
 				}
 			});
@@ -939,7 +943,7 @@ public class ShareActivity extends Activity {
 				ClipboardManager cb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 				cb.setPrimaryClip(cmd);
 				
-				sshInfoCheckboxEnabled = YTD.settings.getBoolean("ssh_info", true);
+				sshInfoCheckboxEnabled = YTD.settings.getBoolean("tutorial_ssh", true);
 				if (sshInfoCheckboxEnabled == true) {
 					AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 					LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);
@@ -948,13 +952,13 @@ public class ShareActivity extends Activity {
 					showAgainCb.setChecked(true);
 					showAgainCb.setText(getString(R.string.show_again_checkbox));
 					adb.setView(showAgain);
-					adb.setTitle(getString(R.string.ssh_info_tutorial_title));
-					adb.setMessage(getString(R.string.ssh_info_tutorial_msg));
+					adb.setTitle(getString(R.string.tutorial_ssh_title));
+					adb.setMessage(getString(R.string.tutorial_ssh_text));
 					adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							if (!showAgainCb.isChecked()) {
-								YTD.settings.edit().putBoolean("ssh_info", false).apply();
-								Utils.logger("d", "sshInfoCheckboxEnabled: " + false, DEBUG_TAG);
+								YTD.settings.edit().putBoolean("tutorial_ssh", false).apply();
+								Utils.logger("d", "sshInfoCheckboxEnabled: false", DEBUG_TAG);
 							}
 							callConnectBot(); 
 						}
@@ -1098,6 +1102,8 @@ public class ShareActivity extends Activity {
 				assignConstraint(YTD.getListFilterConstraint(YTD.VIEW_ALL));
 			}
 		});
+		
+		Utils.setBkgChangeOnTouchListener(sShare, all);
 	}
 	
 	private void reactToViewClick(View v, int filterInt) {

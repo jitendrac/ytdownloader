@@ -10,13 +10,6 @@
     <string name="title_activity_dashboard">Tablero</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">Tutorial general de la aplicación</string>
-	<string name="tutorial_msg_new">Ahora verá a una lista con todos los códecs y cualidades disponibles para el video elegido. Podrá:
-\n\n*) Seleccionar un artículo para descargar el video localmente (al dispositivo) o para mandarlo a descargar vía SSH a una computadora remoto. 
-\nRequisitos de la máquina remoto: Bash y Wget. Información de SSH requerido más adelante;
-\n\n*)Mantenga pulsado un artículo y escoga entre copiarlo al portapapeles o compartir un enlace de texto (ej. para enviar a otra app). 
-\nNote que un enlace (diferente de cúando lo envia por SSH) sólo puede usarse en el mismo dispositivo que lo creó O en la misma RAL (red de área local), si es que lo comparte con otra máquina.\n</string>
     <string name="loading">Cargando&#8320;</string>
     <string name="error">¡Error!</string>
     <string name="information">Información</string>
@@ -40,16 +33,12 @@
     <string name="rename_dialog_msg">No introduzcas extensiónes de archivos (como .mp4 o .flv).</string>
     <string name="unable_save">¡No se ha podido guardar el video!</string>
     <string name="unable_save_dialog_msg">La carpeta de destino no esta disponible y/o no se puede escribir.</string>
-    <string name="ssh_info_tutorial_title">Como enviar vía SSH</string>
-    <string name="ssh_info_tutorial_msg">Una línea de comando ha sido copiado al portapapeles.
-\n\nEscoga un perfil en ConnectBot y una vez iniciado el shell remoto (SSH), debe navigar al 
-directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </string>
+
     <string name="callConnectBot_dialog_title">¡%1$s no esta instalado!</string>
     <string name="callConnectBot_dialog_msg">Necesitas esta aplicación gratuita para mandar los videos descargados vía SSH.</string>
     <string name="callConnectBot_dialog_positive">Descargar</string>
     <string name="download_complete_dialog_msg1">Video de YouTube:\n</string>
     <string name="download_complete_dialog_msg2">\nDescargado éxitosamente.</string>
-    <string name="download_complete_dialog_positive">Abrir</string>
     <string name="downloading">Descargando&#8230;</string>
     <string name="cancel_download_dialog_title">¿Cancelar la descarga?</string>
     <string name="video_list_error_toast">Error en la lista de videos.</string>
@@ -161,9 +150,14 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
 	<string name="json_status_imported">Importado</string>
 	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">buscar&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Copia de seguridad </string>
 	<string name="menu_restore">Restaurar</string>
 	<string name="menu_import_file">Import files</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Escoga una carpeta para la copia de seguridad de los datos del panel (Dashboard)</string>
 	<string name="menu_restore_info">Restaurar los datos del panel del archivo (Dashboard)</string>
@@ -263,19 +257,88 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">Inicio rápido</string>
-    <string name="quick_start_summ">Abrir tutorial sobre el inicio rápido</string>
-    <string name="quick_start_text">Aquí se encuentran las preferencias para \"YouTube Downloader\".
-\n\nLa aplicaciön en sí se accesa usando el botón de compartir en la app de YouTube, mientras esta viendo un video. 
-\n\nLuego escoja \"YouTube Downloader\" y verá más información de uso.
-\n\nTambién podrá compartir cualquier vínculo de texto plano de YouTube mientras esté usando otra app (ej. su navegador)</string>
-    <string name="general_info_title">Habiliar ayuda general</string>
-    <string name="general_info_summary">Mostrar una tutorial general de la app al iniciar. </string>
     <string name="show_again_checkbox">Mostrar la siguiente vez</string>
-    <string name="ssh_info_title">Habiliar tutorial de SSH</string>
-    <string name="ssh_info_summary">Mostrar consejos sobre descarga remota por SSH.</string>
-    <string name="audio_tutorial_title">Tutorial sobre extracción de audio</string>
-    <string name="audio_tutorial_summary">Abrir una guía breve sobre la función de extracción de audio</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">Abrir</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">Ahora verá a una lista con todos los códecs y cualidades disponibles para el video elegido. Podrá:
+\n\n*) Seleccionar un artículo para descargar el video localmente (al dispositivo) o para mandarlo a descargar vía SSH a una computadora remoto. 
+\nRequisitos de la máquina remoto: Bash y Wget. Información de SSH requerido más adelante;
+\n\n*)Mantenga pulsado un artículo y escoga entre copiarlo al portapapeles o compartir un enlace de texto (ej. para enviar a otra app). 
+\nNote que un enlace (diferente de cúando lo envia por SSH) sólo puede usarse en el mismo dispositivo que lo creó O en la misma RAL (red de área local), si es que lo comparte con otra máquina.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">Una línea de comando ha sido copiado al portapapeles.
+\n\nEscoga un perfil en ConnectBot y una vez iniciado el shell remoto (SSH), debe navigar al 
+directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">Carpeta de descargas</string>
@@ -285,7 +348,7 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     <string name="chooser_location_summary">Mantenga pulsado para seleccionar una carpeta</string>
 	
     <!-- -->
-    <string name="settings_cat_files">Archivos de video</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">Habilitar cambios de nombre de archivos</string>
     <string name="enable_rename_summary">Renombrar el archivo de video antes de descargarlo (para las descargas locales solamente)</string>
 	<string name="show_thumb_title">Mostrar vista preliminar</string>
@@ -331,6 +394,9 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     
     <string name="launcher_title">Entry-point activity</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">Actualizaciones</string>
     <string name="update_title">Chequear para actualizaciones</string>
@@ -358,7 +424,7 @@ directorio deseado, COPIE la línea (use el botón de menú) y teclee ENTER. </s
     <string name="share_warning">No hay aplicaciones adecuadas encontrados.</string>
     <string name="share_message">#YouTubeDownloader
 \n¡Una aplicación de Android gratis y de código abierto para descargar videos de YouTube!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">Ayuda a traducir ésta app</string>
     <string name="xda_title">Hilo en el foro de XDA</string>
     

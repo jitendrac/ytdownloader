@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--     android:layout_width="match_parent" -->
+<!--     android:layout_height="match_parent" > -->
+    
+<!-- 	<ScrollView -->
+<!--         android:id="@+id/sv_d" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="fill_parent" > -->
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/dashboard_actions"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" >
+			
+            <TextView
+			    android:id="@+id/dasboard_tools_title"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_vertical"
+			    android:paddingTop="20dp"
+			    android:paddingLeft="10dp"
+			    android:paddingBottom="6dp"
+			    android:text="@string/dasboard_actions_title"
+			    android:textAppearance="?android:attr/listSeparatorTextViewStyle"
+			    android:textColor="@android:color/holo_orange_light" />
+			
+			<include layout="@layout/horizontal_divider" />
+			
+            <TextView
+			    android:id="@+id/menu_backup"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_vertical"
+			    android:paddingTop="10dp"
+			    android:paddingLeft="20dp"
+			    android:paddingBottom="10dp"
+			    android:text="@string/menu_backup"
+			    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            
+            <TextView
+			    android:id="@+id/menu_restore"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_vertical"
+			    android:paddingTop="10dp"
+			    android:paddingLeft="20dp"
+			    android:paddingBottom="10dp"
+			    android:text="@string/menu_restore"
+			    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            
+            <TextView
+			    android:id="@+id/menu_import_file"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_vertical"
+			    android:paddingTop="10dp"
+			    android:paddingLeft="20dp"
+			    android:paddingBottom="10dp"
+			    android:text="@string/menu_import_file"
+			    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            
+            <TextView
+			    android:id="@+id/menu_clear_dashboard"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_vertical"
+			    android:paddingTop="10dp"
+			    android:paddingLeft="20dp"
+			    android:paddingBottom="10dp"
+			    android:text="@string/clear_dashboard_title"
+			    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            
+            <TextView
+			    android:id="@+id/dasboard_actions_title"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_vertical"
+			    android:paddingTop="20dp"
+			    android:paddingLeft="10dp"
+			    android:paddingBottom="6dp"
+			    android:text="@string/dasboard_actions_title"
+			    android:textAppearance="?android:attr/listSeparatorTextViewStyle"
+			    android:textColor="@android:color/holo_orange_light" />
+			
+			<include layout="@layout/horizontal_divider" />
+			
+			<TextView
+			    android:id="@+id/menu_launch_youtube"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_vertical"
+			    android:paddingTop="10dp"
+			    android:paddingLeft="20dp"
+			    android:paddingBottom="10dp"
+			    android:text="@string/launch_youtube_title"
+			    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            
+    	</LinearLayout>
+        
+<!--     </ScrollView> -->
+    
+<!-- </RelativeLayout> -->

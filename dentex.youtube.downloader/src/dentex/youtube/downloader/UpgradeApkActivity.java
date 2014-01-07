@@ -147,7 +147,7 @@ public class UpgradeApkActivity extends Activity {
 					cl.setText("");
 					
 					asyncUpdate = new AsyncUpdate();
-					asyncUpdate.execute(getString(R.string.apk_upgrade_sourceforge_link));
+					asyncUpdate.execute(getString(R.string.ytd_sourceforge_files));
 				} else {
 					buttonClickedOnce = false;
 					callDownloadApk(matchedVersion);
@@ -258,7 +258,7 @@ public class UpgradeApkActivity extends Activity {
 	}
 	
 	void callDownloadApk(String ver) {
-		String apklink = getString(R.string.apk_download_sourceforge_link, ver);
+		String apklink = getString(R.string.ytd_sourceforge_versioned_apk, ver);
 		apkFilename = getString(R.string.apk_filename, ver);
 		downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
 	    Request request = new Request(Uri.parse(apklink));

@@ -7,16 +7,9 @@
     <string name="title_activity_donate">Dary</string>
     <string name="title_activity_tutorials">Návody</string>
     <string name="title_activity_translators_show">Překladatelé</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_dashboard">Seznam</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">Všeobecný návod</string>
-	<string name="tutorial_msg_new">Nyní vidíte seznam s kodeky a kvalitami dostupnými pro zvolené video. Můžete: 
-\n\n*) Kliknout na položku pro stáhnutí videa do vašeho zařízení, nebo odeslat přes SSH do vzdáleného PC. 
-\nPožadavky pro cílové zařízení: Bash a Wget. Další info o SSH později; 
-\n\n*) Delší podržení na položce pro volbu mezi Kopírovat do schránky nebo Sdílet odkaz jako text (např. odeslat do jiné aplikace). 
-\nVemte prosím na vědomí, že takový odkaz (jiný než při odeslaní přes SSH) může být použitý pouze na stejném zařízení, kde byl vytvořený nebo na stejné síti LAN, pokud ho sdílíte do jiného zařízení.\n</string>
     <string name="loading">Načítání&#8230;</string>
     <string name="error">Chyba!</string>
     <string name="information">Informace</string>
@@ -40,16 +33,12 @@
     <string name="rename_dialog_msg">Nezadávejte typ souboru (například .mp4 nebo .flv).</string>
     <string name="unable_save">Nepodařilo se uložit video!</string>
     <string name="unable_save_dialog_msg">Cílová složka není dostupná, nebo do ní nelze zapisovat.</string>
-    <string name="ssh_info_tutorial_title">Jak stáhnout přes SSH</string>
-    <string name="ssh_info_tutorial_msg">Jeden dlouhý příkaz byl vložený do schránky.
-\n\nVyberte profil v ConnectBotu a jeden ve vzdáleném shellu, přejděte na požadovaný
-adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</string>
+
     <string name="callConnectBot_dialog_title">%1$s není nainstalován!</string>
     <string name="callConnectBot_dialog_msg">Potřebujete tuto aplikaci pro spuštění stahování přes SSH.</string>
     <string name="callConnectBot_dialog_positive">Stáhnout</string>
     <string name="download_complete_dialog_msg1">YouTube Video:\n</string>
     <string name="download_complete_dialog_msg2">\nÚspěšně staženo.</string>
-    <string name="download_complete_dialog_positive">Otevřít</string>
     <string name="downloading">Stahování&#8230;</string>
     <string name="cancel_download_dialog_title">Zrušit stahování?</string>
     <string name="video_list_error_toast">Chyba v seznamu videí.</string>
@@ -110,7 +99,7 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="ffmpeg_download_notification">Stahování FFmpeg</string>
     <string name="ffmpeg_install">Instaluji FFmpeg binárku&#8230;</string>
     <string name="email_via">Odeslat email přes:</string>
-    <string name="file_already_added">Soubor už je přidaný.</string>
+    <string name="file_already_added">Soubor je už přidaný.</string>
     
     <!-- ### UpgradeApkActivity ### -->
     
@@ -161,18 +150,23 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
 	<string name="json_status_imported">Importováno</string>
 	<string name="json_status_queued">Ve frontě</string>
 	<string name="menu_search">hledat&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Zálohovat</string>
 	<string name="menu_restore">Obnovit</string>
 	<string name="menu_import_file">Import souborů</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s již přidán.</string>
-	<string name="menu_backup_info">Zvolte složku k záloze Dashboardu</string>
-	<string name="menu_restore_info">Obnovit Dashboard ze souboru</string>
+	<string name="menu_backup_info">Zvolte složku k záloze seznamu</string>
+	<string name="menu_restore_info">Obnovit seznam ze souboru</string>
 	<string name="menu_restore_info_msg">Současné údaje budou přepsány.</string>
-	<string name="menu_import_file_info">Importovat a spravovat soubory v Dashboardu</string>
+	<string name="menu_import_file_info">Importovat a spravovat soubory v seznamu</string>
 	<string name="menu_import_in_progress">Probíhá import souborů: %1$s</string>
-	<string name="menu_backup_result_ok">Záloha Dashboard dat je v pořádku.</string>
+	<string name="menu_backup_result_ok">Záloha seznamu je v pořádku.</string>
 	<string name="menu_backup_result_failed">Chyba při zálohování.</string>
-	<string name="menu_restore_result_ok">Dashboard data obnoveny.</string>
+	<string name="menu_restore_result_ok">Seznam obnoven.</string>
 	<string name="menu_restore_result_failed">Chyba při obnově.</string>
 	<string name="unsupported_operation">Nepodporovaná operace.</string>
 	<string name="ffmpeg_already_running">FFmpeg již běží.</string>
@@ -222,7 +216,7 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
         <item>Přejmenovat</item>
         <item>Stáhnout znovu video</item>
         <item>Odeslat</item>
-        <item>Odstranit z Dashboard</item>
+        <item>Odstranit ze seznamu</item>
         <item>Odstranit a vymazat soubor</item>
         <item>Pozastavit/Spustit</item>
     </string-array>
@@ -239,18 +233,18 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="audio_extr_warning_msg">Stejný audio soubor již extrahován.</string>
 
 	<string name="delete_video_confirm">Potvrďte, že chcete smazat tento soubor?</string>
-	<string name="remove_video_confirm">Potvrďte, že chcete odstranit toto video ze seznamu?</string>
+	<string name="remove_video_confirm">Potvrďte, že chcete odstranit tento soubor ze seznamu?</string>
 	<string name="delete_video_ok">%1$s úspěšně smazáno.</string>
 	<string name="delete_video_failed">Chyba: %1$s není smazán.</string>
 	
-	<string name="empty_dashboard">No entries</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">Žádné položky</string>
+	<string name="status_text_in_progress">Položek: %1$d (zpracovává se: %2$d)</string>
+	<string name="status_text">Položek: %d</string>
 	
     <!-- ### preferences ### -->
 
     <!-- -->
-    <string name="dashboard_summary">Otevřít YTD Dashboard</string>
+    <string name="dashboard_summary">Otevřít YTD seznam</string>
 
     <!-- -->
     <string name="settings_cat_ui">Uživatelské rozhraní</string>
@@ -263,19 +257,88 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">Rychlý start.</string>
-    <string name="quick_start_summ">Otevřít rychlou nápovědu</string>
-    <string name="quick_start_text">Zde jsou pouze nastavení pro \'YouTube Downloader\'.
-\n\nSamotná aplikace je přístupná přes tlačítko Sdílet v aplikaci YouTube při sledovaní videa.
-\n\nPotom zvolte \'YouTube Downloader\' a zobrazí se vám další informace.
-\n\nTaké můžete sdílet YouTube odkaz přes jakoukoliv aplikaci, např. internetový prohlížeč.</string>
-    <string name="general_info_title">Zobrazit všeobecný návod</string>
-    <string name="general_info_summary">Při spuštění zobrazit všeobecný návod</string>
     <string name="show_again_checkbox">Zobrazit i příště</string>
-    <string name="ssh_info_title">Zobrazit SSH návod</string>
-    <string name="ssh_info_summary">Zobrazí rychlý návod jak vzdáleně stahovat přes SSH</string>
-    <string name="audio_tutorial_title">Návod na extrahování audia</string>
-    <string name="audio_tutorial_summary">Otevřít stručný návod o extrahování audia</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">Otevřít</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">Nyní vidíte seznam s kodeky a kvalitami dostupnými pro zvolené video. Můžete: 
+\n\n*) Kliknout na položku pro stáhnutí videa do vašeho zařízení, nebo odeslat přes SSH do vzdáleného PC. 
+\nPožadavky pro cílové zařízení: Bash a Wget. Další info o SSH později; 
+\n\n*) Delší podržení na položce pro volbu mezi Kopírovat do schránky nebo Sdílet odkaz jako text (např. odeslat do jiné aplikace). 
+\nVemte prosím na vědomí, že takový odkaz (jiný než při odeslaní přes SSH) může být použitý pouze na stejném zařízení, kde byl vytvořený nebo na stejné síti LAN, pokud ho sdílíte do jiného zařízení.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">Jeden dlouhý příkaz byl vložený do schránky.
+\n\nVyberte profil v ConnectBotu a jeden ve vzdáleném shellu, přejděte na požadovaný
+adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">Složka stahování</string>
@@ -285,7 +348,7 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="chooser_location_summary">Podržte déle pro výběr složky</string>
 	
     <!-- -->
-    <string name="settings_cat_files">Video soubory</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">Povolit přejmenování souboru</string>
     <string name="enable_rename_summary">Přejmenovat video před stažením (pouze při lokálním uložení)</string>
 	<string name="show_thumb_title">Zobrazit obrázek náhledu</string>
@@ -331,6 +394,9 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     
     <string name="launcher_title">Zobrazit po startu</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">Aktualizace</string>
     <string name="update_title">Zkontrolovat aktualizace.</string>
@@ -358,7 +424,7 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="share_warning">Žádné odpovídající aplikace nenalezeny.</string>
     <string name="share_message">#YouTubeDownloader
 \nVolná Android aplikace s otevřeným kódem ke stahování YouTube videí!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">Pomozte s překladem této aplikace</string>
     <string name="xda_title">Téma na XDA fóru</string>
     
@@ -376,10 +442,10 @@ vložení do vzdáleného shellu (funguje JEN když je cílové PC na stejné s�
 	<string name="settings_cat_system">Systém</string>
 	<string name="enable_logging_title">Povolit záznam</string>
 	<string name="enable_logging_summary">Zahrnout YTD zprávy do systémového záznamu. Povinné pro odeslání \"logcat\" záznamů vývojáři.</string>
-	<string name="clear_dashboard_title">Vyprázdnit Dashboard</string>
-	<string name="clear_dashboard_summary">Vymazat všechny Dashboard záznamy (může odstranit některé chyby)</string>
-	<string name="clear_dashboard_msg">Pokračovat?\nTato akce vymaže všechny záznamy v Dashboardu.</string>
-	<string name="clear_dashboard_ok">Dashboard vyprázdněn.</string>
-	<string name="clear_dashboard_failed">Vyprázdnění Dashboard selhalo.</string>
+	<string name="clear_dashboard_title">Vyprázdnit seznam</string>
+	<string name="clear_dashboard_summary">Vymazat všechny záznamy v seznamu (může odstranit některé chyby)</string>
+	<string name="clear_dashboard_msg">Pokračovat?\nTato akce vymaže všechny záznamy v seznamu.</string>
+	<string name="clear_dashboard_ok">Seznam vyprázdněn.</string>
+	<string name="clear_dashboard_failed">Vyprázdnění seznamu selhalo.</string>
 	
 </resources>

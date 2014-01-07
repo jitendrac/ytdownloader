@@ -10,13 +10,6 @@
     <string name="title_activity_dashboard">Bảng điều khiển</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">Hướng dẫn</string>
-	<string name="tutorial_msg_new">Now you will see a list with all the codecs and qualities available for the selected video. You can:
-		\n\n*) Press an item to download the video locally (on the device) or to send the download via SSH to a remote PC.
-		\nDestination machine requirements: Bash and Wget. Additional SSH info further on;
-		\n\n*) Long-press an item and choose between copy to clipboard or share link as text (i.e. send to another app).
-		\nPlease note that such a link (differently from when you send it via SSH) can be only used from the same device where it has been created OR from the same LAN, if you share it to another machine.\n</string>
     <string name="loading">Đang tải &#8230;</string>
     <string name="error">Lỗi!</string>
     <string name="information">Thông tin</string>
@@ -40,15 +33,12 @@
     <string name="rename_dialog_msg">Không nhập đuôi file</string>
     <string name="unable_save">Không lưu được video</string>
     <string name="unable_save_dialog_msg">Thư mục đích không tồn tại hoặc không được quyền ghi</string>
-    <string name="ssh_info_tutorial_title">Hướng dẫn SSH</string>
-    <string name="ssh_info_tutorial_msg">Lệnh gửi file đã được copy vào clipboard.
-\n\nĐăng nhập vào tài khoản trong ConnectBot, sau đó chuyển đến thư mục mong muốn rồi PASTE lệnh gửi(sử dụng nút menu) và ENTER.</string>
+
     <string name="callConnectBot_dialog_title">%1$s chưa được cài</string>
     <string name="callConnectBot_dialog_msg">Bạn cần phần mềm miễn phí này để gửi video qua SSH</string>
     <string name="callConnectBot_dialog_positive">Tải về</string>
     <string name="download_complete_dialog_msg1">Youtube Video:\n</string>
     <string name="download_complete_dialog_msg2">\nTải về thành công</string>
-    <string name="download_complete_dialog_positive">Mở</string>
     <string name="downloading">Đang tải&#8230;</string>
     <string name="cancel_download_dialog_title">Hủy bỏ</string>
     <string name="video_list_error_toast">Lỗi trong danh sách video</string>
@@ -160,9 +150,14 @@
 	<string name="json_status_imported">Đã nhập</string>
 	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">tìm &#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Sao lưu</string>
 	<string name="menu_restore">Khôi phục</string>
 	<string name="menu_import_file">Import files</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
 	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
@@ -262,19 +257,87 @@
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">Hướng dẫn nhanh</string>
-    <string name="quick_start_summ">Mở hướng dẫn sử dụng</string>
-    <string name="quick_start_text">Đây chỉ là phần tuỳ chỉnh của \'YouTube Downloader\'.
-\n\nChương trình thực sự có thể được truy cập qua nút chia sẻ trong ứng dụng YouTube, khi bạn xem video.
-\n\nSau đó chọn \'YouTube Donwloader\' để thêm tuỳ chọn
-\n\nBạn cũng có thể chia sẻ bất kì link Youtube nào cho các ứng dụng khác: vd. trình duyệt.</string>
-    <string name="general_info_title">Bật hướng dẫn sử dụng</string>
-    <string name="general_info_summary">Hiển thị hướng dẫn sử dụng khi khởi động</string>
     <string name="show_again_checkbox">Hiển thị lần sau</string>
-    <string name="ssh_info_title">Bật hướng dẫn sử dụng SSH</string>
-    <string name="ssh_info_summary">Hiển thị hướng dẫn nhanh sử dụng SSh</string>
-    <string name="audio_tutorial_title">Hướng dẫn xuất ra âm thanh</string>
-    <string name="audio_tutorial_summary">Open a brief guide about the audio extraction feature</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">Mở</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">Now you will see a list with all the codecs and qualities available for the selected video. You can:
+		\n\n*) Press an item to download the video locally (on the device) or to send the download via SSH to a remote PC.
+		\nDestination machine requirements: Bash and Wget. Additional SSH info further on;
+		\n\n*) Long-press an item and choose between copy to clipboard or share link as text (i.e. send to another app).
+		\nPlease note that such a link (differently from when you send it via SSH) can be only used from the same device where it has been created OR from the same LAN, if you share it to another machine.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">Lệnh gửi file đã được copy vào clipboard.
+\n\nĐăng nhập vào tài khoản trong ConnectBot, sau đó chuyển đến thư mục mong muốn rồi PASTE lệnh gửi(sử dụng nút menu) và ENTER.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">Thư mục download</string>
@@ -284,7 +347,7 @@
     <string name="chooser_location_summary">Click và giữ để chọn thư mục</string>
 	
     <!-- -->
-    <string name="settings_cat_files">Videos</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">Cho phép đổi tên</string>
     <string name="enable_rename_summary">Đổi tên video trước khi tải</string>
 	<string name="show_thumb_title">Hiện ảnh xem trước</string>
@@ -330,6 +393,9 @@
     
     <string name="launcher_title">Entry-point activity</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">Cập nhật</string>
     <string name="update_title">Kiểm tra phiên bản</string>
@@ -357,7 +423,7 @@
     <string name="share_warning">Không có ứng dụng phù hợp</string>
     <string name="share_message">#YouTubeDownloader
 \nỨng dụng miễn phí và mã mở cho phép tải video từ YouTube
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">Trợ giúp dịch</string>
     <string name="xda_title">Bài viết trên forum XDA</string>
     

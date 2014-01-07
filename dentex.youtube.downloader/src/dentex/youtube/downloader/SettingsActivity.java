@@ -125,11 +125,11 @@ public class SettingsActivity extends Activity {
         	case R.id.menu_tutorials:
         		startActivity(new Intent(this, TutorialsActivity.class));
         		return true;
-//        	case R.id.menu_dashboard:
-//        		Intent dashboardIntent = new Intent(this, DashboardActivity.class);
-//        		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//        		startActivity(dashboardIntent);
-//        		return true;
+        	case R.id.menu_dashboard:
+        		Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        		startActivity(dashboardIntent);
+        		return true;
         	default:
         		return super.onOptionsItemSelected(item);
         }
@@ -139,7 +139,8 @@ public class SettingsActivity extends Activity {
 		
 		public static PreferenceScreen sSettingsPr;
     	
-		private Preference dashboard;
+//		private Preference dashboard;
+		private Preference yt;
 		private Preference filechooser;
 		private Preference up;
 		private Preference th;
@@ -195,16 +196,32 @@ public class SettingsActivity extends Activity {
             for(int i=0;i<getPreferenceScreen().getPreferenceCount();i++){
                 initSummary(getPreferenceScreen().getPreference(i));
             }
+            
+            //general Info PopUp;
+        	PopUps.showPopUp(getString(R.string.quick_start_settings_title), 
+    				getString(R.string.quick_start_settings_text), 
+    				"info", 
+    				sSettings, 
+    				"show_quick_start_settings");
 
-            dashboard = (Preference) findPreference("dashboard");
-            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+//            dashboard = (Preference) findPreference("dashboard");
+//            dashboard.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+//            	
+//                public boolean onPreferenceClick(Preference preference) {
+//                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
+//            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//            		startActivity(dashboardIntent);
+//                  return true;
+//                }
+//            });
+            
+            yt = (Preference) findPreference("launch_youtube");
+            yt.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             	
-                public boolean onPreferenceClick(Preference preference) {
-                	Intent dashboardIntent = new Intent(getActivity(), DashboardActivity.class);
-            		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            		startActivity(dashboardIntent);
-                  return true;
-                }
+            	public boolean onPreferenceClick(Preference preference) {
+            		Utils.launchYoutube(sSettings);
+                    return true;
+            	}
             });
             
             clear = (Preference) findPreference("clear_dashboard");
@@ -253,7 +270,7 @@ public class SettingsActivity extends Activity {
 			    		getActivity().setTheme(R.style.AppThemeLight);
 			    	}
 			    	
-			    	if (!theme.equals(newValue)) Utils.reload(getActivity());
+			    	if (!theme.equals(newValue)) Utils.reloadNoAnim(getActivity());
 					return true;
 				}
 			});
@@ -265,7 +282,7 @@ public class SettingsActivity extends Activity {
 					String language = YTD.settings.getString("lang", "default");
 					if (!language.equals(newValue)) {
 						Utils.logger("d", "Setting current lang to: " + newValue, DEBUG_TAG);
-						Utils.reload(getActivity());
+						Utils.reloadNoAnim(getActivity());
 					}
 					return true;
 				}
@@ -428,8 +445,8 @@ public class SettingsActivity extends Activity {
     			Log.e(DEBUG_TAG, "unable to start Download Manager -> " + e.getMessage());
     		}
     	}*/
-    	
-    	public static void copyFfmpegToAppDataDir(Context context, File src, File dst) {
+
+		public static void copyFfmpegToAppDataDir(Context context, File src, File dst) {
     		try {
     			Toast.makeText(context, "YTD: " + context.getString(R.string.ffmpeg_install), Toast.LENGTH_SHORT).show();
     			Utils.logger("i", "trying to copy FFmpeg binary to private App dir", DEBUG_TAG);

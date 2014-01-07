@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <Preference 
-        android:key="quick_start"
-        android:title="@string/quick_start_title" 
-        android:summary="@string/quick_start_summ"/>
-              	
-   	<CheckBoxPreference
-       	android:key="general_info"
-       	android:title="@string/general_info_title"
-       	android:summary="@string/general_info_summary"
-       	android:defaultValue="true"/>
-   	
-   	<CheckBoxPreference
-       	android:key="ssh_info"
-       	android:title="@string/ssh_info_title"
-       	android:summary="@string/ssh_info_summary"
-       	android:defaultValue="true"/>
-   	
-   	<!-- <Preference 
-        android:key="audio_tutorial"
-        android:title="@string/audio_tutorial_title" 
-        android:summary="@string/audio_tutorial_summary"/> -->
+    <PreferenceCategory
+    	android:title="@string/tutorials_cat_enable_disable">
+    	
+	    <CheckBoxPreference 
+	        android:key="show_quick_start_settings"
+	        android:title="@string/quick_start_settings_title"
+	        android:defaultValue="true"/>
+	    
+	    <CheckBoxPreference 
+	        android:key="show_quick_start_dasboard"
+	        android:title="@string/quick_start_dashboard_title"
+	        android:defaultValue="true"/>
+	              	
+	   	<CheckBoxPreference
+	       	android:key="tutorial_share"
+	       	android:title="@string/tutorial_share_title"
+	       	android:defaultValue="true"/>
+	   	
+	   	<CheckBoxPreference
+	       	android:key="tutorial_ssh"
+	       	android:title="@string/tutorial_ssh_title"
+	       	android:defaultValue="true"/>
+	        
+	</PreferenceCategory>
+	
+    <PreferenceCategory
+    	android:title="@string/tutorials_cat_open">
+        
+        <Preference    
+			android:key="tutorials_read"
+            android:title="@string/tutorials_read_title"/>
+        
+    </PreferenceCategory>
 
 </PreferenceScreen>

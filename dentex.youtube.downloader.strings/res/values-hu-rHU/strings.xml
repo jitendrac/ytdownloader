@@ -10,13 +10,6 @@
     <string name="title_activity_dashboard">Irányítópult</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">Alkalmazás tudnivalók</string>
-	<string name="tutorial_msg_new">Most láthatod a kiválasztott videó elérhető kodekjeinek és minőségeinek listáját. Most:
-\n\n*) Rákattinthatsz egy elemre a letöltéshez, vagy elküldheted a letöltést SSH-n keresztül egy PC-re.
-\nCéleszköz követelmények: Bash és Wget. További SSH információk;
-\n\n*) Hosszan nyomhatsz egy elemre a vágólapra másoláshoz, vagy a link megosztásához (másik appnak).
-\nKérlek vedd figyelembe, hogy az itt létrehozott link csak az azt létrehozó készüléken, vagy az annak hálózatában lévő eszközökön használható.\n</string>
     <string name="loading">Betöltés&#8230;</string>
     <string name="error">Hiba!</string>
     <string name="information">Info</string>
@@ -40,16 +33,12 @@
     <string name="rename_dialog_msg">Ne írd be a fájl kiterjesztését (pl.: .mp4 vagy .flv).</string>
     <string name="unable_save">A videó nem menthető!</string>
     <string name="unable_save_dialog_msg">A célkönyvtár nem elérhető, és/vagy nem írható.</string>
-    <string name="ssh_info_tutorial_title">Küldés SSH-n keresztül (segítség)</string>
-    <string name="ssh_info_tutorial_msg">Egy hosszú parancs lett betöltve a vágólapra.
-\n\nVálassz egy profilt a ConnectBot-ban, és amint beléptél, tallózd ki a kívánt könyvtárat, 
-illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
+
     <string name="callConnectBot_dialog_title">%1$s nincs telepítve!</string>
     <string name="callConnectBot_dialog_msg">Szükséged lesz erre az ingyenes appra az SSH-n való küldéshez.</string>
     <string name="callConnectBot_dialog_positive">Letöltés</string>
     <string name="download_complete_dialog_msg1">YouTube videó:\n</string>
     <string name="download_complete_dialog_msg2">\nSikeresen letöltve.</string>
-    <string name="download_complete_dialog_positive">Megnyitás</string>
     <string name="downloading">Letöltés folyamatban&#8230;</string>
     <string name="cancel_download_dialog_title">Letöltés megszakítása?</string>
     <string name="video_list_error_toast">Hiba a videólistában.</string>
@@ -161,9 +150,14 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
 	<string name="json_status_imported">Importált</string>
 	<string name="json_status_queued">Ütemezett</string>
 	<string name="menu_search">keresés&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Biztonsági mentés</string>
 	<string name="menu_restore">Visszaállítás</string>
 	<string name="menu_import_file">Import files</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Válassz ki egy mappát</string>
 	<string name="menu_restore_info">Irányítópult visszaállítása fájlból</string>
@@ -263,19 +257,88 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">Gyors kezdés</string>
-    <string name="quick_start_summ">Gyorstalpaló megnyitása</string>
-    <string name="quick_start_text">Itt vannak a  \'YouTube Downloader\' beállításai.
-\n\nAz alkalmazás elérhető a YouTube appból, videó nézése közben a megosztás gomb alatt.
-\n\nEzután válaszd ki a  \'YouTube Downloader\' -t, és még több infót kapsz.
-\n\nEzen kívül bármi más módon megoszthatod a YouTube linkeket, pl Böngészőn keresztül.</string>
-    <string name="general_info_title">Segítség engedélyezése</string>
-    <string name="general_info_summary">Tudnivalók mutatása indításkor</string>
     <string name="show_again_checkbox">Mutasd legközelebb is</string>
-    <string name="ssh_info_title">SSH Tudnivalók engedélyezése</string>
-    <string name="ssh_info_summary">Gyors tipp mutatása az SSH használatáról</string>
-    <string name="audio_tutorial_title">Audio kicsomagolási oktatás</string>
-    <string name="audio_tutorial_summary">Nyisd meg a tudnivalókat a hang kicsomagolásról</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">Megnyitás</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">Most láthatod a kiválasztott videó elérhető kodekjeinek és minőségeinek listáját. Most:
+\n\n*) Rákattinthatsz egy elemre a letöltéshez, vagy elküldheted a letöltést SSH-n keresztül egy PC-re.
+\nCéleszköz követelmények: Bash és Wget. További SSH információk;
+\n\n*) Hosszan nyomhatsz egy elemre a vágólapra másoláshoz, vagy a link megosztásához (másik appnak).
+\nKérlek vedd figyelembe, hogy az itt létrehozott link csak az azt létrehozó készüléken, vagy az annak hálózatában lévő eszközökön használható.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">Egy hosszú parancs lett betöltve a vágólapra.
+\n\nVálassz egy profilt a ConnectBot-ban, és amint beléptél, tallózd ki a kívánt könyvtárat, 
+illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">Letöltési mappa</string>
@@ -285,7 +348,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="chooser_location_summary">Nyomd hosszan a könyvtárválasztáshoz</string>
 	
     <!-- -->
-    <string name="settings_cat_files">Videófájlok</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">Fájl átnevezés engedélyezése</string>
     <string name="enable_rename_summary">Videófájl átnevezése letöltés előtt (csak helyi letöltés esetén)</string>
 	<string name="show_thumb_title">Előzetes kép mutatása</string>
@@ -331,6 +394,9 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     
     <string name="launcher_title">Entry-point activity</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">Frissítések</string>
     <string name="update_title">Új verzió keresése</string>
@@ -358,7 +424,7 @@ illeszd be a parancsot (a menü gombal), és nyomd meg az ENTER-t.</string>
     <string name="share_warning">Nem található megfelelő app.</string>
     <string name="share_message">#YouTubeDownloader
 \nIngyenes és nyílt forráskódú app, mellyel YouTube videók tölthetőek le!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">Segíts a fordításban</string>
     <string name="xda_title">Thread on XDA forum</string>
     

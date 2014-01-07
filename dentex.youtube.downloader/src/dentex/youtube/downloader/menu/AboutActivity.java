@@ -233,9 +233,11 @@ public class AboutActivity extends Activity {
 	                	new Intent(android.content.Intent.ACTION_SEND);   
 	                	shareIntent.setType("text/plain");  
 	                	shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "YouTube Downloader");
-	                	String shareMessage = getString(R.string.share_message);
+	                	
+	                	String shareMessage = getString(R.string.share_message) + getString(R.string.ytd_sourceforge_home);
+	                	
 	                	shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
-	                	startActivity(Intent.createChooser(shareIntent, getString(R.string.share_message)));
+	                	startActivity(Intent.createChooser(shareIntent, shareMessage));
 	                } catch (final ActivityNotFoundException e) {
 	                	Utils.logger("d", "No suitable Apps found.", DEBUG_TAG);
 	                	PopUps.showPopUp(getString(R.string.attention), getString(R.string.share_warning), "error", AboutFragment.this.getActivity());

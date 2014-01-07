@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.5.5 - Jan 03 2014
+        \n v3.5.5 - Jan 06 2014
         \n-----------------------------------
         \n[x] new FFmpeg builds from latest v2.1.1 - now with x86 CPU support
+        \n[x] small menu reorganization
         \n
         \n v3.5.4 - Dic 17 2013
         \n-----------------------------------
@@ -637,8 +638,11 @@
     
     <string name="audio_extraction_type_default">conv</string>
     
-    <string name="apk_upgrade_sourceforge_link">http://sourceforge.net/projects/ytdownloader/files/</string>
-    <string name="apk_download_sourceforge_link">http://sourceforge.net/projects/ytdownloader/files/dentex.youtube.downloader_v%1$s.apk/download</string>
+    <string name="ytd_sourceforge_home">http://sourceforge.net/projects/ytdownloader/</string>
+    <string name="ytd_sourceforge_latest_apk">http://sourceforge.net/projects/ytdownloader/files/latest/download</string>
+    
+    <string name="ytd_sourceforge_files">http://sourceforge.net/projects/ytdownloader/files/</string>
+    <string name="ytd_sourceforge_versioned_apk">http://sourceforge.net/projects/ytdownloader/files/dentex.youtube.downloader_v%1$s.apk/download</string>
 	<string name="apk_filename">dentex.youtube.downloader_v%1$s.apk</string>
     
     <string name="ffmpeg_download_dialog_msg_link">http://sourceforge.net/projects/ytdownloader/files/ffmpeg/2.1.1/ffmpeg_%1$s/download</string>
@@ -742,6 +746,13 @@
         <item>@string/title_activity_dashboard</item>
 	</string-array>
 	
-    <string name="launcher_default">settings</string>
+    <string name="launcher_default">dashboard</string>
+    
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
 
 </resources>

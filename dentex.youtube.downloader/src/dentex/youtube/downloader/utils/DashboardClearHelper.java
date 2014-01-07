@@ -59,7 +59,7 @@ public class DashboardClearHelper {
 		        	} else {
 			        	if (YTD.JSON_FILE.delete()) {
 			        		clearThumbsAndVideoinfopref();
-			        		if (doReload) Utils.reload(act);
+			        		if (doReload) act.recreate();
 			        	} else {
 			        		Toast.makeText(act, act.getString(R.string.clear_dashboard_failed), Toast.LENGTH_SHORT).show();
 			        		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
@@ -159,7 +159,7 @@ public class DashboardClearHelper {
 				Toast.makeText(YTD.ctx, YTD.ctx.getString(R.string.clear_dashboard_failed), Toast.LENGTH_SHORT).show();
         		Utils.logger("w", "clear_dashboard_failed", DEBUG_TAG);
 			}
-			if (sDoReload) Utils.reload(sAct);
+			if (sDoReload) sAct.recreate();
 			DashboardActivity.dashboardAsyncTaskInProgress(sAct, false);
 		}
 	}

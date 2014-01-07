@@ -94,7 +94,7 @@ public class AutoUpgradeApkService extends Service {
 				matchedVersion = null;
 				
 				asyncAutoUpdate = new AsyncUpdate();
-				asyncAutoUpdate.execute(getString(R.string.apk_upgrade_sourceforge_link));
+				asyncAutoUpdate.execute(getString(R.string.ytd_sourceforge_files));
 			} catch (NullPointerException e) {
 				Log.e(DEBUG_TAG, "unable to retrieve update data.");
 			}
@@ -172,7 +172,7 @@ public class AutoUpgradeApkService extends Service {
 	}
 	
 	void callDownloadApk(String ver) {
-		String apklink = getString(R.string.apk_download_sourceforge_link, ver);
+		String apklink = getString(R.string.ytd_sourceforge_versioned_apk, ver);
 		apkFilename = getString(R.string.apk_filename, ver);
 	    Request request = new Request(Uri.parse(apklink));
 	    fileUri = Uri.parse(dir.toURI() + apkFilename);

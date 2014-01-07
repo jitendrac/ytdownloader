@@ -10,13 +10,6 @@
     <string name="title_activity_dashboard">대시보드</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">앱 사용법 안내</string>
-	<string name="tutorial_msg_new">이제 선택한 비디오의 품질과 코덱 목록을 볼 수 있습니다. 이제 아래의 행동 중 하나를 선택할 수 있습니다.
-\n\n*) 비디오 중 하나를 선택하면 기기에 저장하거나 SSH를 통해 리눅스 머신에서 원격으로 다운로드할 수 있습니다.
-\n리눅스 머신에 원격으로 다운로드하려면 Bash와 Wget이 필요합니다. SSH에 대한 추가적인 내용은 앱에서 추후에 다시 안내할 것입니다.
-\n\n*) 아이템을 오래 누르고 있으면 클립보드에 저장하거나 텍스트 링크를 만들어 다른 앱에 보낼 수 있습니다.
-\nSSH로 다운로드하는 것과는 다르게 복사한 텍스트 링크는 기기 내에서만 유효하며 예외적으로 다른 기기로 보낼 경우 같은 공유기에 연결된 기기일 경우에만 유효합니다.\n</string>
     <string name="loading">로딩 중…</string>
     <string name="error">에러!</string>
     <string name="information">정보</string>
@@ -40,15 +33,12 @@
     <string name="rename_dialog_msg">확장자는 입력하지 마세요 (.mp4, .flv 등)</string>
     <string name="unable_save">비디오를 저장할 수 없습니다!</string>
     <string name="unable_save_dialog_msg">저장 폴더가 삭제되었거나 쓰기 작업을 할 수 없습니다.</string>
-    <string name="ssh_info_tutorial_title">SSH로 보내기 안내</string>
-    <string name="ssh_info_tutorial_msg">한줄의 긴 명령이 클립보드로 복사되었습니다.
-\n\nConnectBot 앱에서 적절한 프로파일을 선택한 후 원격 쉘에서 다운로드가 되기를 원하는 디렉토리로 이동합니다. 그 다음 붙여넣기(메뉴버튼 이용)한 후 엔터를 누르세요.</string>
+
     <string name="callConnectBot_dialog_title">%1$s 가 설치되지 않았습니다!</string>
     <string name="callConnectBot_dialog_msg">SSH로 보내려면 앱을 다운로드해야 합니다.</string>
     <string name="callConnectBot_dialog_positive">다운로드</string>
     <string name="download_complete_dialog_msg1">유튜브 비디오:\n</string>
     <string name="download_complete_dialog_msg2">\n성공적으로 다운로드됨.</string>
-    <string name="download_complete_dialog_positive">열기</string>
     <string name="downloading">다운로드 중&#8230;</string>
     <string name="cancel_download_dialog_title">다운로드를 취소하시겠습니까?</string>
     <string name="video_list_error_toast">비디오 목록에 에러가 발생하였습니다.</string>
@@ -81,15 +71,15 @@
     
     <string name="filter_header_reset">필터 재설정</string>
     <string name="filter_view_all">전체 보기</string>
-    <string name="filter_header_format">Filter by format</string>
-    <string name="filter_header_quality">Filter by quality</string>
-    <string name="filter_header_others">Other filters</string>
+    <string name="filter_header_format">포맷으로 필터링</string>
+    <string name="filter_header_quality">품질로 필터링</string>
+    <string name="filter_header_others">다른 필터</string>
 
-    <string name="filter_ld">Large</string>
-    <string name="filter_md">Medium</string>
-    <string name="filter_sd">Small</string>
-    <string name="filter_vo">Video-only</string>
-    <string name="filter_ao">Audio-only</string>
+    <string name="filter_ld">고품질</string>
+    <string name="filter_md">일반</string>
+    <string name="filter_sd">저품질</string>
+    <string name="filter_vo">비디오만</string>
+    <string name="filter_ao">오디오만</string>
     
     <!-- ### SettingsActivity ### -->
 
@@ -160,15 +150,20 @@
 	<string name="json_status_imported">가져오기 완료</string>
 	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">검색&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">백업</string>
 	<string name="menu_restore">복구</string>
-	<string name="menu_import_file">Import files</string>
-	<string name="menu_import_file_double">%1$s already added.</string>
+	<string name="menu_import_file">파일 가져오기</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
+	<string name="menu_import_file_double">%1$s 이(가) 이미 추가되어 있습니다</string>
 	<string name="menu_backup_info">대시보드 데이터를 백업할 폴더를 선택하세요</string>
 	<string name="menu_restore_info">대시보드의 내용을 파일로부터 복구합니다</string>
 	<string name="menu_restore_info_msg">현재의 데이터가 사라지고 복원 데이터로 변경됩니다.</string>
-	<string name="menu_import_file_info">Import files and manage them from the Dashboard</string>
-	<string name="menu_import_in_progress">Files import in progress: %1$s</string>
+	<string name="menu_import_file_info">파일을 가져와서 대시보드에서 관리합니다.</string>
+	<string name="menu_import_in_progress">파일 가져오기 진행 중: %1$s</string>
 	<string name="menu_backup_result_ok">대시보드 데이터 백언 성공</string>
 	<string name="menu_backup_result_failed">백업 중 에러가 발생하였습니다.</string>
 	<string name="menu_restore_result_ok">대시보드 데이터 복원 완료</string>
@@ -180,8 +175,8 @@
 	
 	<string-array name="dashboard_click_entries">
 	    <item>열기</item>
-	    <item>Extract audio</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>오디오 추출</item>
+        <item>오디오 추출 후 mp3로 변환</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_audio">
@@ -190,19 +185,19 @@
     </string-array>
     
 	<string-array name="dashboard_click_entries_flv">
-	    <item>Open</item>
-        <item>Extract audio and encode to mp3</item>
+	    <item>열기</item>
+        <item>오디오 추출 후 mp3로 변환</item>
     </string-array>
     
 	<string-array name="dashboard_click_entries_vo">
-	    <item>Open</item>
+	    <item>열기</item>
         <item>Add audio stream (already downloaded)</item>
     </string-array>
     
 	<string name="ao_not_found">No suitable audio-only stream found</string>
 	<string name="remove_ao_vo">Delete video-only and audio-only files afterwards\n(no confirmation!)</string>
-	<string name="ffmpeg_new_v_required">New FFmpeg version required. Download it now?</string>
-    <string name="share_file_via">Share this file via:</string>
+	<string name="ffmpeg_new_v_required">새버전의 FFmpeg이 필요합니다. 지금 다운로드 하시겠습니까?</string>
+    <string name="share_file_via">이 파일을 공유:</string>
 	<string name="ffmpeg_not_enabled_title">FFmpeg 이 설치되지 않았거나 활성화되지 않았습니다:</string>
 	<string name="ffmpeg_not_enabled_msg">설정화면으로 가시겠습니까?</string>
 	<string name="remove_video">오디오 추출이 끝난 후 비디오 파일을 삭제합니다 (별도의 확인 메세지 없음)</string>
@@ -220,13 +215,13 @@
 	    <item>이동</item>
         <item>이름 변경</item>
         <item>비디오 다시 다운로드</item>
-        <item>Send</item>
-        <item>Remove from Dashboard</item>
-        <item>Remove and delete file</item>
-        <item>Pause/Resume</item>
+        <item>전송</item>
+        <item>대시보드에서 삭제</item>
+        <item>파일도 함께 삭제</item>
+        <item>일시정지/재생</item>
     </string-array>
     
-	<string name="operation_standby">Stand-by: another operation is already in progress.</string>
+	<string name="operation_standby">대기중: 다른 작업이 진행 중 입니다</string>
 	<string name="dashboard_delete_data_cb">리스트에 있는 모든 비디오/오디오 파일 지우기</string>
     
 	<string name="move_error">이동 중 에러가 발생하였습니다.</string>
@@ -242,9 +237,9 @@
 	<string name="delete_video_ok">%1$s 이(가) 성공적으로 삭제되었습니다.</string>
 	<string name="delete_video_failed">에러: %1$s 을(를) 삭제 실패하였습니다.</string>
 	
-	<string name="empty_dashboard">No entries</string>
-	<string name="status_text_in_progress">Entries: %1$d (in progress: %2$d)</string>
-	<string name="status_text">Entries: %d</string>
+	<string name="empty_dashboard">파일없음</string>
+	<string name="status_text_in_progress">%1$d개의 파일 (%2$d개 작업 중)</string>
+	<string name="status_text">%d개의 파일</string>
 	
     <!-- ### preferences ### -->
 
@@ -262,19 +257,87 @@
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">간단한 사용법 안내</string>
-    <string name="quick_start_summ">간단한 사용법을 안내합니다</string>
-    <string name="quick_start_text">이 화면은 \'유튜브 다운로더\'의 설정 화면 입니다.
-\n\n실제 앱은 유튜브 앱의 비디오 시청화면에서 공유 버튼을 눌러 접근할 수 있습니다.
-\n\n공유 목록에서 \'유튜브 다운로더\'를 선택하면 추가적인 사용법에 대한 내용을 읽을 수 있습니다.
-\n\n또한 다른 앱에서 유튜브 링크 주소를 공유할수도 있습니다.: 예. 브라우저.</string>
-    <string name="general_info_title">사용법 안내 보기</string>
-    <string name="general_info_summary">앱을 시작할 때 사용법 안내를 보여줍니다</string>
     <string name="show_again_checkbox">다음에도 보기</string>
-    <string name="ssh_info_title">SSH 사용법 안내 보기</string>
-    <string name="ssh_info_summary">앱을 시작할 때 SSH를 통해 원격으로 다운로드하는 법을 보여줍니다.</string>
-    <string name="audio_tutorial_title">오디오 추출 튜토리얼</string>
-    <string name="audio_tutorial_summary">오디오 추출 기능에 대한 간단한 설명을 봅니다</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">열기</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">이제 선택한 비디오의 품질과 코덱 목록을 볼 수 있습니다. 이제 아래의 행동 중 하나를 선택할 수 있습니다.
+\n\n*) 비디오 중 하나를 선택하면 기기에 저장하거나 SSH를 통해 리눅스 머신에서 원격으로 다운로드할 수 있습니다.
+\n리눅스 머신에 원격으로 다운로드하려면 Bash와 Wget이 필요합니다. SSH에 대한 추가적인 내용은 앱에서 추후에 다시 안내할 것입니다.
+\n\n*) 아이템을 오래 누르고 있으면 클립보드에 저장하거나 텍스트 링크를 만들어 다른 앱에 보낼 수 있습니다.
+\nSSH로 다운로드하는 것과는 다르게 복사한 텍스트 링크는 기기 내에서만 유효하며 예외적으로 다른 기기로 보낼 경우 같은 공유기에 연결된 기기일 경우에만 유효합니다.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">한줄의 긴 명령이 클립보드로 복사되었습니다.
+\n\nConnectBot 앱에서 적절한 프로파일을 선택한 후 원격 쉘에서 다운로드가 되기를 원하는 디렉토리로 이동합니다. 그 다음 붙여넣기(메뉴버튼 이용)한 후 엔터를 누르세요.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">다운로드 폴더</string>
@@ -284,7 +347,7 @@
     <string name="chooser_location_summary">선택할 폴더를 오래 누르세요</string>
 	
     <!-- -->
-    <string name="settings_cat_files">비디오 파일</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">파일 이름 변경 허용</string>
     <string name="enable_rename_summary">다운로드전에 파일 이름을 변경할 수 있도록 합니다. (로컬 다운로드에서만 가능)</string>
 	<string name="show_thumb_title">미리보기 이미지 보기</string>
@@ -328,7 +391,10 @@
         <item>아무것도 안함</item>
     </string-array>
     
-    <string name="launcher_title">Entry-point activity</string>
+    <string name="launcher_title">앱을 시작할 때 보여줄 화면</string>
+    
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
     
     <!-- -->
     <string name="settings_cat_updates">업데이트</string>
@@ -357,7 +423,7 @@
     <string name="share_warning">적절한 앱이 없습니다.</string>
     <string name="share_message">#YouTubeDownloader
 \n공짜이며 오픈소스인 유튜브 다운로더 안드로이드앱!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">이 앱의 번역 돕기</string>
     <string name="xda_title">XDA 포럼 쓰레드</string>
     

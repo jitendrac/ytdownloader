@@ -10,12 +10,10 @@ public class Launcher extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	    
-		String launcher = YTD.settings.getString("launcher", "settings");
-		Class<?> cl = null;
+		String launcher = YTD.settings.getString("launcher", "dashboard");
+		Class<?> cl = DashboardActivity.class;
 		
 		if (launcher.equals("settings")) cl = SettingsActivity.class;
-
-		if (launcher.equals("dashboard")) cl = DashboardActivity.class;
 		
 	    startActivity(new Intent(this, cl));
 	    finish();

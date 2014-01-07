@@ -10,13 +10,6 @@
     <string name="title_activity_dashboard">Instrumentbræt</string>
 
     <!-- ### ShareActivity ### -->
-
-    <string name="tutorial_title">Generel app-guide</string>
-	<string name="tutorial_msg_new">Nu vil du se en liste med alle de cedecs og kvaliteter, der er tilgængelige for den valgte video. Du kan:
-\n\n*) Trykke på et element for at downloade videoen lokalt (på enheden) eller sende den downloadede video via SSH til en fjernstyret PC.
-\nMaskinekrav: Bash og Wget. Yderligere SSH-info på;
-\n\n*) Hold nede for at vælge mellem at kopiere til udklipsholder eller dele link som tekst (f.eks. send til en anden app).
-\nBemærk venligst, at sådan et link (anderledes fra hvor du sender det via SSH) kan blive brugt fra den samme enhed, hvor det er blevet oprettet ELLER fra det samme LAN, hvis du deler det til andre maskiner.\n</string>
     <string name="loading">Indlæser&#8230;</string>
     <string name="error">Fejl!</string>
     <string name="information">Information</string>
@@ -40,16 +33,12 @@
     <string name="rename_dialog_msg">Indtast ikke filtypen (såsom .mp4 eller .flv)</string>
     <string name="unable_save">Videoen kan ikke gemmes!</string>
     <string name="unable_save_dialog_msg">Mappeplaceringen er IKKE tilgængelig og/eller NOT skrivbar.</string>
-    <string name="ssh_info_tutorial_title">Send via SSH-guide</string>
-    <string name="ssh_info_tutorial_msg">En enkelt, lang kommando er blevet indsat i udklipsholderen.
-\n\nVælg en profil i ConnectBot og led efter den ønskede mappe i din remote shell.
-KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
+
     <string name="callConnectBot_dialog_title">%1$s ikke installeret!</string>
     <string name="callConnectBot_dialog_msg">Du skal bruge denne gratis app for at sende den downloadede video via SSH.</string>
     <string name="callConnectBot_dialog_positive">Download</string>
     <string name="download_complete_dialog_msg1">YouTube-video:\n</string>
     <string name="download_complete_dialog_msg2">\nDownload gennemført.</string>
-    <string name="download_complete_dialog_positive">Åbn</string>
     <string name="downloading">Downloader&#8230;</string>
     <string name="cancel_download_dialog_title">Annuller download?</string>
     <string name="video_list_error_toast">Fejl i videolisten.</string>
@@ -161,9 +150,14 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
 	<string name="json_status_imported">Imported</string>
 	<string name="json_status_queued">Queued</string>
 	<string name="menu_search">søg&#8230;</string>
+	
+	<string name="dasboard_tools_title">Tools</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Restore</string>
 	<string name="menu_import_file">Import files</string>
+	
+	<string name="dasboard_actions_title">Actions</string>
+	
 	<string name="menu_import_file_double">%1$s already added.</string>
 	<string name="menu_backup_info">Choose a folder to Backup Dashboard\'s data</string>
 	<string name="menu_restore_info">Restore Dashboard\'s data from file</string>
@@ -263,19 +257,88 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     </string-array>
     
     <!-- -->
-    <string name="quick_start_title">Hurtig start</string>
-    <string name="quick_start_summ">Åbn en hurtigstartsguide</string>
-    <string name="quick_start_text">Her er indstillingerne for \'YouTube Downloader\'.
-\n\nSelve app\'en kan tilgås via del-knappen i YouTube-app\'en, mens du ser en video.
-\n\nVælg derefter \'YouTube Downloader\', og du vil se yderligere informationer.
-\n\nDu kan også dele ethvert YouTube-link via alle andre apps, f.eks. din browser.</string>
-    <string name="general_info_title">Aktiver generel guide.</string>
-    <string name="general_info_summary">Vis en general app-guide ved opstart.</string>
     <string name="show_again_checkbox">Vis igen næste gang.</string>
-    <string name="ssh_info_title">Aktiver SSH-guide</string>
-    <string name="ssh_info_summary">Vis et hurtigt tip om fjernstyring af download via SSH</string>
-    <string name="audio_tutorial_title">Guide til lydekstration</string>
-    <string name="audio_tutorial_summary">Åbn en kort guide om funktionen til lydekstration</string>
+    
+    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+        
+    <string name="tutorials_cat_open">Åbn</string>
+    <string name="tutorials_read_title">Review a tutorial</string>
+    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string-array name="tutorials_read_entries">
+        <item>@string/quick_start_settings_title</item>
+        <item>@string/quick_start_dashboard_title</item>
+        <item>@string/tutorial_share_title</item>
+        <item>@string/tutorial_ssh_title</item>
+    </string-array>
+    
+    <string name="tutorial_share_title">Video list tutorial</string>
+	<string name="tutorial_share_text">Nu vil du se en liste med alle de cedecs og kvaliteter, der er tilgængelige for den valgte video. Du kan:
+\n\n*) Trykke på et element for at downloade videoen lokalt (på enheden) eller sende den downloadede video via SSH til en fjernstyret PC.
+\nMaskinekrav: Bash og Wget. Yderligere SSH-info på;
+\n\n*) Hold nede for at vælge mellem at kopiere til udklipsholder eller dele link som tekst (f.eks. send til en anden app).
+\nBemærk venligst, at sådan et link (anderledes fra hvor du sender det via SSH) kan blive brugt fra den samme enhed, hvor det er blevet oprettet ELLER fra det samme LAN, hvis du deler det til andre maskiner.\n</string>
+    
+	<string name="tutorial_ssh_title">SSH how-to</string>
+    <string name="tutorial_ssh_text">En enkelt, lang kommando er blevet indsat i udklipsholderen.
+\n\nVælg en profil i ConnectBot og led efter den ønskede mappe i din remote shell.
+KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
+    
+    <string name="quick_start_settings_title">Settings quick start</string>
+    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
+		\n\nHere you can:
+		\n\n [-] Launch YouTube
+		\n\n [-] Set the destination download folder
+		\n\n [-] Download and set the FFmpeg plugin
+		\n\n [-] Tweak the UI
+		\n\n [-] Check for updates
+		\n\n [-] Manage many other settings
+	</string>
+		
+    <string name="quick_start_dashboard_title">Dashboard quick start</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, 
+        where you can interact with downloded video/audio files:
+        \n [-] If empty, try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\". 
+              You can also share any YouTube link via any app.
+              Then choose \'YouTube Downloader\' and you will have further usage info.
+        \n  ^ or import here directly a video (or audio) file already stored
+		\n
+		\n [-] Check the status, progress and speed; 
+    	\n
+    	\n [-] Click an entry to: 
+        \n  ^ open video/audio file 
+        \n  ^ do audio extraction/conversion to mp3
+        \n  ^ mux (merge) audio-only and video-only streams (*)
+        \n
+        \n [-] Long-click to manage files: 
+        \n  ^ copy 
+        \n  ^ move 
+        \n  ^ rename 
+        \n  ^ redownload 
+        \n  ^ remove 
+        \n  ^ delete 
+        \n  ^ pause/resume (downloads and other operations)
+        \n
+        \n (*) How to mux: 
+        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
+			it\'s possible to \"MUX\" (merge) a video-only 
+			and an audio-only streams into a single complete video.
+        \n
+        \nDownloads
+        \n [-] enable the \"Get secondary streams\" preference;  
+        \n [-] go share a video to YTD;  
+        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
+        \n
+		\nAfter downloads completion
+        \n [-] click on the VO video into the Dashboard;
+        \n [-] select the \"Add audio stream (already downloaded)\" entry;
+        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
+        \n [-] wait for completion.
+        \n
+        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
+    </string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">Download-mappe</string>
@@ -285,7 +348,7 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     <string name="chooser_location_summary">Hold nede for at vælge en mappe</string>
 	
     <!-- -->
-    <string name="settings_cat_files">Videofiler</string>
+    <string name="settings_cat_list">Video list</string>
     <string name="enable_rename_title">Aktiver omdøbning af filer</string>
     <string name="enable_rename_summary">Omdøb videofilen før download (kun for den lokale download)</string>
 	<string name="show_thumb_title">Vis forhåndsvisninger af billeder</string>
@@ -331,6 +394,9 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     
     <string name="launcher_title">Entry-point activity</string>
     
+    <string name="launch_youtube_title">Launch YouTube</string>
+    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    
     <!-- -->
     <string name="settings_cat_updates">Opdateringer</string>
     <string name="update_title">Tjek for opdateringer</string>
@@ -358,7 +424,7 @@ KOPIÈR derefter kommandoen (brug menuknappen) og tryk ENTER.</string>
     <string name="share_warning">Ingen passende apps fundet.</string>
     <string name="share_message">#YouTubeDownloader
 \nGratis og open source Android-app til at downloade YouTube-videoer!
-\nhttps://sourceforge.net/projects/ytdownloader/files/</string>
+\n</string>
 	<string name="help_translate_title">Hjælp med at oversætte denne app</string>
     <string name="xda_title">Thread on XDA forum</string>
     

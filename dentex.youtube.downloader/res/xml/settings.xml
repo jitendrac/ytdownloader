@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
+<!--     <Preference     -->
+<!-- 		android:key="dashboard" -->
+<!-- 		android:title="@string/title_activity_dashboard" -->
+<!-- 		android:summary="@string/dashboard_summary"/> -->
+
     <Preference    
-		android:key="dashboard"
-		android:title="@string/title_activity_dashboard"
-		android:summary="@string/dashboard_summary"/>
+		android:key="launch_youtube"
+		android:title="@string/launch_youtube_title"
+		android:summary="@string/launch_youtube_summary"/>
     
     <PreferenceCategory
     	android:title="@string/settings_cat_folder">
@@ -30,7 +35,7 @@
     </PreferenceCategory>
     
     <PreferenceCategory
-        android:title="@string/settings_cat_files">
+        android:title="@string/settings_cat_list">
     	
     	<CheckBoxPreference
         	android:key="enable_rename"
