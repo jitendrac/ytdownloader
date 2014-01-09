@@ -91,6 +91,7 @@ import com.matsuhiro.android.download.Maps;
 
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
+import dentex.youtube.downloader.menu.SocialActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.utils.FetchUrl;
@@ -373,6 +374,9 @@ public class ShareActivity extends Activity {
 				return true;
 			case R.id.menu_tutorials:
 				startActivity(new Intent(this, TutorialsActivity.class));
+				return true;
+			case R.id.menu_social:
+				startActivity(new Intent(this, SocialActivity.class));
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

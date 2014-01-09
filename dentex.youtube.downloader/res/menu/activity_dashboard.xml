@@ -28,35 +28,16 @@
         android:orderInCategory="20"
         android:showAsAction="collapseActionView" />
     
+    <item android:id="@+id/menu_social"
+        android:title="@string/settings_cat_social"
+        android:titleCondensed="@string/settings_cat_social"
+        android:orderInCategory="25"
+        android:showAsAction="collapseActionView" />
+    
     <item android:id="@+id/menu_donate"
         android:title="@string/title_activity_donate"
         android:titleCondensed="@string/title_activity_donate"
-        android:orderInCategory="25"
+        android:orderInCategory="30"
         android:showAsAction="collapseActionView" />
-
-<!--     <item android:id="@+id/menu_backup" -->
-<!--         android:title="@string/menu_backup" -->
-<!--         android:titleCondensed="@string/menu_backup" -->
-<!--         android:orderInCategory="10" -->
-<!--         android:showAsAction="collapseActionView" /> -->
-    
-<!--     <item android:id="@+id/menu_restore" -->
-<!--         android:title="@string/menu_restore" -->
-<!--         android:titleCondensed="@string/menu_restore" -->
-<!--         android:orderInCategory="15" -->
-<!--         android:showAsAction="collapseActionView" /> -->
-    
-<!--     <item android:id="@+id/menu_import" -->
-<!--         android:title="@string/menu_import_file" -->
-<!--         android:titleCondensed="@string/menu_import_file" -->
-<!--         android:orderInCategory="20" -->
-<!--         android:showAsAction="collapseActionView" /> -->
-    
-<!--     <item android:id="@+id/menu_clear_dashboard" -->
-<!--         android:title="@string/clear_dashboard_title" -->
-<!--         android:titleCondensed="@string/clear_dashboard_title" -->
-<!--         android:orderInCategory="25" -->
-<!--         android:icon="@android:drawable/ic_menu_preferences" -->
-<!--         android:showAsAction="collapseActionView" /> -->
-    
+        
 </menu>

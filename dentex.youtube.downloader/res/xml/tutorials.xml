@@ -10,7 +10,7 @@
 	        android:defaultValue="true"/>
 	    
 	    <CheckBoxPreference 
-	        android:key="show_quick_start_dasboard"
+	        android:key="show_quick_start_dashboard"
 	        android:title="@string/quick_start_dashboard_title"
 	        android:defaultValue="true"/>
 	              	
@@ -31,7 +31,8 @@
         
         <Preference    
 			android:key="tutorials_read"
-            android:title="@string/tutorials_read_title"/>
+            android:title="@string/tutorials_read_title"
+            android:summary="@string/tutorials_read_summary"/>
         
     </PreferenceCategory>
 

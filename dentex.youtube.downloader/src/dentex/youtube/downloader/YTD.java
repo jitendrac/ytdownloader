@@ -227,8 +227,8 @@ public class YTD extends Application implements QueueThreadListener{
 			settings.edit().putBoolean("first_launch", false).apply();
 			reduceFactor = detectScreenDensity();
 			
-			JSON_FILE.delete();
-			videoinfo.edit().clear().apply();
+			//JSON_FILE.delete();
+			//videoinfo.edit().clear().apply();
 		} else {
 			reduceFactor = Double.parseDouble(settings.getString("REDUCE_FACTOR", "1"));
 			Log.d(DEBUG_TAG, "Retrieved a REDUCE_FACTOR of " + reduceFactor + " from prefs");

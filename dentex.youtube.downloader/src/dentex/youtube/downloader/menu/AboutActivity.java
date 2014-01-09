@@ -27,7 +27,6 @@
 package dentex.youtube.downloader.menu;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -50,7 +49,6 @@ import dentex.youtube.downloader.docs.ChangelogActivity;
 import dentex.youtube.downloader.docs.CreditsShowActivity;
 import dentex.youtube.downloader.docs.ShowLicenseActivity;
 import dentex.youtube.downloader.docs.TranslatorsListActivity;
-import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
 
 public class AboutActivity extends Activity {
@@ -105,14 +103,11 @@ public class AboutActivity extends Activity {
 		private Preference apache;
 		private Preference cc;
 		private Preference mpl;
-		private Preference git;
-		private Preference hg;
-		private Preference share;
+		private Preference gh;
+		private Preference sf_h;
+		private Preference sf_b;
 		private Preference cl;
-		private Preference loc;
-		private Preference tw;
 		private Preference tr;
-		private Preference xda;
 		
 		@Override
         public void onCreate(Bundle savedInstanceState) {
@@ -200,11 +195,11 @@ public class AboutActivity extends Activity {
 	            }
 	        });
 	        
-	        git = (Preference) findPreference("ytd_code_git");
-	        git.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	        gh = (Preference) findPreference("ytd_github_home");
+	        gh.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	String url = "https://github.com/dentex/ytdownloader/";
+	            	String url = getActivity().getString(R.string.ytd_github_home_summary);
 	            	Intent i = new Intent(Intent.ACTION_VIEW);
 	            	i.setData(Uri.parse(url));
 	            	startActivity(i);
@@ -212,11 +207,11 @@ public class AboutActivity extends Activity {
 	            }
 	        });
 	        
-	        hg = (Preference) findPreference("ytd_code_hg");
-	        hg.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	        sf_h = (Preference) findPreference("ytd_sourceforge_home");
+	        sf_h.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	            	String url = "https://sourceforge.net/projects/ytdownloader/";
+	            	String url = getActivity().getString(R.string.ytd_sourceforge_home_summary);
 	            	Intent i = new Intent(Intent.ACTION_VIEW);
 	            	i.setData(Uri.parse(url));
 	            	startActivity(i);
@@ -224,51 +219,27 @@ public class AboutActivity extends Activity {
 	            }
 	        });
 	        
-	        share = (Preference) findPreference("share");
-	        share.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	        sf_b = (Preference) findPreference("ytd_sourceforge_blog");
+	        sf_b.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	        	
 	            public boolean onPreferenceClick(Preference preference) {
-	                try {
-	                	Intent shareIntent =   
-	                	new Intent(android.content.Intent.ACTION_SEND);   
-	                	shareIntent.setType("text/plain");  
-	                	shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "YouTube Downloader");
-	                	
-	                	String shareMessage = getString(R.string.share_message) + getString(R.string.ytd_sourceforge_home);
-	                	
-	                	shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
-	                	startActivity(Intent.createChooser(shareIntent, shareMessage));
-	                } catch (final ActivityNotFoundException e) {
-	                	Utils.logger("d", "No suitable Apps found.", DEBUG_TAG);
-	                	PopUps.showPopUp(getString(R.string.attention), getString(R.string.share_warning), "error", AboutFragment.this.getActivity());
-	                }
+	            	String url = getActivity().getString(R.string.ytd_sourceforge_blog_summary);
+	            	Intent i = new Intent(Intent.ACTION_VIEW);
+	            	i.setData(Uri.parse(url));
+	            	startActivity(i);
 	            	return true;
 	            }
 	        });
 	        
-	        loc = (Preference) findPreference("help_translate");
-            loc.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            	
-                public boolean onPreferenceClick(Preference preference) {
-                	String url = "http://www.getlocalization.com/ytdownloader/";
-                	Intent i = new Intent(Intent.ACTION_VIEW);
-                	i.setData(Uri.parse(url));
-                	startActivity(i);
-                	return true;
-                }
-            });
-            
-            xda = (Preference) findPreference("xda");
-            xda.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            	
-                public boolean onPreferenceClick(Preference preference) {
-                	String url = "http://forum.xda-developers.com/showthread.php?p=37708791";
-                	Intent i = new Intent(Intent.ACTION_VIEW);
-                	i.setData(Uri.parse(url));
-                	startActivity(i);
-                	return true;
-                }
-            });
+            tr = (Preference) findPreference("translators");
+            tr.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	        	
+	            public boolean onPreferenceClick(Preference preference) {
+	            	Intent intent = new Intent(getActivity(),  TranslatorsListActivity.class);
+	        		startActivity(intent);
+	                return true;
+	            }
+	        });
             
             cl = (Preference) findPreference("changelog");
             try {
@@ -286,40 +257,7 @@ public class AboutActivity extends Activity {
                 	startActivity(intent);
                     return true;
                 }
-            });
-            
-            tw = (Preference) findPreference("tweet");
-            tw.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            	
-                public boolean onPreferenceClick(Preference preference) {
-                	
-                	/*
-                	 * http://www.androidsnippets.com/open-twitter-via-intent
-                	 * http://www.androidsnippets.com/users/hyperax
-                	 */
-                	try {
-                		Utils.logger("d", "twitter direct link", DEBUG_TAG);
-                		startActivity(new Intent(Intent.ACTION_VIEW, 
-                				Uri.parse("twitter://user?screen_name=@twidentex")));
-                	} catch (Exception e) {
-                		Utils.logger("d", "twitter WEB link", DEBUG_TAG);
-                		startActivity(new Intent(Intent.ACTION_VIEW, 
-                				Uri.parse("https://twitter.com/#!/@twidentex")));
-                	}
-                    return true;
-                }
-            });
-            
-            tr = (Preference) findPreference("translators");
-            tr.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-	        	
-	            public boolean onPreferenceClick(Preference preference) {
-	            	Intent intent = new Intent(getActivity(),  TranslatorsListActivity.class);
-	        		startActivity(intent);
-	                return true;
-	            }
-	        });
-            
+            });            
 		}
 		
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

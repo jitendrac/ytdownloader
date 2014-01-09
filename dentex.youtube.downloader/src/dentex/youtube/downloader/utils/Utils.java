@@ -86,6 +86,7 @@ import dentex.youtube.downloader.YTD;
 
 public class Utils {
 	
+	public static final String HTTP_M_YOUTUBE_COM_HOME = "http://m.youtube.com/#/home";
 	static String DEBUG_TAG = "Utils";
 	static MediaScannerConnection msc;
 	
@@ -102,20 +103,6 @@ public class Utils {
     	activity.startActivity(intent);
     	activity.overridePendingTransition(0, 0);
     }
-	
-	public static void launchYoutube(Context context) {
-		PackageManager pm = context.getPackageManager();
-		Intent ytIntent = pm.getLaunchIntentForPackage("com.google.android.youtube");
-		if (ytIntent != null) {
-			Utils.logger("d", "ytIntent: " + ytIntent, DEBUG_TAG);
-			context.startActivity(ytIntent);
-		} else {
-			String url = "http://m.youtube.com/home";
-        	Intent i = new Intent(Intent.ACTION_VIEW);
-        	i.setData(Uri.parse(url));
-        	context.startActivity(i);
-		}
-	}
     
     public static void themeInit(Context context) {
 		String theme = YTD.settings.getString("choose_theme", "D");
@@ -409,8 +396,7 @@ public class Utils {
 		Stack<Intent> intents = new Stack<Intent>();
         Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
         		"info@domain.com", null));
-        List<ResolveInfo> activities = ctx.getPackageManager()
-                .queryIntentActivities(i, 0);
+        List<ResolveInfo> activities = ctx.getPackageManager().queryIntentActivities(i, 0);
 
         for(ResolveInfo ri : activities) {
             Intent target = new Intent(source);
@@ -419,14 +405,53 @@ public class Utils {
         }
 
         if(!intents.isEmpty()) {
-            Intent chooserIntent = Intent.createChooser(intents.remove(0),
-                    chooserTitle);
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
-                    intents.toArray(new Parcelable[intents.size()]));
+            Intent chooserIntent = Intent.createChooser(intents.remove(0), chooserTitle);
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intents.toArray(new Parcelable[intents.size()]));
 
             return chooserIntent;
         } else {
         	return Intent.createChooser(source, chooserTitle);
+        }
+	}
+	
+	public static void launchYoutube(Context ctx) {
+		PackageManager pm = ctx.getPackageManager();
+		Intent ytApp = pm.getLaunchIntentForPackage("com.google.android.youtube");
+		if (ytApp != null) {
+			Utils.logger("d", "opening YouTube app", DEBUG_TAG);
+			ctx.startActivity(ytApp);
+		} else {
+			Utils.logger("d", "YouTube app not found - opening a browser", DEBUG_TAG);
+			ctx.startActivity(createBrowserChooserIntentWithoutYTD(ctx, ctx.getString(R.string.open_chooser_title)));
+		}
+	}
+	
+	public static Intent createBrowserChooserIntentWithoutYTD(Context ctx, CharSequence chooserTitle) {	
+    	Stack<Intent> intents = new Stack<Intent>();
+    	String url = HTTP_M_YOUTUBE_COM_HOME;
+    	Intent ytBrowser = new Intent(Intent.ACTION_VIEW);
+    	ytBrowser.setData(Uri.parse(url));
+    	List<ResolveInfo> activities = ctx.getPackageManager().queryIntentActivities(ytBrowser, 0);
+    	for(ResolveInfo ri : activities) {
+    		Intent target;
+    		String pkgName = ri.activityInfo.packageName;
+    		if (!pkgName.equals("dentex.youtube.downloader")) {
+    			target = new Intent(ytBrowser);
+                target.setPackage(pkgName);
+                intents.add(target);
+    		} else {
+    			Utils.logger("v", "YTD intent removed", DEBUG_TAG);
+    		}
+    	}
+    	
+    	if(!intents.isEmpty()) {
+            Intent chooserIntent = Intent.createChooser(intents.remove(0), chooserTitle);
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intents.toArray(new Parcelable[intents.size()]));
+
+            return chooserIntent;
+        } else {
+        	Utils.logger("v", "intents stack empty...", DEBUG_TAG);
+        	return Intent.createChooser(ytBrowser, chooserTitle);
         }
 	}
 	
@@ -632,6 +657,24 @@ public class Utils {
             }
         }
     }
+    
+    public static void copyDirectory(File src, File dst)
+    		throws IOException {
+
+    	if (src.isDirectory()) {
+    		if (!dst.exists()) {
+    			dst.mkdirs();
+    		}
+
+    		String[] children = src.list();
+    		for (int i = 0; i < children.length; i++) {
+    			copyDirectory(new File(src, children[i]), new File(
+    					dst, children[i]));
+    		}
+    	} else {
+    		copyFile(src, dst);
+    	}
+	}
     
     /* method copyFile(File src, File dst, Context context) adapted from Stack Overflow:
 	 * 
@@ -880,6 +923,16 @@ public class Utils {
 		
 		//logger("v", "h=" + h + " m=" + m + " s=" + s + "." + f + " -> tot=" + tot,	DEBUG_TAG);
 		return tot;
+	}
+    
+	public static void setAnyAsyncTaskInProgress(final Activity act, final boolean isIt) {
+		Utils.logger("i", "setting dashboardAsyncTaskInProgress to " + isIt, DEBUG_TAG);
+		YTD.isAnyAsyncInProgress = isIt;
+		act.runOnUiThread(new Runnable() {
+			public void run() {
+				act.setProgressBarIndeterminateVisibility(isIt);
+		    }
+		});
 	}
 }
 

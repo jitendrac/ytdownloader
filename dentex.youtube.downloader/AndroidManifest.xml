@@ -127,6 +127,11 @@
                 android:value=".SettingsActivity" />
         </activity>
         <activity
+            android:name="dentex.youtube.downloader.menu.SocialActivity"
+            android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
+            android:label="@string/settings_cat_social" >
+        </activity>
+        <activity
             android:name="dentex.youtube.downloader.menu.TutorialsActivity"
             android:configChanges="locale|orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/title_activity_tutorials" >

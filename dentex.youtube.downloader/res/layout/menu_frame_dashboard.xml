@@ -22,7 +22,7 @@
 			    android:paddingTop="20dp"
 			    android:paddingLeft="10dp"
 			    android:paddingBottom="6dp"
-			    android:text="@string/dasboard_actions_title"
+			    android:text="@string/dasboard_tools_title"
 			    android:textAppearance="?android:attr/listSeparatorTextViewStyle"
 			    android:textColor="@android:color/holo_orange_light" />
 			

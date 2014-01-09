@@ -112,6 +112,7 @@ import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
+import dentex.youtube.downloader.menu.SocialActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.queue.FFmpegExtractFlvThumbTask;
@@ -216,7 +217,7 @@ public class DashboardActivity extends Activity {
 				getString(R.string.quick_start_dashboard_text), 
 				"info", 
 				sDashboard, 
-				"show_quick_start_dahboard");
+				"show_quick_start_dashboard");
     	
     	// Detect screen orientation
     	int or = this.getResources().getConfiguration().orientation;
@@ -1086,6 +1087,9 @@ public class DashboardActivity extends Activity {
         	case R.id.menu_tutorials:
         		startActivity(new Intent(this, TutorialsActivity.class));
         		return true;
+			case R.id.menu_social:
+				startActivity(new Intent(this, SocialActivity.class));
+				return true;
         	default:
         		return super.onOptionsItemSelected(item);
         }
@@ -1112,7 +1116,7 @@ public class DashboardActivity extends Activity {
 		backup.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Utils.logger("d", "backup action clicked", DEBUG_TAG);
+				Utils.logger("d", "backup tool clicked", DEBUG_TAG);
 				slidingMenuActions(DASHBOARD_TOOL_BACKUP);
 			}
 		});
@@ -1120,7 +1124,7 @@ public class DashboardActivity extends Activity {
 		restore.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Utils.logger("d", "restore action clicked", DEBUG_TAG);
+				Utils.logger("d", "restore tool clicked", DEBUG_TAG);
 				slidingMenuActions(DASHBOARD_TOOL_RESTORE);
 			}
 		});
@@ -1128,7 +1132,7 @@ public class DashboardActivity extends Activity {
 		importFiles.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Utils.logger("d", "importFiles action clicked", DEBUG_TAG);
+				Utils.logger("d", "importFiles tool clicked", DEBUG_TAG);
 				slidingMenuActions(DASHBOARD_TOOL_IMPORT);
 			}
 		});
@@ -1136,8 +1140,16 @@ public class DashboardActivity extends Activity {
 		clearDashboard.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Utils.logger("d", "clearDashboard action clicked", DEBUG_TAG);
+				Utils.logger("d", "clearDashboard tool clicked", DEBUG_TAG);
 				slidingMenuActions(DASHBOARD_TOOL_CLEAR);
+			}
+		});		
+		
+		launchYoutube.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Utils.logger("d", "launchYoutube action clicked", DEBUG_TAG);
+				slidingMenuActions(DASHBOARD_ACTION_YOUTUBE);
 			}
 		});
 	}
@@ -1404,7 +1416,7 @@ public class DashboardActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			dashboardAsyncTaskInProgress(sDashboard, true);
+			Utils.setAnyAsyncTaskInProgress(sDashboard, true);
 		}
 		
 		@Override
@@ -1421,7 +1433,7 @@ public class DashboardActivity extends Activity {
 			} else {
 				notifyDeletionUnsuccessful(mItem, mFile);
 			}
-			dashboardAsyncTaskInProgress(sDashboard, false);
+			Utils.setAnyAsyncTaskInProgress(sDashboard, false);
 		}
 	}
 	
@@ -1759,7 +1771,7 @@ public class DashboardActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			if (importStart)
-				dashboardAsyncTaskInProgress(DashboardActivity.this, true);
+				Utils.setAnyAsyncTaskInProgress(DashboardActivity.this, true);
 		}
 
 		@Override
@@ -1843,7 +1855,8 @@ public class DashboardActivity extends Activity {
 			}
 			
 			if (importEnd) {
-				dashboardAsyncTaskInProgress(DashboardActivity.this, false);
+				Utils.setAnyAsyncTaskInProgress(DashboardActivity.this, false);
+
 				recreate();
 			}
 		}
@@ -1853,7 +1866,7 @@ public class DashboardActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {
-			dashboardAsyncTaskInProgress(DashboardActivity.this, true);
+			Utils.setAnyAsyncTaskInProgress(DashboardActivity.this, true);
 		}
 
 		@Override
@@ -1954,7 +1967,8 @@ public class DashboardActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 			
-			dashboardAsyncTaskInProgress(DashboardActivity.this, false);
+			Utils.setAnyAsyncTaskInProgress(DashboardActivity.this, false);
+
 			recreate();
 		}
 	}
@@ -1989,7 +2003,7 @@ public class DashboardActivity extends Activity {
 		private boolean delResOk;
 		
 		protected void onPreExecute() {
-			dashboardAsyncTaskInProgress(sDashboard, true);
+			Utils.setAnyAsyncTaskInProgress(sDashboard, true);
 			Utils.logger("d", currentItem.getFilename() + " ---> BEGIN move", DEBUG_TAG);
 			Toast.makeText(DashboardActivity.this, 
 					currentItem.getFilename() + ": " + getString(R.string.move_progress), 
@@ -2047,7 +2061,7 @@ public class DashboardActivity extends Activity {
 				Utils.logger("w", currentItem.getFilename() + " --> Copy OK (but not Deletion: original file still in place)", DEBUG_TAG);
 			}
 			
-			dashboardAsyncTaskInProgress(sDashboard, false);
+			Utils.setAnyAsyncTaskInProgress(sDashboard, false);
 		}
 	}
 	
@@ -2056,7 +2070,7 @@ public class DashboardActivity extends Activity {
 		File out;
 		
 		protected void onPreExecute() {
-			dashboardAsyncTaskInProgress(sDashboard, true);
+			Utils.setAnyAsyncTaskInProgress(sDashboard, true);
 			Utils.logger("d", currentItem.getFilename() + " ---> BEGIN copy", DEBUG_TAG);
 			Toast.makeText(DashboardActivity.this, 
 					currentItem.getFilename() + ": " + getString(R.string.copy_progress), 
@@ -2108,7 +2122,7 @@ public class DashboardActivity extends Activity {
 			}
 			
 			refreshlist();
-			dashboardAsyncTaskInProgress(sDashboard, false);
+			Utils.setAnyAsyncTaskInProgress(sDashboard, false);
 		}
 	}
 	
@@ -3201,15 +3215,5 @@ public class DashboardActivity extends Activity {
 			Toast.makeText(DashboardActivity.this,  muxedFileName + ": MUX " + 
 					getString(R.string.json_status_failed), Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	public static void dashboardAsyncTaskInProgress(final Activity act, final boolean isIt) {
-		Utils.logger("i", "setting dashboardAsyncTaskInProgress to " + isIt, DEBUG_TAG);
-		YTD.isAnyAsyncInProgress = isIt;
-		act.runOnUiThread(new Runnable() {
-			public void run() {
-				act.setProgressBarIndeterminateVisibility(isIt);
-		    }
-		});
 	}
 }

@@ -446,8 +446,9 @@
         If a copy of the MPL was not distributed with this file, You can obtain one at 
         <http>http://mozilla.org/MPL/2.0</http>.</string>
 		
-    <string name="ytd_code_git_summary">https://github.com/dentex/ytdownloader/</string>
-    <string name="ytd_code_hg_summary">https://sourceforge.net/projects/ytdownloader/</string>
+    <string name="ytd_github_home_summary">http://github.com/dentex/ytdownloader/</string>
+    <string name="ytd_sourceforge_home_summary">http://sourceforge.net/projects/ytdownloader/</string>
+    <string name="ytd_sourceforge_blog_summary">http://ytdownloader.sourceforge.net/</string>
     
     <string name="credits_text">
         \tMain Licenses

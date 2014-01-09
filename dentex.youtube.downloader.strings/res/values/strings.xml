@@ -279,7 +279,7 @@
     
     <string name="quick_start_settings_title">Settings quick start</string>
     <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
-		\n\nHere you can:
+		\n\nYou can:
 		\n\n [-] Launch YouTube
 		\n\n [-] Set the destination download folder
 		\n\n [-] Download and set the FFmpeg plugin
@@ -289,12 +289,11 @@
 	</string>
 		
     <string name="quick_start_dashboard_title">Dashboard quick start</string>
-    <string name="quick_start_dashboard_text">This is the Dashboard, 
-        where you can interact with downloded video/audio files:
-        \n [-] If empty, try the sliding menu on the left, and:
-        \n  ^ open YouTube and send here a video via the \"share button\". 
-              You can also share any YouTube link via any app.
-              Then choose \'YouTube Downloader\' and you will have further usage info.
+    <string name="quick_start_dashboard_text">This is the Dashboard, where you can interact with downloded video/audio files:
+        \n [-] Try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\" 
+        (You can also share any YouTube link via any app). 
+        Then choose \"YouTube Downloader\" and you will have further usage info.
         \n  ^ or import here directly a video (or audio) file already stored
 		\n
 		\n [-] Check the status, progress and speed; 
@@ -407,9 +406,10 @@
     <string name="title_activity_credits_show">Other licenses and translations</string>
         
     <!-- -->
-    <string name="settings_cat_code">Source Code</string>
-    <string name="ytd_code_git_title">YTD at GitHub</string>
-    <string name="ytd_code_hg_title">YTD at Sourceforge</string>
+    <string name="settings_cat_web">Web</string>
+    <string name="ytd_github_home_title">YTD on GitHub</string>
+    <string name="ytd_sourceforge_home_title">Sourceforge home page</string>
+    <string name="ytd_sourceforge_blog_title">Sourceforge Blog</string>
 
     <!-- -->
     <string name="settings_cat_social">Social</string>

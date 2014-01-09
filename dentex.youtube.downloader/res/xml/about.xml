@@ -50,17 +50,22 @@
 		
 		<PreferenceScreen 
 	        android:key="code"
-	        android:title="@string/settings_cat_code">
+	        android:title="@string/settings_cat_web">
 	        
 	        <Preference 
-	            android:key="ytd_code_git"
-	            android:title="@string/ytd_code_git_title"
-	            android:summary="@string/ytd_code_git_summary"/>
+	            android:key="ytd_github_home"
+	            android:title="@string/ytd_github_home_title"
+	            android:summary="@string/ytd_github_home_summary"/>
 	        
 	        <Preference 
-	            android:key="ytd_code_hg"
-	            android:title="@string/ytd_code_hg_title"
-	            android:summary="@string/ytd_code_hg_summary"/>
+	            android:key="ytd_sourceforge_home"
+	            android:title="@string/ytd_sourceforge_home_title"
+	            android:summary="@string/ytd_sourceforge_home_summary"/>
+	        
+	        <Preference 
+	            android:key="ytd_sourceforge_blog"
+	            android:title="@string/ytd_sourceforge_blog_title"
+	            android:summary="@string/ytd_sourceforge_blog_summary"/>
 	        
 	    </PreferenceScreen>
 		
@@ -69,35 +74,5 @@
 			android:title="@string/title_activity_translators_show"/>
 		
 <!-- 	</PreferenceCategory> -->
-	
-   	<PreferenceScreen
-   	    android:key="social"
-        android:title="@string/settings_cat_social">
-        
-        <Preference
-            android:key="share"
-            android:icon="@android:drawable/ic_menu_share"
-            android:title="@string/share_title"
-            android:summary="@string/share_summary"/>
-        
-        <Preference
-            android:key="tweet"
-            android:icon="@drawable/ic_twitter"
-            android:title="@string/tweet_title"
-            android:summary="@string/tweet_summary"/>
-        
-        <Preference
-            android:key="help_translate"
-            android:icon="@drawable/ic_getlocalization"
-            android:title="@string/help_translate_title"
-            android:summary="@string/help_translate_summary"/>
-        
-        <Preference
-            android:key="xda"
-            android:icon="@drawable/ic_xda"
-            android:title="@string/xda_title"
-            android:summary="@string/xda_summary"/>
-        
-    </PreferenceScreen>
 
 </PreferenceScreen>

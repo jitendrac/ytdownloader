@@ -63,6 +63,7 @@ import com.bugsense.trace.BugSenseHandler;
 
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
+import dentex.youtube.downloader.menu.SocialActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.service.FfmpegDownloadService;
 import dentex.youtube.downloader.utils.DashboardClearHelper;
@@ -130,6 +131,9 @@ public class SettingsActivity extends Activity {
         		dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         		startActivity(dashboardIntent);
         		return true;
+			case R.id.menu_social:
+				startActivity(new Intent(this, SocialActivity.class));
+				return true;
         	default:
         		return super.onOptionsItemSelected(item);
         }
@@ -256,7 +260,6 @@ public class SettingsActivity extends Activity {
                 }
             });
             
-            //settingsUpdateInit();
             YTD.updateInit(getActivity(), true, up);
             
             th = (Preference) findPreference("choose_theme");

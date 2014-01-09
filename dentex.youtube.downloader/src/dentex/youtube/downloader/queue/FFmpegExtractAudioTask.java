@@ -176,7 +176,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 
 		@Override
 		protected void onPreExecute() {
-			DashboardActivity.dashboardAsyncTaskInProgress((Activity) aContext, true);
+			Utils.setAnyAsyncTaskInProgress((Activity) aContext, true);
 		}
 		
 		@Override
@@ -203,7 +203,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 			} else {
 				Utils.logger("w", aFileToConvert.getName() + " NOT deleted", DEBUG_TAG);
 			}
-			DashboardActivity.dashboardAsyncTaskInProgress((Activity) aContext, false);
+			Utils.setAnyAsyncTaskInProgress((Activity) aContext, false);
 		}
 	}
 }

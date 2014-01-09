@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  
+        <Preference
+            android:key="share"
+            android:icon="@android:drawable/ic_menu_share"
+            android:title="@string/share_title"
+            android:summary="@string/share_summary"/>
+        
+        <Preference
+            android:key="tweet"
+            android:icon="@drawable/ic_twitter"
+            android:title="@string/tweet_title"
+            android:summary="@string/tweet_summary"/>
+        
+        <Preference
+            android:key="help_translate"
+            android:icon="@drawable/ic_getlocalization"
+            android:title="@string/help_translate_title"
+            android:summary="@string/help_translate_summary"/>
+        
+        <Preference
+            android:key="xda"
+            android:icon="@drawable/ic_xda"
+            android:title="@string/xda_title"
+            android:summary="@string/xda_summary"/>
+
+</PreferenceScreen>

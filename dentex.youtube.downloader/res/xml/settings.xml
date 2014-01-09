@@ -103,15 +103,6 @@
    	        android:title="@string/enable_adaptive_title"
    	    	android:summary="@string/enable_adaptive_summary"
    	    	android:defaultValue="false"/>
-   		
-<!--    		<ListPreference -->
-<!--    		    android:key="vo_download_method" -->
-<!--    		    android:dependency="enable_advanced_features" -->
-<!--    		    android:title="@string/vo_download_method_title" -->
-<!--    	    	android:dialogTitle="@string/vo_download_method_title" -->
-<!--    	    	android:entries="@array/vo_download_method_entries" -->
-<!--    	    	android:entryValues="@array/vo_download_method_entry_values" -->
-<!--    		    android:defaultValue="@string/vo_download_method_default"/> -->
             
 	</PreferenceCategory>
     
@@ -141,11 +132,6 @@
 		    android:entries="@array/choose_theme_entries"
             android:entryValues="@array/choose_theme_entry_values"
             android:defaultValue="@string/choose_theme_default"/>
-        
-<!--     </PreferenceCategory> -->
-    
-<!--     <PreferenceCategory -->
-<!-- 		android:title="@string/settings_cat_notifications"> -->
         
 		<ListPreference
 		    android:key="notification_defaults"
