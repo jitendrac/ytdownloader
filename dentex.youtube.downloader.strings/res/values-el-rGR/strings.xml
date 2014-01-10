@@ -151,12 +151,12 @@
 	<string name="json_status_queued">Στην ουρά</string>
 	<string name="menu_search">αναζήτηση&#8230;</string>
 	
-	<string name="dasboard_tools_title">Tools</string>
+	<string name="dasboard_tools_title">Εργαλεία</string>
 	<string name="menu_backup">Λήψη αντιγράφου ασφαλείας</string>
 	<string name="menu_restore">Επαναφορά</string>
 	<string name="menu_import_file">Εισαγωγή αρχείων</string>
 	
-	<string name="dasboard_actions_title">Actions</string>
+	<string name="dasboard_actions_title">Ενέργειες</string>
 	
 	<string name="menu_import_file_double">Το %1$s έχει ήδη εισαχθεί.</string>
 	<string name="menu_backup_info">Επιλέξτε ένα φάκελο για αποθήκευση των δεδομένων του Πίνακα Ελέγχου</string>
@@ -259,48 +259,40 @@
     <!-- -->
     <string name="show_again_checkbox">Επανεμφάνιση την επόμενη φορά</string>
     
-    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+    <string name="tutorials_cat_enable_disable">Ενεργοποίηση/απενεργοποίηση</string>
         
     <string name="tutorials_cat_open">Άνοιγμα</string>
-    <string name="tutorials_read_title">Review a tutorial</string>
-    <string name="tutorials_read_summary">Will be out of its context</string>
-    <string-array name="tutorials_read_entries">
-        <item>@string/quick_start_settings_title</item>
-        <item>@string/quick_start_dashboard_title</item>
-        <item>@string/tutorial_share_title</item>
-        <item>@string/tutorial_ssh_title</item>
-    </string-array>
+    <string name="tutorials_read_title">Ανάγνωση οδηγιών</string>
+    <string name="tutorials_read_summary">Θα είναι έξω από το πλαίσιο του</string>
     
-    <string name="tutorial_share_title">Video list tutorial</string>
+    <string name="tutorial_share_title">Οδηγίες λίστας βίντεο</string>
 	<string name="tutorial_share_text">Τώρα θα δείτε μια λίστα με όλους τους διαθέσιμους κωδικοποιητές και τις ποιότητες του επιλεγμένου βίντεο. Μπορείτε να:
 \n\n1) Επιλέξετε ένα αντικείμενο για τοπική λήψη του βίντεο (στη συσκευή) ή να το στείλετε μέσω SSH σε έναν απομακρυσμένο υπολογιστή.
 \nΑπαιτήσεις συσκευής προορισμού: Bash και Wget. Επιπλέον πληροφορίες SSH στη συνέχεια.
 \n\n2)Πιέστε παρατεταμένα ένα αντικείμενο και επιλέξτε μεταξύ αντιγραφής στο πρόχειρο ή κοινής χρήσης του συνδέσμου ως κείμενο (π.χ. αποστολή σε άλλη εφαρμογή).
 \nΣημειώστε ότι ένας τέτοιος σύνδεσμος (διαφορετικός από αυτόν που στέλνετε μέσω SSH) μπορεί να χρησιμοποιηθεί μόνο στην ίδια συσκευή στην οποία δημιουργήθηκε Ή στο ίδιο δίκτυο LAN, αν την μοιράζεστε με άλλη συσκευή.\n</string>
     
-	<string name="tutorial_ssh_title">SSH how-to</string>
+	<string name="tutorial_ssh_title">Οδηγίες SSH</string>
     <string name="tutorial_ssh_text">Μια μοναδική μακροεντολή φορτώθηκε στο πρόχειρο.
 \n\nΕπιλέξτε ένα προφίλ στο ConnectBot και μόλις εισέλθετε στην απομακρυσμένη γραμμή εντολών, 
 επιλέξτε τον επιθυμητό φάκελο, αντιγράψτε την εντολή (χρησιμοποιήστε το μενού) και πατήστε ENTER.</string>
     
-    <string name="quick_start_settings_title">Settings quick start</string>
-    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
-		\n\nHere you can:
-		\n\n [-] Launch YouTube
-		\n\n [-] Set the destination download folder
-		\n\n [-] Download and set the FFmpeg plugin
-		\n\n [-] Tweak the UI
-		\n\n [-] Check for updates
-		\n\n [-] Manage many other settings
-	</string>
+    <string name="quick_start_settings_title">Γρήγορη έναρξη ρυθμίσεων</string>
+    <string name="quick_start_settings_text">Εδώ είναι οι ρυθμίσεις του \'YouTube Downloader\'.
+\n\nΜπορείτε να:
+\n\n [-] Εκκινήσετε το YouTube
+\n\n [-] Ορίσετε το φάκελο προορισμού λήψεων
+\n\n [-] Κατεβάσετε και ορίσετε το πρόσθετο FFmpeg
+\n\n [-] Παραμετροποιήσετε τη διεπαφή χρήστη
+\n\n [-] Ελέγξετε για αναβαθμίσεις
+\n\n [-] Διαχειριστείτε πολλές άλλες ρυθμίσεις</string>
 		
-    <string name="quick_start_dashboard_title">Dashboard quick start</string>
-    <string name="quick_start_dashboard_text">This is the Dashboard, 
-        where you can interact with downloded video/audio files:
-        \n [-] If empty, try the sliding menu on the left, and:
-        \n  ^ open YouTube and send here a video via the \"share button\". 
-              You can also share any YouTube link via any app.
-              Then choose \'YouTube Downloader\' and you will have further usage info.
+    <string name="quick_start_dashboard_title">Γρήγορη έναρξη Πίνακα Ελέγχου</string>
+    <string name="quick_start_dashboard_text">This is the Dashboard, where you can interact with downloded video/audio files:
+        \n [-] Try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\" 
+        (You can also share any YouTube link via any app). 
+        Then choose \"YouTube Downloader\" and you will have further usage info.
         \n  ^ or import here directly a video (or audio) file already stored
 		\n
 		\n [-] Check the status, progress and speed; 
@@ -348,7 +340,7 @@
     <string name="chooser_location_summary">Πιέστε παρατεταμένα για επιλογή φακέλου</string>
 	
     <!-- -->
-    <string name="settings_cat_list">Video list</string>
+    <string name="settings_cat_list">Λίστα βίντεο</string>
     <string name="enable_rename_title">Ενεργοποίηση μετονομασίας αρχείου</string>
     <string name="enable_rename_summary">Μετονομασία του αρχείου βίντεο πριν τη λήψη του (μόνο για τοπική λήψη)</string>
 	<string name="show_thumb_title">Εμφάνιση εικόνας προεπισκόπησης </string>
@@ -394,8 +386,8 @@
     
     <string name="launcher_title">Δραστηριότητα σημείου-εισόδου</string>
     
-    <string name="launch_youtube_title">Launch YouTube</string>
-    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    <string name="launch_youtube_title">Έναρξη YouTube</string>
+    <string name="launch_youtube_summary">Έναρξη της εφαρμογής YouTube (αν είναι εγκατεστημένη) ή του ισοτόπου.</string>
     
     <!-- -->
     <string name="settings_cat_updates">Ενημερώσεις</string>
@@ -413,9 +405,10 @@
     <string name="title_activity_credits_show">Άλλες άδειες και μεταφράσεις</string>
         
     <!-- -->
-    <string name="settings_cat_code">Πηγαίος Κώδικας</string>
-    <string name="ytd_code_git_title">Το YTD στο GitHub</string>
-    <string name="ytd_code_hg_title">Το YTD στο Sourceforge</string>
+    <string name="settings_cat_web">Διαδίκτυο</string>
+    <string name="ytd_github_home_title">Το YTD στο GitHub</string>
+    <string name="ytd_sourceforge_home_title">Αρχική σελίδα Sourceforge</string>
+    <string name="ytd_sourceforge_blog_title">Sourceforge Blog</string>
 
     <!-- -->
     <string name="settings_cat_social">Κοινωνικά</string>

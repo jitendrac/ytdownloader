@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
-<!--     <PreferenceCategory  -->
+<!--     <dentex.youtube.downloader.utils.CustomPreferenceCategory  -->
 <!--     	android:title="@string/settings_cat_app"> -->
         
 	    <Preference 
@@ -73,6 +73,6 @@
 			android:key="translators"
 			android:title="@string/title_activity_translators_show"/>
 		
-<!-- 	</PreferenceCategory> -->
+<!-- 	</dentex.youtube.downloader.utils.CustomPreferenceCategory> -->
 
 </PreferenceScreen>

@@ -492,7 +492,7 @@ public class ShareActivity extends Activity {
 	}
 	
 	private void showSharingTutorial() {
-		shareTutCbEnabled = YTD.settings.getBoolean("general_info", true);
+		shareTutCbEnabled = YTD.settings.getBoolean("tutorial_share", true);
 		if (shareTutCbEnabled) {
 			AlertDialog.Builder adb = new AlertDialog.Builder(ShareActivity.this);
 			LayoutInflater adbInflater = LayoutInflater.from(ShareActivity.this);

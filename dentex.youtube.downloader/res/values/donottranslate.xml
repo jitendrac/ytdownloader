@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.5.5 - Jan 06 2014
+        \n v3.5.5 - Jan 10 2014
         \n-----------------------------------
         \n[x] new FFmpeg builds from latest v2.1.1 - now with x86 CPU support
-        \n[x] small menu reorganization
+        \n[x] menu/preferences reorganization
         \n
         \n v3.5.4 - Dic 17 2013
         \n-----------------------------------

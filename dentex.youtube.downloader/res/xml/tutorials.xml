@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <PreferenceCategory
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory
     	android:title="@string/tutorials_cat_enable_disable">
     	
 	    <CheckBoxPreference 
@@ -24,9 +24,9 @@
 	       	android:title="@string/tutorial_ssh_title"
 	       	android:defaultValue="true"/>
 	        
-	</PreferenceCategory>
+	</dentex.youtube.downloader.utils.CustomPreferenceCategory>
 	
-    <PreferenceCategory
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory
     	android:title="@string/tutorials_cat_open">
         
         <Preference    
@@ -34,6 +34,6 @@
             android:title="@string/tutorials_read_title"
             android:summary="@string/tutorials_read_summary"/>
         
-    </PreferenceCategory>
+    </dentex.youtube.downloader.utils.CustomPreferenceCategory>
 
 </PreferenceScreen>

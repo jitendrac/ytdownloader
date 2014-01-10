@@ -264,12 +264,6 @@
     <string name="tutorials_cat_open">Ouvrir</string>
     <string name="tutorials_read_title">Review a tutorial</string>
     <string name="tutorials_read_summary">Will be out of its context</string>
-    <string-array name="tutorials_read_entries">
-        <item>@string/quick_start_settings_title</item>
-        <item>@string/quick_start_dashboard_title</item>
-        <item>@string/tutorial_share_title</item>
-        <item>@string/tutorial_ssh_title</item>
-    </string-array>
     
     <string name="tutorial_share_title">Video list tutorial</string>
 	<string name="tutorial_share_text">Vous allez maintenant voir une liste des codecs et des qualités disponibles pour la vidéo sélectionnée. Vous pouvez:
@@ -285,7 +279,7 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     
     <string name="quick_start_settings_title">Settings quick start</string>
     <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
-		\n\nHere you can:
+		\n\nYou can:
 		\n\n [-] Launch YouTube
 		\n\n [-] Set the destination download folder
 		\n\n [-] Download and set the FFmpeg plugin
@@ -295,12 +289,11 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
 	</string>
 		
     <string name="quick_start_dashboard_title">Dashboard quick start</string>
-    <string name="quick_start_dashboard_text">This is the Dashboard, 
-        where you can interact with downloded video/audio files:
-        \n [-] If empty, try the sliding menu on the left, and:
-        \n  ^ open YouTube and send here a video via the \"share button\". 
-              You can also share any YouTube link via any app.
-              Then choose \'YouTube Downloader\' and you will have further usage info.
+    <string name="quick_start_dashboard_text">This is the Dashboard, where you can interact with downloded video/audio files:
+        \n [-] Try the sliding menu on the left, and:
+        \n  ^ open YouTube and send here a video via the \"share button\" 
+        (You can also share any YouTube link via any app). 
+        Then choose \"YouTube Downloader\" and you will have further usage info.
         \n  ^ or import here directly a video (or audio) file already stored
 		\n
 		\n [-] Check the status, progress and speed; 
@@ -413,9 +406,10 @@ COLLEZ la commande (utilisez le bouton menu) et pressez ENTRÉE.</string>
     <string name="title_activity_credits_show">Autres licences et traductions</string>
         
     <!-- -->
-    <string name="settings_cat_code">Code source</string>
-    <string name="ytd_code_git_title">YTD sur GitHub</string>
-    <string name="ytd_code_hg_title">YTD sur SourceForge</string>
+    <string name="settings_cat_web">Web</string>
+    <string name="ytd_github_home_title">YTD on GitHub</string>
+    <string name="ytd_sourceforge_home_title">Sourceforge home page</string>
+    <string name="ytd_sourceforge_blog_title">Sourceforge Blog</string>
 
     <!-- -->
     <string name="settings_cat_social">Réseaux sociaux</string>

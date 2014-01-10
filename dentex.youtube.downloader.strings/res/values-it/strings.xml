@@ -151,12 +151,12 @@
 	<string name="json_status_queued">In coda</string>
 	<string name="menu_search">cerca&#8230;</string>
 	
-	<string name="dasboard_tools_title">Tools</string>
+	<string name="dasboard_tools_title">Strumenti</string>
 	<string name="menu_backup">Backup</string>
 	<string name="menu_restore">Ripristino</string>
 	<string name="menu_import_file">Importa file</string>
 	
-	<string name="dasboard_actions_title">Actions</string>
+	<string name="dasboard_actions_title">Azioni</string>
 	
 	<string name="menu_import_file_double">%1$s già aggiunto</string>
 	<string name="menu_backup_info">Scegli la cartella in cui salvare i dati dela Dashboard</string>
@@ -259,84 +259,75 @@
     <!-- -->
     <string name="show_again_checkbox">Mostra ancora la prossima volta</string>
     
-    <string name="tutorials_cat_enable_disable">Enable/disable</string>
+    <string name="tutorials_cat_enable_disable">Abilita/Disabilita</string>
         
     <string name="tutorials_cat_open">Apri</string>
-    <string name="tutorials_read_title">Review a tutorial</string>
-    <string name="tutorials_read_summary">Will be out of its context</string>
-    <string-array name="tutorials_read_entries">
-        <item>@string/quick_start_settings_title</item>
-        <item>@string/quick_start_dashboard_title</item>
-        <item>@string/tutorial_share_title</item>
-        <item>@string/tutorial_ssh_title</item>
-    </string-array>
+    <string name="tutorials_read_title">Rivedi una delle guide</string>
+    <string name="tutorials_read_summary">Sarà fuori contesto</string>
     
-    <string name="tutorial_share_title">Video list tutorial</string>
+    <string name="tutorial_share_title">Guida sulla \"Lista dei video\"</string>
 	<string name="tutorial_share_text">Sarà visibile una lista con tutti i codec e le qualità disponibili per il video selezionato. Potrai:
 		\n\n*) Premere per scaricare il video in locale (sul dispositivo) o per mandare il download via SSH verso un PC remoto.
 		\nRequisiti del computer di destinazione: Bash and Wget. Informazioni addizionali su SSH più avanti;
                 \n\n*) Premere a lungo per scegliere se copiare nella clipboard o condividere il link come testo (ad es. mandandolo ad un\'altra App).
                 \nNota: tale link (diversamente da quando lo si manda via SSH) può essere usato solo dallo stesso dispositivo che l\'ha creato OPPURE dalla stessa LAN, nel caso in cui lo si condivida con un altro computer.\n</string>
     
-	<string name="tutorial_ssh_title">SSH how-to</string>
+	<string name="tutorial_ssh_title">Guida su \"SSH\"</string>
     <string name="tutorial_ssh_text">Un lungo, singolo comando è stato caricato nella clipboard.
 		\n\nScegli un profilo in ConnectBot e una volta nella shell remota, vai nel percorso 
 		desiderato, INCOLLA il comando (usa il tasto menu) e premi ENTER.</string>
     
-    <string name="quick_start_settings_title">Settings quick start</string>
-    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
-		\n\nHere you can:
-		\n\n [-] Launch YouTube
-		\n\n [-] Set the destination download folder
-		\n\n [-] Download and set the FFmpeg plugin
-		\n\n [-] Tweak the UI
-		\n\n [-] Check for updates
-		\n\n [-] Manage many other settings
-	</string>
+    <string name="quick_start_settings_title">Guida sulle \"Opzioni\"</string>
+    <string name="quick_start_settings_text">Qui ci sono le preferenze per \'YouTube Downloader\'.
+\n\nPotrai:
+\n\n [-] Lanciare YouTube
+\n\n [-] Impostare la cartella di destinazione per i download
+\n\n [-] Scaricare e impostare il plugin FFmpeg
+\n\n [-] Modificare l\'interfaccia
+\n\n [-] Controllare aggiornamenti
+\n\n [-] Gestire molte altre opzioni</string>
 		
-    <string name="quick_start_dashboard_title">Dashboard quick start</string>
-    <string name="quick_start_dashboard_text">This is the Dashboard, 
-        where you can interact with downloded video/audio files:
-        \n [-] If empty, try the sliding menu on the left, and:
-        \n  ^ open YouTube and send here a video via the \"share button\". 
-              You can also share any YouTube link via any app.
-              Then choose \'YouTube Downloader\' and you will have further usage info.
-        \n  ^ or import here directly a video (or audio) file already stored
-		\n
-		\n [-] Check the status, progress and speed; 
-    	\n
-    	\n [-] Click an entry to: 
-        \n  ^ open video/audio file 
-        \n  ^ do audio extraction/conversion to mp3
-        \n  ^ mux (merge) audio-only and video-only streams (*)
-        \n
-        \n [-] Long-click to manage files: 
-        \n  ^ copy 
-        \n  ^ move 
-        \n  ^ rename 
-        \n  ^ redownload 
-        \n  ^ remove 
-        \n  ^ delete 
-        \n  ^ pause/resume (downloads and other operations)
-        \n
-        \n (*) How to mux: 
-        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
-			it\'s possible to \"MUX\" (merge) a video-only 
-			and an audio-only streams into a single complete video.
-        \n
-        \nDownloads
-        \n [-] enable the \"Get secondary streams\" preference;  
-        \n [-] go share a video to YTD;  
-        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
-        \n
-		\nAfter downloads completion
-        \n [-] click on the VO video into the Dashboard;
-        \n [-] select the \"Add audio stream (already downloaded)\" entry;
-        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
-        \n [-] wait for completion.
-        \n
-        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
-    </string>	
+    <string name="quick_start_dashboard_title">Guida per la Dashboard</string>
+    <string name="quick_start_dashboard_text">Questa è la Dashboard, dove potrai interagire con i file video/audio scaricati:
+\n [-] Prova il menu scorrevole sulla sinistra, e
+\n  ^ apri YouTube e invia qui un video tramite il  \"tasto condividi\".
+(Puoi anche condividere qualsiasi link a YouTube attraverso qualsiasi app).
+Poi scegli \"YouTube Downloader\" e riceverai ulteriori istruzioni.
+\n  ^ oppure importa qui direttamente un file video (o audio) già salvato
+\n
+\n [-] Controlla stato, avanzamento e velocità;
+\n
+\n [-] Click su un elemento per:
+\n  ^ aprire il file video/audio
+\n  ^ effettuare l\'estrazione audio o conversione in mp3
+\n  ^ mux (combinare) flussi solo-audio e solo-video (*)
+\n
+\n [-] Click-lungo per gestire i file:
+\n  ^ copia 
+\n  ^ sposta 
+\n  ^ rinomina 
+\n  ^ scarica nuovamente 
+\n  ^ rimuovi
+\n  ^ cancella
+\n  ^ pausa/riprendi (download e altre operazioni)
+\n
+\n (*) Come fare il \"mux\": 
+\nPer poter ottenere i video da Youtube a risoluzioni di 1080p e oltre,
+è possibile effettuare il \"mux\" (combinare) un flusso solo-video
+e solo-audio in un singolo video completo.
+\n
+\nDownloads
+\n [-] abilita l\'opzione \"ottieni flussi secondari\";  
+\n [-] condividi un video verso YTD;  
+\n [-] clicca per scaricare il flusso \"VO\" desiderato E ANCHE uno \"AO\";
+\n
+\nAl completamento dei download
+\n [-] clicca su un video VO nella Dashboard;
+\n [-] seleziona \"Aggiungi flusso audio (già scaricato)\";
+\n [-] segui le istruzioni per scaricare l\'ultima versione di FFmpeg [se non già scaricata];
+\n [-] attendi il completamento.
+\n
+\nUn video completo dovrebbe essere disponibile nella Dashboard, con il suffisso \"MUX\" nel nome.</string>	
     
 <!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
@@ -348,7 +339,7 @@
     <string name="chooser_location_summary">Tieni premuto su di una cartella per selezionarla</string>
 	
     <!-- -->
-    <string name="settings_cat_list">Video list</string>
+    <string name="settings_cat_list">Lista dei video</string>
     <string name="enable_rename_title">Abilita rinomina file</string>
     <string name="enable_rename_summary">Rinomina il file video prima di scaricarlo (solo per il download locale)</string>
 	<string name="show_thumb_title">Mostra un\'immagine di anteprima</string>
@@ -394,8 +385,8 @@
     
     <string name="launcher_title">Attività di ingresso</string>
     
-    <string name="launch_youtube_title">Launch YouTube</string>
-    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    <string name="launch_youtube_title">Lancia YouTube</string>
+    <string name="launch_youtube_summary">Apri l\'app di YouTube (se installata) o il sito web mobile (se l\'app non è disponibile)</string>
     
     <!-- -->
     <string name="settings_cat_updates">Aggiornamenti</string>
@@ -413,9 +404,10 @@
     <string name="title_activity_credits_show">Altre licenze e traduzioni</string>
         
     <!-- -->
-    <string name="settings_cat_code">Codice sorgente</string>
-    <string name="ytd_code_git_title">YTD su GitHub</string>
-    <string name="ytd_code_hg_title">YTD su Sourceforge</string>
+    <string name="settings_cat_web">Web</string>
+    <string name="ytd_github_home_title">YTD su GitHub</string>
+    <string name="ytd_sourceforge_home_title">Home page Sourceforge</string>
+    <string name="ytd_sourceforge_blog_title">Blog Sourceforge</string>
 
     <!-- -->
     <string name="settings_cat_social">Social</string>

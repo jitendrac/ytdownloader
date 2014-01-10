@@ -1,7 +1,7 @@
-package dentex.youtube.downloader;
+package dentex.youtube.downloader.utils;
 
 /*
- * Based on code by Udi Cohen
+ * Adapted from code by Udi Cohen
  * https://github.com/Udinic/SmallExamples/tree/master/CustomPreferenceActivity
  * Licensed under the Apache License, Version 2.0 (the "License")
  */
@@ -12,21 +12,31 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import dentex.youtube.downloader.YTD;
 
-public class YTDSettings_PreferenceCategory extends PreferenceCategory {
+public class CustomPreferenceCategory extends PreferenceCategory {
+	
+	String theme = YTD.settings.getString("choose_theme", "D");
 
-    public YTDSettings_PreferenceCategory(Context context) {
+    public CustomPreferenceCategory(Context context) {
     	super(context);
     }
 
-    public YTDSettings_PreferenceCategory(Context context, AttributeSet attrs) {
+    public CustomPreferenceCategory(Context context, AttributeSet attrs) {
     	super(context, attrs);
     }
     
-    public YTDSettings_PreferenceCategory(Context context, AttributeSet attrs, int defStyle) {
+    public CustomPreferenceCategory(Context context, AttributeSet attrs, int defStyle) {
     	super(context, attrs, defStyle);
     }
-
+    
+    private int getHoloShade() {
+    	if (theme.equals("D")) {
+    		return android.R.color.holo_blue_light;
+    	} else {
+    		return android.R.color.holo_blue_dark;
+    	}
+    }
 
 	/**
 	* We catch the view after its creation, and before the activity will use it, in order to make our changes
@@ -36,7 +46,7 @@ public class YTDSettings_PreferenceCategory extends PreferenceCategory {
     @Override
     protected View onCreateView(ViewGroup parent) {
 	    TextView categoryTitle = (TextView) super.onCreateView(parent);
-	    categoryTitle.setTextColor(YTD.ctx.getResources().getColor(android.R.color.holo_blue_dark));
+	    categoryTitle.setTextColor(YTD.ctx.getResources().getColor(getHoloShade()));
 	    return categoryTitle;
     }
 }

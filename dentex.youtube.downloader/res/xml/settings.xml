@@ -11,7 +11,7 @@
 		android:title="@string/launch_youtube_title"
 		android:summary="@string/launch_youtube_summary"/>
     
-    <PreferenceCategory
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory
     	android:title="@string/settings_cat_folder">
 
         <ListPreference
@@ -32,9 +32,9 @@
 		    android:key="open_chooser"
 		    android:title="@string/chooser_location_title"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.utils.CustomPreferenceCategory>
     
-    <PreferenceCategory
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory
         android:title="@string/settings_cat_list">
     	
     	<CheckBoxPreference
@@ -49,9 +49,9 @@
             android:summary="@string/show_thumb_summary" 
             android:defaultValue="false"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.utils.CustomPreferenceCategory>
     
-    <PreferenceCategory
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory
         android:title="@string/settings_cat_advanced">
     	
     	<CheckBoxPreference
@@ -104,9 +104,9 @@
    	    	android:summary="@string/enable_adaptive_summary"
    	    	android:defaultValue="false"/>
             
-	</PreferenceCategory>
+	</dentex.youtube.downloader.utils.CustomPreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory 
     	android:title="@string/settings_cat_ui">
    		
    		<ListPreference
@@ -141,9 +141,9 @@
 		    android:entryValues="@array/notification_defaults_entry_values"
 		    android:defaultValue="@string/notification_defaults_default"/>
         
-    </PreferenceCategory>
+    </dentex.youtube.downloader.utils.CustomPreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory 
     	android:title="@string/settings_cat_updates">
     	
         <Preference 
@@ -157,9 +157,9 @@
             android:summary="@string/autoupdate_summary"
             android:defaultValue="false"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.utils.CustomPreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory 
     	android:title="@string/settings_cat_ssh">
         
         <CheckBoxPreference 
@@ -182,9 +182,9 @@
             android:summary="@string/enable_connectbot_short_cmd_summary"
             android:defaultValue="true"/>
         
-    </PreferenceCategory>
+    </dentex.youtube.downloader.utils.CustomPreferenceCategory>
     
-    <PreferenceCategory 
+    <dentex.youtube.downloader.utils.CustomPreferenceCategory 
     	android:title="@string/settings_cat_system">
         
         <Preference    
@@ -198,6 +198,6 @@
             android:summary="@string/enable_logging_summary"
             android:defaultValue="false"/>
 
-    </PreferenceCategory>
+    </dentex.youtube.downloader.utils.CustomPreferenceCategory>
 
 </PreferenceScreen>
