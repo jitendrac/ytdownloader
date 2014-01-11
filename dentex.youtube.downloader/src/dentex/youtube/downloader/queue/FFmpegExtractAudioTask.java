@@ -92,6 +92,8 @@ public class FFmpegExtractAudioTask implements Runnable {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 			
 			if (exitValue == 0) {
+				Utils.ffmpegJobsCount(true);
+				
 				Utils.scanMedia(aContext, 
 						new String[] {aAudioFile.getAbsolutePath()}, 
 						new String[] {"audio/*"});

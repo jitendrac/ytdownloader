@@ -106,6 +106,7 @@ import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.InvalidYoutubeLinkException;
 import com.matsuhiro.android.download.Maps;
+import com.prashant.custom.widget.crouton.Crouton;
 import com.squareup.picasso.Picasso;
 
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
@@ -269,6 +270,8 @@ public class DashboardActivity extends Activity {
 		updateProgressBars();
 		buildList();
 		writeStatus();
+		
+		Utils.updateDownloadsCount(sDashboard); //TODO remove
 		
 		// YTD update initialization
     	YTD.updateInit(this, false, null);
@@ -880,6 +883,8 @@ public class DashboardActivity extends Activity {
 					
 					@Override
 					public void finishDownload(DownloadTask task) {
+						Utils.updateDownloadsCount(sDashboard);
+						
 						long ID = task.getDownloadId();
 						Utils.logger("d", "__finishDownload on ID: " + ID, DEBUG_TAG);
 						
@@ -1407,6 +1412,14 @@ public class DashboardActivity extends Activity {
     	isDashboardRunning = false;
     	
     	autoUpdate.cancel();
+    }
+    
+    @Override
+    public void onStop() {
+        super.onStop();
+    	Utils.logger("v", "_onStop", DEBUG_TAG);
+    	
+    	Crouton.cancelAllCroutons();
     }
 	
 	private class AsyncDelete extends AsyncTask<DashboardListItem, Void, Boolean> {
@@ -2611,7 +2624,8 @@ public class DashboardActivity extends Activity {
 			String text = null;
 			
 			if (exitValue == 0) {
-
+				Utils.ffmpegJobsCount(true);
+				
 				// Toast + Notification + Log ::: Audio job OK
 				if (!extrTypeIsMp3Conv) {
 					text = getString(R.string.audio_extr_completed);
@@ -3156,6 +3170,8 @@ public class DashboardActivity extends Activity {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 
 			if (exitValue == 0) {
+				Utils.ffmpegJobsCount(true);
+				
 				Toast.makeText(DashboardActivity.this,  muxedFileName + ": MUX " + 
 						getString(R.string.json_status_completed), Toast.LENGTH_SHORT).show();
 		    	

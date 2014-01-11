@@ -88,6 +88,7 @@ import com.matsuhiro.android.connect.NetworkUtils;
 import com.matsuhiro.android.download.DownloadTask;
 import com.matsuhiro.android.download.DownloadTaskListener;
 import com.matsuhiro.android.download.Maps;
+import com.prashant.custom.widget.crouton.Crouton;
 
 import dentex.youtube.downloader.menu.AboutActivity;
 import dentex.youtube.downloader.menu.DonateActivity;
@@ -408,13 +409,15 @@ public class ShareActivity extends Activity {
 	public void onPause() {
 		super.onPause();
 		Utils.logger("v", "_onPause");
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		Utils.logger("v", "_onStop", DEBUG_TAG);
 	}*/
+	
+    @Override
+    public void onStop() {
+        super.onStop();
+    	Utils.logger("v", "_onStop", DEBUG_TAG);
+    	
+    	Crouton.cancelAllCroutons();
+    }
 	
 	@Override
 	public void onBackPressed() {
@@ -1138,6 +1141,8 @@ public class ShareActivity extends Activity {
 			
 			@Override
 			public void preDownload(DownloadTask task) {
+				Utils.updateDownloadsCount(sShare);
+				
 				long ID = task.getDownloadId();
 				String pathOfVideo = task.getAbsolutePath();
 				String nameOfVideo = task.getFileName();

@@ -8,6 +8,13 @@
     <string name="title_activity_tutorials">Tutorials</string>
     <string name="title_activity_translators_show">Translators</string>
     <string name="title_activity_dashboard">Dashboard</string>
+    
+    <string name="crouton_title">You have done %1$d downloads (and performed %2$d FFmpeg jobs), 
+        what do you think about helping me to keep this app free and without banners?\n
+        \nThanks.
+        \nThe developer.
+    </string>
+    <string name="crouton_descr">Click here to donate or go to the \"Donations\" menu whenever you want.</string>
 
     <!-- ### ShareActivity ### -->
     <string name="loading">Loading&#8230;</string>
