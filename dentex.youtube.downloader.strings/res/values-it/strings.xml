@@ -8,6 +8,14 @@
     <string name="title_activity_tutorials">Guide</string>
     <string name="title_activity_translators_show">Traduttori</string>
     <string name="title_activity_dashboard">Dashboard</string>
+    
+    <string name="crouton_title_a_1">Hai effettuato %1$d download (e %2$d operazioni con FFmpeg).</string>
+    <string name="crouton_title_a_2">Hai effettuato %1$d download.</string>
+    <string name="crouton_title_b">\nChe ne pensi di aiutarmi a mantenere questa app gratuita e senza banner? Grazie.
+\nLo sviluppatore.</string>
+    <string name="crouton_descr">Clicca qui per donare o vai al menu "Donazioni" in qualsiasi momento.</string>
+    <string name="crouton_disable_title">Nascondi il promemoria donazioni</string>
+    <string name="crouton_disable_summary">Se hai già donato o vuoi nascondere permanentemente il messaggio occasionale per le donazioni</string>
 
     <!-- ### ShareActivity ### -->
     <string name="loading">In caricamento&#8230;</string>

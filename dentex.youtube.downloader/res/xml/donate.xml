@@ -12,5 +12,12 @@
         android:icon="@drawable/ic_flattr"
         android:title="@string/flattr_title"
         android:summary="@string/flattr_summary"/>
+    
+    <CheckBoxPreference
+        android:key="crouton_disable"
+        android:icon="@drawable/ic_gold_medal"
+        android:title="@string/crouton_disable_title"
+        android:summary="@string/crouton_disable_summary"
+        android:defaultValue="false"/>
 
 </PreferenceScreen>

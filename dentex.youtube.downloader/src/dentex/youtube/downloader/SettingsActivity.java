@@ -164,10 +164,16 @@ public class SettingsActivity extends Activity {
 		private int progress;
 		private long id;*/
 		
+		@Override
+	    public void onActivityCreated(Bundle savedInstanceState) {
+	        super.onActivityCreated(savedInstanceState);
+	        getActivity().setProgressBarIndeterminateVisibility(false);
+		}
+		
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
+            
             addPreferencesFromResource(R.xml.settings);
 
             sSettings = getActivity();

@@ -8,6 +8,15 @@
     <string name="title_activity_tutorials">教学</string>
     <string name="title_activity_translators_show">翻译者</string>
     <string name="title_activity_dashboard">Dashboard</string>
+    
+    <string name="crouton_title_a_1">You did %1$d downloads (and %2$d operations with FFmpeg).</string>
+    <string name="crouton_title_a_2">You did %1$d downloads.</string>
+    <string name="crouton_title_b">\nWhat do you think about helping me to keep this app free and without banners? Thanks.
+        \nThe developer.
+    </string>
+    <string name="crouton_descr">Click here to donate or go to the \"Donations\" menu whenever you want.</string>
+    <string name="crouton_disable_title">Hide donation reminder</string>
+    <string name="crouton_disable_summary">If you already donated or want to permanently hide the occasional donation message</string>
 
     <!-- ### ShareActivity ### -->
     <string name="loading">载入中&#8230;</string>

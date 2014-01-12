@@ -13,6 +13,7 @@ import dentex.youtube.downloader.DashboardListItem;
 import dentex.youtube.downloader.YTD;
 import dentex.youtube.downloader.ffmpeg.FfmpegController;
 import dentex.youtube.downloader.ffmpeg.ShellUtils.ShellCallback;
+import dentex.youtube.downloader.utils.DonationCrouton;
 import dentex.youtube.downloader.utils.JsonHelper;
 import dentex.youtube.downloader.utils.Utils;
 
@@ -92,7 +93,7 @@ public class FFmpegExtractAudioTask implements Runnable {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 			
 			if (exitValue == 0) {
-				Utils.ffmpegJobsCount(true);
+				DonationCrouton.increaseFfmpegJobsCount();
 				
 				Utils.scanMedia(aContext, 
 						new String[] {aAudioFile.getAbsolutePath()}, 

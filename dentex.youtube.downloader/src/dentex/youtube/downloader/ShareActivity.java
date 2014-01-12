@@ -95,6 +95,7 @@ import dentex.youtube.downloader.menu.DonateActivity;
 import dentex.youtube.downloader.menu.SocialActivity;
 import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
+import dentex.youtube.downloader.utils.DonationCrouton;
 import dentex.youtube.downloader.utils.FetchUrl;
 import dentex.youtube.downloader.utils.JsonHelper;
 import dentex.youtube.downloader.utils.PopUps;
@@ -275,6 +276,8 @@ public class ShareActivity extends Activity {
 		slMenuOrigBkg = findViewById(R.id.list).getBackground();
 		
 		lv = (ListView) findViewById(R.id.list);
+		
+		DonationCrouton.popIt(sShare);
 
 		// YTD update initialization
 		YTD.updateInit(this, false, null);
@@ -412,9 +415,9 @@ public class ShareActivity extends Activity {
 	}*/
 	
     @Override
-    public void onStop() {
-        super.onStop();
-    	Utils.logger("v", "_onStop", DEBUG_TAG);
+    public void onDestroy() {
+        super.onDestroy();
+    	Utils.logger("v", "_onDestroy", DEBUG_TAG);
     	
     	Crouton.cancelAllCroutons();
     }
@@ -456,7 +459,7 @@ public class ShareActivity extends Activity {
 				if (linkValidator(sharedText) == "bad_link") {
 					badOrNullLinkAlert();
 				} else if (sharedText != null) {
-					showSharingTutorial();
+					if (!autoModeEnabled && !restartModeEnabled) showSharingTutorial();
 					asyncDownload = new AsyncDownload();
 					asyncDownload.execute(validatedLink);
 				}
@@ -1010,6 +1013,12 @@ public class ShareActivity extends Activity {
 		final View ao = findViewById(R.id.AO);
 		final View all = findViewById(R.id.ALL);
 		
+		View[] menuViews = { mp4, webm, flv, _3gp, hd, ld, md, sd, _3d, vo, ao, all };
+		
+		for (int i = 0; i < menuViews.length; i++) {
+			Utils.setBkgChangeOnTouchListener(sShare, menuViews[i]);
+		}
+		
 		mp4.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -1109,8 +1118,6 @@ public class ShareActivity extends Activity {
 				assignConstraint(YTD.getListFilterConstraint(YTD.VIEW_ALL));
 			}
 		});
-		
-		Utils.setBkgChangeOnTouchListener(sShare, all);
 	}
 	
 	private void reactToViewClick(View v, int filterInt) {
@@ -1141,8 +1148,6 @@ public class ShareActivity extends Activity {
 			
 			@Override
 			public void preDownload(DownloadTask task) {
-				Utils.updateDownloadsCount(sShare);
-				
 				long ID = task.getDownloadId();
 				String pathOfVideo = task.getAbsolutePath();
 				String nameOfVideo = task.getFileName();
@@ -1182,6 +1187,8 @@ public class ShareActivity extends Activity {
 			
 			@Override
 			public void finishDownload(DownloadTask task) {
+				DonationCrouton.increaseDownloadsCount();
+				
 				long ID = task.getDownloadId();
 				String nameOfVideo = task.getFileName();
 				String pathOfVideo = task.getAbsolutePath();

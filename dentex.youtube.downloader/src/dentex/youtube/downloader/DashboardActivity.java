@@ -118,6 +118,7 @@ import dentex.youtube.downloader.menu.TutorialsActivity;
 import dentex.youtube.downloader.queue.FFmpegExtractAudioTask;
 import dentex.youtube.downloader.queue.FFmpegExtractFlvThumbTask;
 import dentex.youtube.downloader.utils.DashboardClearHelper;
+import dentex.youtube.downloader.utils.DonationCrouton;
 import dentex.youtube.downloader.utils.JsonHelper;
 import dentex.youtube.downloader.utils.PopUps;
 import dentex.youtube.downloader.utils.Utils;
@@ -208,7 +209,10 @@ public class DashboardActivity extends Activity {
     	Utils.themeInit(this);
     	
     	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+    	
 		setContentView(R.layout.activity_dashboard);
+		
+		setProgressBarIndeterminateVisibility(false);
 		
 		// Language init
     	Utils.langInit(this);
@@ -271,7 +275,7 @@ public class DashboardActivity extends Activity {
 		buildList();
 		writeStatus();
 		
-		Utils.updateDownloadsCount(sDashboard); //TODO remove
+		DonationCrouton.popIt(sDashboard);
 		
 		// YTD update initialization
     	YTD.updateInit(this, false, null);
@@ -883,7 +887,7 @@ public class DashboardActivity extends Activity {
 					
 					@Override
 					public void finishDownload(DownloadTask task) {
-						Utils.updateDownloadsCount(sDashboard);
+						DonationCrouton.increaseDownloadsCount();
 						
 						long ID = task.getDownloadId();
 						Utils.logger("d", "__finishDownload on ID: " + ID, DEBUG_TAG);
@@ -1415,9 +1419,9 @@ public class DashboardActivity extends Activity {
     }
     
     @Override
-    public void onStop() {
-        super.onStop();
-    	Utils.logger("v", "_onStop", DEBUG_TAG);
+    public void onDestroy() {
+        super.onDestroy();
+    	Utils.logger("v", "_onDestroy", DEBUG_TAG);
     	
     	Crouton.cancelAllCroutons();
     }
@@ -2624,7 +2628,7 @@ public class DashboardActivity extends Activity {
 			String text = null;
 			
 			if (exitValue == 0) {
-				Utils.ffmpegJobsCount(true);
+				DonationCrouton.increaseFfmpegJobsCount();
 				
 				// Toast + Notification + Log ::: Audio job OK
 				if (!extrTypeIsMp3Conv) {
@@ -3170,7 +3174,7 @@ public class DashboardActivity extends Activity {
 			Utils.logger("i", "FFmpeg process exit value: " + exitValue, DEBUG_TAG);
 
 			if (exitValue == 0) {
-				Utils.ffmpegJobsCount(true);
+				DonationCrouton.increaseFfmpegJobsCount();
 				
 				Toast.makeText(DashboardActivity.this,  muxedFileName + ": MUX " + 
 						getString(R.string.json_status_completed), Toast.LENGTH_SHORT).show();

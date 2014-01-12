@@ -8,6 +8,15 @@
     <string name="title_activity_tutorials">Návody</string>
     <string name="title_activity_translators_show">Překladatelé</string>
     <string name="title_activity_dashboard">Seznam</string>
+    
+    <string name="crouton_title_a_1">You did %1$d downloads (and %2$d operations with FFmpeg).</string>
+    <string name="crouton_title_a_2">You did %1$d downloads.</string>
+    <string name="crouton_title_b">\nWhat do you think about helping me to keep this app free and without banners? Thanks.
+        \nThe developer.
+    </string>
+    <string name="crouton_descr">Click here to donate or go to the \"Donations\" menu whenever you want.</string>
+    <string name="crouton_disable_title">Hide donation reminder</string>
+    <string name="crouton_disable_summary">If you already donated or want to permanently hide the occasional donation message</string>
 
     <!-- ### ShareActivity ### -->
     <string name="loading">Načítání&#8230;</string>
@@ -156,7 +165,7 @@
 	<string name="menu_restore">Obnovit</string>
 	<string name="menu_import_file">Import souborů</string>
 	
-	<string name="dasboard_actions_title">Actions</string>
+	<string name="dasboard_actions_title">Akce</string>
 	
 	<string name="menu_import_file_double">%1$s již přidán.</string>
 	<string name="menu_backup_info">Zvolte složku k záloze seznamu</string>
@@ -263,73 +272,71 @@
         
     <string name="tutorials_cat_open">Otevřít</string>
     <string name="tutorials_read_title">Zobrazit návod</string>
-    <string name="tutorials_read_summary">Will be out of its context</string>
+    <string name="tutorials_read_summary">Bude mimo kontext</string>
     
-    <string name="tutorial_share_title">Video list tutorial</string>
+    <string name="tutorial_share_title">Seznam videí - návod</string>
 	<string name="tutorial_share_text">Nyní vidíte seznam s kodeky a kvalitami dostupnými pro zvolené video. Můžete: 
 \n\n*) Kliknout na položku pro stáhnutí videa do vašeho zařízení, nebo odeslat přes SSH do vzdáleného PC. 
 \nPožadavky pro cílové zařízení: Bash a Wget. Další info o SSH později; 
 \n\n*) Delší podržení na položce pro volbu mezi Kopírovat do schránky nebo Sdílet odkaz jako text (např. odeslat do jiné aplikace). 
 \nVemte prosím na vědomí, že takový odkaz (jiný než při odeslaní přes SSH) může být použitý pouze na stejném zařízení, kde byl vytvořený nebo na stejné síti LAN, pokud ho sdílíte do jiného zařízení.\n</string>
     
-	<string name="tutorial_ssh_title">SSH how-to</string>
+	<string name="tutorial_ssh_title">SSH jak na to</string>
     <string name="tutorial_ssh_text">Jeden dlouhý příkaz byl vložený do schránky.
 \n\nVyberte profil v ConnectBotu a jeden ve vzdáleném shellu, přejděte na požadovaný
 adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</string>
     
-    <string name="quick_start_settings_title">Settings quick start</string>
-    <string name="quick_start_settings_text">Here are the preferences for \'YouTube Downloader\'.
-		\n\nYou can:
-		\n\n [-] Launch YouTube
-		\n\n [-] Set the destination download folder
-		\n\n [-] Download and set the FFmpeg plugin
-		\n\n [-] Tweak the UI
-		\n\n [-] Check for updates
-		\n\n [-] Manage many other settings
-	</string>
+    <string name="quick_start_settings_title">Rychlé spuštění - Nastavení</string>
+    <string name="quick_start_settings_text">Zde jsou nastavení pro \'YouTube Downloader\'.
+\n\nMůžete:
+\n\n [-] Spustit YouTube
+\n\n [-] Nastavit složku prostahování
+\n\n [-] Stáhnout a nastavit FFmpeg plugin
+\n\n [-] Upravit uživatelské rozhraní
+\n\n [-] Zkontrolovat aktualizace
+\n\n [-] Spravovat další nastavení</string>
 		
-    <string name="quick_start_dashboard_title">Dashboard quick start</string>
-    <string name="quick_start_dashboard_text">This is the Dashboard, where you can interact with downloded video/audio files:
-        \n [-] Try the sliding menu on the left, and:
-        \n  ^ open YouTube and send here a video via the \"share button\" 
-        (You can also share any YouTube link via any app). 
-        Then choose \"YouTube Downloader\" and you will have further usage info.
-        \n  ^ or import here directly a video (or audio) file already stored
-		\n
-		\n [-] Check the status, progress and speed; 
-    	\n
-    	\n [-] Click an entry to: 
-        \n  ^ open video/audio file 
-        \n  ^ do audio extraction/conversion to mp3
-        \n  ^ mux (merge) audio-only and video-only streams (*)
-        \n
-        \n [-] Long-click to manage files: 
-        \n  ^ copy 
-        \n  ^ move 
-        \n  ^ rename 
-        \n  ^ redownload 
-        \n  ^ remove 
-        \n  ^ delete 
-        \n  ^ pause/resume (downloads and other operations)
-        \n
-        \n (*) How to mux: 
-        \nTo be able to enjoy the 1080p and higher YouTube video resolutions, 
-			it\'s possible to \"MUX\" (merge) a video-only 
-			and an audio-only streams into a single complete video.
-        \n
-        \nDownloads
-        \n [-] enable the \"Get secondary streams\" preference;  
-        \n [-] go share a video to YTD;  
-        \n [-] click to download the desired \"VO\" stream AND an \"AO\" streams.
-        \n
-		\nAfter downloads completion
-        \n [-] click on the VO video into the Dashboard;
-        \n [-] select the \"Add audio stream (already downloaded)\" entry;
-        \n [-] follow instructions to download the latest FFmpeg build [if not already downloaded];
-        \n [-] wait for completion.
-        \n
-        \nA complete video should be avaiable to open from the Dashboard, tagged with \"MUX\".    
-    </string>	
+    <string name="quick_start_dashboard_title">Rychlé spuštění - Seznamu</string>
+    <string name="quick_start_dashboard_text">Zde je Seznam, kde můžete pracovat se staženými video/audio soubory:
+\n [-] Pokud zde nic není, posuňte prstem na levé straně a:
+\n  ^ otevřete YouTube a pošlete sem video přes tlačítko \"sdílet\".
+Můžete sdílet jakýkoliv YouTube odkaz z jakékoliv aplikace.
+Potom vyberte \'YouTube Downloader\' a zobrazí se Vám další info.
+\n  ^ anebo sem přímo naimportujte už uložený video (nebo audio) soubor
+\n
+\n [-] Zkontrolovat stav, postup a rychlost; 
+\n
+\n [-] Klikněte na položku pro: 
+\n  ^ otevření video/audio souboru 
+\n  ^ extrahovat audio a/anebo konvertovat na mp3
+\n  ^ mux (spojit) pouze audio a pouze video streamy (*)
+\n
+\n [-] Dlouhým podržením můžete soubory: 
+\n  ^ kopírovat 
+\n  ^ přesunout 
+\n  ^ přejmenovat 
+\n  ^ stáhnout znovu 
+\n  ^ odstranit 
+\n  ^ vymazat 
+\n  ^ zastavit/spustit (stahování, nebo jiné operace)
+\n
+\n (*) Jak na mux (spojení): 
+\nAby jste si mohli užít 1080p a větší rozlišení videa z YouTube, 
+je možné použít \"MUX\" (spojení) pouze video a pouze audio streamu
+do jednoho kompletního videa.
+\n
+\nStáhnutí
+\n [-] povolte možnost \"Získat sekundární streamy\";  
+\n [-] nasdílejte video do YTD;  
+\n [-] klikněte na stáhnutí požadovaného \"VO\" a \"AO\" streamu.
+\n
+\nPo dokončeném stáhnutí
+\n [-] klikněte na VO video v Seznamu;
+\n [-] zvolte možnost \"Přidat audio stream (už stáhnutý)\" ;
+\n [-] pokračujte podle instrukcí pro stáhnutí nejnovějšího FFmpeg [pokud ještě není stáhnutý];
+\n [-] počkejte na dokončení.
+\n
+\nKompletní video by mělo být dostupné v Seznamu, označené \"MUX\".</string>	
     
 <!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
@@ -341,7 +348,7 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     <string name="chooser_location_summary">Podržte déle pro výběr složky</string>
 	
     <!-- -->
-    <string name="settings_cat_list">Video list</string>
+    <string name="settings_cat_list">Seznam videí</string>
     <string name="enable_rename_title">Povolit přejmenování souboru</string>
     <string name="enable_rename_summary">Přejmenovat video před stažením (pouze při lokálním uložení)</string>
 	<string name="show_thumb_title">Zobrazit obrázek náhledu</string>
@@ -387,8 +394,8 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
     
     <string name="launcher_title">Zobrazit po startu</string>
     
-    <string name="launch_youtube_title">Launch YouTube</string>
-    <string name="launch_youtube_summary">Open YouTube app (if installed) or mobile website (if app is not available)</string>
+    <string name="launch_youtube_title">Spustit YouTube</string>
+    <string name="launch_youtube_summary">Otevře aplikaci YouTube (pokud je nainstalovaná), nebo mobilní stránku v prohlížeči (pokud apl. není dostupná)</string>
     
     <!-- -->
     <string name="settings_cat_updates">Aktualizace</string>
@@ -407,8 +414,8 @@ adresář, vložte příkaz (použijte tlačítko menu), a stiskněte ENTER.</st
         
     <!-- -->
     <string name="settings_cat_web">Web</string>
-    <string name="ytd_github_home_title">YTD on GitHub</string>
-    <string name="ytd_sourceforge_home_title">Sourceforge home page</string>
+    <string name="ytd_github_home_title">YTD na GitHub</string>
+    <string name="ytd_sourceforge_home_title">Sourceforge domovská stránka</string>
     <string name="ytd_sourceforge_blog_title">Sourceforge Blog</string>
 
     <!-- -->

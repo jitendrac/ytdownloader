@@ -74,21 +74,15 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.prashant.custom.widget.crouton.Crouton;
 
 import dentex.youtube.downloader.R;
 import dentex.youtube.downloader.SettingsActivity;
 import dentex.youtube.downloader.YTD;
-import dentex.youtube.downloader.menu.DonateActivity;
 
 public class Utils {
 	
@@ -939,65 +933,6 @@ public class Utils {
 				act.setProgressBarIndeterminateVisibility(isIt);
 		    }
 		});
-	}
-
-	private static final com.prashant.custom.widget.crouton.Configuration CONFIGURATION_INFINITE = 
-			new com.prashant.custom.widget.crouton.Configuration.Builder()
-				.setDuration(com.prashant.custom.widget.crouton.Configuration.DURATION_INFINITE)
-				.build();
-	
-	static Crouton cr;
-	
-	public static void updateDownloadsCount(final Activity act) {
-		int cd = YTD.settings.getInt("completed_downloads", 0);
-		cd++;
-		logger("d", "Completed Downloads Count: " + cd, DEBUG_TAG);
-		YTD.settings.edit().putInt("completed_downloads", cd).commit();
-		
-		//if (cd % 10 == 0) {
-			logger("i", "triggering the donation crouton", DEBUG_TAG);
-			
-			final LayoutInflater inflater = act.getLayoutInflater();
-			View view = inflater.inflate(R.layout.crouton_custom_view, null);
-			
-			TextView title = (TextView) view.findViewById(R.id.crouton_title);
-			title.setText(String.format(
-					act.getString(R.string.crouton_title), 
-					cd, 
-					ffmpegJobsCount(false)));
-			
-			View closeButton = (View) view.findViewById(R.id.crouton_close_button);
-			closeButton.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Crouton.hide(cr);
-				}
-			});
-			
-			LinearLayout root = (LinearLayout) view.findViewById(R.id.crouton_root);
-			root.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					act.startActivity(new Intent(act, DonateActivity.class));
-				}
-			});
-			
-			cr = Crouton.make(act, view);
-			cr.setConfiguration(CONFIGURATION_INFINITE);
-			cr.show();
-		//}
-	}
-
-	public static int ffmpegJobsCount(boolean increase) {
-		int cf = YTD.settings.getInt("completed_ffmpeg", 0);
-		if (increase) {
-			cf++;
-			logger("d", "FFmpeg Jobs Count: " + cf, DEBUG_TAG);
-			YTD.settings.edit().putInt("completed_ffmpeg", cf).commit();
-		}
-		return cf;
 	}
 }
 

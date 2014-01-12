@@ -120,6 +120,8 @@ public class YTD extends Application implements QueueThreadListener{
 	
 	public static boolean isAnyAsyncInProgress = false;
 	
+	public static boolean showCrouton = false;
+	
 	public static String PREFS_NAME = "dentex.youtube.downloader_preferences";
 	public static String VIDEOINFO_NAME = "dentex.youtube.downloader_videoinfo";
 	

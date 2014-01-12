@@ -32,12 +32,25 @@
         android:text="@string/edit_id3_tags" 
         android:onClick="editId3Tags"/>
     
-    <CheckBox
-        android:id="@+id/rem_video_1"
+    <LinearLayout
+        android:id="@+id/rem_ll_1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:text="@string/remove_video"
-        android:padding="10dp"/>
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal"
+        android:padding="5dp">
+    
+	    <CheckBox
+	        android:id="@+id/rem_video_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+	    
+		<TextView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingRight="5dp"
+	        android:text="@string/remove_video" />
+		
+    </LinearLayout>
 
 </LinearLayout>
