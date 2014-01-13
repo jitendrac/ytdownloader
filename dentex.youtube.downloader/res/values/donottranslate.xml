@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.5.5 - Jan 10 2014
+        \n v3.6 - Jan 10 2014
         \n-----------------------------------
-        \n[x] new FFmpeg builds from latest v2.1.1 - now with x86 CPU support
+        \n[x] new FFmpeg builds from latest v2.1.1:
+        \n    - new build for x86 CPU
+        \n    - fix for many arm devices
         \n[x] menu/preferences reorganization
         \n
         \n v3.5.4 - Dic 17 2013
@@ -332,13 +334,13 @@
     <string name="gpl_summary">YouTubeDownloader\nFFmpeg</string>
 
     <string name="mit_title">MIT</string>
-    <string name="mit_summary">android-filechooser</string>
+    <string name="mit_summary">Android-filechooser</string>
     
     <string name="lgpl_title">LGPL-3.0</string>
     <string name="lgpl_summary">liblame</string>
     
     <string name="apache_title">Apache 2.0</string>
-    <string name="apache_summary">SlidingMenu\nPicasso\nMyID3 &amp; Jakarta</string>
+    <string name="apache_summary">SlidingMenu\nPicasso\nMyID3 &amp; Jakarta\nCrouton</string>
     
     <string name="cc_title">CC BY-NC-ND 3.0</string>
     <string name="cc_summary">App\'s icons\nStack Overflow\'s snippets</string>
@@ -456,13 +458,21 @@
         \nThis App is released under the GPL-3.0.
         \n(YouTubeDownloader for Android Copyright &#169; 2012-2013 Samuele Rini)
         \n
+        \nCredits for the custom download manager to Hiroshi Matsunaga (matsuhiro): 
+		    https://github.com/matsuhiro/AndroidDownloadManger
+		    (released "unlicensed"). 
+		\n
         \nThe FFmpeg binary (http://www.ffmpeg.org/index.html), 
         	used for the audio extraction feature, is released under the GPL-3.0.
         \n(FFmpeg version 2.0.1 Copyright &#169; 2000-2013 the FFmpeg developers)
     	\n
-    	\nThe filechooser library is released under the MIT license.
-    	\n(android-filechooser Copyright &#169; 2012 Hai Bison)
+    	\nThe Android-filechooser library is released under the MIT license.
+    	\n(Android-filechooser Copyright &#169; 2012 Hai Bison)
     	\n
+    	\nLauncher and notification icons by Sam Plane: 
+			http://samplane123.deviantart.com/, released under the CC BY-NC-ND 
+			(http://creativecommons.org/licenses/by-nc-nd/3.0)
+		\n
     	\nThe SlidingMenu library is released under the Apache License.
     	\n(Copyright &#169; 2012 Jeremy Feinstein)
     	\n
@@ -483,13 +493,10 @@
 		\nPicasso: Image downloading and caching library
 			 - Copyright 2013 Square, Inc. - http://square.github.io/picasso/
 		\n
-		\nLauncher and notification icons by Sam Plane: 
-			http://samplane123.deviantart.com/, released under the CC BY-NC-ND 
-			(http://creativecommons.org/licenses/by-nc-nd/3.0)
-		\n
-		\nCredits for the custom download manager to  Hiroshi Matsunaga (matsuhiro): 
-		    https://github.com/matsuhiro/AndroidDownloadManger
-		    (released "unlicensed"). 
+		\nCrouton library: Copyright &#169; 2012-2013 Benjamin Weiss and Copyright &#169; 2012 Neofonie Mobile GmbH, 
+		as modified by Prashant Adesara 
+		   - https://github.com/prashantadesara/CroutonExample 
+		   - released under the Apache License
 		\n
 		\n
     	\tCode excerpts Licenses
@@ -532,7 +539,7 @@
 		\nby Ivan Memruk
 		\n
 	    \n
-	    For more details, look for comments in YTD\'s Java code.
+	    For more details, look for comments in YTD\'s source code.
 	    \n
 	    \n
 	    \tTranslations

@@ -9,14 +9,13 @@
     <string name="title_activity_translators_show">Prekladatelia</string>
     <string name="title_activity_dashboard">Dashboard</string>
     
-    <string name="crouton_title_a_1">You did %1$d downloads (and %2$d operations with FFmpeg).</string>
-    <string name="crouton_title_a_2">You did %1$d downloads.</string>
-    <string name="crouton_title_b">\nWhat do you think about helping me to keep this app free and without banners? Thanks.
-        \nThe developer.
-    </string>
-    <string name="crouton_descr">Click here to donate or go to the \"Donations\" menu whenever you want.</string>
-    <string name="crouton_disable_title">Hide donation reminder</string>
-    <string name="crouton_disable_summary">If you already donated or want to permanently hide the occasional donation message</string>
+    <string name="crouton_title_a_1">Už ste stiahli %1$d videí (a urobili %2$d operácií s FFmpeg).</string>
+    <string name="crouton_title_a_2">Už ste stiahli %1$d videí.</string>
+    <string name="crouton_title_b">\nČo by ste povedali na to, pomôcť mi udržať túto aplikáciu ako voľnú a bez bannerov? Ďakujem.
+\nVývojár.</string>
+    <string name="crouton_descr">Kliknite sem, alebo choďte do menu \"Dary\" kedykoľvek budete chcieť.</string>
+    <string name="crouton_disable_title">Skryť pripomienky podpory</string>
+    <string name="crouton_disable_summary">Ak ste mi už poslali finančný dar, alebo ak chcete natrvalo skryť príležitostné správy o podpore</string>
 
     <!-- ### ShareActivity ### -->
     <string name="loading">Načítavanie&#8230;</string>

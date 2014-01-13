@@ -774,7 +774,8 @@ public final class Crouton {
     this.croutonView.addView(contentView);
   }
 
-  private FrameLayout initializeCroutonViewGroup(Resources resources) {
+  @SuppressWarnings("deprecation")
+private FrameLayout initializeCroutonViewGroup(Resources resources) {
     FrameLayout croutonView = new FrameLayout(this.activity);
 
     if (null != onClickListener) {
@@ -813,7 +814,7 @@ public final class Crouton {
       if (this.style.isTileEnabled) {
         drawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
       }
-      croutonView.setBackground(drawable);
+      croutonView.setBackgroundDrawable(drawable);
     }
     return croutonView;
   }

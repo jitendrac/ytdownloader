@@ -9,14 +9,13 @@
     <string name="title_activity_translators_show">Переводчики</string>
     <string name="title_activity_dashboard">Инструментальная панель</string>
     
-    <string name="crouton_title_a_1">You did %1$d downloads (and %2$d operations with FFmpeg).</string>
-    <string name="crouton_title_a_2">You did %1$d downloads.</string>
-    <string name="crouton_title_b">\nWhat do you think about helping me to keep this app free and without banners? Thanks.
-        \nThe developer.
-    </string>
-    <string name="crouton_descr">Click here to donate or go to the \"Donations\" menu whenever you want.</string>
-    <string name="crouton_disable_title">Hide donation reminder</string>
-    <string name="crouton_disable_summary">If you already donated or want to permanently hide the occasional donation message</string>
+    <string name="crouton_title_a_1">Выполнено %1$d загрузок (и %2$d операции с FFmpeg).</string>
+    <string name="crouton_title_a_2">Выполнено %1$d загрузок.</string>
+    <string name="crouton_title_b">\nЧто Вы думаете насчёт оказания мне помощи, чтобы приложение оставалось бесплатным и без рекламы? Спасибо.
+\nРазработчик.</string>
+    <string name="crouton_descr">Нажмите здесь или перейдите в меню \"Пожертвования\" когда Вам будет удобно .</string>
+    <string name="crouton_disable_title">Убрать напоминание о пожертвовании</string>
+    <string name="crouton_disable_summary">Если Вы уже пожертвовали или хотите насовсем спрятать периодически появляющееся сообщение о пожертвовании</string>
 
     <!-- ### ShareActivity ### -->
     <string name="loading">Загрузка&#8230;</string>

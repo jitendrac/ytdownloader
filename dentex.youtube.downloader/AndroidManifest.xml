@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dentex.youtube.downloader"
     android:installLocation="auto"
-    android:versionCode="76"
-    android:versionName="3.5.5" >
+    android:versionCode="75"
+    android:versionName="3.5.4.02-beta-v3.6" >
 
     <uses-sdk
         android:minSdkVersion="14"

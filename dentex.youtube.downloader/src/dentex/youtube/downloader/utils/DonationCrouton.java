@@ -22,7 +22,7 @@ public class DonationCrouton {
 			.setDuration(Configuration.DURATION_INFINITE)
 			.build();
 	
-	private static final int CROUTON_TRIGGER_VALUE = 10;
+	private static final int CROUTON_TRIGGER_VALUE = 12;
 	
 	private static Crouton cr;
 	
