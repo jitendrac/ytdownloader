@@ -1528,7 +1528,11 @@ public class ShareActivity extends Activity {
 				
 				i++;
 			}
-			findDashUrl(content); // TODO include?
+			
+			boolean asEnabled = YTD.settings.getBoolean("enable_adaptive", false);
+			if (asEnabled || autoModeEnabled) {
+				findDashUrl(content);
+			}
 		} else {
 			Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
 		}
@@ -1664,45 +1668,32 @@ public class ShareActivity extends Activity {
 		}
 
 		String sig = null;
-		Pattern sigPattern = Pattern.compile("sig=(.+?)\\\\u0026");
-		Matcher sigMatcher = sigPattern.matcher(block);
-		if (sigMatcher.find()) {
-			sig = "signature=" + sigMatcher.group(1);
+		
+		Pattern sigPattern1 = Pattern.compile("sig=([A-Z0-9\\.]+?)\\\\u0026");
+		Matcher sigMatcher1 = sigPattern1.matcher(block);
+		if (sigMatcher1.find()) {
+			sig = "signature=" + sigMatcher1.group(1);
 			Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 1", DEBUG_TAG);
 		} else {
-			Pattern sigPattern2 = Pattern.compile("sig=(.+?)$");
+			Pattern sigPattern2 = Pattern.compile("sig=([A-Z0-9\\.]+?)$");
 			Matcher sigMatcher2 = sigPattern2.matcher(block);
 			if (sigMatcher2.find()) {
 				sig = "signature=" + sigMatcher2.group(1);
 				Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 2", DEBUG_TAG);
 			} else {
-				Pattern sigPattern3 = Pattern.compile("sig=([[0-9][A-Z]]{39,40}\\.[[0-9][A-Z]]{39,40})");
+				Pattern sigPattern3 = Pattern.compile("s=([A-Z0-9\\.]+?)\\\\u0026");
 				Matcher sigMatcher3 = sigPattern3.matcher(block);
 				if (sigMatcher3.find()) {
-					sig = "signature=" + sigMatcher3.group(1);
-					Utils.logger("d", "index: " + i + ", non-ecrypted signature found on step 3", DEBUG_TAG);
+					Utils.logger("d", "index: " + i + ", encrypted signature found on step 1; length is " + sigMatcher3.group(1).length(), DEBUG_TAG);
+					sig = "signature=" + decryptExpSig(sigMatcher3.group(1));
 				} else {
-					Pattern sigPattern4 = Pattern.compile("^s=(.+?)\\\\u0026");
+					Pattern sigPattern4 = Pattern.compile("s=([A-Z0-9\\.]+?)$");
 					Matcher sigMatcher4 = sigPattern4.matcher(block);
 					if (sigMatcher4.find()) {
-						Utils.logger("d", "index: " + i + ", encrypted signature found on step 1; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
+						Utils.logger("d", "index: " + i + ", encrypted signature found on step 2; length is " + sigMatcher4.group(1).length(), DEBUG_TAG);
 						sig = "signature=" + decryptExpSig(sigMatcher4.group(1));
 					} else {
-						Pattern sigPattern5 = Pattern.compile("\\\\u0026s=(.+?)\\\\u0026");
-						Matcher sigMatcher5 = sigPattern5.matcher(block);
-						if (sigMatcher5.find()) {
-							Utils.logger("d", "index: " + i + ", encrypted signature found on step 2; length is " + sigMatcher5.group(1).length(), DEBUG_TAG);
-							sig = "signature=" + decryptExpSig(sigMatcher5.group(1));
-						} else {
-							Pattern sigPattern6 = Pattern.compile("\\\\u0026s=(.+?)$");
-							Matcher sigMatcher6 = sigPattern6.matcher(block);
-							if (sigMatcher6.find()) {
-								Utils.logger("d", "index: " + i + ", encrypted signature found on step 3; length is " + sigMatcher6.group(1).length(), DEBUG_TAG);
-								sig = "signature=" + decryptExpSig(sigMatcher6.group(1));
-							} else {
-								Utils.logger("w", "index: " + i + ", sig: " + sig, DEBUG_TAG);
-							}
-						}
+						Utils.logger("w", "index: " + i + ", sig: " + sig, DEBUG_TAG);
 					}
 				}
 			}
@@ -1815,24 +1806,27 @@ public class ShareActivity extends Activity {
 	
 	private void findJs(String content) {
 		String jslinkRaw = findMatchGroupOne(content, "\"js\":\\s*\"([^\"]+)\"");
+		//Utils.logger("i", "jslinkRaw: " + jslinkRaw, DEBUG_TAG);
 		if (!jslinkRaw.isEmpty()) {
-			if (jslinkRaw.indexOf("//") == 0) {
-				Utils.logger("w", "adding 'http:' to jslinkRaw", DEBUG_TAG);
-				jslinkRaw = "http:" + jslinkRaw;
+			jslink = jslinkRaw.replace("\\/", "/");			
+			if (jslink.indexOf("//") == 0) {
+				//Utils.logger("w", "adding 'http:' to jslink", DEBUG_TAG);
+				jslink = "http:" + jslink;
 			}
-			jslink = jslinkRaw.replaceAll("\\\\", "");
 		} else {
 			jslink = "e";
 		}
 		Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
 	}
 	
-	@SuppressLint("DefaultLocale")
+	//@SuppressLint("DefaultLocale")
 	private void findDashUrl(String content) {
 		String videoManifestURL = findMatchGroupOne(content, "\"dashmpd\":\\s*\"([^\"]+)\"");
 		//Utils.logger("i", "videoManifestURL: " + videoManifestURL, DEBUG_TAG);
 		if (!videoManifestURL.isEmpty()) {
-			String matchSig = findMatchGroupOne(videoManifestURL, "\\/s\\/([a-zA-Z0-9\\.]+)\\/");
+			videoManifestURL = videoManifestURL.replace("\\/", "/");
+			
+			String matchSig = findMatchGroupOne(videoManifestURL, "/s/([A-Z0-9\\.]+)/");
 			if (!matchSig.isEmpty()) {
 				String decryptedSig = decryptExpSig(matchSig);
 				if (!decryptedSig.isEmpty()) {
@@ -1840,10 +1834,8 @@ public class ShareActivity extends Activity {
 				}
 			}
 			
-			videoManifestURL = videoManifestURL.replace("\\/", "/");
-			
 			if (videoManifestURL.indexOf("//") == 0) {
-				Utils.logger("w", "adding 'http:' to videoManifestURL", DEBUG_TAG);
+				//Utils.logger("w", "adding 'http:' to videoManifestURL", DEBUG_TAG);
 				videoManifestURL = "http:" + videoManifestURL;
 			}
 			
@@ -1851,7 +1843,7 @@ public class ShareActivity extends Activity {
 			String responseText = fu.doFetch(videoManifestURL);
 			
 			if (!responseText.equals("e")) {
-				if (itags.contains(140) && !itags.contains(141)) {
+				if (!itags.contains(141)) {
 					String newFormat = "141"; // itag for HQ m4a (as AO)
 					String matchURL= findMatchGroupOne(responseText, "<BaseURL.+>(http[^<]+itag=" + newFormat + "[^<]+)<\\/BaseURL>");
 					if (!matchURL.isEmpty()) {
@@ -1859,7 +1851,7 @@ public class ShareActivity extends Activity {
 						addDashUrlEntries(matchURL, "m4a", "-", newFormat);
 					}
 				}
-				if (itags.contains(171) && !itags.contains(172)) {
+				if (!itags.contains(172)) {
 					String newFormat = "172"; // itag for HQ ogg (as AO)
 					String matchURL= findMatchGroupOne(responseText, "<BaseURL.+>(http[^<]+itag=" + newFormat + "[^<]+)<\\/BaseURL>");
 					if (!matchURL.isEmpty()) {

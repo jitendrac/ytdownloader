@@ -4,10 +4,12 @@
         \n v3.6 - xxxxxxxxxxx
         \n-----------------------------------
         \n[x] four new custom themes
-        \n
-        \n v3.5.5 - Jan 03 2014
-        \n-----------------------------------
-        \n[x] new FFmpeg builds from latest v2.1.1 - now with x86 CPU support
+        \n[x] new FFmpeg builds from latest v2.1.1:
+        \n    - new build for x86 CPU
+        \n    - fix for many arm devices
+        \n[x] menu/preferences reorganization
+        \n[x] fix and improvements for encrypted signatures
+        \n[x] high quality AO streams hack (thanks Gantt@userscripts.org)
         \n
         \n v3.5.4 - Dic 17 2013
         \n-----------------------------------
