@@ -233,4 +233,5 @@ public class TranslatorsListActivity extends ListActivity {
 			return(result);
 		}
 	};
+
 }

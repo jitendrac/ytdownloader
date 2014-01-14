@@ -105,7 +105,7 @@ import dentex.youtube.downloader.utils.Utils;
 public class ShareActivity extends Activity {
 	
 	private static final String _VO_WEBM_480P = "VO - WebM - 480p";
-	private static final String _VO_MP4_1080P_HBR = "VO - MP4 - 1080p (HBR)";
+	private static final String _VO_MP4_1440P = "VO - MP4 - 1440p";
 	private static final String _VO_WEBM_1080P = "VO - WebM - 1080p";
 	private static final String _VO_WEBM_720P = "VO - WebM - 720p";
 	private static final String _VO_WEBM_360P = "VO - WebM - 360p";
@@ -116,7 +116,7 @@ public class ShareActivity extends Activity {
 	private static final String _AO_M4A_HI_Q = "AO - M4A - Hi-Q";
 	private static final String _AO_M4A_MED_Q = "AO - M4A - Med-Q";
 	private static final String _AO_M4A_LOW_Q = "AO - M4A - Low-Q";
-	private static final String _VO_MP4_ORIGINAL = "VO - MP4 - Original";
+	private static final String _VO_MP4_2160P = "VO - MP4 - 2160p";
 	private static final String _VO_MP4_1080P = "VO - MP4 - 1080p";
 	private static final String _VO_MP4_720P = "VO - MP4 - 720p";
 	private static final String _VO_MP4_480P = "VO - MP4 - 480p";
@@ -191,8 +191,8 @@ public class ShareActivity extends Activity {
 	private String extraId;
 	private boolean autoFFmpegTaskAlreadySent = false;
 	private String basenameTagged;
-	//private String dashUrl = "";
-	//private String dashStartUrl;
+//	private String dashUrl = "";
+//	private String dashStartUrl;
 	private SlidingMenu slMenu;
 	private Drawable slMenuOrigBkg;
 	private static CharSequence constraint;
@@ -1512,7 +1512,7 @@ public class ShareActivity extends Activity {
 				
 				i++;
 			}
-			//findDashUrl(content);
+			findDashUrl(content); // TODO include?
 		} else {
 			Utils.logger("d", "asyncDownload cancelled @ 'matchUrlEncodedStreams' match", DEBUG_TAG);
 		}
@@ -1530,23 +1530,23 @@ public class ShareActivity extends Activity {
 		protected Void doInBackground(String... urls) {
 			for (int i = 0; i < urls.length; i++) {
 				if (!this.isCancelled()) {
-					String size = getVideoFileSize(urls[i]);
-					if (size.equals("-")) {
+					String size = matchFileSize(urls[i]);
+					if (size.equals("-") && !this.isCancelled()) {
 						Utils.logger("d", "trying getVideoFileSize 2nd time", DEBUG_TAG);
 						try {
 							Thread.sleep(150);
 						} catch (InterruptedException e) {
 							Log.e(DEBUG_TAG, "InterruptedException: " + e.getMessage());
 						}
-						size = getVideoFileSize(urls[i]);
-						if (size.equals("-")) {
+						size = matchFileSize(urls[i]);
+						if (size.equals("-") && !this.isCancelled()) {
 							Utils.logger("w", "trying getVideoFileSize 3rd (last) time", DEBUG_TAG);
 							try {
 								Thread.sleep(250);
 							} catch (InterruptedException e) {
 								Log.e(DEBUG_TAG, "InterruptedException: " + e.getMessage());
 							}
-							size = getVideoFileSize(urls[i]);
+							size = matchFileSize(urls[i]);
 						}
 					}
 					//Utils.logger("d", "index: " + i + ", size: " + size, DEBUG_TAG);
@@ -1800,7 +1800,7 @@ public class ShareActivity extends Activity {
 	private void findJs(String content) {
 		String jslinkRaw = findMatchGroupOne(content, "\"js\":\\s*\"([^\"]+)\"");
 		if (!jslinkRaw.isEmpty()) {
-			if (!(jslinkRaw.indexOf("//") == 0)) {
+			if (jslinkRaw.indexOf("//") == 0) {
 				Utils.logger("w", "adding 'http:' to jslinkRaw", DEBUG_TAG);
 				jslinkRaw = "http:" + jslinkRaw;
 			}
@@ -1811,64 +1811,103 @@ public class ShareActivity extends Activity {
 		Utils.logger("v", "jslink: " + jslink, DEBUG_TAG);
 	}
 	
-	/*@SuppressLint("DefaultLocale")
+	@SuppressLint("DefaultLocale")
 	private void findDashUrl(String content) {
-		Utils.logger("d", "*** dash signated streams ***", DEBUG_TAG);
-		String[] dashElements;
-		
-		String dashManifest = findMatchGroupOne(content, "\"dashmpd\":\\s*\"([^\"]+)\"");
-		//Utils.logger("i", "dashManifest: " + dashManifest, DEBUG_TAG);
-		if (!dashManifest.isEmpty()) {
-			String dashParams = findMatchGroupOne(dashManifest, "youtube.com\\\\\\/api\\\\\\/manifest\\\\\\/dash\\\\\\/(.+)");
-			//Utils.logger("i", "dashParams: " + dashParams, DEBUG_TAG);
-			if (!dashParams.isEmpty()) {
-				dashElements = dashParams.split("\\\\\\/");
-				for (int i=0; i < dashElements.length; i+=2) {
-					if (i>0) dashUrl = dashUrl + "&";
-					if (dashElements[i].equals("s")) {
-						Utils.logger("i", "ecrypted signature found into dash manifest", DEBUG_TAG);
-						dashUrl = dashUrl + ("signature=" + decryptExpSig(dashElements[i+1]));
-					} else if (dashElements[i].equals("sig")) {
-						dashUrl = dashUrl + ("signature=" + dashElements[i+1]);
-					} else {
-						dashUrl = dashUrl + (dashElements[i] + '=' + dashElements[i+1]);
+		String videoManifestURL = findMatchGroupOne(content, "\"dashmpd\":\\s*\"([^\"]+)\"");
+		//Utils.logger("i", "videoManifestURL: " + videoManifestURL, DEBUG_TAG);
+		if (!videoManifestURL.isEmpty()) {
+			String matchSig = findMatchGroupOne(videoManifestURL, "\\/s\\/([a-zA-Z0-9\\.]+)\\/");
+			if (!matchSig.isEmpty()) {
+				String decryptedSig = decryptExpSig(matchSig);
+				if (!decryptedSig.isEmpty()) {
+					videoManifestURL = videoManifestURL.replace("/s/" + matchSig + "/", "/signature/" + decryptedSig + "/");
+				}
+			}
+			
+			videoManifestURL = videoManifestURL.replace("\\/", "/");
+			
+			if (videoManifestURL.indexOf("//") == 0) {
+				Utils.logger("w", "adding 'http:' to videoManifestURL", DEBUG_TAG);
+				videoManifestURL = "http:" + videoManifestURL;
+			}
+			
+			FetchUrl fu = new FetchUrl(sShare);
+			String responseText = fu.doFetch(videoManifestURL);
+			
+			if (!responseText.equals("e")) {
+				if (itags.contains(140) && !itags.contains(141)) {
+					String newFormat = "141"; // itag for HQ m4a (as AO)
+					String matchURL= findMatchGroupOne(responseText, "<BaseURL.+>(http[^<]+itag=" + newFormat + "[^<]+)<\\/BaseURL>");
+					if (!matchURL.isEmpty()) {
+						matchURL = matchURL.replace("&amp;","&");
+						addDashUrlEntries(matchURL, "m4a", "-", newFormat);
 					}
 				}
-				//Utils.logger("i", "dashUrl (partial): " + dashUrl, DEBUG_TAG);
-				if (!links.get(0).isEmpty()) {
-					dashStartUrl = findMatchGroupOne(links.get(0), "(http.*?videoplayback\\?)");
-					//Utils.logger("i", "dashStartURL: " + dashStartUrl, DEBUG_TAG);
-				}
-				if (!dashStartUrl.isEmpty()) {
-					dashUrl = dashStartUrl + dashUrl;
-				} else {
-					dashUrl = "";
-				}
-				
-				if (!dashUrl.isEmpty()) {
-					if (dashUrl.toLowerCase().indexOf("ratebypass") == -1) {
-						dashUrl = dashUrl + "&ratebypass=yes";
+				if (itags.contains(171) && !itags.contains(172)) {
+					String newFormat = "172"; // itag for HQ ogg (as AO)
+					String matchURL= findMatchGroupOne(responseText, "<BaseURL.+>(http[^<]+itag=" + newFormat + "[^<]+)<\\/BaseURL>");
+					if (!matchURL.isEmpty()) {
+						matchURL = matchURL.replace("&amp;","&");
+						addDashUrlEntries(matchURL, "ogg", "-", newFormat);
 					}
-				
-					if (itags.contains(135))
-						
-						addDashUrlEntries(3, dashUrl, "flv", "large", "35"); 
-					
-					if (itags.contains(137) || itags.contains(264)) 
-						addDashUrlEntries(0, dashUrl, "mp4", "hd1080", "37");
-					
-					if (itags.contains(138)) 
-						addDashUrlEntries(0, dashUrl, "mp4", "highres", "38");
-					
-					if (itags.contains(248)) 
-						addDashUrlEntries(2, dashUrl, "webm", "hd1080", "46");
 				}
 			}
 		}
+
+//			String[] dashElements;
+//			String dashParams = findMatchGroupOne(dashManifest, "youtube.com\\\\\\/api\\\\\\/manifest\\\\\\/dash\\\\\\/(.+)");
+//			Utils.logger("i", "dashParams: " + dashParams, DEBUG_TAG);
+//			if (!dashParams.isEmpty()) {
+//				dashElements = dashParams.split("\\\\\\/");
+//				for (int i=0; i < dashElements.length; i+=2) {
+//					if (i>0) dashUrl = dashUrl + "&";
+//					if (dashElements[i].equals("s")) {
+//						Utils.logger("i", "ecrypted signature found into dash manifest", DEBUG_TAG);
+//						dashUrl = dashUrl + ("signature=" + decryptExpSig(dashElements[i+1]));
+//					} else if (dashElements[i].equals("sig")) {
+//						dashUrl = dashUrl + ("signature=" + dashElements[i+1]);
+//					} else {
+//						dashUrl = dashUrl + (dashElements[i] + '=' + dashElements[i+1]);
+//					}
+//				}
+//				Utils.logger("i", "dashUrl (partial): " + dashUrl, DEBUG_TAG);
+//				if (!links.get(0).isEmpty()) {
+//					dashStartUrl = findMatchGroupOne(links.get(0), "(http.*?videoplayback\\?)");
+//					Utils.logger("i", "dashStartURL: " + dashStartUrl, DEBUG_TAG);
+//				}
+//				if (!dashStartUrl.isEmpty()) {
+//					dashUrl = dashStartUrl + dashUrl;
+//				} else {
+//					dashUrl = "";
+//				}
+//				
+//				if (!dashUrl.isEmpty()) {
+//					if (dashUrl.toLowerCase().indexOf("ratebypass") == -1) {
+//						dashUrl = dashUrl + "&ratebypass=yes";
+//					}
+//							
+//					if (itags.contains(135))
+//						addDashUrlEntries(dashUrl, "flv", "large", "35"); 
+//					
+//					if (itags.contains(137)) 
+//						addDashUrlEntries(dashUrl, "mp4", "hd1080", "37");
+//					
+//					if (itags.contains(138)) 
+//						addDashUrlEntries(dashUrl, "mp4", "highres", "38");
+//					
+//					if (itags.contains(248)) 
+//						addDashUrlEntries(dashUrl, "webm", "hd1080", "46");
+//				}
+//			}
+//		}
 	}
 	
-	private void addDashUrlEntries(int i, String link, String codec, String quality, String itag) {
-		links.add(i, link + "&itag=" + itag);
+	private void addDashUrlEntries(String link, String codec, String quality, String itag) {
+		Utils.logger("d", "*** dash signated stream: itag=" + itag + " ***", DEBUG_TAG);
+		
+		int i = links.size();
+		
+		links.add(i, link/* + "&itag=" + itag*/);
 		codecs.add(i, codec);
 		qualities.add(i, quality);
 		sizes.add(i, "");
@@ -1886,15 +1925,28 @@ public class ShareActivity extends Activity {
 		Utils.logger("d", "inserted at index: " + i + ", quality: " + quality, DEBUG_TAG);
 		Utils.logger("d", "inserted at index: " + i + ", itag: " + itag + " (" + itagText + ")", DEBUG_TAG);
 		Utils.logger("v", "inserted at index: " + i + ", url: " + link + "&itag=" + itag, DEBUG_TAG);
-	}*/
+	}
 
-	private String getVideoFileSize(String link) {
+	private String matchFileSize(String link) {
+		String matchedSize = findMatchGroupOne(link, "[&\\?]clen=([0-9]+)&");
+		if (!matchedSize.isEmpty()) {
+			try {
+				return Utils.MakeSizeHumanReadable(Long.parseLong(matchedSize), false);
+			} catch (NumberFormatException nfe) {
+				return getFileSize(link);
+			}
+		} else {
+			return getFileSize(link);
+		}
+	}
+
+	private String getFileSize(String link) {
 		try {
 			final URL url = new URL(link);
 			URLConnection ucon = url.openConnection();
 			ucon.connect();
-			int file_size = ucon.getContentLength();
-			return Utils.MakeSizeHumanReadable(file_size, false);
+			int s = ucon.getContentLength();
+			return Utils.MakeSizeHumanReadable(s, false);
 		} catch(IOException e) {
 			return "-";
 		}
@@ -2045,7 +2097,7 @@ public class ShareActivity extends Activity {
 					res = _VO_MP4_1080P;
 					break;
 				case 138:
-					res = _VO_MP4_ORIGINAL;
+					res = _VO_MP4_2160P;
 					break;
 				case 139:
 					res = _AO_M4A_LOW_Q;
@@ -2087,7 +2139,7 @@ public class ShareActivity extends Activity {
 					res = _VO_WEBM_1080P;
 					break;
 				case 264:
-					res = _VO_MP4_1080P_HBR;
+					res = _VO_MP4_1440P;
 					break;
 				default:
 					res = _UNKNOWN;
