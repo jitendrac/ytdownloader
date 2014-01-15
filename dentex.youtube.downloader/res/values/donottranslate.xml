@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        \n v3.6 - Jan 10 2014
+        \n v3.6 - Jan 15 2014
         \n-----------------------------------
         \n[x] new FFmpeg builds from latest v2.1.1:
         \n    - new build for x86 CPU
@@ -534,7 +534,7 @@
 		\nRhino.jar: open-source implementation of JavaScript written entirely in Java; 
 			https://developer.mozilla.org/en-US/docs/Rhino - license: http://www.mozilla.org/MPL/2.0/
         \n
-		\nJavascript function \"decryptSignature\" from the Greasemonkey script 
+		\nJavascript function \"decryptSignature\" and reference for the \"AO HQ hack\" from the Greasemonkey script 
 			http://userscripts.org/scripts/show/25105 (MIT License) - by Gantt
 		\n
 		\nQueueThread.java -  reference: http://mindtherobot.com/blog/159/android-guts-intro-to-loopers-and-handlers/

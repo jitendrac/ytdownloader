@@ -273,7 +273,7 @@
     <string name="tutorials_read_title">Rivedi una delle guide</string>
     <string name="tutorials_read_summary">Sarà fuori contesto</string>
     
-    <string name="tutorial_share_title">Guida sulla \"Lista dei video\"</string>
+    <string name="tutorial_share_title">Guida per la \"Lista video\"</string>
 	<string name="tutorial_share_text">Sarà visibile una lista con tutti i codec e le qualità disponibili per il video selezionato. Potrai:
 		\n\n*) Premere per scaricare il video in locale (sul dispositivo) o per mandare il download via SSH verso un PC remoto.
 		\nRequisiti del computer di destinazione: Bash and Wget. Informazioni addizionali su SSH più avanti;
@@ -295,7 +295,7 @@
 \n\n [-] Controllare aggiornamenti
 \n\n [-] Gestire molte altre opzioni</string>
 		
-    <string name="quick_start_dashboard_title">Guida per la Dashboard</string>
+    <string name="quick_start_dashboard_title">Guida per la \"Dashboard\"</string>
     <string name="quick_start_dashboard_text">Questa è la Dashboard, dove potrai interagire con i file video/audio scaricati:
 \n [-] Prova il menu scorrevole sulla sinistra, e
 \n  ^ apri YouTube e invia qui un video tramite il  \"tasto condividi\".

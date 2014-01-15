@@ -2258,13 +2258,18 @@ public class DashboardActivity extends Activity {
 					sDashboard.getString(R.string.invalid_data), 
 					Toast.LENGTH_SHORT).show();
 			//YTD.JSON_FILE.delete();
+		} catch (IndexOutOfBoundsException e) {
+			Log.e(DEBUG_TAG, "IndexOutOfBoundsException @ parseJson: " + e.getMessage());
+			Toast.makeText(sDashboard, 
+					sDashboard.getString(R.string.invalid_data), 
+					Toast.LENGTH_SHORT).show();
 		}
 		
 		// do sort by filenames
 		List<String> oldFilenameEntries = new ArrayList<String>(filenameEntries);
 		List<String> oldIdEntries = new ArrayList<String>(idEntries);
 		List<String> oldTypeEntries = new ArrayList<String>(typeEntries);
-		List<String> oldLinkEntries = new ArrayList<String>(ytidEntries);
+		List<String> oldytidEntries = new ArrayList<String>(ytidEntries);
 		List<Integer> oldPosEntries = new ArrayList<Integer>(posEntries);
 		List<String> oldStatusEntries = new ArrayList<String>(statusEntries);
 		List<String> oldPathEntries = new ArrayList<String>(pathEntries);
@@ -2289,7 +2294,7 @@ public class DashboardActivity extends Activity {
 				if (oldFilenameEntries.get(j) == filenameEntries.get(i)) {
 					idEntries.add(oldIdEntries.get(j));
 					typeEntries.add(oldTypeEntries.get(j));
-					ytidEntries.add(oldLinkEntries.get(j));
+					ytidEntries.add(oldytidEntries.get(j));
 					posEntries.add(oldPosEntries.get(j));
 					statusEntries.add(oldStatusEntries.get(j));
 					pathEntries.add(oldPathEntries.get(j));

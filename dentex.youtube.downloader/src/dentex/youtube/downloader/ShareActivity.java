@@ -625,6 +625,7 @@ public class ShareActivity extends Activity {
 			if (YTD.settings.getBoolean("show_thumb", false) && 
 					!((result == null || result.equals("e")) ||
 					  (result != null && result.equals("login_required")) ||
+					  (result != null && result.equals("live_event")) ||
 					  (result != null && result.equals("rtmpe")) ) ) {
 				imgView.setImageBitmap(img);
 			}
@@ -644,6 +645,11 @@ public class ShareActivity extends Activity {
 				BugSenseHandler.leaveBreadcrumb("encrypted_streams");
 				listEntries.clear();
 				noVideosMsgs("info", getString(R.string.encrypted_streams));
+			}
+			
+			if (result != null && result.equals("live_event") && !autoModeEnabled) {
+				BugSenseHandler.leaveBreadcrumb("live_event");
+				noVideosMsgs("info", "live event");
 			}
 			
 			aA = new ShareActivityAdapter(listEntries, ShareActivity.this);
@@ -1425,7 +1431,7 @@ public class ShareActivity extends Activity {
 	private String urlBlockMatchAndDecode(String content) {
 		
 		// log entire YouTube requests
-		//File req = new File(YTD.dir_Downloads, "YTD_yt_req.txt");
+		//File req = new File(YTD.sdcard, "YTDreq.txt");
 		//Utils.appendStringToFile(req, content);
 		
 		if (content.equals("e")) return "e";
@@ -1445,6 +1451,12 @@ public class ShareActivity extends Activity {
 		Matcher loginMatcher = loginPattern.matcher(content);
 		if (loginMatcher.find()) {
 			return "login_required";
+		}
+		
+		Pattern livePattern = Pattern.compile("type\\\\/LIVE|\"livestream\":");
+		Matcher liveMatcher = livePattern.matcher(content);
+		if (liveMatcher.find()) {
+			return "live_event";
 		}
 		
 		findVideoFilenameBase(content);

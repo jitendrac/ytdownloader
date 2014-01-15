@@ -321,10 +321,7 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 	
-	                        AlertDialog helpDialog = adb.create();
-	                        if (! ((Activity) context).isFinishing()) {
-	                        	helpDialog.show();
-	                        }
+	                        Utils.secureShowDialog((Activity) context, adb);
                         
                     	} else {
                     		AlertDialog.Builder adb = new AlertDialog.Builder(UpgradeApkActivity.this);
@@ -348,10 +345,7 @@ public class UpgradeApkActivity extends Activity {
 	                            }
 	                        });
 
-	                        AlertDialog helpDialog = adb.create();
-	                        if (! ((Activity) context).isFinishing()) {
-	                        	helpDialog.show();
-	                        }
+	                        Utils.secureShowDialog((Activity) context, adb);
                     	}
                     } else if (status == DownloadManager.STATUS_FAILED) {
                     	deleteBadDownload(id);

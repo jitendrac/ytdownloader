@@ -136,6 +136,7 @@ public class YTD extends Application implements QueueThreadListener{
 	public static File dir_Downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 	public static File dir_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 	public static File dir_Movies = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+	public static File sdcard = Environment.getExternalStorageDirectory();
 	
 	public static Map<Long, Integer> mFFmpegPercentMap = new HashMap<Long, Integer>();
 
@@ -373,8 +374,11 @@ public class YTD extends Application implements QueueThreadListener{
 				Utils.logger("d", "No downloads in progress.", DEBUG_TAG);
 			}
 		} catch (NullPointerException e) {
-			Log.e(DEBUG_TAG, "NPE at removeIdUpdateNotification: " + e.getMessage());
+			Log.e(DEBUG_TAG, "NPE @ removeIdUpdateNotification: " + e.getMessage());
 			BugSenseHandler.sendExceptionMessage("NPE at removeIdUpdateNotification", e.getMessage(), e);
+		} catch (SecurityException e1) {
+			Log.e(DEBUG_TAG, "SecurityException @ removeIdUpdateNotification: " + e1.getMessage());
+			BugSenseHandler.sendExceptionMessage("SecurityException @ removeIdUpdateNotification", e1.getMessage(), e1);
 		}
 	}
 

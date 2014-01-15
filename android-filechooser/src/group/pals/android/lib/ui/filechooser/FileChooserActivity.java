@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.bugsense.trace.BugSenseHandler;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -98,7 +100,7 @@ public class FileChooserActivity extends Activity {
     /**
      * The full name of this class. Generally used for debugging.
      */
-    public static final String _ClassName = FileChooserActivity.class.getName();
+    public static final String _ClassName = "FileChooserActivity";
 
     /**
      * Types of view.
@@ -293,7 +295,14 @@ public class FileChooserActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
+    	try {
+			super.onCreate(savedInstanceState);
+		} catch (RuntimeException e1) {
+			Log.e(_ClassName, "doFetch RuntimeException: " + e1.getMessage());
+	    	BugSenseHandler.sendExceptionMessage(_ClassName + "-> doFetch", e1.getMessage(), e1);
+			setResult(RESULT_CANCELED);
+            finish();
+		}
     	
         /*
          * THEME

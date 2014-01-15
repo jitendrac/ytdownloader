@@ -77,6 +77,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager.BadTokenException;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -333,7 +334,12 @@ public class Utils {
 			@Override
 			public void run() {
 				if(!act.isFinishing()){
-					adb.show();
+					try {
+						adb.show();
+					} catch (BadTokenException e) {
+						Log.e(DEBUG_TAG, "BadTokenException @ secureShowDialog: " + e.getMessage());
+						BugSenseHandler.sendExceptionMessage(DEBUG_TAG + "-> secureShowDialog", e.getMessage(), e);
+					}
 				}
 			}
 		});
@@ -378,10 +384,7 @@ public class Utils {
 		    }
 		});
 
-		AlertDialog helpDialog = adb.create();
-		if (! ((Activity) ctx).isFinishing()) {
-			helpDialog.show();
-		}
+		Utils.secureShowDialog((Activity) ctx, adb);
 	}
     
 	/* Intent createEmailOnlyChooserIntent from Stack Overflow:
@@ -473,10 +476,8 @@ public class Utils {
 		        // cancel
 		    }
 		});
-		
-		if (!act.isFinishing()) {
-			adb.show();
-		}
+
+		secureShowDialog(act, adb);
 	}
     
     /*
