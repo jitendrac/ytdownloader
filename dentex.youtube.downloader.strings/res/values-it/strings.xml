@@ -272,10 +272,78 @@
     <string name="general_info_title">Abilita guida generale</string>
     <string name="general_info_summary">Mostra una guida generale all\'avvio della App</string>
     <string name="show_again_checkbox">Mostra ancora la prossima volta</string>
-    <string name="ssh_info_title">Abilita guida sull\'SSH</string>
-    <string name="ssh_info_summary">Mostra una guida rapida sul download in remoto via SSH</string>
-    <string name="audio_tutorial_title">Guida all\'estrazione audio</string>
-    <string name="audio_tutorial_summary">Apri una breve guida sulla funzione di estrazione dell\'audio</string>
+    
+    <string name="tutorials_cat_enable_disable">Abilita/Disabilita</string>
+        
+    <string name="tutorials_cat_open">Apri</string>
+    <string name="tutorials_read_title">Rivedi una delle guide</string>
+    <string name="tutorials_read_summary">Sarà fuori contesto</string>
+    
+    <string name="tutorial_share_title">Guida per la \"Lista video\"</string>
+	<string name="tutorial_share_text">Sarà visibile una lista con tutti i codec e le qualità disponibili per il video selezionato. Potrai:
+		\n\n*) Premere per scaricare il video in locale (sul dispositivo) o per mandare il download via SSH verso un PC remoto.
+		\nRequisiti del computer di destinazione: Bash and Wget. Informazioni addizionali su SSH più avanti;
+                \n\n*) Premere a lungo per scegliere se copiare nella clipboard o condividere il link come testo (ad es. mandandolo ad un\'altra App).
+                \nNota: tale link (diversamente da quando lo si manda via SSH) può essere usato solo dallo stesso dispositivo che l\'ha creato OPPURE dalla stessa LAN, nel caso in cui lo si condivida con un altro computer.\n</string>
+    
+	<string name="tutorial_ssh_title">Guida su \"SSH\"</string>
+    <string name="tutorial_ssh_text">Un lungo, singolo comando è stato caricato nella clipboard.
+		\n\nScegli un profilo in ConnectBot e una volta nella shell remota, vai nel percorso 
+		desiderato, INCOLLA il comando (usa il tasto menu) e premi ENTER.</string>
+    
+    <string name="quick_start_settings_title">Guida sulle \"Opzioni\"</string>
+    <string name="quick_start_settings_text">Qui ci sono le preferenze per \'YouTube Downloader\'.
+\n\nPotrai:
+\n\n [-] Lanciare YouTube
+\n\n [-] Impostare la cartella di destinazione per i download
+\n\n [-] Scaricare e impostare il plugin FFmpeg
+\n\n [-] Modificare l\'interfaccia
+\n\n [-] Controllare aggiornamenti
+\n\n [-] Gestire molte altre opzioni</string>
+		
+    <string name="quick_start_dashboard_title">Guida per la \"Dashboard\"</string>
+    <string name="quick_start_dashboard_text">Questa è la Dashboard, dove potrai interagire con i file video/audio scaricati:
+\n [-] Prova il menu scorrevole sulla sinistra, e
+\n  ^ apri YouTube e invia qui un video tramite il  \"tasto condividi\".
+(Puoi anche condividere qualsiasi link a YouTube attraverso qualsiasi app).
+Poi scegli \"YouTube Downloader\" e riceverai ulteriori istruzioni.
+\n  ^ oppure importa qui direttamente un file video (o audio) già salvato
+\n
+\n [-] Controlla stato, avanzamento e velocità;
+\n
+\n [-] Click su un elemento per:
+\n  ^ aprire il file video/audio
+\n  ^ effettuare l\'estrazione audio o conversione in mp3
+\n  ^ mux (combinare) flussi solo-audio e solo-video (*)
+\n
+\n [-] Click-lungo per gestire i file:
+\n  ^ copia 
+\n  ^ sposta 
+\n  ^ rinomina 
+\n  ^ scarica nuovamente 
+\n  ^ rimuovi
+\n  ^ cancella
+\n  ^ pausa/riprendi (download e altre operazioni)
+\n
+\n (*) Come fare il \"mux\": 
+\nPer poter ottenere i video da Youtube a risoluzioni di 1080p e oltre,
+è possibile effettuare il \"mux\" (combinare) un flusso solo-video
+e solo-audio in un singolo video completo.
+\n
+\nDownloads
+\n [-] abilita l\'opzione \"ottieni flussi secondari\";  
+\n [-] condividi un video verso YTD;  
+\n [-] clicca per scaricare il flusso \"VO\" desiderato E ANCHE uno \"AO\";
+\n
+\nAl completamento dei download
+\n [-] clicca su un video VO nella Dashboard;
+\n [-] seleziona \"Aggiungi flusso audio (già scaricato)\";
+\n [-] segui le istruzioni per scaricare l\'ultima versione di FFmpeg [se non già scaricata];
+\n [-] attendi il completamento.
+\n
+\nUn video completo dovrebbe essere disponibile nella Dashboard, con il suffisso \"MUX\" nel nome.</string>	
+    
+<!--     <string name="audio_tutorial_title">Audio extraction tutorial</string> -->
     
     <!-- -->
     <string name="settings_cat_folder">Cartella di download</string>

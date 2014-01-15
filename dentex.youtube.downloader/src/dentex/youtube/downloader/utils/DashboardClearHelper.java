@@ -80,10 +80,7 @@ public class DashboardClearHelper {
 		        }
 		    });
 
-		    AlertDialog helpDialog = adb.create();
-		    if (! act.isFinishing()) {
-		    	helpDialog.show();
-		    }
+		    Utils.secureShowDialog(act, adb);
 		} else {
 			Toast.makeText(act, act.getString(R.string.long_press_warning_title) + 
 					"\n- " + act.getString(R.string.notification_downloading_pt1) + " (" + 
